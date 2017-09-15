@@ -1,17 +1,5 @@
 // Ionic Variables and Theming. For more info, please see:
-// http://ionicframework.com/docs/theming/
-
-// Font path is used to include ionicons,
-// roboto, and noto sans fonts
-$font-path: "../assets/fonts";
-
-
-// The app direction is used to include
-// rtl styles in your app. For more info, please see:
-// http://ionicframework.com/docs/theming/rtl-support/
-$app-direction: ltr;
-
-
+// http://ionicframework.com/docs/v2/theming/
 @import "ionic.globals";
 
 
@@ -20,9 +8,7 @@ $app-direction: ltr;
 // To customize the look and feel of this app, you can override
 // the Sass variables found in Ionic's source scss files.
 // To view all the possible Ionic variables, see:
-// http://ionicframework.com/docs/theming/overriding-ionic-variables/
-
-
+// http://ionicframework.com/docs/v2/theming/overriding-ionic-variables/
 
 
 // Named Color Variables
@@ -32,15 +18,53 @@ $app-direction: ltr;
 // to match your app's branding. Ionic uses a Sass map of
 // colors so you can add, rename and remove colors as needed.
 // The "primary" color is the only required color in the map.
+// Primary color for whatsApp color: #13665c
 
 $colors: (
-  primary:    #488aff,
+  primary:    #00BCD4,
   secondary:  #32db64,
   danger:     #f53d3d,
-  light:      #f4f4f4,
-  dark:       #222
+  light:      #fff,
+  dark:       #222,
+  cool:       #607D8B,
+  fab:        #3e9e3e,
+  header:     #387ef5,
+  color1:     #00bcd4,
+  colorLight: #80deea,
+  transparent: rgba(0, 0, 0, 0),
+  csStripColor:#797d80
 );
 
+$color0 :       #fd4544;
+$color1 :       #00BCD4;
+$csPink:        #f6c2d8;
+$csDarkPink:    #d35a7b;
+$colorLight:    #00acc1;
+$dim:           #dddddd;
+$csBlue:        #37cbff;
+$csGreen:       #47c947;
+$csGray:        #818181;
+$csDark:          #000;
+$csBorder:        #ffd180;
+$csBackgroundColor: #f0f0f0;
+$csStripColor:#f8f8f8;
+$csDarkStrip:#dedede;
+// $csPlannerColor1: #7babed;
+// $csPlannerColor2: #fff;
+ $csPlannerColor1: $csDarkPink;
+ $csPlannerColor2: $csPink;
+$csTransparentWhite: rgba(255, 255, 255, 0.66);
+
+$csInputIconSize: 25px;
+$csTop:           5px;
+
+$csZindex: 10;
+
+$toolbar-ios-height: 56px;
+$toolbar-ios-title-font-size: 1.6rem;
+$toolbar-md-title-font-size: 1.6rem;
+$tabs-ios-tab-min-height: 4.6rem;
+$toolbar-md-height: 64px;
 
 // App iOS Variables
 // --------------------------------------------------
@@ -76,13 +100,17 @@ $colors: (
 // Ionicons
 // --------------------------------------------------
 // The premium icon font for Ionic. For more info, please see:
-// http://ionicframework.com/docs/ionicons/
+// http://ionicframework.com/docs/v2/ionicons/
 
-@import "ionic.ionicons";
+$ionicons-font-path: "../assets/fonts";
+@import "ionicons";
 
 
-// Fonts
-// --------------------------------------------------
+//Defined Function
+@function csBackgroundSvg($image){
+    @return url('../assets/svg/'+$image);
+}
 
-@import "roboto";
-@import "noto-sans";
+@function csBackgroundImage($image){
+    @return url('../assets/images/'+$image);
+}

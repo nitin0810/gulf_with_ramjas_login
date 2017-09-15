@@ -1,0 +1,467 @@
+/* <===============================
+Title:   Corner Stone Theme
+Website: http://cornerstone.pk
+Date:    21/12/2016
+=================================> */
+
+.csBackground {
+    background: csBackgroundSvg('gBoard.svg');
+}
+.setBottom {
+    position: absolute;
+    bottom: 5px;
+}
+.csCenter {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+.csBackground {
+    background-size: cover;
+    position: fixed;
+    background-repeat: no-repeat;
+}
+.csFull {
+    width: 100% !important;
+}
+.csFillBackground {
+    @extend .csFull;
+    height: 100%;
+    background-size: cover;
+}
+.csWhiteText {
+    color: white;
+}
+.csGrayText{
+    color:gray;
+}
+.csMainBackground {
+    @extend .csFillBackground;
+    @extend .csWhiteText;
+    background-image: csBackgroundSvg('gBoard.svg');
+}
+.csBackgroundGray {
+    background: $csBackgroundColor;
+}
+.csCircle {
+    border-radius: 100%;
+    border: 3px solid #fff;
+}
+.csBoxShadow {
+    box-shadow: 4px 4px 9px black;
+}
+.csCardHeader {
+    background: $csStripColor;
+    color: #000;
+}
+ion-toolbar {
+    div {
+        background-color: $color1 !important;
+    }
+}
+.csClearButton {
+    font-style: italic;
+    color: $color1;
+}
+.csFontColor1 {
+    color: $color1;
+}
+.csTransclusentButton {
+    @extend .csClearButton;
+    background-color: $csTransparentWhite;
+}
+.csInput {
+    color: darken( $color1, 5%)!important;
+    font: {
+        size: 20px;
+        weight: bold;
+    }
+}
+.csInputIcon {
+    font-size: $csInputIconSize !important;
+    margin-bottom: -5px !important;
+}
+.csLoginLogo {
+    @extend .csCenter;
+    width: 30%;
+}
+.csWidth {
+    width: 90%;
+}
+.csLoginScreen {
+    @extend .csBackground;
+    background-image: csBackgroundSvg('parent.svg');
+}
+.csTransparent {
+    background-color: rgba(255, 255, 255, 0) !important;
+}
+.csLoginBox {
+    background-color: rgba(255, 255, 255, 0.75) !important;
+}
+.csButtonList {
+    @extend .csCenter;
+}
+.csbuttonIcon {
+    font-size: 30px;
+}
+.marginTop {
+    margin-top: $csTop;
+}
+.csButtonList {
+    margin-top: $csTop+5;
+}
+.csButtonSet {
+    margin-top: $csTop+20;
+}
+.csGreenBoard {
+    border: #ffd180 solid 8px;
+    background-image: csBackgroundSvg('calBoardBackground.svg');
+    background-size: cover;
+    color: $color1;
+}
+.csTransparentForm {
+    @extend .csTransparent;
+    color: white;
+    padding-right: 15px;
+}
+/*-----------*/
+
+.csHeader {
+    background: $color1 !important;
+    color: #fff !important;
+    .toolbar-title-ios, .toolbar-title-md, .toolbar-title-wp, .bar-button-default-wp, .bar-button-clear-wp-default, .bar-button-wp-default, .bar-button-default-md, .bar-button-clear-md-default, .bar-button-md-default, .bar-button-default-ios, .bar-button-clear-ios-default, .bar-button-ios-default {
+        color: white;
+    }
+}
+.toolbar-background-md {
+    background-color: $color1;
+    color: white;
+}
+.action-sheet-ios,
+.action-sheet-md,
+.action-sheet-wp {
+    .action-sheet-button {
+        color: $color1;
+    }
+}
+.bar-button-default-ios,
+.bar-button-default.bar-button-ios-default,
+.bar-button-clear-ios-default {
+   
+    background-color: transparent;
+}
+.csGrayBackground {
+    background: url('../assets/svg/gBoard.svg');
+}
+.csParagraph {
+    font-size: 1.4rem;
+    white-space: pre-line;
+    margin-top: 5px;
+}
+.csListCardIcon {
+    margin-top: 32px !important;
+}
+.csFont {
+    font-size: 1.4rem;
+}
+.csBoldFont {
+    font-size: 1.4rem;
+    font-weight: bold;
+}
+.csRight {
+    float: right;
+}
+.item-ios{
+    font-size:1.4rem !important;
+}
+.csFiftyLimit{
+    top: -18px;
+    position: relative;
+    margin-right:5px;
+    float:right;
+}
+//Student Rating (Management)
+.csRating{
+    ion-item{
+    p{
+        color:black;
+        text-align:center;
+    }
+    }
+}
+rating{
+    color:$color1;
+}
+.csStudentName{
+    text-align:center !important;
+}
+button{
+    font-style:initial;
+}
+.bold{
+    font-weight: bold;
+}
+.header-ios .toolbar-ios:last-child .toolbar-background-ios, .header-md .toolbar-md:last-child .toolbar-background-md {
+    border-width: 0px !important;
+}
+.csFooter{
+    background:$color1;
+}
+.csIndicator{
+    border-left:3px solid;
+    padding-left:10px;
+}
+.item-input .label-md, .item-select .label-md, .item-datetime .label-md{
+    color: #464646;
+}
+.item-input .label-ios, .item-select .label-ios, .item-datetime .label-ios{
+    color: #464646;
+}
+.no-comment{
+    @extend .csCenter;
+    margin-top:20vh;
+    color:dimgray;
+    text-align:center;
+    ion-icon{
+        font-size:100px;
+    }
+}
+.csBigIcon{
+    font-size: 2.2em;
+}
+.tabs-ios-primary .tab-button[aria-selected=true], .tabs-ios-primary .tab-button[aria-selected=true],
+.tabs-md-primary .tab-button[aria-selected=true], .tabs-md-primary .tab-button[aria-selected=true]{
+    color: #fff;
+    font-weight:bold;
+    border-top: white solid;
+}
+.csPrimaryBackground{
+    background:$color1;
+}
+.csFiveLeft{
+    margin-left:5px;
+}
+.select-icon{
+    right: 10px;
+    position: fixed;
+    top: 17px;
+}
+.select-text{
+    margin-right: 15px;
+}
+.csCardTopBorder{
+    border-left: 3px solid $color1;
+}
+.csVWSmallText{
+    margin-left:5px !important;
+    font-size: 3vw !important;
+}
+.csCount{
+    margin: -7px 0px 0px 2px;
+}
+.csCardBorder{
+    border-top:3px solid $color1;
+}
+.csPreText{
+      white-space: pre-wrap;
+}
+// SCSS for Colored input box in ios
+// .item-ios.item-input.ng-invalid.ng-touched:not(.input-has-focus) .item-inner {
+//     border-bottom-color: #f53d3d !important;
+//     box-shadow: inset 0 -1px 0 0 #f53d3d !important;
+// }
+// .item-ios.item-input.ng-valid.input-has-value:not(.input-has-focus) .item-inner {
+//     border-bottom-color: #32db64 !important;
+//     box-shadow: inset 0 -1px 0 0 #32db64 !important;
+// }
+// .item-ios.item-input.input-has-focus.item-inner{
+//     border-bottom-color: #00bcd4 !important;
+//     box-shadow: inset 0 -1px 0 0 #00bcd4 !important;
+// }
+.csDateCard{
+    .csDateCardStandard{
+        float:right;
+        margin-top:5px;
+        margin-right:10px;
+    }
+  .csDate{
+    height: 60px;
+    width: 60px;
+    background: white;
+    float: left;
+    margin: 0 10px 5px 0;
+    border: 1px solid gray;
+    border-radius: 10px;
+    box-shadow: 1px 2px 3px grey;
+    .csDateNumber{
+      text-align:center;
+      margin-top:5px;
+      font-size:25px;
+    }
+    .csDateMonth{
+      text-align: center;
+      background: #e8b2b8;
+      font-weight: bold;
+      border-bottom-right-radius: 10px;
+      border-bottom-left-radius: 10px;
+      color: white;
+    }
+  }
+}
+.csEventCard{
+  .csDate{
+    height: 80px;
+    width: 80px;
+    background: white;
+    border: 1px solid gray;
+    border-radius: 10px;
+    box-shadow: 1px 2px 3px grey;
+    .csDateNumber{
+      text-align:center;
+      margin-top:5px;
+      font-size:48px;
+    }
+    .csDateMonth{
+      text-align: center;
+      background: #e8b2b8;
+      font-weight: bold;
+      border-bottom-right-radius: 10px;
+      border-bottom-left-radius: 10px;
+      color: white;
+    }
+  }
+}
+.icon-color1{
+    color:#78ab46;
+}
+.icon-color2{
+    color:deepskyblue;
+}
+.icon-color3{
+    color:#ff4f4f;
+}
+.icon-color4{
+    color:#ff9800;
+}
+.icon-color5{
+    color:#9e9e9e;
+}
+/// Removing inline styles
+.csWidth30{
+    width:30px;
+}
+.csHeight100{
+    height:100%;
+}
+.csHeight160{
+    height:160px;
+}
+.csGray5353{
+    color:#535353;
+}
+.csMargin5{
+    margin:5px;
+}
+.csCircularIndicator{
+    border-left: 3px solid;
+    padding-left: 10px;
+}
+.csMarginT30vh{
+    margin-top: 30vh;
+}
+.csToolbar{
+    height:135px;
+    padding:0px;
+}
+//view component styles
+.csCountArea{
+    padding-top:40px;
+    color:white
+}
+.csFont24{
+    font-size:24px;
+}
+.csFont20{
+    font-size:20px;
+}
+.csFont12{
+    font-size:12px;
+}
+.csPaddingT50{
+    padding-top:5px;
+}
+.csStartingButtonsButton{
+    background:white;
+    border:solid 1px;
+}
+//end on view coponent
+
+.csFont18em{
+    font-size: 1.8em;
+}
+.csBottomMargin-30{
+    margin-bottom: -30px;
+}
+.csBottomMargin0{
+    margin-bottom: 0px;
+}
+
+//Events
+.csEventIcon{
+    font-size: 1.8em;
+    color:white
+}
+.csEventSpinner{
+    margin-top: 10px;
+    z-index: 2;
+}
+.marginT10{
+    margin-top:10px
+}
+.csMiddleLoader{
+    margin-top: 70vh;
+    position:absolute;
+    margin-left:45vw
+}
+// end of events
+
+.cs2WiteBorder{
+    border:2px solid white;
+}
+
+//Poll results "view.html"
+.csColorGreen{
+    color:#78ab46;
+}
+.csMarginB10{
+    margin-bottom:10px;
+}
+.csMarginT20{
+    margin-top:20px;
+}
+.csFont25{
+    font-size: 25px;
+}
+.csLeftMargin35{
+    margin-left:35px;
+}
+//end of poll results
+
+//Suggestion Styles
+.csBorder1lgray{
+    border: 1px solid lightgray;
+    margin: 10px;
+}
+.cs2BottomBorder{
+    border-bottom:2px solid #dbdbdb;
+}
+.csLeftMargin20{
+    margin-left:20px;
+}
+// end of suggestion stles
+
+// end of survey styles
+
+.csMarginTopZero{
+    margin-top:0px;  
+}
