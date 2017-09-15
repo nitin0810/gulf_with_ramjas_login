@@ -1,6 +1,8 @@
 import { Component, Input,Output, EventEmitter} from '@angular/core';
+import { IonicPage } from 'ionic-angular';
 // import { Events } from 'ionic-angular';
 
+@IonicPage()
 @Component({
   selector: 'nl-modal-navbar',
   template: `
@@ -24,7 +26,7 @@ import { Component, Input,Output, EventEmitter} from '@angular/core';
   styles: [``]
 })
 
-export class ModalNavbarComponent {
+export class ModalNavbar {
 
   @Input() title: string;
   @Output() modalClosed =  new EventEmitter<any>();

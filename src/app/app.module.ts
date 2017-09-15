@@ -9,9 +9,9 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MyApp } from './app.component';
 import { DashboardPage } from '../pages/dashboard/dashboard';
 import { LoginPage } from '../pages/login/login';
-import { CustomNavbar } from '../custom-components/navbar.component';
-import { ModalNavbarComponent } from '../custom-components/modal.navbar.component';
 import { AccountPage } from '../pages/account/account';
+
+import { CustomNavbarModule } from '../custom-components/navbar/navbar.module';
 
 import { CustomHttpService } from '../services/custom-http.service';
 import { CustomService } from '../services/custom.service';
@@ -19,30 +19,35 @@ import { AuthService } from '../services/auth.service';
 import { NetworkService } from '../services/network.service';
 import { Network } from '@ionic-native/network';
 
+import { NoInternet } from '../custom-components/noInternet.component';
+import { CustomModalNavbarModule } from '../custom-components/modal-navbar/modal-navbar.module';
+import { ForgotPasswordModal } from '../pages/login/forgot-password/forgot-password';
+
 
 @NgModule({
-  declarations: [
-    MyApp,
-    DashboardPage,
-    LoginPage,
-    AccountPage,
-    CustomNavbar,
-    ModalNavbarComponent
-  ],
+
   imports: [
+    CustomNavbarModule,
+    CustomModalNavbarModule,
     BrowserModule,
     HttpModule,
     ReactiveFormsModule,
     IonicModule.forRoot(MyApp)
   ],
+  declarations: [
+    MyApp,
+    LoginPage,
+    ForgotPasswordModal,
+    NoInternet,
+    DashboardPage,
+  ],
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    DashboardPage,
     LoginPage,
-    AccountPage,
-    CustomNavbar,
-    ModalNavbarComponent
+    ForgotPasswordModal,
+    NoInternet,
+    DashboardPage,
   ],
   providers: [
     StatusBar,

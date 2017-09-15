@@ -1,7 +1,8 @@
 
 import { Component, Input } from '@angular/core';
+import { IonicPage } from 'ionic-angular';
 
-
+@IonicPage()
 @Component( {
     selector: 'nl-navbar',
     template: `

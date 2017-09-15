@@ -5,6 +5,8 @@ import { Events, ModalController, MenuController } from 'ionic-angular';
 import { AuthService } from '../../services/auth.service';
 import { CustomService } from '../../services/custom.service';
 
+import { ForgotPasswordModal } from './forgot-password/forgot-password';
+
 @Component({
     selector: 'login-page',
     templateUrl: 'login.html',
@@ -89,7 +91,8 @@ export class LoginPage implements OnInit {
 
     public openFrgtPswdModal() {
         console.log("frgt pswd");
-
+        let a = this.modalCtrl.create(ForgotPasswordModal);
+        a.present();
     }
 
     public showPassword(input: any): any {

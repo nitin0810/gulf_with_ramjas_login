@@ -10,7 +10,7 @@ import { LoginPage } from '../pages/login/login';
 
 import { AuthService } from '../services/auth.service';
 import { NetworkService } from '../services/network.service';
-import { AccountPage } from '../pages/account/account';
+// import { AccountPage } from '../pages/account/account';
 
 @Component({
   templateUrl: 'app.html'
@@ -23,7 +23,7 @@ export class MyApp extends UserSessionManage {
   selectedPage: any;
   defaultUserImage: string = "assets/images/user.png";
   name: string = localStorage.getItem('name');
-  
+
   pages: Array<{ title: string, component: any, icon: any }>;
 
   constructor(
@@ -51,7 +51,7 @@ export class MyApp extends UserSessionManage {
     this.pages = [
 
       { title: 'Home', component: DashboardPage, icon: 'assets/icon/home.png' },
-      { title: 'Account', component: AccountPage, icon: 'assets/icon/profile.png' }
+      { title: 'Account', component: "AccountPage", icon: 'assets/icon/profile.png' }
 
     ];
   }
@@ -61,7 +61,7 @@ export class MyApp extends UserSessionManage {
   openPage(page: any) {
 
     if (!page) {
-      this.appCtrl.getRootNav().setRoot(AccountPage);
+      this.appCtrl.getRootNav().setRoot("AccountPage");
       this.selectedPage = "";
       return;
     }
