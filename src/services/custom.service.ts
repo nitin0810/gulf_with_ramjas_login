@@ -3,7 +3,6 @@ import {
     ToastController,
     AlertController,
     LoadingController,
-    Events
 } from 'ionic-angular';
 
 @Injectable()
@@ -16,7 +15,6 @@ export class CustomService {
 
     constructor(
         private l: LoadingController,
-        public events: Events,
         private toastCtrl: ToastController
     ) { }
 
