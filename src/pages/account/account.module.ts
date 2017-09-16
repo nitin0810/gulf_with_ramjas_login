@@ -11,4 +11,5 @@ import { CustomNavbarModule } from '../../custom-components/navbar/navbar.module
     IonicPageModule.forChild(AccountPage)],
     
 })
-export class AccountPageModule { }
+
+export class AccountModule { }

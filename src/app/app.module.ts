@@ -1,3 +1,4 @@
+/**import inbuiit modules/classes */
 import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
@@ -6,20 +7,21 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { XHRBackend, RequestOptions, HttpModule} from '@angular/http';
 import { ReactiveFormsModule } from '@angular/forms';
 
+/**import classes that are eagerly loaded(not lazy loaded)*/
 import { MyApp } from './app.component';
 import { DashboardPage } from '../pages/dashboard/dashboard';
 import { LoginPage } from '../pages/login/login';
-import { AccountPage } from '../pages/account/account';
+import { NoInternet } from '../custom-components/noInternet.component';
 
-import { CustomNavbarModule } from '../custom-components/navbar/navbar.module';
-
+/**import services*/
 import { CustomHttpService } from '../services/custom-http.service';
 import { CustomService } from '../services/custom.service';
 import { AuthService } from '../services/auth.service';
 import { NetworkService } from '../services/network.service';
 import { Network } from '@ionic-native/network';
 
-import { NoInternet } from '../custom-components/noInternet.component';
+/**import custom modules*/
+import { CustomNavbarModule } from '../custom-components/navbar/navbar.module';
 import { CustomModalNavbarModule } from '../custom-components/modal-navbar/modal-navbar.module';
 import { ForgotPasswordModal } from '../pages/login/forgot-password/forgot-password';
 

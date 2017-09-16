@@ -2,9 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage } from 'ionic-angular';
 
 
-@IonicPage({
-    priority: 'high'
-})
+@IonicPage()
 @Component({
     selector: 'account-page',
     templateUrl: 'account.html',

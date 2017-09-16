@@ -41,17 +41,19 @@ export class MyApp extends UserSessionManage {
 
     super(events, menu, appCtrl, authService, alertCtrl, networkService);
 
-    platform.ready().then(() => {
+    this.platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
-      statusBar.styleDefault();
-      splashScreen.hide();
+      this.statusBar.styleDefault();
+      this.splashScreen.hide();
     });
 
     this.pages = [
 
       { title: 'Home', component: DashboardPage, icon: 'assets/icon/home.png' },
-      { title: 'Account', component: "AccountPage", icon: 'assets/icon/profile.png' }
+      { title: 'Complaints', component: "ComplaintPage", icon: 'assets/icon/complaint.png' },
+      { title: 'Account', component: "AccountPage", icon: 'assets/icon/profile.png' },
+      
 
     ];
   }
@@ -65,6 +67,7 @@ export class MyApp extends UserSessionManage {
       this.selectedPage = "";
       return;
     }
+console.log(page);
 
     this.selectedPage = page.title;
     this.nav.setRoot(page.component);

@@ -69,8 +69,6 @@ export class UserSessionManage {
         let picTimestamp = localStorage.getItem("picTimestamp");
         this.picUrl = localStorage.getItem("picUrl");
         this.userImage = this.picUrl + "/" + picTimestamp;
-console.log(this.picUrl, typeof this.picUrl);
-
     }
 
     public logout() {

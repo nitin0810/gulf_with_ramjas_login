@@ -1,8 +1,8 @@
 
 
-import { Component, Input } from '@angular/core';
+import { Component} from '@angular/core';
 
-import { MenuController, NavController } from 'ionic-angular';
+import { MenuController} from 'ionic-angular';
 @Component({
     selector: 'no-internet',
     template: `
