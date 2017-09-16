@@ -1,7 +1,7 @@
 
 
 import { Component } from '@angular/core';
-import { IonicPage, ModalController,NavController } from 'ionic-angular';
+import { IonicPage, ModalController} from 'ionic-angular';
 
 @IonicPage()
 @Component({
@@ -16,13 +16,11 @@ export class ComplaintPage {
 
     constructor(
         private mdlCtrl: ModalController,
-        private navCtrl: NavController
-    ) {    }
+        ) {  }
 
     openNewComplaintModal() {
-        // let mod = this.mdlCtrl.create("NewComplaintPage");
-        let mod = this.navCtrl.push("NewComplaintPage");
-        
-        // mod.present();
+
+        let mod = this.mdlCtrl.create("NewComplaintPage");
+        mod.present();
     }
 }
