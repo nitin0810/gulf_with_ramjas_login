@@ -1,7 +1,9 @@
 
 
 import { Component } from '@angular/core';
-import { IonicPage, ModalController} from 'ionic-angular';
+import { IonicPage, ModalController } from 'ionic-angular';
+
+import { ComplaintService } from './complaint.service';
 
 @IonicPage()
 @Component({
@@ -16,7 +18,22 @@ export class ComplaintPage {
 
     constructor(
         private mdlCtrl: ModalController,
-        ) {  }
+        private complaintService: ComplaintService
+    ) { }
+
+    getComplaints() {
+        console.log("inside getCompalints");
+        
+        this.complaintService.fetchComplaints()
+            .subscribe((res: any) => {
+                console.log(res);
+
+            },
+            (err: any) => {
+                console.log(err);
+
+            });
+    }
 
     openNewComplaintModal() {
 
