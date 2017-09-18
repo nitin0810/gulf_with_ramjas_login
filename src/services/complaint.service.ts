@@ -1,8 +1,8 @@
 
 import { Injectable } from '@angular/core';
 
-import { CustomHttpService } from '../../services/custom-http.service';
-import { APP_CONSTANTS as CONFIG } from '../../services/app.constants';
+import { APP_CONSTANTS as CONFIG } from '../services/app.constants';
+import { CustomHttpService } from './custom-http.service';
 
 
 @Injectable()
@@ -17,6 +17,10 @@ export class ComplaintService {
         return this.http.get(CONFIG.serverUrl + `/st/complaint/page/1`);
     }
 
+    fetchCategories(){
+
+        return this.http.get(CONFIG.serverUrl + `/st/complaint/category`);
+    }
    
 
 }

@@ -3,5 +3,40 @@
 </ion-header>
 
 <ion-content class="csGrayBackground">
-<p>new comlaint</p>  
+
+    <ion-card>
+        <ion-item>
+            <ion-icon ios="ios-sad-outline" md="md-sad" item-start></ion-icon>
+            <ion-label>Category</ion-label>
+            <ion-select [(ngModel)]="selectedCategory">
+                <ion-option *ngFor="let category of categories" [value]="category">{{category.name}}</ion-option>
+            </ion-select>
+        </ion-item>
+    </ion-card>
+
+    <div *ngIf="selectedCategory?.subCategory && selectedCategory.subCategory.length > 0">
+        <ion-card>
+            <ion-item>
+                <ion-icon name="options" item-start></ion-icon>
+                <ion-label>SubCategory</ion-label>
+                <ion-select [(ngModel)]="selectedSubCategory">
+                    <ion-option *ngFor="let subCat of selectedCategory.subCategory" [value]="subCat">{{subCat.name}}</ion-option>
+                </ion-select>
+            </ion-item>
+        </ion-card>
+    </div>
+
+    <ion-card>
+        <ion-item>
+            <ion-label stacked>Title</ion-label>
+            <ion-textarea [(ngModel)]="compalaintTitle" maxlength="50" placeholder="Enter Title"></ion-textarea>
+        </ion-item>
+    </ion-card>
+    <ion-card>
+            <ion-item>
+                <ion-label stacked>Description</ion-label>
+                <ion-textarea [(ngModel)]="complaintDescription" maxlength="200" placeholder="Enter Description"></ion-textarea>
+            </ion-item>
+        </ion-card>
+
 </ion-content>

@@ -3,7 +3,6 @@ import { IonicPageModule } from 'ionic-angular';
 import { CustomNavbarModule } from '../../custom-components/navbar/navbar.module';
 
 import { ComplaintPage } from './complaint';
-import { ComplaintService } from './complaint.service';
 
 @NgModule({
   
@@ -13,7 +12,6 @@ import { ComplaintService } from './complaint.service';
         CustomNavbarModule,
         IonicPageModule.forChild(ComplaintPage)
     ],
-    providers:[ComplaintService]
     
 })
 export class ComplaintModule { }  

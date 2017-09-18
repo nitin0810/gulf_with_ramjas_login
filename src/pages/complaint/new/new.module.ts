@@ -11,6 +11,5 @@ import { NewComplaintPage } from './new';
         CustomModalNavbarModule,
         IonicPageModule.forChild(NewComplaintPage)
     ],
-
 })
 export class ComplaintModule { }  
