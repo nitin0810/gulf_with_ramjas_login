@@ -11,14 +11,14 @@ export class CustomService {
 
     public txt: String;
     public loading: any;
-    toast:any;
+    toast: any;
 
     constructor(
         private l: LoadingController,
         private toastCtrl: ToastController
     ) { }
 
-    public showLoader(text?:string) {
+    public showLoader(text?: string) {
 
         this.loading = this.l.create({
             content: text || 'Please wait...'
@@ -27,7 +27,7 @@ export class CustomService {
     }
 
     public hideLoader() {
-        
+
         this.loading.dismiss();
     }
 
@@ -41,6 +41,10 @@ export class CustomService {
         this.toast.present();
     }
 
+    public hideToast() {
+        this.toast.dismiss();
+    }
+
     public errMessage() {
 
         let toast = this.toastCtrl.create({
@@ -50,5 +54,5 @@ export class CustomService {
         });
         toast.present();
     }
-    
+
 }

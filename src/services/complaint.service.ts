@@ -12,15 +12,29 @@ export class ComplaintService {
         public http: CustomHttpService,
     ) { }
 
-    fetchComplaints() {
+    fetchComplaints(pageNo:number) {
 
-        return this.http.get(CONFIG.serverUrl + `/st/complaint/page/1`);
+        return this.http.get(CONFIG.serverUrl + `/st/complaint/page/${pageNo}`);
     }
 
-    fetchCategories(){
+    fetchCategories() {
 
         return this.http.get(CONFIG.serverUrl + `/st/complaint/category`);
     }
-   
+
+    fetchFacultyNames() {
+
+        let programId = localStorage.getItem('programId');
+        let yearId = localStorage.getItem('yearId');
+        let isEvenSem = localStorage.getItem('isEvenSemester');
+        return this.http.get(CONFIG.serverUrl + `/st/complaint/faculty/${programId}/${yearId}/${isEvenSem}`);
+    }
+
+    submitComplaint(data:any){
+        
+        return this.http.post(CONFIG.serverUrl + `/st/complaint`,data);
+        
+    }
+
 
 }

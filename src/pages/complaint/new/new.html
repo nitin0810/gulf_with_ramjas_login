@@ -4,39 +4,63 @@
 
 <ion-content class="csGrayBackground">
 
-    <ion-card>
-        <ion-item>
-            <ion-icon ios="ios-sad-outline" md="md-sad" item-start></ion-icon>
-            <ion-label>Category</ion-label>
-            <ion-select [(ngModel)]="selectedCategory">
-                <ion-option *ngFor="let category of categories" [value]="category">{{category.name}}</ion-option>
-            </ion-select>
-        </ion-item>
-    </ion-card>
+    <div *ngIf="categories">
 
-    <div *ngIf="selectedCategory?.subCategory && selectedCategory.subCategory.length > 0">
-        <ion-card>
-            <ion-item>
-                <ion-icon name="options" item-start></ion-icon>
-                <ion-label>SubCategory</ion-label>
-                <ion-select [(ngModel)]="selectedSubCategory">
-                    <ion-option *ngFor="let subCat of selectedCategory.subCategory" [value]="subCat">{{subCat.name}}</ion-option>
-                </ion-select>
-            </ion-item>
-        </ion-card>
+        <form  #complaintForm="ngForm" (ngSubmit)="onSubmit(complaintForm)">
+            <ion-card>
+                <ion-item>
+                    <ion-icon ios="ios-sad-outline" md="md-sad" item-start color="primary"></ion-icon>
+                    <ion-label>Against</ion-label>
+                    <ion-select [(ngModel)]="selectedCategory" (ngModelChange)="checkSelectedCategory()" required name="category">
+                        <ion-option *ngFor="let category of categories" [value]="category">{{category.name}}</ion-option>
+                    </ion-select>
+                </ion-item>
+            </ion-card>
+
+            <div *ngIf="selectedCategory?.subCategory && selectedCategory.subCategory.length > 0">
+                <ion-card>
+                    <ion-item>
+                        <ion-icon name="options" item-start></ion-icon>
+                        <ion-label>SubCategory</ion-label>
+                        <ion-select [(ngModel)]="selectedSubCategory" required name="subCategory">
+                            <ion-option *ngFor="let subCat of selectedCategory.subCategory" [value]="subCat">{{subCat.name || subCat.facultyName}}</ion-option>
+                        </ion-select>
+                    </ion-item>
+                </ion-card>
+            </div>
+
+            <ion-card>
+                <ion-item>
+                    <ion-label stacked>Title</ion-label>
+                    <ion-textarea [(ngModel)]="complaintTitle" required name="title" maxlength="50" placeholder="Enter Title"></ion-textarea>
+                </ion-item>
+                <ion-badge class="csFiftyLimit">
+                    <span>{{50 - complaintTitle?.length}}</span>
+                </ion-badge>
+            </ion-card>
+
+            <ion-card>
+                <ion-item>
+                    <ion-label stacked>Description</ion-label>
+                    <ion-textarea [(ngModel)]="complaintDescription" required name="description" rows="5" maxlength="200" placeholder="Enter Description"></ion-textarea>
+                </ion-item>
+                <ion-badge class="csFiftyLimit">
+                    <span>{{200 - complaintDescription?.length}}</span>
+                </ion-badge>
+            </ion-card>
+
+            <ion-card>
+                <ion-item>
+                    <ion-label>Anonymous</ion-label>
+                    <ion-toggle [(ngModel)]="isAnonymous" checked="false" required name="isAnonymous"></ion-toggle>
+                </ion-item>
+            </ion-card>
+
+            <div padding>
+                <button [disabled]="!complaintForm.valid" ion-button full type="submit">Submit</button>
+            </div>
+        </form>
+
     </div>
-
-    <ion-card>
-        <ion-item>
-            <ion-label stacked>Title</ion-label>
-            <ion-textarea [(ngModel)]="compalaintTitle" maxlength="50" placeholder="Enter Title"></ion-textarea>
-        </ion-item>
-    </ion-card>
-    <ion-card>
-            <ion-item>
-                <ion-label stacked>Description</ion-label>
-                <ion-textarea [(ngModel)]="complaintDescription" maxlength="200" placeholder="Enter Description"></ion-textarea>
-            </ion-item>
-        </ion-card>
 
 </ion-content>

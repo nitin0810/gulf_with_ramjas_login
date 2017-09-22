@@ -67,7 +67,6 @@ export class MyApp extends UserSessionManage {
       this.selectedPage = "";
       return;
     }
-console.log(page);
 
     this.selectedPage = page.title;
     this.nav.setRoot(page.component);
