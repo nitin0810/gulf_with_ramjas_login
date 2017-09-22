@@ -131,7 +131,7 @@ export class NewComplaintPage {
         if (this.selectedCategory.id == 2) { //in case of faculty
 
             data.againstCategoryId = this.selectedCategory.id;
-            data.againstEmployeeId = this.selectedSubCategory.id;
+            data.againstEmployeeId = this.selectedSubCategory.facultyId;
         }
         else {
 

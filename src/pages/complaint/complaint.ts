@@ -55,15 +55,21 @@ export class ComplaintPage {
 
         let mod = this.mdlCtrl.create("NewComplaintPage");
         mod.present();
-        mod.onDidDismiss((recentlyAddedComplaint: any) => {
-            console.log('complaint midal clsed', recentlyAddedComplaint);
 
-            this.complaintList.unshift(recentlyAddedComplaint.data);
+        mod.onDidDismiss((recentlyAddedComplaint: any) => {
+            console.log(recentlyAddedComplaint);
+
+            if (recentlyAddedComplaint.data) {
+
+                this.complaintList.unshift(recentlyAddedComplaint.data);
+            }
         });
     }
 
     openViewModal(complaint: any, index: number) {
 
+        let mod = this.mdlCtrl.create("ViewComplaintPage", { viewCompl: complaint });
+        mod.present();
     }
 
     doRefresh(refresher: any) {
