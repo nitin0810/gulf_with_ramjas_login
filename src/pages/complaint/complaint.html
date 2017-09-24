@@ -16,7 +16,7 @@
 
         <ion-item-sliding *ngFor="let complaint of complaintList; let i =index">
 
-            <ion-item (click)="openViewModal(complaint, i)" >
+            <button  ion-item (click)="openViewModal(complaint, i)" >
                 <h2><b>{{complaint.againstCategoryName || complaint.againstEmployeeName}}</b></h2>
                 <h3>{{complaint.title}}</h3>
 
@@ -28,7 +28,7 @@
                         <ion-icon name="at"></ion-icon><span>{{complaint.statusName}}</span>
                     </ion-col>
                 </ion-row>
-            </ion-item >
+            </button>
 
 
             <ion-item-options side="right">
