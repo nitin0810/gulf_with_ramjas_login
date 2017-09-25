@@ -6,6 +6,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 import { XHRBackend, RequestOptions, HttpModule} from '@angular/http';
 import { ReactiveFormsModule } from '@angular/forms';
+import { MomentModule } from 'angular2-moment';
 
 /**import classes that are eagerly loaded(not lazy loaded)*/
 import { MyApp } from './app.component';
@@ -35,6 +36,7 @@ import { ForgotPasswordModal } from '../pages/login/forgot-password/forgot-passw
     BrowserModule,
     HttpModule,
     ReactiveFormsModule,
+    MomentModule,
     IonicModule.forRoot(MyApp)
   ],
   declarations: [

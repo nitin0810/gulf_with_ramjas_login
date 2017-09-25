@@ -61,6 +61,13 @@ export class CustomHttpService extends Http {
             .catch(this.handleError);
     }
 
+    put(url: string, body: any, options?: RequestOptionsArgs): Observable<Response> {
+
+        return super.put(url, body, options)
+            .map(this.extractData)
+            .catch(this.handleError);
+    }
+
 
     extractData(res: Response) {
         /**

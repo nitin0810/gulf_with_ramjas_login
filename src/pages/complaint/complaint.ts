@@ -56,10 +56,10 @@ export class ComplaintPage {
         let mod = this.mdlCtrl.create("NewComplaintPage");
         mod.present();
 
-        mod.onDidDismiss((recentlyAddedComplaint: any) => {
+        mod.onDidDismiss((recentlyAddedComplaint?: any) => {
             console.log(recentlyAddedComplaint);
 
-            if (recentlyAddedComplaint.data) {
+            if (recentlyAddedComplaint && recentlyAddedComplaint.data) {
 
                 this.complaintList.unshift(recentlyAddedComplaint.data);
             }
@@ -70,6 +70,21 @@ export class ComplaintPage {
 
         let mod = this.mdlCtrl.create("ViewComplaintPage", { viewCompl: complaint });
         mod.present();
+
+        mod.onDidDismiss((updatedComplaint?: any) => {
+            console.log('inside view on did dismiss',updatedComplaint);
+
+            if (updatedComplaint && updatedComplaint.newData) {
+
+                // let compl = this.complaintList.find((element: any) => {
+                //     return element.id == updatedComplaint.newData.id;
+                // });
+
+                // compl = updatedComplaint.newData;
+
+                this.complaintList[index]=updatedComplaint.newData;
+            }
+        });
     }
 
     doRefresh(refresher: any) {

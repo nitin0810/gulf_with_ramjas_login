@@ -12,7 +12,7 @@ export class ComplaintService {
         public http: CustomHttpService,
     ) { }
 
-    fetchComplaints(pageNo:number) {
+    fetchComplaints(pageNo: number) {
 
         return this.http.get(CONFIG.serverUrl + `/st/complaint/page/${pageNo}`);
     }
@@ -30,11 +30,23 @@ export class ComplaintService {
         return this.http.get(CONFIG.serverUrl + `/st/complaint/faculty/${programId}/${yearId}/${isEvenSem}`);
     }
 
-    submitComplaint(data:any){
-        
-        return this.http.post(CONFIG.serverUrl + `/st/complaint`,data);
-        
+    submitComplaint(data: any) {
+
+        return this.http.post(CONFIG.serverUrl + `/st/complaint`, data);
+
     }
+
+    closeComplaint(complaintId: number, description: string) {
+
+        return this.http.put(CONFIG.serverUrl + `/st/complaint/${complaintId}/close`, { comment: description });
+
+    }
+    
+    reOpenComplaint(complaintId: number, description: string) {
+        
+                return this.http.put(CONFIG.serverUrl + `/st/complaint/${complaintId}/open`, { comment: description });
+        
+            }
 
 
 }
