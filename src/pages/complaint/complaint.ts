@@ -88,8 +88,8 @@ export class ComplaintPage {
     }
 
     doRefresh(refresher: any) {
-
         this.getComplaints(1, refresher);
+        this.currentPage = 1;
     }
 
     doInfinite(refresher: any) {

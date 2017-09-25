@@ -44,7 +44,7 @@ export class ComplaintService {
     
     reOpenComplaint(complaintId: number, description: string) {
         
-                return this.http.put(CONFIG.serverUrl + `/st/complaint/${complaintId}/open`, { comment: description });
+                return this.http.put(CONFIG.serverUrl + `/st/complaint/${complaintId}/reopen`, { comment: description });
         
             }
 

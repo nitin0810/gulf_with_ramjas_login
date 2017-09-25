@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, ViewController, AlertController, NavParams } from 'ionic-angular';
+import { IonicPage, ViewController, AlertController, ModalController, NavParams } from 'ionic-angular';
 
 import { CustomService } from '../../../services/custom.service';
 import { ComplaintService } from '../../../services/complaint.service';
@@ -22,6 +22,7 @@ export class ViewComplaintPage {
         private complaintService: ComplaintService,
         private viewCtrl: ViewController,
         private alertCtrl: AlertController,
+        private mdlCtrl: ModalController,
         private customService: CustomService
     ) {
         this.complaint = this.params.get('viewCompl');
@@ -72,6 +73,8 @@ export class ViewComplaintPage {
                 this.complaint = res;
                 this.compalintStatusChanged = true;
                 this.customService.hideLoader();
+                this.customService.showToast('Complaint closed successfully');
+                
             }, (err: any) => {
 
                 this.customService.hideLoader();
@@ -124,6 +127,8 @@ export class ViewComplaintPage {
                 this.complaint = res;
                 this.compalintStatusChanged = true;
                 this.customService.hideLoader();
+                this.customService.showToast('Complaint reopend successfully');
+                
             }, (err: any) => {
 
                 this.customService.hideLoader();
@@ -131,8 +136,14 @@ export class ViewComplaintPage {
             });
     }
 
+    openCommentPage(){
+
+        let commentPage = this.mdlCtrl.create("CommentsPage",{'complaint':this.complaint});
+        commentPage.present();
+    }
 
     dismiss() {
+
         if (this.compalintStatusChanged) {
             this.viewCtrl.dismiss({ 'newData': this.complaint });
         }

@@ -44,7 +44,7 @@
         <ion-row class="csViewCompBtnContainer">
 
             <ion-col width-33>
-                <button class="csFiveLeft" full class="csVieCompBtn" [style.border-color]="complaint.statusColor || 'green' " ion-button small round>
+                <button class="csFiveLeft" full (click)="openCommentPage()" class="csVieCompBtn" [style.border-color]="complaint.statusColor || 'green' " ion-button small round>
                         <ion-icon name="md-chatbubbles" [style.color]="complaint.statusColor || 'green' "></ion-icon>
                         <span class="csVWSmallText csCenter csFiveLeft" [style.color]="complaint.statusColor || 'green' "  class="csVWSmallText">Comment</span>
                       </button>
