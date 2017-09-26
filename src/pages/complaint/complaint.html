@@ -9,14 +9,14 @@
     </ion-refresher>
 
     <ion-fab top right edge>
-        <button ion-fab mini color="danger" (click)="openNewComplaintModal()"><ion-icon name="add"></ion-icon></button>
+        <button ion-fab  color="danger" (click)="openNewComplaintModal()"><ion-icon name="add"></ion-icon></button>
     </ion-fab>
 
-    <ion-list>
+    <ion-list class="complaint-list">
 
-        <ion-item-sliding *ngFor="let complaint of complaintList; let i =index">
+        <ion-item-sliding *ngFor="let complaint of complaintList; let i =index" >
 
-            <button ion-item (click)="openViewModal(complaint, i)">
+            <a ion-item (click)="openViewModal(complaint, i)" [style.border-left-color]="complaint.statusColor">
                 <h2 *ngIf="complaint.againstCategoryId != 2"><b>{{complaint.againstCategoryName}}</b></h2>
                 <h2 *ngIf="complaint.againstCategoryId == 2"><b>{{complaint.againstEmployeeName}}</b></h2>
                 
@@ -30,7 +30,7 @@
                         <ion-icon name="at"></ion-icon><span>{{complaint.statusName}}</span>
                     </ion-col>
                 </ion-row>
-            </button>
+            </a>
 
             <ion-item-options side="right">
                 <c-s-options [complaint]="complaint" [complaintIndex]="i"></c-s-options>

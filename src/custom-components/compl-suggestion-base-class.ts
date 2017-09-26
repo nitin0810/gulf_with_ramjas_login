@@ -159,6 +159,7 @@ export class ComplaintSuggestionOptionsBaseClass {
     }
 
     satisfyFinally() {
+        this.customService.showLoader();
         this.complaintService.satisfyComplaint(this.complaint.id)
             .subscribe((res: any) => {
 
