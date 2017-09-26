@@ -19,6 +19,7 @@ export class ComplaintPage {
     complaintList: Array<any>;
     isEmptyList: boolean = false;
     currentPage: number = 1;
+    a={'color':3};
 
     constructor(
         private mdlCtrl: ModalController,

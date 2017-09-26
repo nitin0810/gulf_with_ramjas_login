@@ -16,7 +16,7 @@
 
         <ion-item-sliding *ngFor="let complaint of complaintList; let i =index">
 
-            <button  ion-item (click)="openViewModal(complaint, i)" >
+            <button ion-item (click)="openViewModal(complaint, i)">
                 <h2 *ngIf="complaint.againstCategoryId != 2"><b>{{complaint.againstCategoryName}}</b></h2>
                 <h2 *ngIf="complaint.againstCategoryId == 2"><b>{{complaint.againstEmployeeName}}</b></h2>
                 
@@ -32,10 +32,10 @@
                 </ion-row>
             </button>
 
-
             <ion-item-options side="right">
-                <!-- TODO: cusotm components of optios to be added-->
+                <c-s-options [complaint]="complaint"></c-s-options>
             </ion-item-options>
+
         </ion-item-sliding>
 
         <div *ngIf="isEmptyList">
