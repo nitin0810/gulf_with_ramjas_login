@@ -65,7 +65,7 @@
             </ion-col>
 
             <ion-col width-33 *ngIf="complaint.statusId === 4">
-                <button full class="csVieCompBtn" [style.border-color]="complaint.statusColor || 'green' " ion-button small round>
+                <button full (click)="satisfyComplaint()" class="csVieCompBtn" [style.border-color]="complaint.statusColor || 'green' " ion-button small round>
                 <ion-icon name="ios-thumbs-up" [style.color]="complaint.statusColor || 'green' "></ion-icon>
                 <div class="bold csCenter csFiveLeft" [style.color]="complaint.statusColor || 'green' "  class="csVWSmallText">Satisfied</div>
               </button>
@@ -98,5 +98,6 @@
             <ion-icon name="bug" [style.color]="complaint.statusColor" item-start></ion-icon>
             <span class="csFont12"><b>Anonymous Complaint</b></span>
         </ion-item>
+       
     </ion-list>
 </ion-content>

@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
-import { IonicPage, ViewController, AlertController, ModalController, NavParams } from 'ionic-angular';
+import { IonicPage, ViewController, AlertController, ActionSheetController, Events,ModalController, NavParams } from 'ionic-angular';
 
 import { CustomService } from '../../../services/custom.service';
 import { ComplaintService } from '../../../services/complaint.service';
+import { ComplaintSuggestionOptionsBaseClass } from '../../../custom-components/compl-suggestion-base-class';
 
 @IonicPage()
 @Component({
@@ -11,146 +12,32 @@ import { ComplaintService } from '../../../services/complaint.service';
     styles: [` `]
 })
 
-export class ViewComplaintPage {
+export class ViewComplaintPage extends ComplaintSuggestionOptionsBaseClass{
 
     title = "VIEW COMPLAINT";
     complaint: any;
-    compalintStatusChanged: boolean = false; // to detect successfull reopen or close 
+    complaintIndex: number;
 
     constructor(
-        private params: NavParams,
-        private complaintService: ComplaintService,
-        private viewCtrl: ViewController,
-        private alertCtrl: AlertController,
-        private mdlCtrl: ModalController,
-        private customService: CustomService
+        public params: NavParams,
+        public complaintService: ComplaintService,
+        public viewCtrl: ViewController,
+        public alertCtrl: AlertController,
+        public mdlCtrl: ModalController,
+        public customService: CustomService,
+        public actionSheetCtrl: ActionSheetController,
+        public events: Events
     ) {
+        super(mdlCtrl, alertCtrl, actionSheetCtrl, customService, complaintService,events);
+
         this.complaint = this.params.get('viewCompl');
+        this.complaintIndex = this.params.get('index');
+
+    
     }
 
-    closeComplaint() {
-
-        let alert = this.alertCtrl.create({
-            title: 'Do you really want to close ? ',
-            inputs: [
-                {
-                    name: 'description',
-                    placeholder: 'Write short description'
-                },
-
-            ],
-            buttons: [
-                {
-                    text: 'No',
-                    role: 'cancel',
-                    handler: data => {
-                        console.log('Cancel clicked');
-                    }
-                },
-                {
-                    text: 'Yes',
-                    handler: data => {
-                        console.log(data);
-                        if (data.description.trim().length == 0) {
-                            this.customService.showToast('Description is required ');
-                            return;
-                        }
-                        this.closeFinally(data.description);
-
-                    }
-                }
-            ]
-        });
-        alert.present();
+    dismiss(){
+        this.viewCtrl.dismiss();
     }
 
-    closeFinally(description: string) {
-
-        this.customService.showLoader();
-        this.complaintService.closeComplaint(this.complaint.id, description)
-            .subscribe((res: any) => {
-
-                this.complaint = res;
-                this.compalintStatusChanged = true;
-                this.customService.hideLoader();
-                this.customService.showToast('Complaint closed successfully');
-                
-            }, (err: any) => {
-
-                this.customService.hideLoader();
-                this.customService.showToast(err.msg);
-            });
-    }
-
-    reOpenComplaint() {
-
-        let alert = this.alertCtrl.create({
-            title: 'If you are not happy with the resolution, you can reopen ',
-            inputs: [
-                {
-                    name: 'description',
-                    placeholder: 'Write short description'
-                },
-
-            ],
-            buttons: [
-                {
-                    text: 'No',
-                    role: 'cancel',
-                    handler: data => {
-                        console.log('Cancel clicked');
-                    }
-                },
-                {
-                    text: 'Yes',
-                    handler: data => {
-                        console.log(data);
-                        if (data.description.trim().length == 0) {
-                            this.customService.showToast('Description is required ');
-                            return;
-                        }
-                        this.reOpenFinally(data.description);
-
-                    }
-                }
-            ]
-        });
-        alert.present();
-    }
-
-    reOpenFinally(description: string) {
-
-        this.customService.showLoader();
-        this.complaintService.reOpenComplaint(this.complaint.id, description)
-            .subscribe((res: any) => {
-
-                this.complaint = res;
-                this.compalintStatusChanged = true;
-                this.customService.hideLoader();
-                this.customService.showToast('Complaint reopend successfully');
-                
-            }, (err: any) => {
-
-                this.customService.hideLoader();
-                this.customService.showToast(err.msg);
-            });
-    }
-
-    openCommentPage(){
-
-        let commentPage = this.mdlCtrl.create("CommentsPage",{'complaint':this.complaint});
-        commentPage.present();
-    }
-
-    dismiss() {
-
-        if (this.compalintStatusChanged) {
-            this.viewCtrl.dismiss({ 'newData': this.complaint });
-        }
-        else {
-            this.viewCtrl.dismiss();
-        }
-
-
-    }
 }

@@ -41,12 +41,18 @@ export class ComplaintService {
         return this.http.put(CONFIG.serverUrl + `/st/complaint/${complaintId}/close`, { comment: description });
 
     }
-    
+
     reOpenComplaint(complaintId: number, description: string) {
-        
-                return this.http.put(CONFIG.serverUrl + `/st/complaint/${complaintId}/reopen`, { comment: description });
-        
-            }
+
+        return this.http.put(CONFIG.serverUrl + `/st/complaint/${complaintId}/reopen`, { comment: description });
+
+    }
+
+    satisfyComplaint(complaintId: number) {
+
+        return this.http.put(CONFIG.serverUrl + `/st/complaint/${complaintId}/satisfied`, {});
+
+    }
 
 
 }

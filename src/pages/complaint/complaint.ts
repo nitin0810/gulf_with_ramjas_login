@@ -1,7 +1,7 @@
 
 
 import { Component } from '@angular/core';
-import { IonicPage, ModalController } from 'ionic-angular';
+import { IonicPage, ModalController, Events } from 'ionic-angular';
 import { ComplaintService } from '../../services/complaint.service';
 import { CustomService } from '../../services/custom.service';
 
@@ -19,13 +19,23 @@ export class ComplaintPage {
     complaintList: Array<any>;
     isEmptyList: boolean = false;
     currentPage: number = 1;
-    a={'color':3};
 
     constructor(
         private mdlCtrl: ModalController,
         private complaintService: ComplaintService,
-        private customService: CustomService
-    ) { }
+        private customService: CustomService,
+        private events: Events
+    ) {
+        this.registerStatusChange();
+    }
+
+    registerStatusChange() {
+
+        this.events.subscribe('complaintStatusChanged', (newData: any, index: number) => {
+            
+            this.complaintList[index] = newData;
+        });
+    }
 
     ionViewWillEnter() {
 
@@ -40,6 +50,7 @@ export class ComplaintPage {
             .subscribe((res: any) => {
 
                 this.complaintList = res;
+                
                 this.isEmptyList = this.complaintList.length == 0;
                 refresher ? refresher.complete() : this.customService.hideLoader();
 
@@ -69,23 +80,11 @@ export class ComplaintPage {
 
     openViewModal(complaint: any, index: number) {
 
-        let mod = this.mdlCtrl.create("ViewComplaintPage", { viewCompl: complaint });
+        console.log(complaint,index);
+        
+
+        let mod = this.mdlCtrl.create("ViewComplaintPage", { viewCompl: complaint, index: index });
         mod.present();
-
-        mod.onDidDismiss((updatedComplaint?: any) => {
-            console.log('inside view on did dismiss',updatedComplaint);
-
-            if (updatedComplaint && updatedComplaint.newData) {
-
-                // let compl = this.complaintList.find((element: any) => {
-                //     return element.id == updatedComplaint.newData.id;
-                // });
-
-                // compl = updatedComplaint.newData;
-
-                this.complaintList[index]=updatedComplaint.newData;
-            }
-        });
     }
 
     doRefresh(refresher: any) {

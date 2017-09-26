@@ -1,6 +1,9 @@
 
 import { Component, Input } from '@angular/core';
-import { IonicPage } from 'ionic-angular';
+import { IonicPage, ModalController, AlertController, ActionSheetController, Events } from 'ionic-angular';
+import { CustomService } from '../../services/custom.service';
+import { ComplaintSuggestionOptionsBaseClass } from '../compl-suggestion-base-class';
+import { ComplaintService } from '../../services/complaint.service';
 
 @IonicPage()
 @Component({
@@ -10,23 +13,27 @@ import { IonicPage } from 'ionic-angular';
 
 })
 
-export class ComplaintSuggestionOptionsPage {
+export class ComplaintSuggestionOptionsPage extends ComplaintSuggestionOptionsBaseClass {
 
     @Input() complaint: any;
-    constructor() {     }
-  
+    @Input() complaintIndex: any;
+    
+    compalintStatusChanged:boolean;
+    
+    constructor(
+        public mdlCtrl: ModalController,
+        public alertCtrl: AlertController,
+        public actionSheetCtrl: ActionSheetController,
+        public customService: CustomService,
+        public complaintService: ComplaintService,
+        public events: Events
+    ) {
+        super(mdlCtrl, alertCtrl, actionSheetCtrl, customService, complaintService,events);
 
-    openCommentModal(){
-        console.log('aaaaaaaaaaaaa');
         
     }
-    openReopenModal(){
+   
 
-    }
-    openCloseModal(){
 
-    }
-    openSatisfiedModal(){
 
-    }
 }
