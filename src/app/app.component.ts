@@ -52,12 +52,13 @@ export class MyApp extends UserSessionManage {
 
       { title: 'Home', component: DashboardPage, icon: 'assets/icon/home.png' },
       { title: 'Complaints', component: "ComplaintPage", icon: 'assets/icon/complaint.png' },
+      { title: 'Suggestions', component: "SuggestionTabs", icon: 'assets/icon/suggestion.png' },
       { title: 'Account', component: "AccountPage", icon: 'assets/icon/profile.png' },
       
 
     ];
   }
-
+  
 
 
   openPage(page: any) {
