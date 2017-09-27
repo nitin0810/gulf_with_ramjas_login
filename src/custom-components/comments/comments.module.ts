@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
 import { CustomModalNavbarModule } from '../modal-navbar/modal-navbar.module';
+import { MomentModule } from 'angular2-moment';
 
 import { CommentsPage } from './comments';
 
@@ -9,6 +10,7 @@ import { CommentsPage } from './comments';
 
     imports: [
         CustomModalNavbarModule,
+        MomentModule,
         IonicPageModule.forChild(CommentsPage)
     ],
 

@@ -33,9 +33,10 @@ export class ViewComplaintPage extends ComplaintSuggestionOptionsBaseClass{
         this.complaint = this.params.get('viewCompl');
         this.complaintIndex = this.params.get('index');
 
+        // this.complaint = this.complaintService.sockJsConnection(this.complaint.id);
     
     }
-
+ 
     dismiss(){
         this.viewCtrl.dismiss();
     }

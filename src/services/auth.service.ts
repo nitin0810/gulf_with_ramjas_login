@@ -4,6 +4,8 @@ import { Injectable } from '@angular/core';
 import { CustomHttpService } from './custom-http.service';
 import { APP_CONSTANTS as CONFIG } from './app.constants';
 
+declare const SockJS;
+declare const Stomp;
 
 @Injectable()
 export class AuthService {
@@ -54,6 +56,15 @@ export class AuthService {
         localStorage.setItem('yearId', user.yearId);
         localStorage.setItem('yearName', user.yearName);
     }
+
+
+    public getSockJs() {
+        
+        let access_token = localStorage.getItem('access_token');
+        let url = CONFIG.serverUrl + '/st/nxtlife-websocket?access_token=' + access_token;
+        var socket = new SockJS(url);
+        return Stomp.over(socket);
+      }
 
 
 }

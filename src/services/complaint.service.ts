@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 
 import { APP_CONSTANTS as CONFIG } from '../services/app.constants';
 import { CustomHttpService } from './custom-http.service';
+import { AuthService } from './auth.service';
 
 
 @Injectable()
@@ -10,6 +11,7 @@ export class ComplaintService {
 
     constructor(
         public http: CustomHttpService,
+        private authService: AuthService
     ) { }
 
     fetchComplaints(pageNo: number) {
@@ -54,5 +56,14 @@ export class ComplaintService {
 
     }
 
+    fetchComments(complaintId: number) {
+
+        return this.http.get(CONFIG.serverUrl + `/st/complaint/${complaintId}/comment`);
+    }
+
+    postComments(complaintId: number, comment: string) {
+
+        return this.http.post(CONFIG.serverUrl + `/st/complaint/${complaintId}/comment`, { comment: comment });
+    }
 
 }

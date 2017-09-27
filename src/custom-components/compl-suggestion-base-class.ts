@@ -127,11 +127,7 @@ export class ComplaintSuggestionOptionsBaseClass {
             });
     }
 
-    openCommentPage() {
 
-        let commentPage = this.mdlCtrl.create("CommentsPage", { 'complaint': this.complaint });
-        commentPage.present();
-    }
 
     satisfyComplaint() {
 
@@ -172,5 +168,12 @@ export class ComplaintSuggestionOptionsBaseClass {
                 this.customService.hideLoader();
                 this.customService.showToast(err.msg);
             });
+    }
+
+
+    openCommentPage() {
+
+        let commentPage = this.mdlCtrl.create("CommentsPage", { 'complaint': this.complaint });
+        commentPage.present();
     }
 }

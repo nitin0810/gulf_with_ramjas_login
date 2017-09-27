@@ -42,7 +42,7 @@ export class CustomService {
     }
 
     public hideToast() {
-        this.toast.dismiss();
+        if (this.toast) { this.toast.dismiss() };
     }
 
     public errMessage() {
