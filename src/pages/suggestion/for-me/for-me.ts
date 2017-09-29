@@ -8,6 +8,6 @@ import {IonicPage} from 'ionic-angular';
 })
 
 export class SuggestionForMe {
+
   title:string = "SUGGESTIONS";
-  
 }

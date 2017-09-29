@@ -98,6 +98,9 @@
             <ion-icon name="bug" [style.color]="complaint.statusColor" item-start></ion-icon>
             <span class="csFont12"><b>Anonymous Complaint</b></span>
         </ion-item>
-       
+        <ion-item *ngIf="complaint.priority">
+            <ion-icon name="alert" [style.color]="complaint.statusColor" item-start></ion-icon>
+            <span class="csFont12" [style.color]="complaint.statusColor">Priority</span><br> {{complaint.priority}}
+        </ion-item>
     </ion-list>
 </ion-content>

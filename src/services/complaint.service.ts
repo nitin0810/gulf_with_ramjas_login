@@ -5,10 +5,13 @@ import { APP_CONSTANTS as CONFIG } from '../services/app.constants';
 import { CustomHttpService } from './custom-http.service';
 import { AuthService } from './auth.service';
 
-
+/**this service is used for both complaints and suggestions, hence all variables name related to complaint may 
+ * relate to complaint depending on the context(from which page service is called)
+ */
 @Injectable()
 export class ComplaintService {
 
+    compOrSugg:string ;
     constructor(
         public http: CustomHttpService,
         private authService: AuthService
@@ -16,7 +19,7 @@ export class ComplaintService {
 
     fetchComplaints(pageNo: number) {
 
-        return this.http.get(CONFIG.serverUrl + `/st/complaint/page/${pageNo}`);
+        return this.http.get(CONFIG.serverUrl + `/st/${this.compOrSugg}/page/${pageNo}`);
     }
 
     fetchCategories() {
@@ -34,36 +37,36 @@ export class ComplaintService {
 
     submitComplaint(data: any) {
 
-        return this.http.post(CONFIG.serverUrl + `/st/complaint`, data);
+        return this.http.post(CONFIG.serverUrl + `/st/${this.compOrSugg}`, data);
 
     }
 
     closeComplaint(complaintId: number, description: string) {
 
-        return this.http.put(CONFIG.serverUrl + `/st/complaint/${complaintId}/close`, { comment: description });
+        return this.http.put(CONFIG.serverUrl + `/st/${this.compOrSugg}/${complaintId}/close`, { comment: description });
 
     }
 
     reOpenComplaint(complaintId: number, description: string) {
 
-        return this.http.put(CONFIG.serverUrl + `/st/complaint/${complaintId}/reopen`, { comment: description });
+        return this.http.put(CONFIG.serverUrl + `/st/${this.compOrSugg}/${complaintId}/reopen`, { comment: description });
 
     }
 
     satisfyComplaint(complaintId: number) {
 
-        return this.http.put(CONFIG.serverUrl + `/st/complaint/${complaintId}/satisfied`, {});
+        return this.http.put(CONFIG.serverUrl + `/st/${this.compOrSugg}/${complaintId}/satisfied`, {});
 
     }
 
     fetchComments(complaintId: number) {
 
-        return this.http.get(CONFIG.serverUrl + `/st/complaint/${complaintId}/comment`);
+        return this.http.get(CONFIG.serverUrl + `/st/${this.compOrSugg}/${complaintId}/comment`);
     }
 
     postComments(complaintId: number, comment: string) {
 
-        return this.http.post(CONFIG.serverUrl + `/st/complaint/${complaintId}/comment`, { comment: comment });
+        return this.http.post(CONFIG.serverUrl + `/st/${this.compOrSugg}/${complaintId}/comment`, { comment: comment });
     }
 
 }

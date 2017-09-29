@@ -1,8 +1,10 @@
 import { Component } from '@angular/core';
-import { IonicPage, ViewController, AlertController, ActionSheetController, Events,ModalController, NavParams } from 'ionic-angular';
+import { IonicPage, ViewController, AlertController, ActionSheetController, Events, ModalController, NavParams } from 'ionic-angular';
 
 import { CustomService } from '../../../services/custom.service';
+import { AuthService } from '../../../services/auth.service';
 import { ComplaintService } from '../../../services/complaint.service';
+
 import { ComplaintSuggestionOptionsBaseClass } from '../../../custom-components/compl-suggestion-base-class';
 
 @IonicPage()
@@ -12,11 +14,12 @@ import { ComplaintSuggestionOptionsBaseClass } from '../../../custom-components/
     styles: [` `]
 })
 
-export class ViewComplaintPage extends ComplaintSuggestionOptionsBaseClass{
+export class ViewComplaintPage extends ComplaintSuggestionOptionsBaseClass {
 
-    title = "VIEW COMPLAINT";
+    title = `VIEW ${this.complaintService.compOrSugg}`;
     complaint: any;
     complaintIndex: number;
+    stompClient: any;
 
     constructor(
         public params: NavParams,
@@ -24,21 +27,83 @@ export class ViewComplaintPage extends ComplaintSuggestionOptionsBaseClass{
         public viewCtrl: ViewController,
         public alertCtrl: AlertController,
         public mdlCtrl: ModalController,
-        public customService: CustomService,
         public actionSheetCtrl: ActionSheetController,
-        public events: Events
+        public events: Events,
+        public customService: CustomService,
+        private authService: AuthService
     ) {
-        super(mdlCtrl, alertCtrl, actionSheetCtrl, customService, complaintService,events);
+        super(mdlCtrl, alertCtrl, actionSheetCtrl, customService, complaintService, events);
 
         this.complaint = this.params.get('viewCompl');
         this.complaintIndex = this.params.get('index');
 
-        // this.complaint = this.complaintService.sockJsConnection(this.complaint.id);
-    
+        this.subscribeStatusChange();
+
+        this.events.subscribe('complaintStatusChangedInCommentsPage', (newData: any, index: number) => {
+
+            this.complaint = newData;
+        });
+
+
     }
- 
-    dismiss(){
+
+    subscribeStatusChange() {
+
+        this.stompClient = this.authService.getSockJs();
+
+        let url1 = `/st/${this.complaintService.compOrSugg}/${this.complaint.id}/close`;
+        let url2 = `/st/${this.complaintService.compOrSugg}/${this.complaint.id}/status`;
+
+        this.stompClient.connect({}, (frame) => {
+
+            this.stompClient.subscribe(url1, (greeting) => {
+
+                let message = JSON.parse(greeting.body);
+                if (!message) {
+                    return;
+                }
+
+                this.complaint = message;
+                this.events.publish('complaintStatusChanged', this.complaint, this.complaintIndex);
+
+
+            });
+
+
+            this.stompClient.subscribe(url2, (greeting) => {
+
+                let message = JSON.parse(greeting.body);
+                if (!message) {
+                    return;
+                }
+
+                this.complaint = message;
+                this.events.publish('complaintStatusChanged', this.complaint, this.complaintIndex);
+
+
+            });
+
+
+        });
+    }
+
+
+
+    dismiss() {
+
+        this.disconnectSockJs();
         this.viewCtrl.dismiss();
+    }
+
+
+    disconnectSockJs() {
+
+        if (this.stompClient && this.stompClient.connected) {
+
+            this.stompClient.disconnect((res: any) => {
+                console.log(res);
+            });
+        }
     }
 
 }

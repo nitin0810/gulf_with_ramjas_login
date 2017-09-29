@@ -34,13 +34,11 @@ export class ComplaintSuggestionOptionsBaseClass {
                     text: 'No',
                     role: 'cancel',
                     handler: data => {
-                        console.log('Cancel clicked');
                     }
                 },
                 {
                     text: 'Yes',
                     handler: data => {
-                        console.log(data);
                         if (data.description.trim().length == 0) {
                             this.customService.showToast('Description is required ');
                             return;
@@ -89,13 +87,11 @@ export class ComplaintSuggestionOptionsBaseClass {
                     text: 'No',
                     role: 'cancel',
                     handler: data => {
-                        console.log('Cancel clicked');
                     }
                 },
                 {
                     text: 'Yes',
                     handler: data => {
-                        console.log(data);
                         if (data.description.trim().length == 0) {
                             this.customService.showToast('Description is required ');
                             return;
@@ -145,7 +141,6 @@ export class ComplaintSuggestionOptionsBaseClass {
                     text: 'Cancel',
                     role: 'destructive',
                     handler: () => {
-                        console.log('Cancel clicked');
                     }
                 }
             ]
@@ -173,7 +168,7 @@ export class ComplaintSuggestionOptionsBaseClass {
 
     openCommentPage() {
 
-        let commentPage = this.mdlCtrl.create("CommentsPage", { 'complaint': this.complaint });
+        let commentPage = this.mdlCtrl.create("CommentsPage", { 'complaint': this.complaint, 'complaintIndex':this.complaintIndex});
         commentPage.present();
     }
 }

@@ -21,18 +21,25 @@ export class ComplaintPage {
     currentPage: number = 1;
 
     constructor(
-        private mdlCtrl: ModalController,
-        private complaintService: ComplaintService,
-        private customService: CustomService,
-        private events: Events
+        public mdlCtrl: ModalController,
+        public complaintService: ComplaintService,
+        public customService: CustomService,
+        public events: Events
     ) {
         this.registerStatusChange();
+        this.complaintService.compOrSugg = "complaint";
+
     }
 
     registerStatusChange() {
 
         this.events.subscribe('complaintStatusChanged', (newData: any, index: number) => {
-            
+
+            this.complaintList[index] = newData;
+        });
+
+        this.events.subscribe('complaintStatusChangedInCommentsPage', (newData: any, index: number) => {
+
             this.complaintList[index] = newData;
         });
     }
@@ -50,7 +57,8 @@ export class ComplaintPage {
             .subscribe((res: any) => {
 
                 this.complaintList = res;
-                
+                console.log('suggestions', this.complaintList);
+
                 this.isEmptyList = this.complaintList.length == 0;
                 refresher ? refresher.complete() : this.customService.hideLoader();
 
@@ -80,8 +88,8 @@ export class ComplaintPage {
 
     openViewModal(complaint: any, index: number) {
 
-        console.log(complaint,index);
-        
+        console.log(complaint, index);
+
 
         let mod = this.mdlCtrl.create("ViewComplaintPage", { viewCompl: complaint, index: index });
         mod.present();

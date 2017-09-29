@@ -15,7 +15,7 @@ import { ComplaintService } from '../../../services/complaint.service';
 
 export class NewComplaintPage {
 
-    title: string = "New Complaint";
+    title: string = `New ${this.complaintService.compOrSugg}`;
     categories: Array<any>;
 
 
@@ -132,7 +132,7 @@ export class NewComplaintPage {
 
                 this.customService.hideLoader();
                 this.dismiss(res);
-                this.customService.showToast('Complaint added successfully');
+                this.customService.showToast('Submitted successfully');
 
             }, (err: any) => {
 
