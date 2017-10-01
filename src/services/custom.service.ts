@@ -23,12 +23,17 @@ export class CustomService {
         this.loading = this.l.create({
             content: text || 'Please wait...'
         });
+        console.log('loading');
         this.loading.present();
+        
+        
     }
 
     public hideLoader() {
 
+        console.log('loading dismiss');
         this.loading.dismiss();
+        
     }
 
     public showToast(msg) {
@@ -38,6 +43,8 @@ export class CustomService {
             duration: 3000,
             position: 'bottom'
         });
+        console.log('toast',this.loading);
+        
         this.toast.present();
     }
 

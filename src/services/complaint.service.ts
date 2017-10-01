@@ -11,7 +11,7 @@ import { AuthService } from './auth.service';
 @Injectable()
 export class ComplaintService {
 
-    compOrSugg:string ;
+    compOrSugg: string;
     constructor(
         public http: CustomHttpService,
         private authService: AuthService
@@ -67,6 +67,12 @@ export class ComplaintService {
     postComments(complaintId: number, comment: string) {
 
         return this.http.post(CONFIG.serverUrl + `/st/${this.compOrSugg}/${complaintId}/comment`, { comment: comment });
+    }
+
+
+    search(input: string,pageNo:number) {
+
+        return this.http.post(CONFIG.serverUrl + `/st/${this.compOrSugg}/search/page/${pageNo}`,{search:input});
     }
 
 }

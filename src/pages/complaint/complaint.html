@@ -4,22 +4,27 @@
 
 <ion-content class="csGrayBackground">
 
+    <ion-searchbar [(ngModel)]="searchInput" (ionInput)="onSearchInput($event)" [debounce]="debounceDuration"  (ionClear)="onSearchClear($event)" ></ion-searchbar>
+
+    <ion-spinner  name="dots" *ngIf="searchInProcess"></ion-spinner>
+    
     <ion-refresher (ionRefresh)="doRefresh($event)">
         <ion-refresher-content></ion-refresher-content>
     </ion-refresher>
 
-    <ion-fab top right edge>
-        <button ion-fab  color="danger" (click)="openNewComplaintModal()"><ion-icon name="add"></ion-icon></button>
+    <ion-fab right bottom>
+        <button ion-fab color="danger" (click)="openNewComplaintModal()"><ion-icon name="add"></ion-icon></button>
     </ion-fab>
+        
 
     <ion-list class="complaint-list">
 
-        <ion-item-sliding *ngFor="let complaint of complaintList; let i =index" >
+        <ion-item-sliding *ngFor="let complaint of complaintList; let i =index">
 
             <a ion-item (click)="openViewModal(complaint, i)" [style.border-left-color]="complaint.statusColor">
                 <h2 *ngIf="complaint.againstCategoryId != 2"><b>{{complaint.againstCategoryName}}</b></h2>
                 <h2 *ngIf="complaint.againstCategoryId == 2"><b>{{complaint.againstEmployeeName}}</b></h2>
-                
+
                 <h3>{{complaint.title}}</h3>
 
                 <ion-row>

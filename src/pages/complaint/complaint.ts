@@ -19,6 +19,11 @@ export class ComplaintPage {
     complaintList: Array<any>;
     isEmptyList: boolean = false;
     currentPage: number = 1;
+    currentPageWithSearch: number = 1;
+
+    searchInput: string = '';
+    searchInProcess: boolean = false;
+    debounceDuration:number = 400;
 
     constructor(
         public mdlCtrl: ModalController,
@@ -98,23 +103,90 @@ export class ComplaintPage {
     doRefresh(refresher: any) {
         this.getComplaints(1, refresher);
         this.currentPage = 1;
+        this.searchInput = '';
     }
 
     doInfinite(refresher: any) {
 
-        this.complaintService.fetchComplaints(this.currentPage + 1)
+        if (this.searchInput.trim().length >= 2) {
+
+            this.complaintService.search(this.searchInput, this.currentPageWithSearch + 1)
+                .subscribe((res: any) => {
+                    
+                    if (!res) {
+                        refresher.complete();
+                        return;
+                    }
+                    this.complaintList = this.complaintList.concat(res);
+                    if (res.length != 0) { this.currentPageWithSearch++; }
+                    refresher.complete();
+
+                }, (err: any) => {
+
+                    refresher.complete();
+                    this.customService.showToast(err.msg);
+
+                });
+        } else {
+
+            this.complaintService.fetchComplaints(this.currentPage + 1)
+                .subscribe((res: any) => {
+
+                    this.complaintList = this.complaintList.concat(res);
+                    if (res.length != 0) { this.currentPage++; }
+                    refresher.complete();
+                },
+                (err: any) => {
+
+                    refresher.complete();
+                    this.customService.showToast(err.msg);
+
+                });
+        }
+    }
+
+    onSearchInput(event: any) {
+
+        /**Event type has been checked to remove a severe error: 
+         * on clicking cross btn, the mouse event is also fired and ` if (this.searchInput.trim().length == 0)`
+         * condition was becoming true, which was causing  double request to server.
+         * Hence only input event is allowed 
+         *  */
+        if (event.type != 'input') { return; }
+
+        if (this.searchInput.trim().length >= 2) {
+
+            this.sendSearchRequest();
+        }
+
+        if (this.searchInput.trim().length == 0) {
+            this.getComplaints(1);
+
+        }
+    }
+
+    sendSearchRequest() {
+
+        this.searchInProcess = true;
+        this.complaintService.search(this.searchInput, this.currentPageWithSearch)
             .subscribe((res: any) => {
 
-                this.complaintList = this.complaintList.concat(res);
-                if (res.length != 0) { this.currentPage++; }
-                refresher.complete();
-            },
-            (err: any) => {
+                console.log(res);
+                this.complaintList = res;
+                this.searchInProcess = false;
+                this.isEmptyList = !this.complaintList || this.complaintList.length == 0;
 
-                refresher.complete();
+            }, (err: any) => {
+
+                console.log(err);
                 this.customService.showToast(err.msg);
+                this.searchInProcess = false;
 
             });
+    }
 
+    onSearchClear(event: any) {
+
+        this.getComplaints(1);
     }
 }
