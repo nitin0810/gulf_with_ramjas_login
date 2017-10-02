@@ -3,7 +3,6 @@ import { Injectable } from '@angular/core';
 
 import { APP_CONSTANTS as CONFIG } from '../services/app.constants';
 import { CustomHttpService } from './custom-http.service';
-import { AuthService } from './auth.service';
 
 /**this service is used for both complaints and suggestions, hence all variables name related to complaint may 
  * relate to complaint depending on the context(from which page service is called)
@@ -14,7 +13,6 @@ export class ComplaintService {
     compOrSugg: string;
     constructor(
         public http: CustomHttpService,
-        private authService: AuthService
     ) { }
 
     fetchComplaints(pageNo: number) {
@@ -33,6 +31,16 @@ export class ComplaintService {
         let yearId = localStorage.getItem('yearId');
         let isEvenSem = localStorage.getItem('isEvenSemester');
         return this.http.get(CONFIG.serverUrl + `/st/complaint/faculty/${programId}/${yearId}/${isEvenSem}`);
+    }
+
+    fetchStatusList(){
+
+        return this.http.get(CONFIG.serverUrl +'/st/complaint/filter/status');
+    }
+
+    fetchPriorityList(){
+
+        return this.http.get(CONFIG.serverUrl +'/st/complaint/filter/priority');
     }
 
     submitComplaint(data: any) {

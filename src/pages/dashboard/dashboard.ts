@@ -16,14 +16,17 @@ export class DashboardPage implements OnInit {
   ) { }
 
   ngOnInit() {
-    
+
     this.fetchStaticData();
   }
 
   fetchStaticData() {
 
-    this.fetchComplaintCategories();
-    this.fetchFacultyNames();
+    if (!localStorage.getItem('complaintCategories')) { this.fetchComplaintCategories(); }
+    if (!localStorage.getItem('complaintFaculties')) { this.fetchFacultyNames(); }
+    if (!localStorage.getItem('complaintStatusList')) { this.fetchStatusList(); }
+    if (!localStorage.getItem('complaintPriorityList')) { this.fetchPriorityList(); }
+
   }
 
   fetchComplaintCategories() {
@@ -45,5 +48,29 @@ export class DashboardPage implements OnInit {
 
       });
   }
+
+  fetchStatusList() {
+
+    this.complaintService.fetchStatusList()
+      .subscribe((res: any) => {
+
+        localStorage.setItem('complaintStatusList', JSON.stringify(res));
+      }, (err: any) => {
+
+      });
+
+  }
+
+
+  fetchPriorityList() {
+    this.complaintService.fetchPriorityList()
+      .subscribe((res: any) => {
+
+        localStorage.setItem('complaintPriorityList', JSON.stringify(res));
+      }, (err: any) => {
+
+      });
+  }
+
 
 }
