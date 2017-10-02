@@ -1,14 +1,18 @@
 <ion-header>
     <nl-navbar [title]="title"></nl-navbar>
+    <ion-searchbar [(ngModel)]="searchInput" (ionInput)="onSearchInput($event)" [debounce]="debounceDuration"  (ionClear)="onSearchClear($event)" ></ion-searchbar>
+    
 </ion-header>
 
 <ion-content class="csGrayBackground">
-
+    
+    <ion-spinner  name="dots" *ngIf="searchInProcess"></ion-spinner>
+    
     <ion-refresher (ionRefresh)="doRefresh($event)">
         <ion-refresher-content></ion-refresher-content>
     </ion-refresher>
 
-    <ion-fab top right edge>
+    <ion-fab bottom right>
         <button ion-fab color="danger" (click)="openNewComplaintModal()"><ion-icon name="add"></ion-icon></button>
     </ion-fab>
 

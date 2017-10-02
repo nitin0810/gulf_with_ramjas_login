@@ -1,10 +1,12 @@
-<ion-header>
-    <nl-navbar [title]="title"></nl-navbar>
+<ion-header >
+    <nl-navbar [title]="title">
+    </nl-navbar>
+    <ion-searchbar [(ngModel)]="searchInput" (ionInput)="onSearchInput($event)" [debounce]="debounceDuration"  (ionClear)="onSearchClear($event)" ></ion-searchbar>
+    
 </ion-header>
 
 <ion-content class="csGrayBackground">
 
-    <ion-searchbar [(ngModel)]="searchInput" (ionInput)="onSearchInput($event)" [debounce]="debounceDuration"  (ionClear)="onSearchClear($event)" ></ion-searchbar>
 
     <ion-spinner  name="dots" *ngIf="searchInProcess"></ion-spinner>
     

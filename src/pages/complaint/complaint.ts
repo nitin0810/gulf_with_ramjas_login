@@ -189,4 +189,7 @@ export class ComplaintPage {
 
         this.getComplaints(1);
     }
+    presentPopover(x:any){
+    console.log(x);
+    }
 }
