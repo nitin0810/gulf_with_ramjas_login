@@ -17,7 +17,10 @@ import { IonicPage } from 'ionic-angular';
           <ion-buttons end>
             <ng-content></ng-content>
             </ion-buttons>
+
             </ion-toolbar>
+
+
         </ion-navbar>
             `,
      styles: [``]

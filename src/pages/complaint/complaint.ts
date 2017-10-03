@@ -20,10 +20,16 @@ export class ComplaintPage {
     isEmptyList: boolean = false;
     currentPage: number = 1;
     currentPageWithSearch: number = 1;
+    currentPageWithSortFilter: number = 1;
 
     searchInput: string = '';
     searchInProcess: boolean = false;
-    debounceDuration:number = 400;
+    isSortApplied: boolean = false;
+    isFilterApplied: boolean = false;
+
+    appliedSortName: string;
+    appliedFilter: any;
+    debounceDuration: number = 400;
 
     constructor(
         public mdlCtrl: ModalController,
@@ -33,6 +39,7 @@ export class ComplaintPage {
     ) {
         this.registerStatusChange();
         this.complaintService.compOrSugg = "complaint";
+        this.getComplaints(1);
 
     }
 
@@ -47,11 +54,59 @@ export class ComplaintPage {
 
             this.complaintList[index] = newData;
         });
+
     }
 
-    ionViewWillEnter() {
+    onSortFilterSelect(event: any) {
 
-        this.getComplaints(1);
+        if (event.sortName) {
+
+            if (this.isSortApplied || this.isFilterApplied) { this.currentPageWithSortFilter = 1; }
+
+            this.customService.showLoader();
+            this.complaintService.sortBy(event.sortName, 1)
+                .subscribe((res: any) => {
+
+                    this.complaintList = res;
+                    this.isEmptyList = this.complaintList.length == 0;
+                    this.appliedSortName = event.sortName;
+                    this.isSortApplied = true;
+                    this.isFilterApplied = false;
+                    this.searchInput = '';
+                    this.customService.hideLoader();
+
+
+                },
+                (err: any) => {
+
+                    this.customService.hideLoader();
+                    this.customService.showToast(err.msg);
+
+                });
+        } else if (event.filter) {
+
+            if (this.isSortApplied || this.isFilterApplied) { this.currentPageWithSortFilter = 1; }
+
+            this.customService.showLoader();
+            this.complaintService.filterBy(event.filter, 1)
+                .subscribe((res: any) => {
+
+                    this.complaintList = res;
+                    this.isEmptyList = this.complaintList.length == 0;
+                    this.appliedFilter = event.filter;
+                    this.isFilterApplied = true;
+                    this.isSortApplied = false;
+                    this.searchInput = '';
+                    this.customService.hideLoader();
+
+                },
+                (err: any) => {
+                    this.customService.hideLoader();
+                    this.customService.showToast(err.msg);
+
+                });
+        }
+
     }
 
     getComplaints(pageNo: number, refresher?: any) {
@@ -62,7 +117,6 @@ export class ComplaintPage {
             .subscribe((res: any) => {
 
                 this.complaintList = res;
-                console.log('suggestions', this.complaintList);
 
                 this.isEmptyList = this.complaintList.length == 0;
                 refresher ? refresher.complete() : this.customService.hideLoader();
@@ -101,18 +155,23 @@ export class ComplaintPage {
     }
 
     doRefresh(refresher: any) {
+
         this.getComplaints(1, refresher);
         this.currentPage = 1;
+        this.currentPageWithSearch = 1;
+        this.currentPageWithSortFilter = 1;
+        this.isSortApplied = false;
+        this.isFilterApplied = false;
         this.searchInput = '';
     }
 
     doInfinite(refresher: any) {
 
-        if (this.searchInput.trim().length >= 2) {
+        if (this.searchInput.trim().length >= 1) {
 
             this.complaintService.search(this.searchInput, this.currentPageWithSearch + 1)
                 .subscribe((res: any) => {
-                    
+
                     if (!res) {
                         refresher.complete();
                         return;
@@ -127,7 +186,50 @@ export class ComplaintPage {
                     this.customService.showToast(err.msg);
 
                 });
-        } else {
+        } else if (this.isSortApplied || this.isFilterApplied) {
+
+            if (this.isSortApplied) {
+                this.complaintService.sortBy(this.appliedSortName, this.currentPageWithSortFilter+1)
+                    .subscribe((res: any) => {
+
+                        if (!res) {
+                            refresher.complete();
+                            return;
+                        }
+                        this.complaintList = this.complaintList.concat(res);
+                        if (res.length != 0) { this.currentPageWithSortFilter++; }
+                        refresher.complete();
+
+                    }, (err: any) => {
+
+                        refresher.complete();
+                        this.customService.showToast(err.msg);
+
+                    });
+
+            }
+
+            else {
+                this.complaintService.filterBy(this.appliedFilter, this.currentPageWithSortFilter+1)
+                    .subscribe((res: any) => {
+
+                        if (!res) {
+                            refresher.complete();
+                            return;
+                        }
+                        this.complaintList = this.complaintList.concat(res);
+                        if (res.length != 0) { this.currentPageWithSortFilter++; }
+                        refresher.complete();
+
+                    }, (err: any) => {
+
+                        refresher.complete();
+                        this.customService.showToast(err.msg);
+
+                    });
+            }
+        }
+        else {
 
             this.complaintService.fetchComplaints(this.currentPage + 1)
                 .subscribe((res: any) => {
@@ -154,7 +256,7 @@ export class ComplaintPage {
          *  */
         if (event.type != 'input') { return; }
 
-        if (this.searchInput.trim().length >= 2) {
+        if (this.searchInput.trim().length >= 1) {
 
             this.sendSearchRequest();
         }
@@ -176,6 +278,10 @@ export class ComplaintPage {
                 this.searchInProcess = false;
                 this.isEmptyList = !this.complaintList || this.complaintList.length == 0;
 
+                this.isSortApplied = false;
+                this.isFilterApplied = false;
+                this.currentPageWithSortFilter = 1;
+
             }, (err: any) => {
 
                 console.log(err);
@@ -189,7 +295,5 @@ export class ComplaintPage {
 
         this.getComplaints(1);
     }
-    presentPopover(x:any){
-    console.log(x);
-    }
+
 }

@@ -1,6 +1,7 @@
 <ion-header>
     <nl-navbar [title]="title"></nl-navbar>
     <ion-searchbar [(ngModel)]="searchInput" (ionInput)="onSearchInput($event)" [debounce]="debounceDuration"  (ionClear)="onSearchClear($event)" ></ion-searchbar>
+    <sort-filter (onSelect)="onSortFilterSelect($event)"></sort-filter>
     
 </ion-header>
 

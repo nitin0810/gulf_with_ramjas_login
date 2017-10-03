@@ -33,14 +33,14 @@ export class ComplaintService {
         return this.http.get(CONFIG.serverUrl + `/st/complaint/faculty/${programId}/${yearId}/${isEvenSem}`);
     }
 
-    fetchStatusList(){
+    fetchStatusList() {
 
-        return this.http.get(CONFIG.serverUrl +'/st/complaint/filter/status');
+        return this.http.get(CONFIG.serverUrl + '/st/complaint/filter/status');
     }
 
-    fetchPriorityList(){
+    fetchPriorityList() {
 
-        return this.http.get(CONFIG.serverUrl +'/st/complaint/filter/priority');
+        return this.http.get(CONFIG.serverUrl + '/st/complaint/filter/priority');
     }
 
     submitComplaint(data: any) {
@@ -78,9 +78,21 @@ export class ComplaintService {
     }
 
 
-    search(input: string,pageNo:number) {
+    search(input: string, pageNo: number) {
 
-        return this.http.post(CONFIG.serverUrl + `/st/${this.compOrSugg}/search/page/${pageNo}`,{search:input});
+        return this.http.post(CONFIG.serverUrl + `/st/${this.compOrSugg}/search/page/${pageNo}`, { search: input });
+    }
+
+    sortBy(sortBy: string, pageNo: number) {
+
+        return this.http.get(CONFIG.serverUrl + `/st/${this.compOrSugg}/sort/` + sortBy + `/page/${pageNo}`);
+
+    }
+
+    filterBy(filtering: any, pageNo: number) {
+
+        return this.http.get(CONFIG.serverUrl + `/st/${this.compOrSugg}/filter/` + filtering.filterName + `/${filtering.id}/page/${pageNo}`);
+
     }
 
 }
