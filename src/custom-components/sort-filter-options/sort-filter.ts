@@ -55,7 +55,6 @@ export class SortFilterOptionsPage implements OnInit {
                 {
                     text: 'Title',
                     handler: () => {
-                        console.log('Title clicked');
                         /** this event is being listened in complaint.ts, 1st parameter is for sort, 2nd is for filter*/
                         this.onSelect.emit({ sortName: 'title', filter: null });
                     }
@@ -63,7 +62,6 @@ export class SortFilterOptionsPage implements OnInit {
                 {
                     text: 'Faculty Name',
                     handler: () => {
-                        console.log('Archive clicked');
                         this.onSelect.emit({ sortName: 'employee', filter: null });
 
                     }
@@ -71,7 +69,6 @@ export class SortFilterOptionsPage implements OnInit {
                 {
                     text: 'Status',
                     handler: () => {
-                        console.log('Archive clicked');
                         this.onSelect.emit({ sortName: 'status', filter: null });
 
                     }
@@ -80,7 +77,6 @@ export class SortFilterOptionsPage implements OnInit {
                     text: 'Cancel',
                     role: 'cancel',
                     handler: () => {
-                        console.log('Cancel clicked');
                     }
                 }
             ]
@@ -96,7 +92,6 @@ export class SortFilterOptionsPage implements OnInit {
                 {
                     text: 'Priority',
                     handler: () => {
-                        console.log('Priority clicked');
                         this.filterBySubCategories(1);
 
                     }
@@ -113,7 +108,6 @@ export class SortFilterOptionsPage implements OnInit {
                     text: 'Cancel',
                     role: 'cancel',
                     handler: () => {
-                        console.log('Cancel clicked');
                     }
                 }
             ]
