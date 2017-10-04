@@ -16,6 +16,8 @@ import { ForgotPasswordModal } from './forgot-password/forgot-password';
 
 export class LoginPage implements OnInit {
 
+    loginType:string = "student";
+
     loginForm: FormGroup;
     icon: String = "eye";
     pswdInputType: string;
@@ -40,11 +42,16 @@ export class LoginPage implements OnInit {
 
     login() {
 
+        console.log(this.loginType);
+        
         this.custom.showLoader("Authenticating...");
         this.authService.verifyCredentials(this.loginForm.value)
             .subscribe((res: any) => {
 
                 this.authService.saveToken(res.access_token);
+                localStorage.setItem('loginType',this.loginType);
+                let isStudent = (this.loginType==="student").toString();
+                localStorage.setItem('isStudent',isStudent);// just for checking the loginType conveniently
                 this.getUserInfo();
             }, (err) => {
 
@@ -78,7 +85,6 @@ export class LoginPage implements OnInit {
     public loginFailed(err) {
 
         this.custom.hideLoader();
-        this.loginForm.reset();
         if (err.status == 400) {
 
             this.custom.showToast("Invalid credentials, Enter correct Information.");

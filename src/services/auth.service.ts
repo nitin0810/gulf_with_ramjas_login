@@ -26,7 +26,8 @@ export class AuthService {
 
     public getUserInfo() {
 
-        return this.http.get(CONFIG.serverUrl + "/st/info");
+        let userType = localStorage.getItem('isStudent')==="true" ? 'st' : 'ma';
+        return this.http.get(CONFIG.serverUrl + `/${userType}/info`);
     }
 
     public verifyCredentials(data) {
@@ -48,23 +49,32 @@ export class AuthService {
         localStorage.setItem('picUrl', user.picUrl);
         localStorage.setItem('picOriginalName', user.picOriginalName);
 
-        localStorage.setItem('isEvenSemester', user.isEvenSemester);
-        localStorage.setItem('programId', user.programId);
-        localStorage.setItem('programName', user.programName);
-        localStorage.setItem('sessionEnd', user.sessionEnd);
-        localStorage.setItem('sessionStart', user.sessionStart);
-        localStorage.setItem('yearId', user.yearId);
-        localStorage.setItem('yearName', user.yearName);
+
+        if (localStorage.getItem('isStudent')==="true") {
+            localStorage.setItem('isEvenSemester', user.isEvenSemester);
+            localStorage.setItem('programId', user.programId);
+            localStorage.setItem('programName', user.programName);
+            localStorage.setItem('sessionEnd', user.sessionEnd);
+            localStorage.setItem('sessionStart', user.sessionStart);
+            localStorage.setItem('yearId', user.yearId);
+            localStorage.setItem('yearName', user.yearName);
+        } else {
+
+            localStorage.setItem('faculty', user.faculty);
+            localStorage.setItem('roles', JSON.stringify(user.roles));
+        }
+
+
     }
 
 
     public getSockJs() {
-        
+
         let access_token = localStorage.getItem('access_token');
         let url = CONFIG.serverUrl + '/st/nxtlife-websocket?access_token=' + access_token;
         var socket = new SockJS(url);
         return Stomp.over(socket);
-      }
+    }
 
 
 }

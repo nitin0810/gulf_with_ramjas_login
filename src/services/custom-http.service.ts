@@ -5,6 +5,7 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/throw';
 
+
 function getToken(): any {
 
     let token = localStorage.getItem('access_token');
@@ -20,10 +21,13 @@ function getToken(): any {
 @Injectable()
 export class CustomHttpService extends Http {
 
+    accountHeader: string;
     constructor(backend: XHRBackend, options: RequestOptions) {
+
+
         options.headers = new Headers({
             'Authorization': `${getToken()}`,
-            'account': 'student'
+            'account': localStorage.getItem('loginType')
         });
 
         super(backend, options);
@@ -32,17 +36,20 @@ export class CustomHttpService extends Http {
     // its like interceptor, calls by each methods internally like get, post, put, delete etc
     request(url: string | Request, options?: RequestOptionsArgs): Observable<Response> {
 
+
+        console.log(typeof (localStorage.getItem('loginType')));
+
         if (typeof url === 'string') {
             if (!options) {
                 options = { headers: new Headers() };
             }
 
             options.headers.set('Authorization', `${getToken()}`);
-            options.headers.set('account', 'student');
+            options.headers.set('account', localStorage.getItem('loginType'));
         } else {
 
             url.headers.set('Authorization', `${getToken()}`);
-            url.headers.set('account', 'student');
+            url.headers.set('account', localStorage.getItem('loginType'));
         }
         return super.request(url, options);
     }

@@ -21,12 +21,16 @@ export class DashboardPage implements OnInit {
   }
 
   fetchStaticData() {
+  
 
+    if( localStorage.getItem('isStudent')==="true"){
+
+ 
     if (!localStorage.getItem('complaintCategories')) { this.fetchComplaintCategories(); }
     if (!localStorage.getItem('complaintFaculties')) { this.fetchFacultyNames(); }
     if (!localStorage.getItem('complaintStatusList')) { this.fetchStatusList(); }
     if (!localStorage.getItem('complaintPriorityList')) { this.fetchPriorityList(); }
-
+  }
   }
 
   fetchComplaintCategories() {

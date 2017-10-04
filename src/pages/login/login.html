@@ -2,9 +2,17 @@
 
     <img class="csCenter" class="csLogo" src="assets/images/logo.png">
 
-    <ion-item class="csTransparent">
-        <div text-center class="csHeadingText"> <span color="primary">Student Login</span></div>
-    </ion-item>
+
+    <ion-segment [(ngModel)]="loginType" color="primary" >
+        <ion-segment-button value="student" >
+            <p>Student Login</p>
+        </ion-segment-button>
+        <ion-segment-button value="management">
+            <p>Management Login</p>
+        </ion-segment-button>
+    </ion-segment>
+
+ 
 
     <form [formGroup]="loginForm" (ngSubmit)="login()" novalidate>
         <ion-list class="letter-space">
