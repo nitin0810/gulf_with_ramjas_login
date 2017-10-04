@@ -5,7 +5,7 @@ import { APP_CONSTANTS as CONFIG } from '../services/app.constants';
 import { CustomHttpService } from './custom-http.service';
 
 /**this service is used for both complaints and suggestions, hence all variables name related to complaint may 
- * relate to complaint depending on the context(from which page service is called)
+ * relate to suggestion depending on the context(from which page service is called)
  */
 @Injectable()
 export class ComplaintService {
