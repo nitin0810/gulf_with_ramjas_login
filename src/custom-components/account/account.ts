@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage } from 'ionic-angular';
 
 
-@IonicPage()
+@IonicPage() 
 @Component({
     selector: 'account-page',
     templateUrl: 'account.html',
