@@ -6,6 +6,7 @@ import { ComplaintSuggestionOptionsModule } from '../../custom-components/compl-
 
 import { ComplaintPage } from './complaint';
 import { SortFilterOptionsModule } from '../../custom-components/sort-filter-options/sort-filter.module';
+import { ComplaintMainModule } from '../../custom-components/complaint-main/complaint-main.module';
 
 @NgModule({
   
@@ -14,6 +15,7 @@ import { SortFilterOptionsModule } from '../../custom-components/sort-filter-opt
     imports: [
         CustomNavbarModule,
         SortFilterOptionsModule,
+        ComplaintMainModule,
         MomentModule,
         ComplaintSuggestionOptionsModule,
         IonicPageModule.forChild(ComplaintPage)

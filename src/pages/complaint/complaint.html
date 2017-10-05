@@ -4,10 +4,26 @@
     <ion-searchbar [(ngModel)]="searchInput" (ionInput)="onSearchInput($event)" [debounce]="debounceDuration" (ionClear)="onSearchClear($event)"></ion-searchbar>
 
     <sort-filter (onSelect)="onSortFilterSelect($event)"></sort-filter>
-  
+
 </ion-header>
 
 <ion-content class="csGrayBackground">
+    <ion-refresher (ionRefresh)="doRefresh($event)">
+        <ion-refresher-content></ion-refresher-content>
+    </ion-refresher>
+  
+    <complaint-main [complaintList]="complaintList" [searchInput]="searchInput"></complaint-main>
+
+    <ion-fab right bottom>
+        <button ion-fab color="danger" (click)="openNewComplaintModal()"><ion-icon name="add"></ion-icon></button>
+    </ion-fab>
+    
+
+    <!--
+
+
+
+
 
 
     <ion-spinner name="dots" *ngIf="searchInProcess"></ion-spinner>
@@ -57,5 +73,5 @@
     <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
         <ion-infinite-scroll-content></ion-infinite-scroll-content>
     </ion-infinite-scroll>
-
+-->
 </ion-content>

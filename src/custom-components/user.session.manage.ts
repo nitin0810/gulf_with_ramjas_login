@@ -10,6 +10,7 @@ export class UserSessionManage {
 
     selectedPage: string;
     rootPage: any;
+    userName: string;
     userImage: string;
     picUrl: any;
 
@@ -120,7 +121,7 @@ export class UserSessionManage {
             .subscribe((res: any) => {
 
                 this.authService.storeUserData(res);
-
+                this.userName = localStorage.getItem('name');
                 this.imageUpdate();
             }, (err: any) => {
 

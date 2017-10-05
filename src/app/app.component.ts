@@ -22,8 +22,6 @@ export class MyApp extends UserSessionManage {
   // rootPage:any = LoginPage;
   selectedPage: any;
   defaultUserImage: string = "assets/images/user.png";
-  name: string = localStorage.getItem('name');
-
   pages: Array<{ title: string, component: any, icon: any }>;
 
   constructor(
