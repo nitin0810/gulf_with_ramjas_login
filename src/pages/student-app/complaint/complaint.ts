@@ -2,9 +2,7 @@
 
 import { Component, ViewChild } from '@angular/core';
 import { IonicPage, ModalController, Events } from 'ionic-angular';
-import { ComplaintService } from '../../services/complaint.service';
-import { CustomService } from '../../services/custom.service';
-import { ComplaintMainPage } from '../../custom-components/complaint-main/complaint-main';
+import { ComplaintMainPage } from '../../../custom-components/complaint-main/complaint-main';
 
 
 @IonicPage()
@@ -14,7 +12,7 @@ import { ComplaintMainPage } from '../../custom-components/complaint-main/compla
     styles: [` `]
 })
 
-export class ComplaintPage {
+export class ComplaintPageStudent {
 
     title: string = "Complaints";
     complaintList: Array<any>;
@@ -36,10 +34,7 @@ export class ComplaintPage {
     // debounceDuration: number = 400;
 
     constructor(
-        public mdlCtrl: ModalController,
-        public complaintService: ComplaintService,
-        public customService: CustomService,
-        public events: Events
+     
     ) {
         // super(mdlCtrl,complaintService,customService,events);
         // this.registerStatusChange();

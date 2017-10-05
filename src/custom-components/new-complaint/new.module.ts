@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
-import { CustomModalNavbarModule } from '../../../custom-components/modal-navbar/modal-navbar.module';
 
+import { CustomModalNavbarModule } from '../modal-navbar/modal-navbar.module';
 import { NewComplaintPage } from './new';
 
 @NgModule({
@@ -12,4 +12,4 @@ import { NewComplaintPage } from './new';
         IonicPageModule.forChild(NewComplaintPage)
     ],
 })
-export class ComplaintModule { }  
+export class NewComplaintModule{ }  

@@ -3,8 +3,8 @@
 import { Component } from '@angular/core';
 import { IonicPage, ViewController, ActionSheetController } from 'ionic-angular';
 
-import { CustomService } from '../../../services/custom.service';
-import { ComplaintService } from '../../../services/complaint.service';
+import { CustomService } from '../../services/custom.service';
+import { ComplaintService } from '../../services/complaint.service';
 
 @IonicPage()
 @Component({

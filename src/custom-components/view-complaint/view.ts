@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
 import { IonicPage, ViewController, AlertController, ActionSheetController, Events, ModalController, NavParams } from 'ionic-angular';
 
-import { CustomService } from '../../../services/custom.service';
-import { AuthService } from '../../../services/auth.service';
-import { ComplaintService } from '../../../services/complaint.service';
 
-import { ComplaintSuggestionOptionsBaseClass } from '../../../custom-components/compl-suggestion-base-class';
+import { ComplaintSuggestionOptionsBaseClass } from '../compl-suggestion-base-class';
+import { ComplaintService } from '../../services/complaint.service';
+import { CustomService } from '../../services/custom.service';
+import { AuthService } from '../../services/auth.service';
+
 
 @IonicPage()
 @Component({
