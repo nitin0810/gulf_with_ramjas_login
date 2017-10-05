@@ -27,7 +27,7 @@ export class ComplaintPageStudent {
     // searchInput: string = '';
     // searchInProcess: boolean = false;
     // isSortApplied: boolean = false;
-    // isFilterApplied: boolean = false;
+    // isFilterApplied: boolean = false;  
 
     // appliedSortName: string;
     // appliedFilter: any;

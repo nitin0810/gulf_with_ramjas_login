@@ -11,8 +11,7 @@ import {IonicPage} from 'ionic-angular';
 })
 
 export class SuggestionTabs {
-  SuggestionByMe:any = "SuggestionByMe";
-  SuggestionForMe:any = "SuggestionForMe";
-//   tab1 = YourSuggestion;
-//   tab2 = SuggestionForYou;
+  SuggestionByMe:string = "SuggestionByMe";
+  SuggestionForMe:string = "SuggestionForMe";
+
 }

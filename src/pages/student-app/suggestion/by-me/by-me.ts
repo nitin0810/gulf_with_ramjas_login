@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage, ModalController, Events } from 'ionic-angular';
-import { ComplaintService } from '../../../services/complaint.service';
-import { CustomService } from '../../../services/custom.service';
+import { ComplaintService } from '../../../../services/complaint.service';
+import { CustomService } from '../../../../services/custom.service';
+
 
 @IonicPage()
 @Component({

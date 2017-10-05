@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
-// import { MomentModule } from 'angular2-moment';
 
 import { ComplaintPageStudent } from './complaint';
 
@@ -17,7 +16,6 @@ import { ComplaintSuggestionOptionsModule } from '../../../custom-components/com
         CustomNavbarModule,
         SortFilterOptionsModule,
         ComplaintMainModule,
-        // MomentModule,
         ComplaintSuggestionOptionsModule,
         IonicPageModule.forChild(ComplaintPageStudent)
     ],
