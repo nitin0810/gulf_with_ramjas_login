@@ -36,9 +36,6 @@ export class CustomHttpService extends Http {
     // its like interceptor, calls by each methods internally like get, post, put, delete etc
     request(url: string | Request, options?: RequestOptionsArgs): Observable<Response> {
 
-
-        console.log(typeof (localStorage.getItem('loginType')));
-
         if (typeof url === 'string') {
             if (!options) {
                 options = { headers: new Headers() };
@@ -81,7 +78,7 @@ export class CustomHttpService extends Http {
         * res.json() raises exception if body is not a valid json or body is not present in response
         * that's why it is written in try block
         * */
-        console.log(res);
+        // console.log(res);
 
         try {
             return res.json();

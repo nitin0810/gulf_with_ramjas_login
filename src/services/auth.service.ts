@@ -24,21 +24,22 @@ export class AuthService {
         localStorage.setItem('access_token', token);
     }
 
-    public getUserInfo() {
+    getUserInfo() {
 
-        let userType = localStorage.getItem('isStudent')==="true" ? 'st' : 'ma';
+        let userType = localStorage.getItem('isStudent') === "true" ? 'st' : 'ma';
         return this.http.get(CONFIG.serverUrl + `/${userType}/info`);
     }
 
-    public verifyCredentials(data) {
+    verifyCredentials(data) {
 
         return this.http.post(CONFIG.loginUrl + `/oauth/token?grant_type=password&username=${data.username}&password=${data.password}`, {});
     }
 
 
 
-    public storeUserData(user) {
+    storeUserData(user) {
 
+        /**common data for student and management */
         localStorage.setItem("id", user.id);
         localStorage.setItem("name", user.name);
         localStorage.setItem("userName", user.username);
@@ -49,8 +50,9 @@ export class AuthService {
         localStorage.setItem('picUrl', user.picUrl);
         localStorage.setItem('picOriginalName', user.picOriginalName);
 
+        /**specific data for student */
+        if (localStorage.getItem('isStudent') === "true") {
 
-        if (localStorage.getItem('isStudent')==="true") {
             localStorage.setItem('isEvenSemester', user.isEvenSemester);
             localStorage.setItem('programId', user.programId);
             localStorage.setItem('programName', user.programName);
@@ -59,16 +61,14 @@ export class AuthService {
             localStorage.setItem('yearId', user.yearId);
             localStorage.setItem('yearName', user.yearName);
         } else {
-
+            /**specific data for management */
             localStorage.setItem('faculty', user.faculty);
             localStorage.setItem('roles', JSON.stringify(user.roles));
         }
-
-
     }
 
 
-    public getSockJs() {
+    getSockJs() {
 
         let access_token = localStorage.getItem('access_token');
         let url = CONFIG.serverUrl + '/st/nxtlife-websocket?access_token=' + access_token;
