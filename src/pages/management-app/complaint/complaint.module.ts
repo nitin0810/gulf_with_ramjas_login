@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
 
-import { ComplaintPageStudent } from './complaint';
+import { ComplaintPageManagement } from './complaint';
 
 import { CustomNavbarModule } from '../../../custom-components/navbar/navbar.module';
 import { ComplaintMainModule } from '../../../custom-components/complaint-main/complaint-main.module';
@@ -10,15 +10,15 @@ import { SortFilterOptionsModule } from '../../../custom-components/sort-filter-
 
 @NgModule({
   
-    declarations: [ComplaintPageStudent],
+    declarations: [ComplaintPageManagement],
    
     imports: [
         CustomNavbarModule,
         SortFilterOptionsModule,
         ComplaintMainModule,
         // ComplaintSuggestionOptionsModule,
-        IonicPageModule.forChild(ComplaintPageStudent)
+        IonicPageModule.forChild(ComplaintPageManagement)
     ],
     
 })
-export class ComplaintModuleStudent { }  
+export class ComplaintModuleManagement { }  

@@ -22,7 +22,7 @@ export class MyApp extends UserSessionManage {
   // rootPage:any = LoginPage;
   selectedPage: any;
   defaultUserImage: string = "assets/images/user.png";
-  pages: Array<{ title: string, component: any, icon: any }>;
+  sideMenuOptions: Array<any>;
 
   constructor(
     private platform: Platform,
@@ -46,17 +46,13 @@ export class MyApp extends UserSessionManage {
       this.splashScreen.hide();
     });
 
-    this.pages = [
-
-      { title: 'Home', component: DashboardPage, icon: 'assets/icon/home.png' },
-      { title: 'Complaints', component: "ComplaintPageStudent", icon: 'assets/icon/complaint.png' },
-      { title: 'Suggestions', component: "SuggestionTabs", icon: 'assets/icon/suggestion.png' },
-      { title: 'Polls', component: "PollPage", icon: 'assets/icon/poll.png' },
-      { title: 'Account', component: "AccountPage", icon: 'assets/icon/profile.png' },
-
-    ];
+    
   }
-  
+
+ 
+
+
+
 
 
   openPage(page: any) {

@@ -10,21 +10,27 @@ import { CustomHttpService } from './custom-http.service';
 @Injectable()
 export class ComplaintService {
 
-    compOrSugg: string;
+    compOrSugg: string; // refers to complaint or suggestion
+    userType: string ; 
     constructor(
         public http: CustomHttpService,
-    ) { }
+    ) {
+        this.userType = localStorage.getItem('isStudent') === "true" ? 'st' : 'ma';
+     }
 
+    /**for both student and management */
     fetchComplaints(pageNo: number) {
 
-        return this.http.get(CONFIG.serverUrl + `/st/${this.compOrSugg}/page/${pageNo}`);
+        return this.http.get(CONFIG.serverUrl + `/${this.userType}/${this.compOrSugg}/page/${pageNo}`);
     }
 
+    /**for  student  only*/
     fetchCategories() {
 
         return this.http.get(CONFIG.serverUrl + `/st/complaint/category`);
     }
 
+    /**for  student  only*/
     fetchFacultyNames() {
 
         let programId = localStorage.getItem('programId');
@@ -33,66 +39,76 @@ export class ComplaintService {
         return this.http.get(CONFIG.serverUrl + `/st/complaint/faculty/${programId}/${yearId}/${isEvenSem}`);
     }
 
+    /**for both student and management */
     fetchStatusList() {
 
-        return this.http.get(CONFIG.serverUrl + '/st/complaint/filter/status');
+        /**status list is same for both complaint and suggstions, hence only single url(with complaint) is sufficicent */
+        return this.http.get(CONFIG.serverUrl + `/${this.userType}/complaint/filter/status`);
     }
 
+    /**for both student and management */
     fetchPriorityList() {
 
-        return this.http.get(CONFIG.serverUrl + '/st/complaint/filter/priority');
+        /**priority list is also same for both */
+        return this.http.get(CONFIG.serverUrl + `/${this.userType}/complaint/filter/priority`);
     }
 
+    /**for  student  only*/
     submitComplaint(data: any) {
 
         return this.http.post(CONFIG.serverUrl + `/st/${this.compOrSugg}`, data);
 
     }
 
+    /**for both student and management */
     closeComplaint(complaintId: number, description: string) {
 
-        return this.http.put(CONFIG.serverUrl + `/st/${this.compOrSugg}/${complaintId}/close`, { comment: description });
+        return this.http.put(CONFIG.serverUrl + `/${this.userType}/${this.compOrSugg}/${complaintId}/close`, { comment: description });
 
     }
 
+    /**for  student  only*/
     reOpenComplaint(complaintId: number, description: string) {
 
         return this.http.put(CONFIG.serverUrl + `/st/${this.compOrSugg}/${complaintId}/reopen`, { comment: description });
 
     }
 
+    /**for  student  only*/
     satisfyComplaint(complaintId: number) {
 
         return this.http.put(CONFIG.serverUrl + `/st/${this.compOrSugg}/${complaintId}/satisfied`, {});
 
     }
 
+    /**for both student and management */
     fetchComments(complaintId: number) {
 
-        return this.http.get(CONFIG.serverUrl + `/st/${this.compOrSugg}/${complaintId}/comment`);
+        return this.http.get(CONFIG.serverUrl + `/${this.userType}/${this.compOrSugg}/${complaintId}/comment`);
     }
 
+    /**for both student and management */
     postComments(complaintId: number, comment: string) {
 
-        return this.http.post(CONFIG.serverUrl + `/st/${this.compOrSugg}/${complaintId}/comment`, { comment: comment });
+        return this.http.post(CONFIG.serverUrl + `/${this.userType}/${this.compOrSugg}/${complaintId}/comment`, { comment: comment });
     }
 
-
+    /**for both student and management */
     search(input: string, pageNo: number) {
 
-        return this.http.post(CONFIG.serverUrl + `/st/${this.compOrSugg}/search/page/${pageNo}`, { search: input });
+        return this.http.post(CONFIG.serverUrl + `/${this.userType}/${this.compOrSugg}/search/page/${pageNo}`, { search: input });
     }
 
+    /**for both student and management */
     sortBy(sortBy: string, pageNo: number) {
 
-        return this.http.get(CONFIG.serverUrl + `/st/${this.compOrSugg}/sort/` + sortBy + `/page/${pageNo}`);
-
+        return this.http.get(CONFIG.serverUrl + `/${this.userType}/${this.compOrSugg}/sort/` + sortBy + `/page/${pageNo}`);
     }
 
+    /**for both student and management */
     filterBy(filtering: any, pageNo: number) {
 
-        return this.http.get(CONFIG.serverUrl + `/st/${this.compOrSugg}/filter/` + filtering.filterName + `/${filtering.id}/page/${pageNo}`);
-
+        return this.http.get(CONFIG.serverUrl + `/${this.userType}/${this.compOrSugg}/filter/` + filtering.filterName + `/${filtering.id}/page/${pageNo}`);
     }
 
 }

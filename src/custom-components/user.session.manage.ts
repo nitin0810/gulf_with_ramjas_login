@@ -12,6 +12,7 @@ export class UserSessionManage {
     rootPage: any;
     userName: string;
     userImage: string;
+    sideMenuOptions:Array<any>;
     picUrl: any;
 
     constructor(
@@ -52,6 +53,7 @@ export class UserSessionManage {
 
         if (this.authService.isLoggedIn()) {
             this.getUserInfo();
+            this.decideSideMenuContent();
             this.rootPage = DashboardPage;
         } else {
             this.rootPage = LoginPage;
@@ -61,8 +63,39 @@ export class UserSessionManage {
     public login() {
         this.enableMenu(true);
         this.menu.close();
+        this.decideSideMenuContent();
         this.appCtrl.getRootNav().setRoot(DashboardPage);
         this.imageUpdate();
+    }
+
+  /**maintain different side menu options for better understanding and also there might be some features
+   * present in one and not in other one
+   */
+    decideSideMenuContent() {
+        if (localStorage.getItem('isStudent') === "true") {
+
+            this.sideMenuOptions = [
+
+                { title: 'Home', component: DashboardPage, icon: 'assets/icon/home.png' },
+                { title: 'Complaints', component: "ComplaintPageStudent", icon: 'assets/icon/complaint.png' },
+                // { title: 'Suggestions', component: "SuggestionTabs", icon: 'assets/icon/suggestion.png' },
+                // { title: 'Polls', component: "PollPage", icon: 'assets/icon/poll.png' },
+                { title: 'Account', component: "AccountPage", icon: 'assets/icon/profile.png' },
+
+            ];
+
+        } else {
+
+            this.sideMenuOptions = [
+
+                { title: 'Home', component: DashboardPage, icon: 'assets/icon/home.png' },
+                { title: 'Complaints', component: "ComplaintPageManagement", icon: 'assets/icon/complaint.png' },
+                // { title: 'Suggestions', component: "SuggestionTabs", icon: 'assets/icon/suggestion.png' },
+                // { title: 'Polls', component: "PollPage", icon: 'assets/icon/poll.png' },
+                { title: 'Account', component: "AccountPage", icon: 'assets/icon/profile.png' },
+
+            ];
+        }
     }
 
     public imageUpdate() {
@@ -70,6 +103,7 @@ export class UserSessionManage {
         let picTimestamp = localStorage.getItem("picTimestamp");
         this.picUrl = localStorage.getItem("picUrl");
         this.userImage = this.picUrl + "/" + picTimestamp;
+        this.userName = localStorage.getItem('name') || '';
     }
 
     public logout() {
@@ -121,6 +155,8 @@ export class UserSessionManage {
             .subscribe((res: any) => {
 
                 this.authService.storeUserData(res);
+                console.log('above name////');
+
                 this.userName = localStorage.getItem('name');
                 this.imageUpdate();
             }, (err: any) => {
