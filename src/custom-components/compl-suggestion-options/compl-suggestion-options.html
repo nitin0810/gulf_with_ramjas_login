@@ -26,7 +26,12 @@
     Comments
   </button>
 
-  <button ion-button *ngIf="complaint.statusId != 6 && complaint.statusId != 4" color="secondary" (click)="closeComplaint()">
+  <button ion-button *ngIf="isStudent && complaint.statusId != 6 && complaint.statusId != 4" color="secondary" (click)="closeComplaint()">
+    <ion-icon name="md-close" class="csBigIcon"></ion-icon>
+    Close
+  </button>
+
+  <button ion-button *ngIf="!isStudent && complaint.statusId != 6 && complaint.statusId != 4" color="secondary" (click)="openClosePage()">
     <ion-icon name="md-close" class="csBigIcon"></ion-icon>
     Close
   </button>

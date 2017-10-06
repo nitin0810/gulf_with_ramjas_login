@@ -97,7 +97,7 @@
                 </ion-col>
 
                 <ion-col width-33 *ngIf="complaint.statusId != 6 && complaint.statusId != 4">
-                    <button ion-button full small round (click)="closeComplaint()" class="csVieCompBtn" [style.border-color]="complaint.statusColor || 'green' ">
+                    <button ion-button full small round (click)="openClosePage()" class="csVieCompBtn" [style.border-color]="complaint.statusColor || 'green' ">
                         <ion-icon name="ios-thumbs-down" [style.color]="complaint.statusColor || 'green' "></ion-icon>
                         <span class="csCenter csFiveLeft csVWSmallText" [style.color]="complaint.statusColor || 'green' ">Close</span>
                     </button>

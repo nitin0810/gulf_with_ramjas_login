@@ -1,6 +1,6 @@
 
 
-import { Component, Input} from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { IonicPage, ModalController, Events } from 'ionic-angular';
 import { ComplaintService } from '../../services/complaint.service';
 import { CustomService } from '../../services/custom.service';
@@ -14,16 +14,16 @@ import { CustomService } from '../../services/custom.service';
 })
 
 export class ComplaintMainPage {
-    
+
     @Input() complaintList: Array<any>;
     @Input() searchInput: string;
-    
+
     //  title: string = "Complaints";
     isEmptyList: boolean = false;
     currentPage: number = 1;
     currentPageWithSearch: number = 1;
     currentPageWithSortFilter: number = 1;
-    
+
     searchInProcess: boolean = false;
     isSortApplied: boolean = false;
     isFilterApplied: boolean = false;
@@ -52,6 +52,12 @@ export class ComplaintMainPage {
         });
 
         this.events.subscribe('complaintStatusChangedInCommentsPage', (newData: any, index: number) => {
+
+            this.complaintList[index] = newData;
+        });
+        
+        /**for management only as closing page in this case is different */
+        this.events.subscribe('complaintClosed', (newData: any, index: number) => {
 
             this.complaintList[index] = newData;
         });
@@ -190,7 +196,7 @@ export class ComplaintMainPage {
         } else if (this.isSortApplied || this.isFilterApplied) {
 
             if (this.isSortApplied) {
-                this.complaintService.sortBy(this.appliedSortName, this.currentPageWithSortFilter+1)
+                this.complaintService.sortBy(this.appliedSortName, this.currentPageWithSortFilter + 1)
                     .subscribe((res: any) => {
 
                         if (!res) {
@@ -211,7 +217,7 @@ export class ComplaintMainPage {
             }
 
             else {
-                this.complaintService.filterBy(this.appliedFilter, this.currentPageWithSortFilter+1)
+                this.complaintService.filterBy(this.appliedFilter, this.currentPageWithSortFilter + 1)
                     .subscribe((res: any) => {
 
                         if (!res) {

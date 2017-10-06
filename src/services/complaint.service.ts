@@ -61,9 +61,9 @@ export class ComplaintService {
     }
 
     /**for both student and management */
-    closeComplaint(complaintId: number, description: string) {
+    closeComplaint(complaintId: number, reason: any) {
 
-        return this.http.put(CONFIG.serverUrl + `/${this.userType}/${this.compOrSugg}/${complaintId}/close`, { comment: description });
+        return this.http.put(CONFIG.serverUrl + `/${this.userType}/${this.compOrSugg}/${complaintId}/close`, reason);
 
     }
 

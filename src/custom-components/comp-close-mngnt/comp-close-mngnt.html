@@ -1,0 +1,32 @@
+<ion-header>
+    <nl-modal-navbar [title]="title" (modalClosed)="dismiss()"></nl-modal-navbar>
+</ion-header>
+
+<ion-content class="csGrayBackground">
+
+    <ion-card>
+        <ion-item>
+            <ion-label stacked>Root Cause</ion-label>
+            <ion-textarea [(ngModel)]="rootCause" required name="rca" maxlength="50" placeholder="Enter Root Cause "></ion-textarea>
+        </ion-item>
+        <ion-badge class="csFiftyLimit">
+            <span>{{50 - rootCause.length}}</span>
+        </ion-badge>
+    </ion-card>
+
+
+    <ion-card>
+        <ion-item>
+            <ion-label stacked>Comment</ion-label>
+            <ion-textarea [(ngModel)]="comment" required name="comment" maxlength="50" placeholder="Enter Comment"></ion-textarea>
+        </ion-item>
+        <ion-badge class="csFiftyLimit">
+            <span>{{200 - comment.length}}</span>
+        </ion-badge>
+    </ion-card>
+
+    <div padding>
+        <button (click)="onSubmit()" [disabled]="rootCause.trim().length==0 || comment.trim().length==0" ion-button full>Submit</button>
+    </div>
+
+</ion-content>

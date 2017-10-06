@@ -37,10 +37,14 @@ export class ViewComplaintPage extends ComplaintSuggestionOptionsBaseClass {
 
         this.complaint = this.params.get('viewCompl');
         this.complaintIndex = this.params.get('index');
-        this.isStudent = localStorage.getItem('isStudent')==="true";
+        this.isStudent = localStorage.getItem('isStudent') === "true";
         this.subscribeStatusChange();
 
         this.events.subscribe('complaintStatusChangedInCommentsPage', (newData: any, index: number) => {
+
+            this.complaint = newData;
+        });
+        this.events.subscribe('complaintClosed', (newData: any, index: number) => {
 
             this.complaint = newData;
         });

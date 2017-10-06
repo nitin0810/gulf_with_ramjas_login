@@ -55,7 +55,7 @@ export class ComplaintSuggestionOptionsBaseClass {
     closeFinally(description: string) {
 
         this.customService.showLoader();
-        this.complaintService.closeComplaint(this.complaint.id, description)
+        this.complaintService.closeComplaint(this.complaint.id, {comment:description})
             .subscribe((res: any) => {
 
                 this.complaint = res;
@@ -169,7 +169,12 @@ export class ComplaintSuggestionOptionsBaseClass {
         console.log('edit called///////');
 
     }
-
+    openClosePage() {
+        console.log('cllose pae......./');
+        
+        let closePage = this.mdlCtrl.create("ComplaintCloseManagementPage", { 'complaint': this.complaint, 'complaintIndex': this.complaintIndex });
+        closePage.present();
+    }
     openCommentPage() {
 
         let commentPage = this.mdlCtrl.create("CommentsPage", { 'complaint': this.complaint, 'complaintIndex': this.complaintIndex });
