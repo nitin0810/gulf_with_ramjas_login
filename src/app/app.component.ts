@@ -6,10 +6,10 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { UserSessionManage } from '../custom-components/user.session.manage';
 
 import { DashboardPage } from '../pages/dashboard/dashboard';
-import { LoginPage } from '../pages/login/login';
 
 import { AuthService } from '../services/auth.service';
 import { NetworkService } from '../services/network.service';
+import { LoginPage } from '../custom-components/login/login';
 // import { AccountPage } from '../pages/account/account';
 
 @Component({

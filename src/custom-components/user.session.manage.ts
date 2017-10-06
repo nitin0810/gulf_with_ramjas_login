@@ -1,10 +1,10 @@
 import { MenuController, AlertController, Events, App } from 'ionic-angular';
 
 import { NoInternet } from './noInternet.component';
-import { LoginPage } from '../pages/login/login';
 import { DashboardPage } from '../pages/dashboard/dashboard';
 import { AuthService } from '../services/auth.service';
 import { NetworkService } from '../services/network.service';
+import { LoginPage } from './login/login';
 
 export class UserSessionManage {
 

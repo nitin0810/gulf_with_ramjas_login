@@ -2,10 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { Validators, FormGroup, FormBuilder } from '@angular/forms';
 import { Events, ModalController, MenuController } from 'ionic-angular';
 
-import { AuthService } from '../../services/auth.service';
-import { CustomService } from '../../services/custom.service';
+
 
 import { ForgotPasswordModal } from './forgot-password/forgot-password';
+import { CustomService } from '../../services/custom.service';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
     selector: 'login-page',

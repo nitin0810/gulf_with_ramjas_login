@@ -11,7 +11,6 @@ import { MomentModule } from 'angular2-moment';
 /**import classes that are eagerly loaded(not lazy loaded)*/
 import { MyApp } from './app.component';
 import { DashboardPage } from '../pages/dashboard/dashboard';
-import { LoginPage } from '../pages/login/login';
 import { NoInternet } from '../custom-components/noInternet.component';
 
 /**import services*/
@@ -26,7 +25,8 @@ import { PollService } from '../services/poll.service';
 /**import custom modules*/
 import { CustomNavbarModule } from '../custom-components/navbar/navbar.module';
 import { CustomModalNavbarModule } from '../custom-components/modal-navbar/modal-navbar.module';
-import { ForgotPasswordModal } from '../pages/login/forgot-password/forgot-password';
+import { LoginPage } from '../custom-components/login/login';
+import { ForgotPasswordModal } from '../custom-components/login/forgot-password/forgot-password';
 
 
 @NgModule({
