@@ -21,7 +21,7 @@ export class ViewComplaintPage extends ComplaintSuggestionOptionsBaseClass {
     complaint: any;
     complaintIndex: number;
     stompClient: any;
-
+    isStudent: boolean;
     constructor(
         public params: NavParams,
         public complaintService: ComplaintService,
@@ -37,7 +37,7 @@ export class ViewComplaintPage extends ComplaintSuggestionOptionsBaseClass {
 
         this.complaint = this.params.get('viewCompl');
         this.complaintIndex = this.params.get('index');
-
+        this.isStudent = localStorage.getItem('isStudent')==="true";
         this.subscribeStatusChange();
 
         this.events.subscribe('complaintStatusChangedInCommentsPage', (newData: any, index: number) => {

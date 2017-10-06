@@ -165,10 +165,14 @@ export class ComplaintSuggestionOptionsBaseClass {
             });
     }
 
+    editComplaint() {
+        console.log('edit called///////');
+
+    }
 
     openCommentPage() {
 
-        let commentPage = this.mdlCtrl.create("CommentsPage", { 'complaint': this.complaint, 'complaintIndex':this.complaintIndex});
+        let commentPage = this.mdlCtrl.create("CommentsPage", { 'complaint': this.complaint, 'complaintIndex': this.complaintIndex });
         commentPage.present();
     }
 }

@@ -19,7 +19,7 @@ export class ComplaintSuggestionOptionsPage extends ComplaintSuggestionOptionsBa
     @Input() complaintIndex: any;
     
     compalintStatusChanged:boolean;
-    
+    isStudent:boolean;
     constructor(
         public mdlCtrl: ModalController,
         public alertCtrl: AlertController,
@@ -29,7 +29,7 @@ export class ComplaintSuggestionOptionsPage extends ComplaintSuggestionOptionsBa
         public events: Events
     ) {
         super(mdlCtrl, alertCtrl, actionSheetCtrl, customService, complaintService,events);
-
+this.isStudent = localStorage.getItem('isStudent')==="true";
         
     }
    
