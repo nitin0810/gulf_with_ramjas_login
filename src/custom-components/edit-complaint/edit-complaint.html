@@ -1,0 +1,34 @@
+<ion-header>
+    <nl-modal-navbar [title]="title" (modalClosed)="dismiss()"></nl-modal-navbar>
+</ion-header>
+
+<ion-content class="csGrayBackground">
+
+    <ion-card>
+        <button ion-item (click)="onAssignedToBtn()">
+            <ion-label stacked>Assign To</ion-label>
+            <ion-input [(ngModel)]="assignTo" placeholder="Select Faculty "></ion-input>
+        </button>
+    </ion-card>
+
+    <ion-card>
+        <ion-item>
+            <ion-label>Set Priority</ion-label>
+            <ion-select [(ngModel)]="priority">
+                <ion-option *ngFor="let p of priorityList" [value]="p.id">{{p.id}}</ion-option>
+            </ion-select>
+        </ion-item>
+    </ion-card>
+
+    <ion-card *ngIf="complaint.statusId!=3">
+        <ion-item>
+            <ion-label>In Progress</ion-label>
+            <ion-checkbox [(ngModel)]="inProgress"></ion-checkbox>
+        </ion-item>
+    </ion-card>
+
+    <div padding>
+        <button [disabled]="!(assignTo || priority || inProgress)" (click)="onEditBtn()" ion-button full>Edit</button>
+    </div>
+
+</ion-content>

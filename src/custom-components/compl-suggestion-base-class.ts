@@ -150,6 +150,7 @@ export class ComplaintSuggestionOptionsBaseClass {
     }
 
     satisfyFinally() {
+        
         this.customService.showLoader();
         this.complaintService.satisfyComplaint(this.complaint.id)
             .subscribe((res: any) => {
@@ -166,11 +167,12 @@ export class ComplaintSuggestionOptionsBaseClass {
     }
 
     editComplaint() {
-        console.log('edit called///////');
+
+        let editPage = this.mdlCtrl.create("ComplaintEditPage", { 'complaint': this.complaint, 'complaintIndex': this.complaintIndex });
+        editPage.present();
 
     }
     openClosePage() {
-        console.log('cllose pae......./');
         
         let closePage = this.mdlCtrl.create("ComplaintCloseManagementPage", { 'complaint': this.complaint, 'complaintIndex': this.complaintIndex });
         closePage.present();

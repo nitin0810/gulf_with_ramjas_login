@@ -1,0 +1,15 @@
+<ion-header>
+    <nl-modal-navbar [title]="title" (modalClosed)="dismiss()"></nl-modal-navbar>
+</ion-header>
+
+<ion-content class="csGrayBackground">
+    <ion-searchbar [(ngModel)]="searchInput" (ionInput)="onSearchInput($event)" (ionClear)="onSearchClear($event)"></ion-searchbar>
+
+    <ion-card>
+        <ion-list>
+            <button ion-item *ngFor="let faculty of facultyTempList" (cilck)="setSelectedFaculty(faculty)">
+                {{faculty.name}}
+            </button>
+        </ion-list>
+    </ion-card>
+</ion-content>

@@ -11,12 +11,12 @@ import { CustomHttpService } from './custom-http.service';
 export class ComplaintService {
 
     compOrSugg: string; // refers to complaint or suggestion
-    userType: string ; 
+    userType: string;
     constructor(
         public http: CustomHttpService,
     ) {
         this.userType = localStorage.getItem('isStudent') === "true" ? 'st' : 'ma';
-     }
+    }
 
     /**for both student and management */
     fetchComplaints(pageNo: number) {
@@ -78,6 +78,13 @@ export class ComplaintService {
     satisfyComplaint(complaintId: number) {
 
         return this.http.put(CONFIG.serverUrl + `/st/${this.compOrSugg}/${complaintId}/satisfied`, {});
+
+    }
+
+    /**for  management  only*/
+    editComplaint(complaintId: number,newStatus:any) {
+
+        return this.http.put(CONFIG.serverUrl + `/${this.userType}/${this.compOrSugg}/${complaintId}`, newStatus);
 
     }
 
