@@ -27,7 +27,10 @@ export class DashboardPage implements OnInit {
       if (!localStorage.getItem('complaintCategories')) { this.fetchComplaintCategories(); }
       if (!localStorage.getItem('complaintFaculties')) { this.fetchFacultyNames(); }
     }
+    else {
+      if (!localStorage.getItem('complaintFaculties')) { this.fetchFacultyNamesForManagement(); }
 
+    }
     if (!localStorage.getItem('complaintStatusList')) { this.fetchStatusList(); }
     if (!localStorage.getItem('complaintPriorityList')) { this.fetchPriorityList(); }
   }
@@ -45,6 +48,16 @@ export class DashboardPage implements OnInit {
   fetchFacultyNames() {
 
     this.complaintService.fetchFacultyNames()
+      .subscribe((res: any) => {
+        localStorage.setItem('complaintFaculties', JSON.stringify(res));
+      }, (err: any) => {
+
+      });
+  }
+
+  fetchFacultyNamesForManagement() {
+
+    this.complaintService.fetchFacultyNamesForManagement()
       .subscribe((res: any) => {
         localStorage.setItem('complaintFaculties', JSON.stringify(res));
       }, (err: any) => {

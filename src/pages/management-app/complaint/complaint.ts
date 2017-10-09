@@ -1,7 +1,7 @@
 
 
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage} from 'ionic-angular';
+import { IonicPage, Events } from 'ionic-angular';
 import { ComplaintMainPage } from '../../../custom-components/complaint-main/complaint-main';
 
 
@@ -36,12 +36,17 @@ export class ComplaintPageManagement {
     // debounceDuration: number = 400;
 
     constructor(
-     
+        private events: Events
     ) {
         // super(mdlCtrl,complaintService,customService,events);
         // this.registerStatusChange();
         // this.complaintService.compOrSugg = "complaint";
         // this.getComplaints(1);
+
+        this.events.subscribe('complaintEdited', (newData: any, index: number) => {
+            
+            this.complaintMainPage.complaintList[index] = newData;
+        });
 
     }
 
@@ -63,7 +68,7 @@ export class ComplaintPageManagement {
 
         this.complaintMainPage.onSortFilterSelect(event);
         this.searchInput = '';
-        
+
         // if (event.sortName) {
 
         //     if (this.isSortApplied || this.isFilterApplied) { this.currentPageWithSortFilter = 1; }
@@ -149,8 +154,8 @@ export class ComplaintPageManagement {
     // }
 
     doRefresh(refresher: any) {
-this.complaintMainPage.doRefresh(refresher);
-this.searchInput = '';
+        this.complaintMainPage.doRefresh(refresher);
+        this.searchInput = '';
     }
 
     // doInfinite(refresher: any) {

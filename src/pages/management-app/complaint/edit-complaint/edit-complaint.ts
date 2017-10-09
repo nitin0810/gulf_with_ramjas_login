@@ -1,8 +1,8 @@
 
 import { Component, Input } from '@angular/core';
 import { IonicPage, Events, NavParams, ViewController, ModalController, ActionSheetController } from 'ionic-angular';
-import { CustomService } from '../../services/custom.service';
-import { ComplaintService } from '../../services/complaint.service';
+import { ComplaintService } from '../../../../services/complaint.service';
+import { CustomService } from '../../../../services/custom.service';
 
 @IonicPage()
 @Component({
@@ -25,7 +25,7 @@ export class ComplaintEditPage {
     priorityList: Array<any>;
     inProgress: boolean;
     complaintEdited: boolean = false;
-
+facultyList: Array<any>;
 
     searchList: Array<any>;
     constructor(
@@ -42,36 +42,16 @@ export class ComplaintEditPage {
         this.complaint = this.navParam.get('complaint');
         this.complaintIndex = this.navParam.get('complaintIndex');
         this.priorityList = JSON.parse(localStorage.getItem('complaintPriorityList'));
+        this.facultyList = JSON.parse(localStorage.getItem('complaintFaculties'));
     }
 
     onAssignedToBtn() {
 
-        this.searchList = [];
-        for (let i = 1; i <= 50; i++) {
-            let n = Math.floor(Math.random() * 10);
-            let name: String = '';
-            switch (n) {
-                case 0: name = "n";
-                    break;
-                case 1: name = "ni"; break;
-                case 2: name = "nit"; break;
-                case 3: name = "niti"; break;
-                case 4: name = "nitin"; break;
-                case 5: name = "NIter"; break;
-                case 6: name = "abah"; break;
-                case 7: name = "byr"; break;
-                // case 8: name = "78"; break;
-                case 9: name = "nitin445";
-            }
-
-            this.searchList.push({ id: i, name: name });
-        }
-
-
-        let searchPage = this.mdlCtrl.create("FacultySearchPage", { 'searchList': this.searchList, 'title': 'Faculty' });
+        let searchPage = this.mdlCtrl.create("FacultySearchPage", { 'searchList': this.facultyList, 'title': 'Faculty' });
         searchPage.present();
         searchPage.onDidDismiss((selected) => { 
             if (selected) { 
+console.log(selected.selectedSearch);
 
             this.assignTo = selected.selectedSearch;
              this.assignToName = selected.selectedSearch.name 
@@ -105,8 +85,7 @@ export class ComplaintEditPage {
     submitFinally() {
 
         let status: any = {
-            assignedTo: 778824662,
-
+            assignedTo: this.assignTo && this.assignTo.id,
             priority: this.priority
         };
         if (this.inProgress) { status.statusId = 3; }
@@ -118,8 +97,8 @@ export class ComplaintEditPage {
                 this.complaint = res;
                 this.complaintEdited = true;
                 this.customService.hideLoader();
-                this.customService.showToast('Complaint closed successfully');
-                // this.dismiss();
+                this.customService.showToast('Complaint Edited successfully');
+                this.dismiss();
             }, (err: any) => {
 
                 this.complaintEdited = false;
@@ -131,9 +110,9 @@ export class ComplaintEditPage {
 
     dismiss() {
 
-        // if (this.complaintEdited) {
-        //     this.events.publish("complaintEdited", this.complaint, this.complaintIndex);
-        // }
+        if (this.complaintEdited) {
+            this.events.publish("complaintEdited", this.complaint, this.complaintIndex);
+        }
         this.viewCtrl.dismiss();
     }
 }

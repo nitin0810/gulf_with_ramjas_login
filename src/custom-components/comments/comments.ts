@@ -8,8 +8,8 @@ import { AuthService } from '../../services/auth.service';
 @IonicPage()
 @Component({
     selector: 'comments',
-    templateUrl:  './comments.html', 
-   styles: [``]
+    templateUrl: './comments.html',
+    styles: [``]
 })
 
 export class CommentsPage {
@@ -68,7 +68,7 @@ export class CommentsPage {
     checkComplaintStatus() {
 
         if (this.complaint.statusId == 4 || this.complaint.statusId == 6) {
-            this.customService.showToast("You can't comment on it any more, may be your complaint Id is closed or satisfied");
+            this.customService.showToast("You can't comment any more, your complaint is either closed or satisfied");
         }
     }
 
@@ -102,6 +102,7 @@ export class CommentsPage {
                 if (!message) {
                     return;
                 }
+            console.log(message);
                 this.comments.push(message);
                 this.content.scrollToBottom();
                 this.isCommentsEmpty = this.comments.length == 0;
@@ -128,8 +129,8 @@ export class CommentsPage {
 
     postChat() {
 
-        this.content.scrollToBottom();
         this.postInProcess = true;
+        this.content.scrollToBottom();
         this.complaintService.postComments(this.complaint.id, this.inputChat)
             .subscribe((res: any) => {
 
@@ -150,8 +151,13 @@ export class CommentsPage {
 
     showRecentPost(commentData: any) {
         this.comments.push({
-            studentId: this.selfId,
             comment: commentData.comment,
+            employeeId: commentData.employeeId || null,
+            employeeName: commentData.employeeName || null,
+            employeeNickName: commentData.employeeNickName || null,
+            studentId: commentData.studentId || null,
+            studentName: commentData.studentName || null,
+            studentPic: commentData.studentPic || null,
             createdAt: new Date(Date.now())
         });
 

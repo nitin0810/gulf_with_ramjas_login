@@ -39,6 +39,12 @@ export class ComplaintService {
         return this.http.get(CONFIG.serverUrl + `/st/complaint/faculty/${programId}/${yearId}/${isEvenSem}`);
     }
 
+    /**for  management  only*/
+    fetchFacultyNamesForManagement() {
+
+        return this.http.get(CONFIG.serverUrl + '/ma/all');
+    }
+
     /**for both student and management */
     fetchStatusList() {
 
@@ -82,7 +88,7 @@ export class ComplaintService {
     }
 
     /**for  management  only*/
-    editComplaint(complaintId: number,newStatus:any) {
+    editComplaint(complaintId: number, newStatus: any) {
 
         return this.http.put(CONFIG.serverUrl + `/${this.userType}/${this.compOrSugg}/${complaintId}`, newStatus);
 

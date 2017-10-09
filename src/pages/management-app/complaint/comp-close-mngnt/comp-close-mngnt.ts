@@ -1,8 +1,8 @@
 
 import { Component, Input } from '@angular/core';
 import { IonicPage, Events, NavParams, ViewController, ActionSheetController } from 'ionic-angular';
-import { CustomService } from '../../services/custom.service';
-import { ComplaintService } from '../../services/complaint.service';
+import { ComplaintService } from '../../../../services/complaint.service';
+import { CustomService } from '../../../../services/custom.service';
 
 @IonicPage()
 @Component({
@@ -90,7 +90,7 @@ export class ComplaintCloseManagementPage {
     dismiss() {
 
         if (this.complaintClosed) {
-            this.events.publish("complaintClosed", this.complaint, this.complaintIndex);
+            this.events.publish("complaintStatusChanged", this.complaint, this.complaintIndex);
         }
         this.viewCtrl.dismiss();
     }

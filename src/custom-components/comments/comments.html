@@ -9,7 +9,7 @@
         <br>NO COMMENT
     </div>
 
-    <div class="message-box csTransparent" *ngFor="let comm of comments" [ngClass]="{'mine': isStudent && comm.studentId == selfId || !isStudent && comm.employeeId == selfId }"
+    <div class="message-box csTransparent" *ngFor="let comm of comments" [ngClass]="{'mine': ((isStudent && comm.studentId == selfId )|| (!isStudent && comm.employeeId == selfId) )}"
         no-margin>
 
         <div class="csMyComment">
@@ -18,8 +18,8 @@
 
         <div class="csCommentTime">
 
-            <span *ngIf="isStudent && comm.employeeId">{{comm.employeeNickName || comm.employeeName}} </span>
-            <span *ngIf="!isStudent && comm.studentId">{{comm.studentName}} </span>
+            <span *ngIf="isStudent && comm.employeeId>=0">{{comm.employeeNickName || comm.employeeName}} </span>
+            <span *ngIf="!isStudent && comm.studentId>=0">{{comm.studentName}} </span>
             <span>{{ comm.createdAt | amCalendar }}</span>
         </div>
 
@@ -28,13 +28,13 @@
 
 </ion-content>
 
-<ion-footer *ngIf="complaint.statusId != 4 && complaint.statusId != 6" keyboard-attach class="bar-stable">
+<ion-footer *ngIf="complaint.statusId != 4 && complaint.statusId != 6 " keyboard-attach class="bar-stable">
 
     <ion-grid>
         <ion-row>
 
-            <ion-col width-80>
-                <ion-textarea rows="2" [(ngModel)]="inputChat" class="csCommentInput" type="text" placeholder=" Write comment..."></ion-textarea>
+            <ion-col col-10>
+                <ion-input  [(ngModel)]="inputChat" class="csCommentInput" type="text" placeholder=" Write comment..."></ion-input>
             </ion-col>
 
             <ion-col>

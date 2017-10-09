@@ -30,7 +30,7 @@ export class FacultySearchPage {
 
         if (event.type != 'input') { return; }
 
-        if (this.searchInput.length == 0) { this.searchTempList = this.searchList; return; }
+        if (this.searchInput.trim().length == 0) { this.searchTempList = this.searchList; return; }
 
         this.searchTempList = this.searchList.filter((search) => {
 

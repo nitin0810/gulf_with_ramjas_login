@@ -38,8 +38,8 @@ export class ViewComplaintPage extends ComplaintSuggestionOptionsBaseClass {
         this.complaint = this.params.get('viewCompl');
         this.complaintIndex = this.params.get('index');
         this.isStudent = localStorage.getItem('isStudent') === "true";
-        console.log('inside view',this.isStudent);
-        
+        console.log('inside view', this.isStudent);
+
         this.subscribeStatusChange();
 
         this.events.subscribe('complaintStatusChangedInCommentsPage', (newData: any, index: number) => {
@@ -51,6 +51,12 @@ export class ViewComplaintPage extends ComplaintSuggestionOptionsBaseClass {
             this.complaint = newData;
         });
 
+        if(!this.isStudent){
+
+            this.events.subscribe('complaintEdited', (newData: any, index: number) => {
+                this.complaint = newData;
+            });
+        }
 
     }
 
