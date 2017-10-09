@@ -1,6 +1,6 @@
 
 import { Component, Input } from '@angular/core';
-import { IonicPage, Events, NavParams, ViewController,ModalController, ActionSheetController } from 'ionic-angular';
+import { IonicPage, Events, NavParams, ViewController, ModalController, ActionSheetController } from 'ionic-angular';
 import { CustomService } from '../../services/custom.service';
 import { ComplaintService } from '../../services/complaint.service';
 
@@ -19,12 +19,15 @@ export class ComplaintEditPage {
     complaintIndex: number;
 
     //form variables
-    assignTo: string;
+    assignTo:any;
+    assignToName: string;
     priority: string;
     priorityList: Array<any>;
     inProgress: boolean;
     complaintEdited: boolean = false;
 
+
+    searchList: Array<any>;
     constructor(
 
         private complaintService: ComplaintService,
@@ -32,7 +35,7 @@ export class ComplaintEditPage {
         private navParam: NavParams,
         private viewCtrl: ViewController,
         private actionSheetCtrl: ActionSheetController,
-        private mdlCtrl:ModalController,
+        private mdlCtrl: ModalController,
         private events: Events
     ) {
 
@@ -41,16 +44,42 @@ export class ComplaintEditPage {
         this.priorityList = JSON.parse(localStorage.getItem('complaintPriorityList'));
     }
 
-onAssignedToBtn(){
-    let searchPage = this.mdlCtrl.create("FacultySearchPage" );
-    searchPage.present();
-}
+    onAssignedToBtn() {
+
+        this.searchList = [];
+        for (let i = 1; i <= 50; i++) {
+            let n = Math.floor(Math.random() * 10);
+            let name: String = '';
+            switch (n) {
+                case 0: name = "n";
+                    break;
+                case 1: name = "ni"; break;
+                case 2: name = "nit"; break;
+                case 3: name = "niti"; break;
+                case 4: name = "nitin"; break;
+                case 5: name = "NIter"; break;
+                case 6: name = "abah"; break;
+                case 7: name = "byr"; break;
+                // case 8: name = "78"; break;
+                case 9: name = "nitin445";
+            }
+
+            this.searchList.push({ id: i, name: name });
+        }
+
+
+        let searchPage = this.mdlCtrl.create("FacultySearchPage", { 'searchList': this.searchList, 'title': 'Faculty' });
+        searchPage.present();
+        searchPage.onDidDismiss((selected) => { 
+            if (selected) { 
+
+            this.assignTo = selected.selectedSearch;
+             this.assignToName = selected.selectedSearch.name 
+            } });
+    }
 
 
     onEditBtn() {
-        console.log(this.assignTo);
-        console.log(this.priority);
-        console.log(this.inProgress);
 
         let actionSheet = this.actionSheetCtrl.create({
             title: 'Are you sure to change the status ?',

@@ -71,7 +71,8 @@ export class AuthService {
     getSockJs() {
 
         let access_token = localStorage.getItem('access_token');
-        let url = CONFIG.serverUrl + '/st/nxtlife-websocket?access_token=' + access_token;
+        let loginType = localStorage.getItem('isStudent') === "true" ? 'st' : 'ma';
+        let url = CONFIG.serverUrl + `/${loginType}/nxtlife-websocket?access_token=${access_token}`;
         var socket = new SockJS(url);
         return Stomp.over(socket);
     }

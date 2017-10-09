@@ -38,6 +38,8 @@ export class ViewComplaintPage extends ComplaintSuggestionOptionsBaseClass {
         this.complaint = this.params.get('viewCompl');
         this.complaintIndex = this.params.get('index');
         this.isStudent = localStorage.getItem('isStudent') === "true";
+        console.log('inside view',this.isStudent);
+        
         this.subscribeStatusChange();
 
         this.events.subscribe('complaintStatusChangedInCommentsPage', (newData: any, index: number) => {
@@ -55,9 +57,9 @@ export class ViewComplaintPage extends ComplaintSuggestionOptionsBaseClass {
     subscribeStatusChange() {
 
         this.stompClient = this.authService.getSockJs();
-
-        let url1 = `/st/${this.complaintService.compOrSugg}/${this.complaint.id}/close`;
-        let url2 = `/st/${this.complaintService.compOrSugg}/${this.complaint.id}/status`;
+        let loginType = this.isStudent ? 'st' : 'ma';
+        let url1 = `/${loginType}/${this.complaintService.compOrSugg}/${this.complaint.id}/close`;
+        let url2 = `/${loginType}/${this.complaintService.compOrSugg}/${this.complaint.id}/status`;
 
         this.stompClient.connect({}, (frame) => {
 

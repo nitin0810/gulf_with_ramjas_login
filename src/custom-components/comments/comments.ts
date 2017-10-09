@@ -8,59 +8,8 @@ import { AuthService } from '../../services/auth.service';
 @IonicPage()
 @Component({
     selector: 'comments',
-    template: `
-        <ion-header>
-             <nl-modal-navbar [title]="title" (modalClosed)="dismiss()"></nl-modal-navbar>
-        </ion-header>
-
-         <ion-content class="csGrayBackground">
-            
-         <div class="no-comment" *ngIf="isCommentsEmpty">
-            <ion-icon name="chatbubbles"></ion-icon>
-            <br>NO COMMENT
-        </div>
-
-         <div class="message-box csTransparent" *ngFor="let comm of comments" [ngClass]="{'mine': comm.studentId == selfId}" no-margin>
-           
-             <div class="csMyComment">
-                 <h3>{{ comm.comment }}</h3>
-            </div>
-
-            <div class="csCommentTime">
-                <span *ngIf="comm.employeeId">{{comm.employeeNickName || comm.employeeName}} </span>
-                <span>{{ comm.createdAt | amCalendar }}</span>
-            </div>
-            
-         </div>
-         <ion-spinner class="loader" name="dots" *ngIf="postInProcess"></ion-spinner>
-         
-         </ion-content>
-
-         <ion-footer *ngIf="complaint.statusId != 4 && complaint.statusId != 6" keyboard-attach class="bar-stable" >
-         
-           <ion-grid>
-             <ion-row>
-
-               <ion-col width-80>
-                 <ion-textarea rows="2" [(ngModel)]="inputChat" class="csCommentInput" type="text"  placeholder=" Write comment..."></ion-textarea>
-               </ion-col>
-
-               <ion-col>
-               
-                 <button [disabled]="inputChat?.trim().length==0" (click)="postChat()" style="width: 50px !important;" class="csCommentSend" color="primary" ion-button icon-only item-end  >
-                   <ion-icon name="md-send" role="img"></ion-icon>
-                 </button>
-
-               </ion-col>
-
-             </ion-row>
-           </ion-grid>
-         
-       </ion-footer>
-         
-        
-            `,
-    styles: [``]
+    templateUrl:  './comments.html', 
+   styles: [``]
 })
 
 export class CommentsPage {
@@ -75,7 +24,7 @@ export class CommentsPage {
     selfId: number = parseInt(localStorage.getItem('id'));
     postInProcess: boolean = false; //to show spinner while sending the message
     stompClient: any;
-
+    isStudent: boolean;
     @ViewChild(Content) content: Content;
 
     constructor(
@@ -89,6 +38,7 @@ export class CommentsPage {
     ) {
         this.complaint = this.navParam.get('complaint');
         this.complaintIndex = this.navParam.get('complaintIndex');
+        this.isStudent = localStorage.getItem('isStudent') === "true";
         this.getComments();
         this.sockJsConnection();
     }
@@ -125,9 +75,9 @@ export class CommentsPage {
     sockJsConnection() {
 
         this.stompClient = this.authService.getSockJs();
-
-        let url1 = `/st/${this.complaintService.compOrSugg}/${this.complaint.id}/close`;
-        let url2 = `/st/${this.complaintService.compOrSugg}/${this.complaint.id}/comment`;
+        let loginType = this.isStudent ? 'st' : 'ma';
+        let url1 = `/${loginType}/${this.complaintService.compOrSugg}/${this.complaint.id}/close`;
+        let url2 = `/${loginType}/${this.complaintService.compOrSugg}/${this.complaint.id}/comment`;
 
         this.stompClient.connect({}, (frame) => {
 

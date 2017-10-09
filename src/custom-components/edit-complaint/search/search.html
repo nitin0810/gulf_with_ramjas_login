@@ -7,8 +7,8 @@
 
     <ion-card>
         <ion-list>
-            <button ion-item *ngFor="let faculty of facultyTempList" (cilck)="setSelectedFaculty(faculty)">
-                {{faculty.name}}
+            <button ion-item *ngFor="let search of searchTempList" (click)="dismiss(search)">
+                {{search.name}}
             </button>
         </ion-list>
     </ion-card>
