@@ -6,7 +6,6 @@ import { ComplaintPageManagement } from './complaint';
 import { CustomNavbarModule } from '../../../custom-components/navbar/navbar.module';
 import { ComplaintMainModule } from '../../../custom-components/complaint-main/complaint-main.module';
 import { SortFilterOptionsModule } from '../../../custom-components/sort-filter-options/sort-filter.module';
-// import { ComplaintSuggestionOptionsModule } from '../../../custom-components/compl-suggestion-options/compl-suggestion-options.module';
 
 @NgModule({
   
@@ -16,7 +15,6 @@ import { SortFilterOptionsModule } from '../../../custom-components/sort-filter-
         CustomNavbarModule,
         SortFilterOptionsModule,
         ComplaintMainModule,
-        // ComplaintSuggestionOptionsModule,
         IonicPageModule.forChild(ComplaintPageManagement)
     ],
     

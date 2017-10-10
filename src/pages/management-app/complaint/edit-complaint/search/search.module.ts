@@ -10,7 +10,6 @@ import { CustomModalNavbarModule } from '../../../../../custom-components/modal-
     CustomModalNavbarModule,
       IonicPageModule.forChild(FacultySearchPage)
     ],
-//   exports: [FacultySearchPage]
 })
 
 export class FacultySearchModule { }

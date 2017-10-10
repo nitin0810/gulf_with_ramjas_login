@@ -45,7 +45,6 @@ export class FacultySearchPage {
 
     }
 
-
     dismiss(selectedSearch?: any) {
 
         if (selectedSearch) {

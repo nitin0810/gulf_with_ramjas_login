@@ -25,15 +25,15 @@ export class CustomService {
         });
         console.log('loading');
         this.loading.present();
-        
-        
+
+
     }
 
     public hideLoader() {
 
         console.log('loading dismiss');
         this.loading.dismiss();
-        
+
     }
 
     public showToast(msg) {
@@ -43,15 +43,18 @@ export class CustomService {
             duration: 3000,
             position: 'bottom'
         });
-        console.log('toast',this.loading);
-        
+        console.log('toast', this.loading);
+
         this.toast.present();
     }
 
     public hideToast() {
-        if (this.toast) { this.toast.dismiss() };
-    }
 
+        // if (this.toast) {
+        //     this.toast.dismiss().
+        //     catch (()=> { });
+        // }
+    }
     public errMessage() {
 
         let toast = this.toastCtrl.create({
