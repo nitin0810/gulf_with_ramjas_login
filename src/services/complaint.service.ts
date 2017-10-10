@@ -24,6 +24,12 @@ export class ComplaintService {
         return this.http.get(CONFIG.serverUrl + `/${this.userType}/${this.compOrSugg}/page/${pageNo}`);
     }
 
+    /**for  management  only*/
+    fetchComplaintById(id:number){
+
+        return this.http.get(CONFIG.serverUrl + `/${this.userType}/${this.compOrSugg}/${id}`);
+    }
+
     /**for  student  only*/
     fetchCategories() {
 

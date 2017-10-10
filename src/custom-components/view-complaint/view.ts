@@ -22,6 +22,7 @@ export class ViewComplaintPage extends ComplaintSuggestionOptionsBaseClass {
     complaintIndex: number;
     stompClient: any;
     isStudent: boolean;
+
     constructor(
         public params: NavParams,
         public complaintService: ComplaintService,
@@ -35,32 +36,39 @@ export class ViewComplaintPage extends ComplaintSuggestionOptionsBaseClass {
     ) {
         super(mdlCtrl, alertCtrl, actionSheetCtrl, customService, complaintService, events);
 
-        this.complaint = this.params.get('viewCompl');
-        this.complaintIndex = this.params.get('index');
         this.isStudent = localStorage.getItem('isStudent') === "true";
-        console.log('inside view', this.isStudent);
 
-        this.subscribeStatusChange();
+        let complaintTemp = this.params.get('viewCompl');
+        this.complaintIndex = this.params.get('index');
 
-        this.events.subscribe('complaintStatusChangedInCommentsPage', (newData: any, index: number) => {
-
-            this.complaint = newData;
-        });
-        this.events.subscribe('complaintClosed', (newData: any, index: number) => {
-
-            this.complaint = newData;
-        });
-
-        if(!this.isStudent){
-
-            this.events.subscribe('complaintEdited', (newData: any, index: number) => {
-                this.complaint = newData;
-            });
+        /**in case of managment, complete data  of complaint is to be fetched using complaint id
+         * in case of student, complaint data obtained from navParam is already complete
+        */
+        if (this.isStudent) {
+            this.complaint = complaintTemp;
+            this.subscribeLiveUpdates();
+            this.subscribeStatusChanges();
         }
-
+        else { this.fetchCompleteComplaint(complaintTemp.id); }
     }
 
-    subscribeStatusChange() {
+    fetchCompleteComplaint(id: number) {
+        this.customService.showLoader();
+        this.complaintService.fetchComplaintById(id)
+            .subscribe((res: any) => {
+
+                this.complaint = res;
+                this.customService.hideLoader();
+                this.subscribeLiveUpdates();
+                this.subscribeStatusChanges();
+            }, (err: any) => {
+
+                this.customService.hideLoader();
+                this.customService.showToast(err.msg);
+            });
+    }
+
+    subscribeLiveUpdates() {
 
         this.stompClient = this.authService.getSockJs();
         let loginType = this.isStudent ? 'st' : 'ma';
@@ -100,6 +108,24 @@ export class ViewComplaintPage extends ComplaintSuggestionOptionsBaseClass {
         });
     }
 
+    subscribeStatusChanges() {
+
+        this.events.subscribe('complaintStatusChangedInCommentsPage', (newData: any, index: number) => {
+
+            this.complaint = newData;
+        });
+        this.events.subscribe('complaintClosed', (newData: any, index: number) => {
+
+            this.complaint = newData;
+        });
+
+        if (!this.isStudent) {
+
+            this.events.subscribe('complaintEdited', (newData: any, index: number) => {
+                this.complaint = newData;
+            });
+        }
+    }
 
 
     dismiss() {

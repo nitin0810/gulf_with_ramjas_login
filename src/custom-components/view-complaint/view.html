@@ -4,7 +4,7 @@
 
 
 <ion-content class="csGrayBackground view-complaint ">
-    <ion-item [style.background-color]="complaint.statusColor || 'green'">
+    <ion-item *ngIf="complaint" [style.background-color]="complaint.statusColor || 'green'">
 
         <div class="csStatus">
             <span [style.color]="'white'" class="csBold">
@@ -108,7 +108,7 @@
 
     </ion-item>
 
-    <ion-list>
+    <ion-list *ngIf="complaint">
         <ion-item>
             <b>{{complaint.title}}</b>
             <p class="csParagraph">{{complaint.description}}</p>

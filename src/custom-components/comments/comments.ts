@@ -53,9 +53,9 @@ export class CommentsPage {
                 this.isCommentsEmpty = this.comments.length == 0;
                 this.customService.hideLoader();
                 setTimeout(() => {
-                    this.content.scrollToBottom();
-
-                }, 500);
+                    
+                   this.content.scrollToBottom(200);
+                }, 300);
 
                 this.checkComplaintStatus();
             }, (err: any) => {
