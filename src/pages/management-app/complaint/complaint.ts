@@ -25,10 +25,6 @@ export class ComplaintPageManagement {
         private events: Events
     ) {
 
-        this.events.subscribe('complaintEdited', (newData: any, index: number) => {
-            
-            this.complaintMainPage.complaintList[index] = newData;
-        });
 
     }
 

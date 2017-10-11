@@ -1,5 +1,5 @@
-import { Component, Input } from '@angular/core';
-import { IonicPage, ViewController, NavParams } from 'ionic-angular';
+import { Component, Input, ViewChild } from '@angular/core';
+import { IonicPage, ViewController, NavParams, Searchbar } from 'ionic-angular';
 
 @IonicPage()
 @Component({
@@ -16,6 +16,7 @@ export class FacultySearchPage {
     searchList: Array<any>;
     searchInput: string;
 
+    @ViewChild(Searchbar) searchBar: Searchbar;
     constructor(
         private viewCtrl: ViewController,
         private navParam: NavParams
@@ -26,6 +27,9 @@ export class FacultySearchPage {
 
     }
 
+    ionViewDidEnter() {
+        this.searchBar.setFocus();
+    }
     onSearchInput(event: any) {
 
         if (event.type != 'input') { return; }

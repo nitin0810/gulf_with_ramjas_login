@@ -90,7 +90,7 @@ export class ComplaintCloseManagementPage {
     dismiss() {
 
         if (this.complaintClosed) {
-            this.events.publish("complaintStatusChanged", this.complaint, this.complaintIndex);
+            this.events.publish("complaintStatusClosedMngmnt", this.complaint, this.complaintIndex);
         }
         this.viewCtrl.dismiss();
     }

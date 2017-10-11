@@ -161,7 +161,7 @@ export class UserSessionManage {
                 this.imageUpdate();
             }, (err: any) => {
 
-                if (err.status === 401 || err.status == 0) { this.sessionExpired(); }
+                if (err.status === 401) { this.sessionExpired(); }
             });
     }
 

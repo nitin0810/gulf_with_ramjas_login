@@ -23,6 +23,10 @@ export class ViewComplaintPage extends ComplaintSuggestionOptionsBaseClass {
     stompClient: any;
     isStudent: boolean;
 
+
+    statusChangedByLive: boolean = false;
+
+
     constructor(
         public params: NavParams,
         public complaintService: ComplaintService,
@@ -35,6 +39,7 @@ export class ViewComplaintPage extends ComplaintSuggestionOptionsBaseClass {
         private authService: AuthService
     ) {
         super(mdlCtrl, alertCtrl, actionSheetCtrl, customService, complaintService, events);
+console.log('inside view const///////');
 
         this.isStudent = localStorage.getItem('isStudent') === "true";
 
@@ -78,7 +83,7 @@ export class ViewComplaintPage extends ComplaintSuggestionOptionsBaseClass {
         this.stompClient.connect({}, (frame) => {
 
             this.stompClient.subscribe(url1, (greeting) => {
-
+                console.log('close subcribe in view called////');
                 let message = JSON.parse(greeting.body);
                 if (!message) {
                     return;
@@ -92,7 +97,7 @@ export class ViewComplaintPage extends ComplaintSuggestionOptionsBaseClass {
 
 
             this.stompClient.subscribe(url2, (greeting) => {
-
+                console.log('EDITING IN LIVE.......');
                 let message = JSON.parse(greeting.body);
                 if (!message) {
                     return;
@@ -100,6 +105,8 @@ export class ViewComplaintPage extends ComplaintSuggestionOptionsBaseClass {
 
                 this.complaint = message;
                 this.events.publish('complaintStatusChanged', this.complaint, this.complaintIndex);
+
+
 
 
             });
@@ -114,15 +121,21 @@ export class ViewComplaintPage extends ComplaintSuggestionOptionsBaseClass {
 
             this.complaint = newData;
         });
-        this.events.subscribe('complaintClosed', (newData: any, index: number) => {
+        /**used for listeneing close complaint event published from comp-close-mngmnt page */
+        this.events.subscribe('complaintStatusClosedMngmnt', (newData: any, index: number) => {
 
             this.complaint = newData;
+            this.events.publish('complaintStatusChanged', this.complaint, this.complaintIndex);
         });
 
         if (!this.isStudent) {
 
             this.events.subscribe('complaintEdited', (newData: any, index: number) => {
+                console.log('EDITING IN RESPONSE');
+                
                 this.complaint = newData;
+                this.events.publish('complaintStatusChanged', this.complaint, this.complaintIndex);
+
             });
         }
     }
@@ -131,9 +144,12 @@ export class ViewComplaintPage extends ComplaintSuggestionOptionsBaseClass {
     dismiss() {
 
         this.disconnectSockJs();
+        // this.events.unsubscribe('complaintEdited');
+        // this.events.unsubscribe('complaintStatusClosedMngmnt');
+        // this.events.unsubscribe('complaintStatusChangedInCommentsPage');
+        
         this.viewCtrl.dismiss();
     }
-
 
     disconnectSockJs() {
 

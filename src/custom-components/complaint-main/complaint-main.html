@@ -12,8 +12,8 @@
     <ion-item-sliding *ngFor="let complaint of complaintList; let i =index">
 
         <a ion-item (click)="openViewModal(complaint, i)" [style.border-left-color]="complaint.statusColor">
-            <h2 *ngIf="complaint.againstCategoryId != 2"><b>{{complaint.againstCategoryName}}</b></h2>
-            <h2 *ngIf="complaint.againstCategoryId == 2"><b>{{complaint.againstEmployeeName}}</b></h2>
+            <h2 *ngIf="complaint.againstCategoryId != 3"><b>{{complaint.againstCategoryName}}</b></h2>
+            <h2 *ngIf="complaint.againstCategoryId == 3"><b>{{complaint.againstEmployeeName}}</b></h2>
 
             <h3>{{complaint.title}}</h3>
 

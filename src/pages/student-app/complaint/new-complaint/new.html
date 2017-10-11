@@ -6,24 +6,35 @@
 
     <div *ngIf="categories">
 
-        <form  #complaintForm="ngForm" (ngSubmit)="onSubmit(complaintForm)">
+        <form #complaintForm="ngForm" (ngSubmit)="onSubmit(complaintForm)">
             <ion-card>
                 <ion-item>
                     <ion-icon ios="ios-sad-outline" md="md-sad" item-start color="primary"></ion-icon>
                     <ion-label>Against</ion-label>
-                    <ion-select [(ngModel)]="selectedCategory"  required name="category">
+                    <ion-select [(ngModel)]="selectedCategory" (ionChange)="resetSubCategories()" required name="category">
                         <ion-option *ngFor="let category of categories" [value]="category">{{category.name}}</ion-option>
                     </ion-select>
                 </ion-item>
             </ion-card>
-
             <div *ngIf="selectedCategory?.subCategory && selectedCategory.subCategory.length > 0">
                 <ion-card>
                     <ion-item>
                         <ion-icon name="options" item-start></ion-icon>
                         <ion-label>SubCategory</ion-label>
-                        <ion-select [(ngModel)]="selectedSubCategory" required name="subCategory">
+                        <ion-select [(ngModel)]="selectedSubCategory" (ionChange)="resetSubCategories2()" required name="subCategory">
                             <ion-option *ngFor="let subCat of selectedCategory.subCategory" [value]="subCat">{{subCat.name || subCat.facultyName}}</ion-option>
+                        </ion-select>
+                    </ion-item>
+                </ion-card>
+            </div>
+
+            <div *ngIf="selectedSubCategory?.subCategory && selectedSubCategory.subCategory.length > 0">
+                <ion-card>
+                    <ion-item>
+                        <ion-icon name="options" item-start></ion-icon>
+                        <ion-label>SubCategory</ion-label>
+                        <ion-select [(ngModel)]="selectedSubCategory2" required name="subCategory2">
+                            <ion-option *ngFor="let subCat of selectedSubCategory.subCategory" [value]="subCat">{{subCat.name || subCat.facultyName}}</ion-option>
                         </ion-select>
                     </ion-item>
                 </ion-card>

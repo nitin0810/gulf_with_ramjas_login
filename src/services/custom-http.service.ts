@@ -10,8 +10,9 @@ function getToken(): any {
 
     let token = localStorage.getItem('access_token');
     let header;
+    let userId = localStorage.getItem('isStudent')==="true"? "gulf_student:riddhi":"gulf_management:riddhi";
     if (!token) {
-        header = 'Basic ' + btoa('nxtlifetechnologies:riddhi');
+        header = 'Basic ' + btoa(userId);
     } else {
         header = 'Bearer ' + localStorage.getItem('access_token') || '';
     }

@@ -1,7 +1,7 @@
 
 
 import { Component } from '@angular/core';
-import { IonicPage, ViewController, ActionSheetController } from 'ionic-angular';
+import { IonicPage, ViewController, ActionSheetController} from 'ionic-angular';
 import { ComplaintService } from '../../../../services/complaint.service';
 import { CustomService } from '../../../../services/custom.service';
 
@@ -23,6 +23,7 @@ export class NewComplaintPage {
     /**form ngModel variables */
     selectedCategory: any;
     selectedSubCategory: any;
+    selectedSubCategory2: any; // refer to further chosen subcategory of selectedSybCategory
     complaintTitle: string;
     complaintDescription: string;
     isAnonymous: boolean = false;
@@ -41,16 +42,20 @@ export class NewComplaintPage {
 
         let catg = JSON.parse(localStorage.getItem('complaintCategories'));
         let faculties = JSON.parse(localStorage.getItem('complaintFaculties'));
+        console.log(catg);
 
         /*load categories and faculty list from local storage (if present), otherwise fetch from server */
         if (catg && faculties) {
 
             this.categories = catg;
-            /**find faculty category and fills it subcategor array with faculty list */
-            let facultyCatg = this.categories.find((element) => {
-                return element.id == 2;  //2 is the id of faculty
+            /**find Teaching and learning subcategory */
+            let teachingCatg = this.categories.find((element) => {
+                return element.id == 1;  //1 is the id of Teaching and learning subcategory
             });
-            facultyCatg.subCategory = faculties;
+            let facultySubCategory = teachingCatg.subCategory.find((element) => {
+                return element.id == 3;  //1 is the id of Faculty member subcategory
+            });
+            facultySubCategory.subCategory = faculties;
 
         } else {
 
@@ -82,13 +87,16 @@ export class NewComplaintPage {
         this.complaintService.fetchFacultyNames()
             .subscribe((res: any) => {
 
-                let facultyCatg = this.categories.find((element) => {
-                    return element.id == 2;
+                /**find Teaching and learning subcategory */
+                let teachingCatg = this.categories.find((element) => {
+                    return element.id == 1;  //1 is the id of Teaching and learning subcategory
                 });
-
-                facultyCatg.subCategory = res;
+                let facultySubCategory = teachingCatg.subCategory.find((element) => {
+                    return element.id == 3;  //1 is the id of Faculty member subcategory
+                });
+                facultySubCategory.subCategory2 = res;
                 this.customService.hideLoader();
-                
+
                 localStorage.setItem('complaintFaculties', JSON.stringify(res));
 
 
@@ -97,6 +105,18 @@ export class NewComplaintPage {
                 this.customService.hideLoader();
                 this.customService.showToast("Couldn't fetch faculty list, try again");
             });
+    }
+
+    resetSubCategories() {
+console.log('reset callled');
+
+        this.selectedSubCategory = null;
+        this.selectedSubCategory2 = null;
+    }
+    resetSubCategories2() {
+        console.log('reset 2 caled');
+        
+        this.selectedSubCategory2 = null;
     }
 
     onSubmit() {
@@ -144,17 +164,21 @@ export class NewComplaintPage {
 
     buildPayload() {
 
+        console.log('slectedSubCategry', this.selectedSubCategory.id);
+        console.log('slectedSubCategry2', this.selectedSubCategory2);
+
+
         let data: any = {};
         data.anonymous = this.isAnonymous;
 
-        if (this.selectedCategory.id == 2) { //in case of faculty
+        if (this.selectedSubCategory.id == 3) { //in case of faculty
 
-            data.againstCategoryId = this.selectedCategory.id;
-            data.againstEmployeeId = this.selectedSubCategory.facultyId;
+            data.againstCategoryId = this.selectedSubCategory.id;
+            data.againstEmployeeId = this.selectedSubCategory2.facultyId;
         }
         else {
 
-            data.againstCategoryId = this.selectedSubCategory ? this.selectedSubCategory.id : this.selectedCategory.id;
+            data.againstCategoryId = this.selectedSubCategory2 ? this.selectedSubCategory2.id : this.selectedSubCategory.id;
         }
         data.title = this.complaintTitle;
         data.description = this.complaintDescription;

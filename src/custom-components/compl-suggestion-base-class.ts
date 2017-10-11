@@ -59,7 +59,6 @@ export class ComplaintSuggestionOptionsBaseClass {
             .subscribe((res: any) => {
 
                 this.complaint = res;
-
                 this.customService.hideLoader();
                 this.customService.showToast('Complaint closed successfully');
                 this.events.publish('complaintStatusChanged', res, this.complaintIndex);

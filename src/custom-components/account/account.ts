@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
-import { IonicPage } from 'ionic-angular';
+import { IonicPage, Nav,Events} from 'ionic-angular';
+import { LoginPage } from '../login/login';
 
 
-@IonicPage() 
+@IonicPage()
 @Component({
     selector: 'account-page',
     templateUrl: 'account.html',
@@ -26,10 +27,9 @@ export class AccountPage {
     // public userImage: string = localStorage.getItem("picTimestamp");
 
     constructor(
-
-    ) {
-
-    }
+        private nav: Nav,
+        private events:Events
+    ) {    }
 
 
     ionViewWillEnter() {
@@ -60,7 +60,6 @@ export class AccountPage {
 
 
     logout() {
-        // this.events.publish('user:logout');
     }
 
     // public openImageActionSheet(data) {
@@ -142,4 +141,9 @@ export class AccountPage {
     //     let viewComplaint = this.modalCtrl.create(resetPasswordModal);
     //     viewComplaint.present();
     // }
+
+    onLogOut() {
+
+        this.events.publish('user:logout');
+    }
 }

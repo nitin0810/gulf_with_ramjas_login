@@ -57,8 +57,14 @@ export class ComplaintMainPage {
         });
         
         /**for management only as closing page in this case is different */
-        this.events.subscribe('complaintClosed', (newData: any, index: number) => {
+        this.events.subscribe('complaintStatusClosedMngmnt', (newData: any, index: number) => {
 
+            this.complaintList[index] = newData;
+        });
+
+     /**for management only as edit page exist in this case only*/
+        this.events.subscribe('complaintEdited', (newData: any, index: number) => {
+            
             this.complaintList[index] = newData;
         });
 
