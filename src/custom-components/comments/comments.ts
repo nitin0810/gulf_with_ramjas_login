@@ -83,7 +83,7 @@ export class CommentsPage {
 
 
             this.stompClient.subscribe(url1, (greeting) => {
-
+console.log('closed inside comments');
                 let message = JSON.parse(greeting.body);
                 if (!message) {
                     return;

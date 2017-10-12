@@ -36,6 +36,9 @@ export class ComplaintCloseManagementPage {
 
         this.complaint = this.navParam.get('complaint');
         this.complaintIndex = this.navParam.get('complaintIndex');
+
+        console.log('comparing objects',this.complaint===this.navParam.get('complaint'));
+        
     }
 
     onSubmit() {
@@ -90,7 +93,7 @@ export class ComplaintCloseManagementPage {
     dismiss() {
 
         if (this.complaintClosed) {
-            this.events.publish("complaintStatusClosedMngmnt", this.complaint, this.complaintIndex);
+            this.events.publish("complaintClosed", this.complaint, this.complaintIndex);
         }
         this.viewCtrl.dismiss();
     }

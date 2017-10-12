@@ -45,25 +45,30 @@ export class ComplaintMainPage {
 
     registerStatusChange() {
 
-        this.events.subscribe('complaintStatusChanged', (newData: any, index: number) => {
+        this.events.subscribe('complaintClosed', (newData: any, index: number) => {
 
             this.complaintList[index] = newData;
         });
+
+        this.events.subscribe('complaintReOpened', (newData: any, index: number) => {
+  
+            this.complaintList[index] = newData;
+        });
+
+        this.events.subscribe('complaintSatisfied', (newData: any, index: number) => {
+              
+                        this.complaintList[index] = newData;
+                    });
 
         this.events.subscribe('complaintStatusChangedInCommentsPage', (newData: any, index: number) => {
 
             this.complaintList[index] = newData;
         });
-        
-        /**for management only as closing page in this case is different */
-        this.events.subscribe('complaintStatusClosedMngmnt', (newData: any, index: number) => {
 
-            this.complaintList[index] = newData;
-        });
 
-     /**for management only as edit page exist in this case only*/
+        /**for management only as edit page exist in this case only*/
         this.events.subscribe('complaintEdited', (newData: any, index: number) => {
-            
+
             this.complaintList[index] = newData;
         });
 

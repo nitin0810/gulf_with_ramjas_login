@@ -61,7 +61,7 @@ export class ComplaintSuggestionOptionsBaseClass {
                 this.complaint = res;
                 this.customService.hideLoader();
                 this.customService.showToast('Complaint closed successfully');
-                this.events.publish('complaintStatusChanged', res, this.complaintIndex);
+                this.events.publish('complaintClosed', res, this.complaintIndex);
 
             }, (err: any) => {
 
@@ -113,7 +113,7 @@ export class ComplaintSuggestionOptionsBaseClass {
                 this.complaint = res;
                 this.customService.hideLoader();
                 this.customService.showToast('Complaint reopend successfully');
-                this.events.publish('complaintStatusChanged', res, this.complaintIndex);
+                this.events.publish('complaintReOpened', res, this.complaintIndex);
 
             }, (err: any) => {
 
@@ -157,7 +157,7 @@ export class ComplaintSuggestionOptionsBaseClass {
                 this.complaint = res;
                 this.customService.hideLoader();
                 this.customService.showToast('Status changed to satisfied successfully ');
-                this.events.publish('complaintStatusChanged', res, this.complaintIndex);
+                this.events.publish('complaintSatisfied', res, this.complaintIndex);
             }, (err: any) => {
 
                 this.customService.hideLoader();

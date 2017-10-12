@@ -39,7 +39,7 @@ export class ViewComplaintPage extends ComplaintSuggestionOptionsBaseClass {
         private authService: AuthService
     ) {
         super(mdlCtrl, alertCtrl, actionSheetCtrl, customService, complaintService, events);
-console.log('inside view const///////');
+        console.log('inside view const///////');
 
         this.isStudent = localStorage.getItem('isStudent') === "true";
 
@@ -90,7 +90,7 @@ console.log('inside view const///////');
                 }
 
                 this.complaint = message;
-                this.events.publish('complaintStatusChanged', this.complaint, this.complaintIndex);
+                this.events.publish('complaintClosed', this.complaint, this.complaintIndex);
 
 
             });
@@ -132,7 +132,7 @@ console.log('inside view const///////');
 
             this.events.subscribe('complaintEdited', (newData: any, index: number) => {
                 console.log('EDITING IN RESPONSE');
-                
+
                 this.complaint = newData;
                 this.events.publish('complaintStatusChanged', this.complaint, this.complaintIndex);
 
@@ -147,7 +147,7 @@ console.log('inside view const///////');
         // this.events.unsubscribe('complaintEdited');
         // this.events.unsubscribe('complaintStatusClosedMngmnt');
         // this.events.unsubscribe('complaintStatusChangedInCommentsPage');
-        
+
         this.viewCtrl.dismiss();
     }
 
