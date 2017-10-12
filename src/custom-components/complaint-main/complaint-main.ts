@@ -39,7 +39,6 @@ export class ComplaintMainPage {
         public events: Events
     ) {
         this.registerStatusChange();
-        this.complaintService.compOrSugg = "complaint";
         this.getComplaints(1);
 
     }

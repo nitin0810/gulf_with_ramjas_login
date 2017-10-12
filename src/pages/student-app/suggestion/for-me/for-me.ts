@@ -7,7 +7,12 @@ import {IonicPage} from 'ionic-angular';
    
 })
 
-export class SuggestionForMe {
+export class SuggestionForMeStudent {
 
   title:string = "SUGGESTIONS";
+
+  constructor(){
+    console.log('for me constructor called/////');
+    
+  }
 }

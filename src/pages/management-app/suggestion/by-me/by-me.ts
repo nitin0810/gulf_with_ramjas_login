@@ -2,50 +2,33 @@
 
 import { Component, ViewChild } from '@angular/core';
 import { IonicPage, ModalController, Events } from 'ionic-angular';
-import { ComplaintMainPage } from '../../../custom-components/complaint-main/complaint-main';
-import { ComplaintService } from '../../../services/complaint.service';
+import { ComplaintMainPage } from '../../../../custom-components/complaint-main/complaint-main';
+import { ComplaintService } from '../../../../services/complaint.service';
 
 
 @IonicPage()
 @Component({
-    selector: 'complaint',
-    templateUrl: './complaint.html',
+    selector: 'suggestion-by-me',
+    templateUrl: './by-me.html',
     styles: [` `]
 })
 
-export class ComplaintPageStudent {
+export class SuggestionByMeManagement {
 
-    title: string = "Complaints";
+    title: string = "Suggestions";
     complaintList: Array<any>;
     searchInput: string = '';
     debounceDuration: number = 400;
-    
     @ViewChild(ComplaintMainPage) complaintMainPage: ComplaintMainPage;
-    // isEmptyList: boolean = false;
-    // currentPage: number = 1;
-    // currentPageWithSearch: number = 1;
-    // currentPageWithSortFilter: number = 1;
-
-    // searchInput: string = '';
-    // searchInProcess: boolean = false;
-    // isSortApplied: boolean = false;
-    // isFilterApplied: boolean = false;  
-
-    // appliedSortName: string;
-    // appliedFilter: any;
-    // debounceDuration: number = 400;
+   
 
     constructor(
-       private complaintService :ComplaintService 
-    ) {
-        this.complaintService.compOrSugg = "complaint";
+     private complaintService: ComplaintService
+    ) {  
+        this.complaintService.compOrSugg = "suggestion";
+        console.log('by me constructor called/////');
         
-        // super(mdlCtrl,complaintService,customService,events);
-        // this.registerStatusChange();
-        // this.complaintService.compOrSugg = "complaint";
-        // this.getComplaints(1);
-
-    }
+      }
 
     // registerStatusChange() {
 

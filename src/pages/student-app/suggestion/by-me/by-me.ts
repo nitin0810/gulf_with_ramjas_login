@@ -1,25 +1,68 @@
-import { Component } from '@angular/core';
+
+
+import { Component, ViewChild } from '@angular/core';
 import { IonicPage, ModalController, Events } from 'ionic-angular';
+import { ComplaintMainPage } from '../../../../custom-components/complaint-main/complaint-main';
 import { ComplaintService } from '../../../../services/complaint.service';
-import { CustomService } from '../../../../services/custom.service';
 
 
 @IonicPage()
 @Component({
-    templateUrl: './by-me.html'
+    selector: 'suggestion-by-me',
+    templateUrl: './by-me.html',
+    styles: [` `]
 })
 
-export class SuggestionByMe {
+export class SuggestionByMeStudent {
 
-    title: string = "SUGGESTIONS";
+    title: string = "Suggestions";
+    complaintList: Array<any>;
+    searchInput: string = '';
+    debounceDuration: number = 400;
+    @ViewChild(ComplaintMainPage) complaintMainPage: ComplaintMainPage;
+
 
     constructor(
-        public mdlCtrl: ModalController,
-        public complaintService: ComplaintService,
-        public customService: CustomService,
-        public events: Events
+        private complaintService: ComplaintService
     ) {
-
         this.complaintService.compOrSugg = "suggestion";
+        console.log('by me constructor called/////');
+
     }
+
+
+    onSortFilterSelect(event: any) {
+
+        this.complaintMainPage.onSortFilterSelect(event);
+        this.searchInput = '';
+
+    }
+
+
+    openNewComplaintModal() {
+        this.complaintMainPage.openNewComplaintModal();
+    }
+
+
+
+    doRefresh(refresher: any) {
+        this.complaintMainPage.doRefresh(refresher);
+        this.searchInput = '';
+    }
+
+
+
+    onSearchInput(event: any) {
+
+        this.complaintMainPage.onSearchInput(event);
+
+    }
+
+
+
+    onSearchClear(event: any) {
+
+        this.complaintMainPage.onSearchClear(event);
+    }
+
 }
