@@ -19,13 +19,13 @@ export class ComplaintEditPage {
     complaintIndex: number;
 
     //form variables
-    assignTo:any;
+    assignTo: any;
     assignToName: string;
     priority: string;
     priorityList: Array<any>;
     inProgress: boolean;
     complaintEdited: boolean = false;
-facultyList: Array<any>;
+    facultyList: Array<any>;
 
     searchList: Array<any>;
     constructor(
@@ -49,13 +49,14 @@ facultyList: Array<any>;
 
         let searchPage = this.mdlCtrl.create("FacultySearchPage", { 'searchList': this.facultyList, 'title': 'Faculty' });
         searchPage.present();
-        searchPage.onDidDismiss((selected) => { 
-            if (selected) { 
-console.log(selected.selectedSearch);
+        searchPage.onDidDismiss((selected) => {
+            if (selected) {
 
-            this.assignTo = selected.selectedSearch;
-             this.assignToName = selected.selectedSearch.name 
-            } });
+                this.assignTo = selected.selectedSearch;
+                this.assignToName = selected.selectedSearch.name;
+
+            }
+        });
     }
 
 

@@ -83,7 +83,7 @@ export class CommentsPage {
 
 
             this.stompClient.subscribe(url1, (greeting) => {
-console.log('closed inside comments');
+// console.log('closed inside comments');
                 let message = JSON.parse(greeting.body);
                 if (!message) {
                     return;
@@ -102,7 +102,6 @@ console.log('closed inside comments');
                 if (!message) {
                     return;
                 }
-            console.log(message);
                 this.comments.push(message);
                 this.content.scrollToBottom();
                 this.isCommentsEmpty = this.comments.length == 0;

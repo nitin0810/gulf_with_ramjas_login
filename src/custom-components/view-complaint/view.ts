@@ -127,17 +127,7 @@ export class ViewComplaintPage extends ComplaintSuggestionOptionsBaseClass {
             this.complaint = newData;
             this.events.publish('complaintStatusChanged', this.complaint, this.complaintIndex);
         });
-
-        if (!this.isStudent) {
-
-            this.events.subscribe('complaintEdited', (newData: any, index: number) => {
-                console.log('EDITING IN RESPONSE');
-
-                this.complaint = newData;
-                this.events.publish('complaintStatusChanged', this.complaint, this.complaintIndex);
-
-            });
-        }
+        
     }
 
 
