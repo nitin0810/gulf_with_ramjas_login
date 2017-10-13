@@ -1,0 +1,75 @@
+<ion-header>
+    <nl-modal-navbar [title]="title" (modalClosed)="dismiss()"></nl-modal-navbar>
+</ion-header>
+
+<ion-content class="csGrayBackground">
+
+    <form #newPollForm="ngForm" (ngSubmit)="onSubmit()">
+
+        <ion-card>
+            <ion-item>
+                <ion-label>Poll For</ion-label>
+                <ion-select [(ngModel)]="mainAudienceId"  required name="mainAudience">
+                    <ion-option *ngFor="let audience of audienceList" [value]="audience">{{audience.name}}</ion-option>
+                </ion-select>
+            </ion-item>
+        </ion-card>
+        <!--
+        <div *ngIf="selectedCategory?.subCategory && selectedCategory.subCategory.length > 0">
+            <ion-card>
+                <ion-item>
+                    <ion-icon name="options" item-start></ion-icon>
+                    <ion-label>SubCategory</ion-label>
+                    <ion-select [(ngModel)]="selectedSubCategory" (ionChange)="resetSubCategories2()" required name="subCategory">
+                        <ion-option *ngFor="let subCat of selectedCategory.subCategory" [value]="subCat">{{subCat.name || subCat.facultyName}}</ion-option>
+                    </ion-select>
+                </ion-item>
+            </ion-card>
+        </div>
+
+        <div *ngIf="selectedSubCategory?.subCategory && selectedSubCategory.subCategory.length > 0">
+            <ion-card>
+                <ion-item>
+                    <ion-icon name="options" item-start></ion-icon>
+                    <ion-label>SubCategory</ion-label>
+                    <ion-select [(ngModel)]="selectedSubCategory2" required name="subCategory2">
+                        <ion-option *ngFor="let subCat of selectedSubCategory.subCategory" [value]="subCat">{{subCat.name || subCat.facultyName}}</ion-option>
+                    </ion-select>
+                </ion-item>
+            </ion-card>
+        </div>
+
+        <ion-card>
+            <ion-item>
+                <ion-label stacked>Title</ion-label>
+                <ion-textarea [(ngModel)]="complaintTitle" required name="title" maxlength="50" placeholder="Enter Title"></ion-textarea>
+            </ion-item>
+            <ion-badge class="csFiftyLimit">
+                <span>{{50 - complaintTitle?.length}}</span>
+            </ion-badge>
+        </ion-card>
+
+        <ion-card>
+            <ion-item>
+                <ion-label stacked>Description</ion-label>
+                <ion-textarea [(ngModel)]="complaintDescription" required name="description" rows="5" maxlength="200" placeholder="Enter Description"></ion-textarea>
+            </ion-item>
+            <ion-badge class="csFiftyLimit">
+                <span>{{200 - complaintDescription?.length}}</span>
+            </ion-badge>
+        </ion-card>
+
+        <ion-card>
+            <ion-item>
+                <ion-label>Anonymous</ion-label>
+                <ion-toggle [(ngModel)]="isAnonymous" checked="false" required name="isAnonymous"></ion-toggle>
+            </ion-item>
+        </ion-card>
+
+        <div padding>
+            <button [disabled]="!complaintForm.valid" ion-button full type="submit">Submit</button>
+        </div>
+    -->
+    </form>
+
+</ion-content>

@@ -17,5 +17,11 @@ export class PollService {
         return this.http.get(CONFIG.serverUrl + `/st/poll/page/${pageNo}`);
     }
 
+    fetchPollAudience(){
+        
+        return this.http.get(CONFIG.serverUrl + '/ma/poll/audience');
+        
+    }
+
 
 }

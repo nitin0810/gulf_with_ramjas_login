@@ -1,0 +1,13 @@
+<ion-header>
+    <nl-navbar [title]="title"></nl-navbar>
+</ion-header>
+
+<ion-content class="csGrayBackground">
+    <p>current polls</p>
+
+    <ion-fab right bottom>
+        <button ion-fab color="danger" (click)="openNewPollModal()">
+            <ion-icon name="add"></ion-icon>
+        </button>
+    </ion-fab>
+</ion-content>

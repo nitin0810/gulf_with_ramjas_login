@@ -64,7 +64,6 @@ export class ComplaintService {
 
     /**for both student and management */
     fetchPriorityList() {
-        console.log('priorityList', this.getUserType());
 
         /**priority list is also same for both */
         return this.http.get(CONFIG.serverUrl + `/${this.getUserType()}/complaint/filter/priority`);
