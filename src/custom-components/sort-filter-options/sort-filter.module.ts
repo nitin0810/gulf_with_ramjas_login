@@ -5,7 +5,8 @@ import { SortFilterOptionsPage } from './sort-filter';
 @NgModule({
   declarations: [SortFilterOptionsPage],
   
-  imports: [IonicPageModule.forChild(SortFilterOptionsPage)],
+  imports: [
+    IonicPageModule.forChild(SortFilterOptionsPage)],
   exports:[SortFilterOptionsPage]
 })
 

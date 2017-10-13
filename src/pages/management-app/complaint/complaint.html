@@ -3,8 +3,8 @@
     </nl-navbar>
     <ion-searchbar [(ngModel)]="searchInput" (ionInput)="onSearchInput($event)" [debounce]="debounceDuration" (ionClear)="onSearchClear($event)"></ion-searchbar>
 
-    <sort-filter (onSelect)="onSortFilterSelect($event)"></sort-filter>
-
+    <sort-filter [sortSelected]="complaintMainPage.isSortApplied" [filterSelected]="complaintMainPage.isFilterApplied" (onSelect)="onSortFilterSelect($event)"></sort-filter>
+    
 </ion-header>
 
 <ion-content class="csGrayBackground">

@@ -135,4 +135,11 @@ export class ComplaintService {
         return this.http.get(CONFIG.serverUrl + `/${this.getUserType()}/${this.compOrSugg}/filter/` + filtering.filterName + `/${filtering.id}/page/${pageNo}`);
     }
 
+    
+    /**for both student and management */
+    searchAfterFilter(filtering: any, input: string,pageNo: number) {
+        
+                return this.http.post(CONFIG.serverUrl + `/${this.getUserType()}/${this.compOrSugg}/filter/` + filtering.filterName + `/${filtering.id}/search/page/${pageNo}`,{ search: input});
+            }    
+    
 }

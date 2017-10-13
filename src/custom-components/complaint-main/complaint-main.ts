@@ -1,7 +1,7 @@
 
 
 import { Component, Input } from '@angular/core';
-import { IonicPage, ModalController, Events } from 'ionic-angular';
+import { IonicPage, ModalController, Events, ToastController } from 'ionic-angular';
 import { ComplaintService } from '../../services/complaint.service';
 import { CustomService } from '../../services/custom.service';
 
@@ -18,7 +18,6 @@ export class ComplaintMainPage {
     @Input() complaintList: Array<any>;
     @Input() searchInput: string;
 
-    //  title: string = "Complaints";
     isEmptyList: boolean = false;
     currentPage: number = 1;
     currentPageWithSearch: number = 1;
@@ -30,10 +29,12 @@ export class ComplaintMainPage {
 
     appliedSortName: string;
     appliedFilter: any;
+    refreshMsgDisplayed: boolean = false;
     debounceDuration: number = 400;
 
     constructor(
         public mdlCtrl: ModalController,
+        private toastCtrl: ToastController,
         public complaintService: ComplaintService,
         public customService: CustomService,
         public events: Events
@@ -51,14 +52,14 @@ export class ComplaintMainPage {
         });
 
         this.events.subscribe('complaintReOpened', (newData: any, index: number) => {
-  
+
             this.complaintList[index] = newData;
         });
 
         this.events.subscribe('complaintSatisfied', (newData: any, index: number) => {
-              
-                        this.complaintList[index] = newData;
-                    });
+
+            this.complaintList[index] = newData;
+        });
 
         this.events.subscribe('complaintStatusChangedInCommentsPage', (newData: any, index: number) => {
 
@@ -75,6 +76,7 @@ export class ComplaintMainPage {
     }
 
     onSortFilterSelect(event: any) {
+        console.log('inside onsortfilterselect', event);
 
         if (event.sortName) {
 
@@ -91,6 +93,7 @@ export class ComplaintMainPage {
                     this.isFilterApplied = false;
                     this.searchInput = '';
                     this.customService.hideLoader();
+                    this.showSortFilterRemoveMsg();
 
 
                 },
@@ -115,7 +118,7 @@ export class ComplaintMainPage {
                     this.isSortApplied = false;
                     this.searchInput = '';
                     this.customService.hideLoader();
-
+                    this.showSortFilterRemoveMsg();
                 },
                 (err: any) => {
                     this.customService.hideLoader();
@@ -186,23 +189,45 @@ export class ComplaintMainPage {
 
         if (this.searchInput.trim().length >= 1) {
 
-            this.complaintService.search(this.searchInput, this.currentPageWithSearch + 1)
-                .subscribe((res: any) => {
+            if (!this.appliedFilter) {
+                this.complaintService.search(this.searchInput, this.currentPageWithSearch + 1)
+                    .subscribe((res: any) => {
 
-                    if (!res) {
+                        if (!res) {
+                            refresher.complete();
+                            return;
+                        }
+                        this.complaintList = this.complaintList.concat(res);
+                        if (res.length != 0) { this.currentPageWithSearch++; }
                         refresher.complete();
-                        return;
-                    }
-                    this.complaintList = this.complaintList.concat(res);
-                    if (res.length != 0) { this.currentPageWithSearch++; }
-                    refresher.complete();
 
-                }, (err: any) => {
+                    }, (err: any) => {
 
-                    refresher.complete();
-                    this.customService.showToast(err.msg);
+                        refresher.complete();
+                        this.customService.showToast(err.msg);
 
-                });
+                    });
+            } else {
+
+                this.complaintService.searchAfterFilter(this.appliedFilter, this.searchInput, this.currentPageWithSearch + 1)
+                    .subscribe((res: any) => {
+
+                        if (!res) {
+                            refresher.complete();
+                            return;
+                        }
+                        this.complaintList = this.complaintList.concat(res);
+                        if (res.length != 0) { this.currentPageWithSearch++; }
+                        refresher.complete();
+
+                    }, (err: any) => {
+
+                        refresher.complete();
+                        this.customService.showToast(err.msg);
+
+                    });
+            }
+
         } else if (this.isSortApplied || this.isFilterApplied) {
 
             if (this.isSortApplied) {
@@ -275,11 +300,25 @@ export class ComplaintMainPage {
 
         if (this.searchInput.trim().length >= 1) {
 
-            this.sendSearchRequest();
+            if (this.isFilterApplied) {
+                console.log('FILTERED SEARCH FIRED.......');
+
+                this.sendSearchAfterFilterRequest();
+            } else {
+                console.log('NORMAL SEARCH FIRED.......');
+                this.sendSearchRequest();
+            }
         }
 
         if (this.searchInput.trim().length == 0) {
-            this.getComplaints(1);
+
+            if (this.isFilterApplied) {
+                console.log('FILTERED SEARCH FIRED--ON LENGTH 0 .......');
+                this.onSortFilterSelect({ filter: this.appliedFilter });
+            } else {
+                console.log('NORMAL SEARCH FIRED--ON LENGTH 0 .......');
+                this.getComplaints(1);
+            }
 
         }
     }
@@ -287,10 +326,10 @@ export class ComplaintMainPage {
     sendSearchRequest() {
 
         this.searchInProcess = true;
+        this.currentPageWithSearch = 1;
         this.complaintService.search(this.searchInput, this.currentPageWithSearch)
             .subscribe((res: any) => {
 
-                console.log(res);
                 this.complaintList = res;
                 this.searchInProcess = false;
                 this.isEmptyList = !this.complaintList || this.complaintList.length == 0;
@@ -308,9 +347,43 @@ export class ComplaintMainPage {
             });
     }
 
+    sendSearchAfterFilterRequest() {
+
+        this.currentPageWithSearch = 1;
+        this.searchInProcess = true;
+        this.complaintService.searchAfterFilter(this.appliedFilter, this.searchInput, this.currentPageWithSearch)
+            .subscribe((res: any) => {
+
+                this.complaintList = res;
+                this.searchInProcess = false;
+                this.isEmptyList = !this.complaintList || this.complaintList.length == 0;
+
+            }, (err: any) => {
+
+                this.customService.showToast(err.msg);
+                this.searchInProcess = false;
+
+            });
+    }
+
     onSearchClear(event: any) {
 
         this.getComplaints(1);
     }
+
+    showSortFilterRemoveMsg() {
+
+        if (!this.refreshMsgDisplayed) {
+            let toast = this.toastCtrl.create({
+                message: "Pull down to refresh or remove any applied filter or sort",
+                duration: 3000,
+                position: "top"
+
+            });
+            toast.present();
+            this.refreshMsgDisplayed = true;
+        }
+    }
+
 
 }

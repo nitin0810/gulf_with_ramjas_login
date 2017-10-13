@@ -1,5 +1,5 @@
 
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, Input, EventEmitter, OnChanges } from '@angular/core';
 import { IonicPage, ActionSheetController, Events } from 'ionic-angular';
 
 @IonicPage()
@@ -10,14 +10,14 @@ import { IonicPage, ActionSheetController, Events } from 'ionic-angular';
     <ion-grid>
         <ion-row>
             <ion-col >
-                <button ion-button (click)="onSort()" icon-start block outline>
+                <button ion-button (click)="onSort()" [style.background-color]="sortSelected ? 'grey': ''" icon-start block outline>
                     <ion-icon name="arrow-round-down"></ion-icon><ion-icon name="arrow-round-up"></ion-icon>
                 Sort By
                 </button>
             </ion-col>
 
             <ion-col>
-                    <button ion-button (click)="onFilter()" icon-start block outline>
+                    <button ion-button (click)="onFilter()" [style.background-color]="filterSelected ? 'grey': ''" icon-start block outline>
                         <ion-icon name="funnel"></ion-icon>
                     Filter By
                     </button>
@@ -34,7 +34,8 @@ export class SortFilterOptionsPage implements OnInit {
 
     statusOptions: any;
     priorityOptions: any;
-
+    @Input() sortSelected: boolean;
+    @Input() filterSelected: boolean;
     @Output() onSelect = new EventEmitter<any>();
 
 
@@ -48,6 +49,7 @@ export class SortFilterOptionsPage implements OnInit {
         this.priorityOptions = JSON.parse(localStorage.getItem('complaintPriorityList'));
 
     }
+   
     onSort() {
         const actionSheet = this.actionSheetCtrl.create({
             title: 'Sort By',
@@ -129,7 +131,7 @@ export class SortFilterOptionsPage implements OnInit {
                     text: this.priorityOptions[i].id,
                     handler: () => {
                         this.onSelect.emit({ sortName: null, filter: { filterName: 'priority', id: this.priorityOptions[i].id } });
-                        
+
                     }
                 });
             }
