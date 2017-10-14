@@ -24,21 +24,35 @@ export class DashboardPage implements OnInit {
 
     if (localStorage.getItem('isStudent') === "true") {
 
-      if (!localStorage.getItem('complaintCategories')) { this.fetchComplaintCategories(); }
       if (!localStorage.getItem('complaintFaculties')) { this.fetchFacultyNames(); }
+      if (!localStorage.getItem('complaintCategories')) { this.fetchComplaintCategories(); }
     }
     else {
+      
       if (!localStorage.getItem('complaintFaculties')) { this.fetchFacultyNamesForManagement(); }
-
     }
+    /**following data is to be used in sorting and filtering */
+    if (!localStorage.getItem('complaintCategoryOptions')) { this.fetchCategoryOptions(); } // for filtering purpose
     if (!localStorage.getItem('complaintStatusList')) { this.fetchStatusList(); }
     if (!localStorage.getItem('complaintPriorityList')) { this.fetchPriorityList(); }
   }
+
+  fetchCategoryOptions() {
+    
+        this.complaintService.fetchCategoryOptions()
+          .subscribe((res: any) => {
+    
+            localStorage.setItem('complaintCategoryOptions', JSON.stringify(res));
+          }, (err: any) => {
+    
+          });
+      }
 
   fetchComplaintCategories() {
 
     this.complaintService.fetchCategories()
       .subscribe((res: any) => {
+
         localStorage.setItem('complaintCategories', JSON.stringify(res));
       }, (err: any) => {
 

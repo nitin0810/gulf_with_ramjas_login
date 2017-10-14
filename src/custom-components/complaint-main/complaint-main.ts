@@ -76,7 +76,6 @@ export class ComplaintMainPage {
     }
 
     onSortFilterSelect(event: any) {
-        console.log('inside onsortfilterselect', event);
 
         if (event.sortName) {
 

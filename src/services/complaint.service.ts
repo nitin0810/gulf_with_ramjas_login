@@ -14,7 +14,7 @@ export class ComplaintService {
 
     constructor(
         public http: CustomHttpService,
-    ) {   }
+    ) { }
 
     getUserType(): string {
 
@@ -55,8 +55,14 @@ export class ComplaintService {
     }
 
     /**for both student and management */
+    fetchCategoryOptions() {
+
+        /**categoryoptions list is same for both complaint and suggstions, hence only single url(with complaint) is sufficicent */
+        return this.http.get(CONFIG.serverUrl + `/${this.getUserType()}/complaint/filter/category`);
+    }
+
+    /**for both student and management */
     fetchStatusList() {
-        console.log('statusList', this.getUserType());
 
         /**status list is same for both complaint and suggstions, hence only single url(with complaint) is sufficicent */
         return this.http.get(CONFIG.serverUrl + `/${this.getUserType()}/complaint/filter/status`);
@@ -134,11 +140,11 @@ export class ComplaintService {
         return this.http.get(CONFIG.serverUrl + `/${this.getUserType()}/${this.compOrSugg}/filter/` + filtering.filterName + `/${filtering.id}/page/${pageNo}`);
     }
 
-    
+
     /**for both student and management */
-    searchAfterFilter(filtering: any, input: string,pageNo: number) {
-        
-                return this.http.post(CONFIG.serverUrl + `/${this.getUserType()}/${this.compOrSugg}/filter/` + filtering.filterName + `/${filtering.id}/search/page/${pageNo}`,{ search: input});
-            }    
-    
+    searchAfterFilter(filtering: any, input: string, pageNo: number) {
+
+        return this.http.post(CONFIG.serverUrl + `/${this.getUserType()}/${this.compOrSugg}/filter/` + filtering.filterName + `/${filtering.id}/search/page/${pageNo}`, { search: input });
+    }
+
 }

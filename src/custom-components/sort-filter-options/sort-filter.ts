@@ -34,6 +34,7 @@ export class SortFilterOptionsPage implements OnInit {
 
     statusOptions: any;
     priorityOptions: any;
+    complaintCategoryOptions: any;
     @Input() sortSelected: boolean;
     @Input() filterSelected: boolean;
     @Output() onSelect = new EventEmitter<any>();
@@ -45,11 +46,12 @@ export class SortFilterOptionsPage implements OnInit {
     ) { }
 
     ngOnInit() {
+        
         this.statusOptions = JSON.parse(localStorage.getItem('complaintStatusList'));
         this.priorityOptions = JSON.parse(localStorage.getItem('complaintPriorityList'));
-
+        this.complaintCategoryOptions = JSON.parse(localStorage.getItem('complaintCategoryOptions'));
     }
-   
+
     onSort() {
         const actionSheet = this.actionSheetCtrl.create({
             title: 'Sort By',
@@ -62,9 +64,10 @@ export class SortFilterOptionsPage implements OnInit {
                     }
                 },
                 {
-                    text: 'Faculty Name',
+                    text: 'Category',
                     handler: () => {
-                        this.onSelect.emit({ sortName: 'employee', filter: null });
+                        //show further options of complaintCatgories
+                        this.onSelect.emit({ sortName: 'category', filter: null });
 
                     }
                 },
@@ -87,6 +90,7 @@ export class SortFilterOptionsPage implements OnInit {
         actionSheet.present();
     }
 
+
     onFilter() {
         const actionSheet = this.actionSheetCtrl.create({
             title: 'Filter By',
@@ -105,7 +109,13 @@ export class SortFilterOptionsPage implements OnInit {
 
                     }
                 },
+                {
+                    text: 'Category',
+                    handler: () => {
+                        this.filterBySubCategories(3);
 
+                    }
+                },
                 {
                     text: 'Cancel',
                     role: 'cancel',
@@ -135,9 +145,8 @@ export class SortFilterOptionsPage implements OnInit {
                     }
                 });
             }
-        }
+        } else if (id == 2) {
 
-        else {
             actionSheet.setTitle('Select Status');
 
             for (let i = 0; i < this.statusOptions.length; i++) {
@@ -148,8 +157,20 @@ export class SortFilterOptionsPage implements OnInit {
                     }
                 });
             }
-        }
+        } else {
 
+            actionSheet.setTitle('Select Category');
+
+            for (let i = 0; i < this.complaintCategoryOptions.length; i++) {
+                actionSheet.addButton({
+                    text: this.complaintCategoryOptions[i].name,
+                    handler: () => {
+
+                        this.afterCategorySelect(this.complaintCategoryOptions[i]);
+                    }
+                });
+            }
+        }
         actionSheet.addButton({
             text: 'Cancel',
             role: 'cancel',
@@ -158,5 +179,53 @@ export class SortFilterOptionsPage implements OnInit {
         });
         actionSheet.present();
 
+    }
+
+    afterCategorySelect(selectedCategory: any) {
+        console.log(selectedCategory);
+
+        const actionSheet = this.actionSheetCtrl.create();
+
+        actionSheet.setTitle('Select Subcategory');
+
+        for (let i = 0; i < selectedCategory.subCategory.length; i++) {
+            actionSheet.addButton({
+                text: selectedCategory.subCategory[i].name,
+                handler: () => {
+
+                    if (selectedCategory.subCategory[i].id !=3 && selectedCategory.subCategory[i].subCategory && selectedCategory.subCategory[i].subCategory.length != 0) {
+
+                        this.afterSubcategorySelect(selectedCategory.subCategory[i]);
+                    } else {
+
+                        this.onSelect.emit({ sortName: null, filter: { filterName: 'category', id: selectedCategory.subCategory[i].id } });
+                    }
+                }
+            });
+        }
+
+        actionSheet.present();
+
+    }
+
+    afterSubcategorySelect(selectedSubcategory: any) {
+
+        const actionSheet = this.actionSheetCtrl.create();
+        switch (selectedSubcategory.id) {
+            // further options if needed in future can be added here
+            case 6: actionSheet.setTitle('Select Student Activities');
+                break;
+        }
+
+        for (let i = 0; i < selectedSubcategory.subCategory.length; i++) {
+            actionSheet.addButton({
+                text: selectedSubcategory.subCategory[i].name || selectedSubcategory.subCategory[i].facultyName,
+                handler: () => {
+                    this.onSelect.emit({ sortName: null, filter: { filterName: 'category', id: selectedSubcategory.subCategory[i].id || selectedSubcategory.subCategory[i].facultyId } });
+                }
+            });
+        }
+
+        actionSheet.present();
     }
 }
