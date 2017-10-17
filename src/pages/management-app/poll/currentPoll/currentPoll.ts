@@ -13,6 +13,7 @@ import { IonicPage, ModalController } from 'ionic-angular';
 export class CurrentPollPageManagement {
 
     title: string = "Poll";
+
     constructor(
         private modalCtrl: ModalController
     ) { }
@@ -22,5 +23,12 @@ export class CurrentPollPageManagement {
     openNewPollModal() {
         let modal = this.modalCtrl.create("NewPollPageManagement");
         modal.present();
+        modal.onDidDismiss((returnedData: any) => {
+            if (returnedData.data) {
+
+            }
+        });
+
+
     }
 }
