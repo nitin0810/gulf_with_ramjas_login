@@ -52,7 +52,7 @@
 
         <ion-card>
             <ion-item>
-                <ion-label>Due Date</ion-label>
+                <ion-label><b>Due Date</b></ion-label>
                 <ion-datetime max="2018" [min]="todayDate()"  displayFormat="MMM DD YYYY" pickerFormat="DD MMM YYYY" name="expireDate" [(ngModel)]="expireDate" ></ion-datetime>
             </ion-item>
         </ion-card>
@@ -60,7 +60,7 @@
 
         <ion-card *ngIf="audienceList">
             <ion-item>
-                <ion-label>Poll For</ion-label>
+                <ion-label><b>Poll For</b></ion-label>
                 <ion-select [(ngModel)]="mainAudience" (ionChange)="onAudienceChange()" required name="mainAudience">
                     <ion-option *ngFor="let audience of audienceList" [value]="audience">{{audience.name}}</ion-option>
                 </ion-select>
@@ -70,7 +70,7 @@
         <div *ngIf="departmentList && mainAudience.id == 2">
             <ion-card>
                 <ion-item>
-                    <ion-label>Select Departments</ion-label>
+                    <ion-label><b>Select Departments</b></ion-label>
                     <ion-select [(ngModel)]="departmentIds" multiple required name="departments">
                         <ion-option *ngFor="let dep of departmentList" [value]="dep.id">{{dep.name}}</ion-option>
                     </ion-select>
@@ -81,7 +81,7 @@
         <div *ngIf="mainAudience?.subAudience && (mainAudience.id == 1 || mainAudience.id == 2)">
             <ion-card>
                 <ion-item>
-                    <ion-label>Select Subcategories</ion-label>
+                    <ion-label><b>Subcategories</b></ion-label>
                     <ion-select [(ngModel)]="audienceIds" multiple required name="subCategory">
                         <ion-option *ngFor="let subCat of mainAudience.subAudience" [value]="subCat.id">{{subCat.name }}</ion-option>
                     </ion-select>
@@ -92,7 +92,7 @@
         <div *ngIf=" programList && mainAudience?.id == 3 ">
             <ion-card>
                 <ion-item>
-                    <ion-label>Select Programs</ion-label>
+                    <ion-label><b>Select Programs</b></ion-label>
                     <ion-select [(ngModel)]="programIds" multiple required name="programs">
                         <ion-option *ngFor="let pgm of programList" [value]="pgm.id">{{pgm.name}}</ion-option>
                     </ion-select>
@@ -103,7 +103,7 @@
         <div *ngIf=" mainAudience?.id == 3 ">
             <ion-card>
                 <ion-item>
-                    <ion-label>Select Years</ion-label>
+                    <ion-label><b>Select Years</b></ion-label>
                     <ion-select [(ngModel)]="yearIds" multiple required name="years">
                         <ion-option *ngFor="let y of yearList" [value]="y.id">{{y.name}}</ion-option>
                     </ion-select>
@@ -114,7 +114,7 @@
         <div *ngIf=" mainAudience?.id == 4 && yearsListForModule">
             <ion-card>
                 <ion-item>
-                    <ion-label>Select Year</ion-label>
+                    <ion-label><b>Select Year</b></ion-label>
                     <ion-select [(ngModel)]="yearForModule" (ionChange)="onYearForModuleChange()" required name="years">
                         <ion-option *ngFor="let y of yearsListForModule" [value]="y">{{y.name || y.yearName}}</ion-option>
                     </ion-select>
@@ -125,7 +125,7 @@
         <div *ngIf=" mainAudience?.id == 4 && moduleList">
             <ion-card>
                 <ion-item>
-                    <ion-label>Select Modules</ion-label>
+                    <ion-label><b>Select Modules</b></ion-label>
                     <ion-select [(ngModel)]="moduleIds" multiple required name="years">
                         <ion-option *ngFor="let module of moduleList" [value]="module.moduleId">{{module.moduleName}}</ion-option>
                     </ion-select>
@@ -136,38 +136,7 @@
         <div padding>
             <button [disabled]="!newPollForm.valid" ion-button full type="submit">Submit</button>
         </div>
-        <!--
-        <ion-card>
-            <ion-item>
-                <ion-label stacked>Title</ion-label>
-                <ion-textarea [(ngModel)]="complaintTitle" required name="title" maxlength="50" placeholder="Enter Title"></ion-textarea>
-            </ion-item>
-            <ion-badge class="csFiftyLimit">
-                <span>{{50 - complaintTitle?.length}}</span>
-            </ion-badge>
-        </ion-card>
 
-        <ion-card>
-            <ion-item>
-                <ion-label stacked>Description</ion-label>
-                <ion-textarea [(ngModel)]="complaintDescription" required name="description" rows="5" maxlength="200" placeholder="Enter Description"></ion-textarea>
-            </ion-item>
-            <ion-badge class="csFiftyLimit">
-                <span>{{200 - complaintDescription?.length}}</span>
-            </ion-badge>
-        </ion-card>
-
-        <ion-card>
-            <ion-item>
-                <ion-label>Anonymous</ion-label>
-                <ion-toggle [(ngModel)]="isAnonymous" checked="false" required name="isAnonymous"></ion-toggle>
-            </ion-item>
-        </ion-card>
-
-        <div padding>
-            <button [disabled]="!complaintForm.valid" ion-button full type="submit">Submit</button>
-        </div>
-    -->
     </form>
 
 </ion-content>

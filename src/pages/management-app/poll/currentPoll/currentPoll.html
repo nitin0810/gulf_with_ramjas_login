@@ -3,11 +3,15 @@
 </ion-header>
 
 <ion-content class="csGrayBackground">
-    <p>current polls</p>
 
     <ion-fab right bottom>
         <button ion-fab color="danger" (click)="openNewPollModal()">
             <ion-icon name="add"></ion-icon>
         </button>
     </ion-fab>
+
+    <poll-list [pollList]="pollList"></poll-list>
+
+
+
 </ion-content>

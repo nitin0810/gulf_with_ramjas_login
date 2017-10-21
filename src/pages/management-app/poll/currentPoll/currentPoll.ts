@@ -13,10 +13,13 @@ import { IonicPage, ModalController } from 'ionic-angular';
 export class CurrentPollPageManagement {
 
     title: string = "Poll";
-
+    pollList: Array<any> = [];
     constructor(
         private modalCtrl: ModalController
-    ) { }
+    ) {
+        // console.log('current construtor callded');
+
+    }
 
 
 
@@ -24,8 +27,11 @@ export class CurrentPollPageManagement {
         let modal = this.modalCtrl.create("NewPollPageManagement");
         modal.present();
         modal.onDidDismiss((returnedData: any) => {
+            console.log("ondiddismaiis called////",returnedData);
+            
             if (returnedData.data) {
 
+                this.pollList.unshift(returnedData.data);
             }
         });
 

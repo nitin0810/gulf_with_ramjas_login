@@ -1,0 +1,23 @@
+<ion-list>
+    <button *ngFor="let poll of pollList" ion-item (click)="openViewPoll()" [style.border-left-color]="poll.mainAudienceColor">
+        <h2><b>{{poll.question}}</b></h2>
+        <ion-row>
+            <ion-col col-4 class="no-padding-l csGray5353">
+                {{poll.optionTypeName}}
+            </ion-col>
+            <ion-col col-4 class="no-padding-l">
+                {{poll.studentVoteCount || poll.totalVote|| 0}} Votes
+            </ion-col>
+        </ion-row>
+        <ion-row>
+                <ion-col col-6 class="no-padding-l csGray5353">
+                    Expires: {{poll.expiredAt |  amTimeAgo}}
+                </ion-col>
+                <ion-col col-6 class="no-padding-l" [style.color]="poll.mainAudienceColor">
+                        <ion-icon name="at"></ion-icon><span>{{poll.mainAudienceName}}</span>
+                    </ion-col>
+            </ion-row>
+    </button>
+</ion-list>
+
+

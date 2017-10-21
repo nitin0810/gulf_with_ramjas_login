@@ -7,7 +7,7 @@ import { IonicPage, Tabs } from 'ionic-angular';
 @Component({
     selector: 'poll',
     template: `
-        <ion-tabs #myTabs1  class="csGrayBackground" color="primary" tabsLayout='icon-start'>
+        <ion-tabs (ionChange)="detectChangeTab()" #myTabs1  class="csGrayBackground" color="primary" tabsLayout='icon-start'>
         <ion-tab tabTitle="CURRENT" tabIcon="mic" [root]="current"></ion-tab>
         <ion-tab tabTitle="CLOSED" tabIcon="mic-off"  [root]="closed"></ion-tab>
         </ion-tabs>
@@ -26,5 +26,10 @@ export class PollTabsManagement {
         
         // this.tabRef.select(0);
         console.log(this.tabRef.getByIndex(0));
+    }
+
+    detectChangeTab(){
+        console.log('tab hcanged////////////////');
+        
     }
 }

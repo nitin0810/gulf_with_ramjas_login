@@ -132,6 +132,8 @@ export class NewPollPageManagement {
                     });
             } else {
                 this.programList = JSON.parse(localStorage.getItem('pollProgramList'));
+                this.yearList = JSON.parse(localStorage.getItem('pollYearList'));
+                
 
             }
         } else if (this.mainAudience.id == 4) {

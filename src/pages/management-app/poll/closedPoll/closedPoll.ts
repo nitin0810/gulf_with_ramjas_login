@@ -13,6 +13,8 @@ import { IonicPage } from 'ionic-angular';
 export class ClosedPollPageManagement {
     title: string = "Poll";
 
-    constructor() { }
+    constructor() {
+        // console.log('closed construtor callded');
+    }
 
 }
