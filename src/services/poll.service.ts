@@ -17,6 +17,12 @@ export class PollService {
         return this.http.get(CONFIG.serverUrl + `/st/poll/page/${pageNo}`);
     }
 
+    votePoll(pollId: number, pollResponse: Array<number>) {
+        
+        return this.http.post(CONFIG.serverUrl + `/st/poll/${pollId}`, pollResponse);
+
+    }
+
     fetchPollListForManagement(isExpired: boolean, pageNo: number) {
 
         return this.http.get(CONFIG.serverUrl + `/ma/poll/${isExpired}/page/${pageNo}`);
