@@ -1,5 +1,5 @@
 <ion-list>
-    <button *ngFor="let poll of pollList" ion-item (click)="openViewPoll()" [style.border-left-color]="poll.mainAudienceColor">
+    <a *ngFor="let poll of pollList" ion-item (click)="openViewPoll()" [style.border-left-color]="poll.mainAudienceColor">
         <h2><b>{{poll.question}}</b></h2>
         <ion-row>
             <ion-col col-4 class="no-padding-l csGray5353">
@@ -16,8 +16,8 @@
                 <ion-col col-6 class="no-padding-l" [style.color]="poll.mainAudienceColor">
                         <ion-icon name="at"></ion-icon><span>{{poll.mainAudienceName}}</span>
                     </ion-col>
-            </ion-row>
-    </button>
+            </ion-row>   
+    </a>
 </ion-list>
 
 

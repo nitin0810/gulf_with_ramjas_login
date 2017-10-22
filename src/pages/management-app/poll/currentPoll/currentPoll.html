@@ -3,6 +3,9 @@
 </ion-header>
 
 <ion-content class="csGrayBackground">
+    <ion-refresher (ionRefresh)="doRefresh($event)">
+        <ion-refresher-content></ion-refresher-content>
+    </ion-refresher>
 
     <ion-fab right bottom>
         <button ion-fab color="danger" (click)="openNewPollModal()">
@@ -12,6 +15,8 @@
 
     <poll-list [pollList]="pollList"></poll-list>
 
-
+    <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
+        <ion-infinite-scroll-content></ion-infinite-scroll-content>
+    </ion-infinite-scroll>
 
 </ion-content>

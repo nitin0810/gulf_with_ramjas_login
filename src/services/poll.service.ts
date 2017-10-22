@@ -12,15 +12,19 @@ export class PollService {
         public http: CustomHttpService,
     ) { }
 
-    fetchPollList(pageNo: number) {
+    fetchPollListForStudent(pageNo: number) {
 
         return this.http.get(CONFIG.serverUrl + `/st/poll/page/${pageNo}`);
+    }
+
+    fetchPollListForManagement(isExpired: boolean, pageNo: number) {
+
+        return this.http.get(CONFIG.serverUrl + `/ma/poll/${isExpired}/page/${pageNo}`);
     }
 
     fetchPollAudience() {
 
         return this.http.get(CONFIG.serverUrl + '/ma/poll/save-info');
-
     }
 
     fetchDepartments() {
@@ -42,20 +46,17 @@ export class PollService {
 
         let isFaculty = localStorage.getItem('faculty') === "true";
         return this.http.get(CONFIG.serverUrl + `/ma/poll/audience/module/${yearId}/${isFaculty}`);
-
     }
-    
+
     fetchYearsForModules() {
 
         let isFaculty = localStorage.getItem('faculty') === "true";
         return this.http.get(CONFIG.serverUrl + `/ma/poll/audience/module/year/${isFaculty}`);
-
     }
 
-    submitPoll(data){
+    submitPoll(data) {
 
         return this.http.post(CONFIG.serverUrl + `/ma/poll`, data);
-        
     }
 
 }
