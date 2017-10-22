@@ -9,7 +9,7 @@ import { PollService } from '../../../services/poll.service';
 @IonicPage()
 @Component({
     selector: 'poll',
-    templateUrl: './poll.html',
+    templateUrl: './polls.html',
     styles: [` `]
 })
 

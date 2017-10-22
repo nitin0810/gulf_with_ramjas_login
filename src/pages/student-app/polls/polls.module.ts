@@ -3,7 +3,7 @@ import { IonicPageModule } from 'ionic-angular';
 import { MomentModule } from 'angular2-moment';
 import { CustomNavbarModule } from '../../../custom-components/navbar/navbar.module';
 
-import { PollStudent } from './poll';
+import { PollStudent } from './polls';
 
 
 @NgModule({
