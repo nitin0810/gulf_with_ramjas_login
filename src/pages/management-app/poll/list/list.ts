@@ -19,6 +19,7 @@ export class ListPollPageManagement {
     ) {
     }
 
+
     openViewPoll(pollId: number) {
 
         let modal = this.modalCtrl.create("ViewPollPageManagement", { 'pollId': pollId });

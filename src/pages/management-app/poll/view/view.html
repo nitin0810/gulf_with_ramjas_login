@@ -1,12 +1,15 @@
 <ion-header>
     <nl-modal-navbar [title]="title" (modalClosed)="dismiss()">
-        <!-- <button ion-button clear (click)></button> -->
+        <button ion-button clear (click)="showInfo=!showInfo">
+            <ion-icon name="information-circle" class="csWhiteText csFont18em"></ion-icon>
+           
+        </button>
     </nl-modal-navbar>
 </ion-header>
 
 <ion-content class="csGrayBackground">
 
-    <ion-card *ngIf="poll">
+    <ion-card *ngIf="poll && showInfo">
         <ion-card-content>
             <ion-item>
                 <ion-icon name="checkmark" item-start></ion-icon>
@@ -81,22 +84,22 @@
                 <p *ngFor="let pgm of poll.programs">{{pgm}}</p>
             </ion-item>
 
-            <ion-item *ngIf="poll.programs && poll.years">
-                <ion-icon name="folder" item-start></ion-icon>
-                <p>
-                    <b>Years: </b>
-                </p>
-                <p *ngFor="let y of poll.years">{{y}}</p>
-            </ion-item>
 
             <ion-item *ngIf="poll.modules">
                 <ion-icon name="folder" item-start></ion-icon>
                 <p>
                     <b>Modules: </b>
                 </p>
-                <p *ngFor="let md of poll.programs">{{md}}</p>
+                <p *ngFor="let md of poll.modules">{{md}}</p>
             </ion-item>
 
+            <ion-item *ngIf=" poll.years">
+                <ion-icon name="folder" item-start></ion-icon>
+                <p>
+                    <b>Years: </b>
+                </p>
+                <p *ngFor="let y of poll.years">{{y}}</p>
+            </ion-item>
         </ion-card-content>
     </ion-card>
 

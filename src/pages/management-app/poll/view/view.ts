@@ -16,7 +16,7 @@ export class ViewPollPageManagement {
     title: string = "view poll";
     pollId: number; // recieved from navparams
     poll: any; // complete poll info to be fetched from server
-
+    showInfo:boolean = false;
     constructor(
         private navparam: NavParams,
         private viewCtrl: ViewController,
@@ -41,7 +41,7 @@ export class ViewPollPageManagement {
                 this.customService.showToast(err.msg);
             });
     }
-    
+
     dismiss() {
         this.viewCtrl.dismiss();
     }
