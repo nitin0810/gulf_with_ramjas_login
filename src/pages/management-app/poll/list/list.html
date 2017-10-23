@@ -1,5 +1,5 @@
 <ion-list>
-    <a *ngFor="let poll of pollList" ion-item (click)="openViewPoll()" [style.border-left-color]="poll.mainAudienceColor">
+    <a *ngFor="let poll of pollList" ion-item (click)="openViewPoll(poll.id)" [style.border-left-color]="poll.mainAudienceColor">
         <h2>
             <b>{{poll.question}}</b>
         </h2>
@@ -8,7 +8,7 @@
                 {{poll.optionTypeName}}
             </ion-col>
             <ion-col col-4 class="no-padding-l">
-                {{poll.studentVoteCount || poll.totalVote|| 0}} Votes
+                {{poll.studentVoteCount || poll.totalVote || 0}} Votes
             </ion-col>
         </ion-row>
         <ion-row>

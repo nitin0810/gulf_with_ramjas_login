@@ -48,6 +48,7 @@ export class ClosedPollPageManagement {
             .subscribe((res: any) => {
 
                 this.pollList = res;
+                this.pageNo = 1;
                 refresher.complete();
             }, (err: any) => {
 
@@ -62,7 +63,7 @@ export class ClosedPollPageManagement {
             .subscribe((res: any) => {
 
                 if (res && res.length != 0) {
-                    this.pollList.push(res);
+                    this.pollList = this.pollList.concat(res);
                     this.pageNo++;
                 }
                 refresher.complete();

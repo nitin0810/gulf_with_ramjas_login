@@ -1,0 +1,125 @@
+<ion-header>
+    <nl-modal-navbar [title]="title" (modalClosed)="dismiss()">
+        <!-- <button ion-button clear (click)></button> -->
+    </nl-modal-navbar>
+</ion-header>
+
+<ion-content class="csGrayBackground">
+
+    <ion-card *ngIf="poll">
+        <ion-card-content>
+            <ion-item>
+                <ion-icon name="checkmark" item-start></ion-icon>
+                <p>
+                    <b>Count: </b>
+                    <span>{{poll.totalVote || 0}}</span>
+                </p>
+            </ion-item>
+
+            <ion-item>
+                <ion-icon name="clock" item-start></ion-icon>
+                <p>
+                    <b>Created : </b>
+                    <span>{{poll.createdAt | amTimeAgo}}</span>
+                </p>
+            </ion-item>
+
+            <ion-item *ngIf="poll.expiredAt">
+                <ion-icon name="clock" item-start></ion-icon>
+                <p>
+                    <b>Expires: </b>
+                    <span>{{poll.expiredAt | amTimeAgo}}</span>
+                </p>
+                <button ion-button clear item-end>EDIT</button>
+            </ion-item>
+
+            <ion-item>
+                <ion-icon name="person" item-start></ion-icon>
+                <p>
+                    <b>Created By: </b>
+                    <span>{{poll.employeName}}</span>
+                </p>
+            </ion-item>
+
+            <ion-item>
+                <ion-icon name="checkmark" item-start></ion-icon>
+                <p>
+                    <b>Poll Type: </b>
+                    <span>{{poll.optionTypeName}}</span>
+                </p>
+            </ion-item>
+
+            <ion-item>
+                <ion-icon name="people" item-start></ion-icon>
+                <p>
+                    <b>Audience: </b>
+                    <span>{{poll.mainAudienceName}}</span>
+                </p>
+            </ion-item>
+
+            <ion-item *ngIf="poll.audiences">
+                <ion-icon name="people" item-start></ion-icon>
+                <p>
+                    <b>SubAudience: </b>
+                </p>
+                <p *ngFor="let aud of poll.audiences">{{aud}}</p>
+            </ion-item>
+
+            <ion-item *ngIf="poll.departments">
+                <ion-icon name="folder" item-start></ion-icon>
+                <p>
+                    <b>Departments: </b>
+                </p>
+                <p *ngFor="let dep of poll.departments">{{dep}}</p>
+            </ion-item>
+
+            <ion-item *ngIf="poll.programs">
+                <ion-icon name="folder" item-start></ion-icon>
+                <p>
+                    <b>Programs: </b>
+                </p>
+                <p *ngFor="let pgm of poll.programs">{{pgm}}</p>
+            </ion-item>
+
+            <ion-item *ngIf="poll.programs && poll.years">
+                <ion-icon name="folder" item-start></ion-icon>
+                <p>
+                    <b>Years: </b>
+                </p>
+                <p *ngFor="let y of poll.years">{{y}}</p>
+            </ion-item>
+
+            <ion-item *ngIf="poll.modules">
+                <ion-icon name="folder" item-start></ion-icon>
+                <p>
+                    <b>Modules: </b>
+                </p>
+                <p *ngFor="let md of poll.programs">{{md}}</p>
+            </ion-item>
+
+        </ion-card-content>
+    </ion-card>
+
+    <ion-card *ngIf="poll">
+
+        <ion-card-content>
+            <ion-card-title>
+                Ques: {{poll.question}}
+            </ion-card-title>
+            <ion-list>
+                <ion-item *ngFor="let option of poll.options">
+                    <ion-row>
+                        <ion-col col-6>
+                            <p>{{option.name}}</p>
+                        </ion-col>
+                        <ion-col col-6>
+                            <p>{{option.percent}}%</p>
+                        </ion-col>
+                    </ion-row>
+                    <progress-bar [progress]="option.percent"></progress-bar>
+                </ion-item>
+            </ion-list>
+        </ion-card-content>
+
+    </ion-card>
+</ion-content>

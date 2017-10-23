@@ -1,7 +1,7 @@
 
 
-import { Component, ViewChild,Input } from '@angular/core';
-import { IonicPage } from 'ionic-angular';
+import { Component, ViewChild, Input } from '@angular/core';
+import { IonicPage, ModalController } from 'ionic-angular';
 
 @IonicPage()
 @Component({
@@ -14,12 +14,15 @@ export class ListPollPageManagement {
 
     @Input() pollList: any;
 
-    constructor() {
-        // console.log('List construtor callded');
+    constructor(
+        private modalCtrl: ModalController
+    ) {
     }
 
-    openViewPoll(){
+    openViewPoll(pollId: number) {
 
+        let modal = this.modalCtrl.create("ViewPollPageManagement", { 'pollId': pollId });
+        modal.present();
     }
 
 }

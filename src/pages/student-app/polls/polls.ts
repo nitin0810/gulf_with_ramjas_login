@@ -62,10 +62,10 @@ export class PollStudent {
     }
 
 
-    onVote(poll: any,index:number) {
+    onVote(poll: any, index: number) {
 
         let payLoad = this.buildPayload(poll);
-        this.submitResponse(poll.id,payLoad,index);
+        this.submitResponse(poll.id, payLoad, index);
     }
 
     buildPayload(poll: any) {
@@ -89,14 +89,14 @@ export class PollStudent {
         return data;
     }
 
-    submitResponse(id:number,payLoad:Array<number>,index:number){
+    submitResponse(id: number, payLoad: Array<number>, index: number) {
 
         this.customService.showLoader();
         this.pollService.votePoll(id, payLoad)
             .subscribe((res: any) => {
 
                 this.customService.hideLoader();
-                this.pollList.splice(index,1);
+                this.pollList.splice(index, 1);
                 this.customService.showToast(res.message || res.developerMessage || 'Poll Voted Successfully');
             }, (err: any) => {
 
@@ -119,6 +119,7 @@ export class PollStudent {
                     element.isVoteBtnEnabled = false;
 
                 });
+                this.pageNo = 1;
                 refresher.complete();
             }, (err: any) => {
 
@@ -133,7 +134,7 @@ export class PollStudent {
             .subscribe((res: any) => {
 
                 if (res && res.length != 0) {
-                    this.pollList.push(res);
+                    this.pollList = this.pollList.concat(res);
                     this.pageNo++;
                 }
                 refresher.complete();

@@ -23,7 +23,6 @@ export class CustomService {
         this.loading = this.l.create({
             content: text || 'Please wait...'
         });
-        console.log('loading');
         this.loading.present();
 
 
@@ -31,7 +30,6 @@ export class CustomService {
 
     public hideLoader() {
 
-        console.log('loading dismiss');
         this.loading.dismiss();
 
     }
