@@ -94,9 +94,10 @@ export class UserSessionManage {
                 { title: 'Home', component: DashboardPage, icon: 'assets/icon/home.png' },
                 { title: 'Complaints', component: "ComplaintPageManagement", icon: 'assets/icon/complaint.png' },
                 { title: 'Suggestions', component: "SuggestionTabsPageManagement", icon: 'assets/icon/suggestion.png' },
+                { title: 'Appreciations', component: "AppreciationTabsPageManagement", icon: 'assets/icon/appreciation.png' },
                 { title: 'Polls', component: "PollTabsPageManagement", icon: 'assets/icon/poll.png' },
                 { title: 'Account', component: "AccountPage", icon: 'assets/icon/profile.png' },
-
+                
             ];
         }
     }
