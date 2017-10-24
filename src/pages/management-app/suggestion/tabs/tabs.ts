@@ -11,7 +11,7 @@ import { IonicPage, Tabs } from 'ionic-angular';
     `
 })
 
-export class SuggestionTabsManagement {
+export class SuggestionTabsPageManagement {
   @ViewChild('myTabs2') tabRef: Tabs;
   SuggestionByMe: string = "SuggestionByMeManagement";
   SuggestionForMe: string = "SuggestionForMeManagement";

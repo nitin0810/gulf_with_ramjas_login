@@ -79,7 +79,7 @@ export class UserSessionManage {
                 { title: 'Home', component: DashboardPage, icon: 'assets/icon/home.png' },
                 { title: 'Complaints', component: "ComplaintPageStudent", icon: 'assets/icon/complaint.png' },
                 // { title: 'Suggestions', component: "SuggestionTabs", icon: 'assets/icon/suggestion.png' },
-                { title: 'Suggestions', component: "SuggestionTabsStudent", icon: 'assets/icon/suggestion.png' },
+                { title: 'Suggestions', component: "SuggestionTabsPageStudent", icon: 'assets/icon/suggestion.png' },
                 { title: 'Polls', component: "PollStudent", icon: 'assets/icon/poll.png' },
                 { title: 'Account', component: "AccountPage", icon: 'assets/icon/profile.png' },
                 
@@ -93,8 +93,8 @@ export class UserSessionManage {
 
                 { title: 'Home', component: DashboardPage, icon: 'assets/icon/home.png' },
                 { title: 'Complaints', component: "ComplaintPageManagement", icon: 'assets/icon/complaint.png' },
-                { title: 'Suggestions', component: "SuggestionTabsManagement", icon: 'assets/icon/suggestion.png' },
-                { title: 'Polls', component: "PollTabsManagement", icon: 'assets/icon/poll.png' },
+                { title: 'Suggestions', component: "SuggestionTabsPageManagement", icon: 'assets/icon/suggestion.png' },
+                { title: 'Polls', component: "PollTabsPageManagement", icon: 'assets/icon/poll.png' },
                 { title: 'Account', component: "AccountPage", icon: 'assets/icon/profile.png' },
 
             ];

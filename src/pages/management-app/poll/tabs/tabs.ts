@@ -15,7 +15,7 @@ import { IonicPage, Tabs } from 'ionic-angular';
     styles: [` `]
 })
    
-export class PollTabsManagement {
+export class PollTabsPageManagement {
     @ViewChild('myTabs1') tabRef: Tabs;
     current: string = "CurrentPollPageManagement";
     closed: string = "ClosedPollPageManagement";

@@ -10,7 +10,7 @@ import {IonicPage} from 'ionic-angular';
     </ion-tabs>` 
 })
 
-export class SuggestionTabsStudent {
+export class SuggestionTabsPageStudent {
   SuggestionByMe:string = "SuggestionByMeStudent";
   SuggestionForMe:string = "SuggestionForMeStudent";
 

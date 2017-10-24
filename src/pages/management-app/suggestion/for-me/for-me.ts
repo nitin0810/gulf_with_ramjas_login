@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, OnDestroy } from '@angular/core';
 import { IonicPage } from 'ionic-angular';
 import { ComplaintMainPage } from '../../../../custom-components/complaint-main/complaint-main';
 import { ComplaintService } from '../../../../services/complaint.service';
@@ -9,7 +9,7 @@ import { ComplaintService } from '../../../../services/complaint.service';
 
 })
 
-export class SuggestionForMeManagement {
+export class SuggestionForMeManagement implements OnDestroy {
 
   title: string = "Suggestions";
   complaintList: Array<any>;
@@ -24,6 +24,10 @@ export class SuggestionForMeManagement {
     console.log('for me constructor called/////');
     this.complaintService.compOrSugg = "suggestion";
 
+  }
+
+  ngOnDestroy() {
+    console.log("for me destroyed.//////////");
   }
 
 
