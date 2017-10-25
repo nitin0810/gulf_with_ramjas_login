@@ -1,0 +1,29 @@
+<ion-list>
+    <ion-card *ngFor="let appr of appreciationList">
+        <ion-badge class="csAppBadge csCenter">{{appr.studentName || appr.facultyName}}</ion-badge>
+
+        <ion-row>
+            <ion-col col-6>
+                <div class="csAppImageBlock">
+                    <img class="csAppImg" [src]="appr.facultyPicUrl || appr.studentPicUrl || defaultUserImage">
+                </div>
+            </ion-col>
+
+            <ion-col col-6>
+                <div class="csMargin5">
+                    <b class="csParagraph">{{appr.title}}</b>
+                    <p class="csParagraph">{{appr.description}}</p>
+                </div>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col col-6>
+                <p>{{appr.createdAt | amDateFormat:'LL'}}</p>
+            </ion-col>
+
+        </ion-row>
+    </ion-card>
+</ion-list>
+
+
+

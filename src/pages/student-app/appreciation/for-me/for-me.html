@@ -3,9 +3,14 @@
 </ion-header>
 
 <ion-content class="csGrayBackground">
-    <!-- <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher (ionRefresh)="doRefresh($event)">
         <ion-refresher-content></ion-refresher-content>
-    </ion-refresher> -->
+    </ion-refresher>
 
-<p>for me appre STUDENT</p>
+    <appreciation-list [appreciationList]="appreciationList"></appreciation-list>
+
+    <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
+        <ion-infinite-scroll-content></ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+
 </ion-content>

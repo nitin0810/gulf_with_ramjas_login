@@ -3,12 +3,19 @@
 </ion-header>
 
 <ion-content class="csGrayBackground">
-    <!-- <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher (ionRefresh)="doRefresh($event)">
         <ion-refresher-content></ion-refresher-content>
-    </ion-refresher> -->
+    </ion-refresher>
     <ion-fab right bottom>
-        <button ion-fab color="danger" (click)="openNewAppreciationModal()"><ion-icon name="add"></ion-icon></button>
+        <button ion-fab color="danger" (click)="openNewAppreciationModal()">
+            <ion-icon name="add"></ion-icon>
+        </button>
     </ion-fab>
 
-<p>by me appre Student</p>
+
+    <appreciation-list [appreciationList]="appreciationList"></appreciation-list>
+    
+    <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
+        <ion-infinite-scroll-content></ion-infinite-scroll-content>
+    </ion-infinite-scroll>
 </ion-content>

@@ -51,4 +51,14 @@ export class AppreciationService {
 
         return this.http.post(CONFIG.serverUrl + `/st/appreciation`, data);
     }
+
+    fetchAppreciationsStudentByMe(pageNo:number){
+
+        return this.http.get(CONFIG.serverUrl + `/st/appreciation/page/${pageNo}`);
+    }
+
+    fetchAppreciationsStudentForMe(pageNo:number){
+        
+                return this.http.get(CONFIG.serverUrl + `/st/appreciation/forStudent/page/${pageNo}`);
+    }
 }

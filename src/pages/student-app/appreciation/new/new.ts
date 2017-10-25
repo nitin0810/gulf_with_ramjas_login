@@ -94,7 +94,13 @@ export class NewAppreciationPageStudent {
         .subscribe((res:any)=>{
             this.customService.hideLoader();
             this.customService.showToast("Appreciation Created Successfully");
-            this.dismiss();
+            this.dismiss({
+                facultyPicUrl:null,
+                facultyName:this.selectedFaculty.facultyName,
+                title:this.appreciationTitle,
+                description:this.appreciationDescription,
+                createdAt: new Date()
+            });
         },(err:any)=>{
             this.customService.hideLoader();
             this.customService.showToast(err.msg);

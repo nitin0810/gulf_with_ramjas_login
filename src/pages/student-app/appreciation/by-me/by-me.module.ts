@@ -3,6 +3,7 @@ import { IonicPageModule} from 'ionic-angular';
 
 import { AppreciationByMePageStudent } from './by-me';
 import { CustomNavbarModule } from '../../../../custom-components/navbar/navbar.module';
+import { AppreciationListModule } from '../list/list.module';
 
 
 @NgModule({
@@ -11,6 +12,7 @@ import { CustomNavbarModule } from '../../../../custom-components/navbar/navbar.
    
     imports: [
         CustomNavbarModule,
+        AppreciationListModule,
         IonicPageModule.forChild(AppreciationByMePageStudent)
     ],
     
