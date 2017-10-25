@@ -36,6 +36,15 @@ export class AppreciationService {
         return this.http.post(CONFIG.serverUrl + `/ma/appreciation`, data);
     }
 
+    fetchAppreciationsManagementByMe(pageNo: number) {
+
+        return this.http.get(CONFIG.serverUrl + `/ma/appreciation/page/${pageNo}`);
+    }
+
+    fetchAppreciationsManagementForMe(pageNo: number) {
+
+        return this.http.get(CONFIG.serverUrl + `/ma/appreciation/forFaculty/page/${pageNo}`);
+    }
 
     /**services for management */
     fetchFaculties() {
@@ -52,13 +61,13 @@ export class AppreciationService {
         return this.http.post(CONFIG.serverUrl + `/st/appreciation`, data);
     }
 
-    fetchAppreciationsStudentByMe(pageNo:number){
+    fetchAppreciationsStudentByMe(pageNo: number) {
 
         return this.http.get(CONFIG.serverUrl + `/st/appreciation/page/${pageNo}`);
     }
 
-    fetchAppreciationsStudentForMe(pageNo:number){
-        
-                return this.http.get(CONFIG.serverUrl + `/st/appreciation/forStudent/page/${pageNo}`);
+    fetchAppreciationsStudentForMe(pageNo: number) {
+
+        return this.http.get(CONFIG.serverUrl + `/st/appreciation/forStudent/page/${pageNo}`);
     }
 }

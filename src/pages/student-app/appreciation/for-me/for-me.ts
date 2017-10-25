@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, ModalController } from 'ionic-angular';
+import { IonicPage } from 'ionic-angular';
 import { CustomService } from '../../../../services/custom.service';
 import { AppreciationService } from '../../../../services/appreciation.service';
 
@@ -16,7 +16,6 @@ export class AppreciationForMePageStudent {
     pageNo: number = 1;
 
     constructor(
-        private modalCtrl: ModalController,
         private customService: CustomService,
         private appreciationService: AppreciationService
     ) {

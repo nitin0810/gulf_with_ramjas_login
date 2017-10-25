@@ -128,18 +128,24 @@ export class NewAppreciationPageManagement {
 
         this.customService.showLoader();
         this.appreciationService.postAppreciation(data)
-        .subscribe((res:any)=>{
-            this.customService.hideLoader();
-            this.customService.showToast("Appreciation Created Successfully");
-            this.dismiss();
-        },(err:any)=>{
-            this.customService.hideLoader();
-            this.customService.showToast(err.msg);
-        });
+            .subscribe((res: any) => {
+                this.customService.hideLoader();
+                this.customService.showToast("Appreciation Created Successfully");
+                this.dismiss({
+                    studentPicUrl: null,
+                    studentName: this.selectedStudent.name,
+                    title: this.appreciationTitle,
+                    description: this.appreciationDescription,
+                    createdAt: new Date()
+                });
+            }, (err: any) => {
+                this.customService.hideLoader();
+                this.customService.showToast(err.msg);
+            });
 
     }
 
-    dismiss(res?:any) {
+    dismiss(res?: any) {
 
         this.viewCtrl.dismiss(res);
     }

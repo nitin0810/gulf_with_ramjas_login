@@ -15,7 +15,7 @@ progress-bar {
            min-width: 0%;
            white-space: nowrap;
            overflow: hidden;
-           padding: 5px;
+        //    padding: 2px;
            border-radius: 20px;
            background-color: map-get($colors, primary);
        }

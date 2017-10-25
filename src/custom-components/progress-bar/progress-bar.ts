@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { IonicPage } from 'ionic-angular';
 
 @IonicPage()
@@ -6,16 +6,20 @@ import { IonicPage } from 'ionic-angular';
     selector: 'progress-bar',
     template: `
             <div class="progress-outer">
-                <div class="progress-inner" [style.width]="progress + '%'">
+                <div class="progress-inner" [style.width]="progress + '%'" [style.padding.px]="progress==0?0:2">
                    
                 </div>
             </div>
             `
 })
-export class ProgressBarComponent {
+export class ProgressBarComponent implements OnInit{
 
     @Input() progress;
 
-    constructor() { }
+    constructor() { 
+    }
+
+    ngOnInit(){console.log(this.progress);
+    }
 
 }
