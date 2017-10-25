@@ -3,7 +3,7 @@ import { IonicPageModule} from 'ionic-angular';
 
 import { AppreciationByMePageStudent } from './by-me';
 import { CustomNavbarModule } from '../../../../custom-components/navbar/navbar.module';
-import { AppreciationListModule } from '../list/list.module';
+import { AppreciationListModule } from '../../../../custom-components/list/list.module';
 
 
 @NgModule({
