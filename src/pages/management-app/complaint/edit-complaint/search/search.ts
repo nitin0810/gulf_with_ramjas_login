@@ -22,7 +22,7 @@ export class FacultySearchPage {
         private navParam: NavParams
     ) {
         this.searchList = this.navParam.get('searchList');
-        this.title = 'Search ' + this.navParam.get('title');
+        this.title = 'Select ' + this.navParam.get('title');
         this.searchTempList = this.searchList;
 
     }

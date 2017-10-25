@@ -21,6 +21,7 @@ import { NetworkService } from '../services/network.service';
 import { Network } from '@ionic-native/network';
 import { ComplaintService } from '../services/complaint.service';
 import { PollService } from '../services/poll.service';
+import { AppreciationService } from '../services/appreciation.service';
 
 /**import custom modules*/
 import { CustomNavbarModule } from '../custom-components/navbar/navbar.module';
@@ -64,6 +65,7 @@ import { ForgotPasswordModal } from '../custom-components/login/forgot-password/
     NetworkService,
     ComplaintService,
     PollService,
+    AppreciationService,
     { provide: ErrorHandler, useClass: IonicErrorHandler },
     {
       provide: CustomHttpService, useFactory: (backend: XHRBackend, defaultOptions: RequestOptions) => {

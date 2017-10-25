@@ -2,15 +2,17 @@
 
     <img class="csCenter" class="csLogo" src="assets/images/logo.png">
 
+<div style="overflow:hidden">
+        <ion-segment [(ngModel)]="loginType" color="primary" >
+                <ion-segment-button value="student" >
+                    <p>Student Login</p>
+                </ion-segment-button>
+                <ion-segment-button value="management">
+                    <p>Management Login</p>
+                </ion-segment-button>
+            </ion-segment>
+</div>
 
-    <ion-segment [(ngModel)]="loginType" color="primary" >
-        <ion-segment-button value="student" >
-            <p>Student Login</p>
-        </ion-segment-button>
-        <ion-segment-button value="management">
-            <p>Management Login</p>
-        </ion-segment-button>
-    </ion-segment>
 
  
 

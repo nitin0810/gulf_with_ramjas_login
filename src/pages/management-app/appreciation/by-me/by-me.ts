@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage } from 'ionic-angular';
+import { IonicPage, ModalController } from 'ionic-angular';
 
 @IonicPage()
 @Component({
@@ -10,11 +10,14 @@ import { IonicPage } from 'ionic-angular';
 export class AppreciationByMePageManagement {
 
     title: string = "Appreciations";
-    constructor() {
+    constructor(
+        private modalCtrl: ModalController
+    ) {
 
     }
 
     openNewSuggestionModal(){
-        
+        let modal = this.modalCtrl.create("NewAppreciationPageManagement");
+        modal.present();
     }
 }

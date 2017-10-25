@@ -1,0 +1,46 @@
+<ion-header>
+    <nl-modal-navbar [title]="title" (modalClosed)="dismiss()"></nl-modal-navbar>
+</ion-header>
+
+<ion-content class="csGrayBackground">
+
+    <form #newAppreciationForm="ngForm" (ngSubmit)="onSubmit()" *ngIf="years">
+
+        <ion-card>
+            <ion-item>
+                <ion-label>Select Year</ion-label>
+                <ion-select [(ngModel)]="selectedYear" (ionChange)="getModules()" required name="year">
+                    <ion-option *ngFor="let y of years" [value]="y">
+                        {{y.name || y.yearName}}
+                    </ion-option>
+                </ion-select>
+            </ion-item>
+        </ion-card>
+
+        <ion-card *ngIf="modules">
+            <ion-item>
+                <ion-label>Select Module</ion-label>
+                <ion-select [(ngModel)]="selectedModule" (ionChange)="getStudents()" required name="module">
+                    <ion-option *ngFor="let m of modules" [value]="m">
+                        {{m.name || m.moduleName}}
+                    </ion-option>
+                </ion-select>
+            </ion-item>
+        </ion-card>
+
+        <ion-card *ngIf="students">
+            <ion-item>
+                <ion-label>Select Student</ion-label>
+                <ion-input [(ngModel)]="selectedStudentName" disabled (tap)="openSelectionPage()" required name="student">
+                </ion-input>
+            </ion-item>
+        </ion-card>
+
+
+
+        <div padding>
+            <button [disabled]="!newAppreciationForm.valid || !selectedStudent" ion-button full type="submit">Submit</button>
+        </div>
+    </form>
+
+</ion-content>
