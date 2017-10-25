@@ -80,9 +80,10 @@ export class UserSessionManage {
                 { title: 'Complaints', component: "ComplaintPageStudent", icon: 'assets/icon/complaint.png' },
                 // { title: 'Suggestions', component: "SuggestionTabs", icon: 'assets/icon/suggestion.png' },
                 { title: 'Suggestions', component: "SuggestionTabsPageStudent", icon: 'assets/icon/suggestion.png' },
+                { title: 'Appreciations', component: "AppreciationTabsPageStudent", icon: 'assets/icon/appreciation.png' },
                 { title: 'Polls', component: "PollStudent", icon: 'assets/icon/poll.png' },
                 { title: 'Account', component: "AccountPage", icon: 'assets/icon/profile.png' },
-                
+                    
                 
 
             ];

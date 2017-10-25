@@ -9,19 +9,16 @@ import { CustomService } from '../../../../services/custom.service';
 
 })
 
-export class NewAppreciationPageManagement {
+export class NewAppreciationPageStudent {
 
     title: string = "New appreciation";
-    /**data required to create appreciation */
-    years: any;
-    modules: any;
-    students: any;
-    selectedStudentName: string;
 
+    /**data required to create appreciation */
+    faculties: any;
+    
     /**ngModal variables */
-    selectedYear: any;
-    selectedModule: any;
-    selectedStudent: any;
+    selectedFaculty: any;
+    selectedFacultyName: string;
     appreciationTitle: string;
     appreciationDescription: string;
 
@@ -32,47 +29,15 @@ export class NewAppreciationPageManagement {
         private mdlCtrl: ModalController,
         private actionSheetCtrl: ActionSheetController
     ) {
-        this.years = this.getYears();
+        this.faculties = this.getFaculties();
     }
 
-    getYears() {
+    getFaculties() {
 
         this.customService.showLoader();
-        this.appreciationService.fetchYears()
+        this.appreciationService.fetchFaculties()
             .subscribe((res: any) => {
-                this.years = res;
-                this.customService.hideLoader();
-            }, (err: any) => {
-                this.customService.hideLoader();
-                this.customService.showToast(err.msg);
-            });
-    }
-
-    getModules() {
-        this.selectedModule = null;
-        this.selectedStudent = null;
-
-        this.customService.showLoader('Fetching Modules');
-        this.appreciationService.fetchModules(this.selectedYear.id || this.selectedYear.yearId)
-            .subscribe((res: any) => {
-                this.modules = res;
-                this.customService.hideLoader();
-            }, (err: any) => {
-                this.customService.hideLoader();
-                this.customService.showToast(err.msg);
-            });
-    }
-
-    getStudents() {
-
-        this.selectedStudent = null;
-        this.selectedStudentName = null;
-        if (!this.selectedModule) { return; } // do nothing, when it is called in case selectedModule is changed to null
-
-        this.customService.showLoader('Fetching Students List');
-        this.appreciationService.fetchStudents(this.selectedYear.id || this.selectedYear.yearId, this.selectedModule.id || this.selectedModule.moduleId)
-            .subscribe((res: any) => {
-                this.students = res;
+                this.faculties = res;
                 this.customService.hideLoader();
             }, (err: any) => {
                 this.customService.hideLoader();
@@ -82,22 +47,20 @@ export class NewAppreciationPageManagement {
 
     openSelectionPage() {
 
-        let searchPage = this.mdlCtrl.create("FacultySearchPage", { 'searchList': this.students, 'title': 'Student' });
+        let searchPage = this.mdlCtrl.create("FacultySearchPage", { 'searchList': this.faculties, 'title': 'Faculty' });
         searchPage.present();
         searchPage.onDidDismiss((selected) => {
             if (selected) {
 
-                this.selectedStudent = selected.selectedSearch;
-                this.selectedStudentName = this.selectedStudent.name;
+                this.selectedFaculty = selected.selectedSearch;
+                this.selectedFacultyName = this.selectedFaculty.facultyName + ` (${this.selectedFaculty.moduleName})`;
             }
         });
     }
+
     onSubmit() {
-        // console.log(this.selectedYear);
-        // console.log(this.selectedModule);
-        // console.log(this.selectedStudent);
-
-
+       
+        console.log(this.selectedFaculty);
         const actionSheet = this.actionSheetCtrl.create({
 
             title: 'Are you sure to create the appreciation ?',
@@ -123,11 +86,11 @@ export class NewAppreciationPageManagement {
         let data = {
             title: this.appreciationTitle,
             description: this.appreciationDescription,
-            studentId: this.selectedStudent.id
+            facultyId: this.selectedFaculty.facultyId
         };
 
         this.customService.showLoader();
-        this.appreciationService.postAppreciation(data)
+        this.appreciationService.postAppreciationStudent(data)
         .subscribe((res:any)=>{
             this.customService.hideLoader();
             this.customService.showToast("Appreciation Created Successfully");

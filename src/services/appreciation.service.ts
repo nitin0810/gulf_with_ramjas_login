@@ -31,8 +31,24 @@ export class AppreciationService {
         return this.http.get(CONFIG.serverUrl + `/ma/appreciation/students/${moduleId}/${yearId}`);
     }
 
-    postAppreciation(data:any){
+    postAppreciation(data: any) {
 
-        return this.http.post(CONFIG.serverUrl + `/ma/appreciation`,data);
+        return this.http.post(CONFIG.serverUrl + `/ma/appreciation`, data);
+    }
+
+
+    /**services for management */
+    fetchFaculties() {
+
+        let programId = localStorage.getItem('programId');
+        let yearId = localStorage.getItem('yearId');
+        let isEvenSem = localStorage.getItem('isEvenSemester') === "true";
+
+        return this.http.get(CONFIG.serverUrl + `/st/appreciation/faculty/${programId}/${yearId}/${isEvenSem}`);
+    }
+
+    postAppreciationStudent(data: any) {
+
+        return this.http.post(CONFIG.serverUrl + `/st/appreciation`, data);
     }
 }

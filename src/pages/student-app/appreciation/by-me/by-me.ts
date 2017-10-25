@@ -7,7 +7,7 @@ import { IonicPage, ModalController } from 'ionic-angular';
 
 })
 
-export class AppreciationByMePageManagement {
+export class AppreciationByMePageStudent {
 
     title: string = "Appreciations";
     constructor(
@@ -17,7 +17,7 @@ export class AppreciationByMePageManagement {
     }
 
     openNewAppreciationModal(){
-        let modal = this.modalCtrl.create("NewAppreciationPageManagement");
+        let modal = this.modalCtrl.create("NewAppreciationPageStudent");
         modal.present();
     }
 }

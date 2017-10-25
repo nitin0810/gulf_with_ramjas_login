@@ -30,12 +30,27 @@
 
         <ion-card *ngIf="students">
             <ion-item>
-                <ion-label>Select Student</ion-label>
-                <ion-input [(ngModel)]="selectedStudentName" disabled (tap)="openSelectionPage()" required name="student">
+                <ion-label>Student</ion-label>
+                <ion-input [(ngModel)]="selectedStudentName" disabled placeholder="Select Student" (tap)="openSelectionPage()" required name="student">
                 </ion-input>
             </ion-item>
         </ion-card>
 
+        <ion-card *ngIf="years">
+            <ion-item>
+                <ion-label stacked>Title</ion-label>
+                <ion-input [(ngModel)]="appreciationTitle" placeholder="Enter Title" required name="title">
+                </ion-input>
+            </ion-item>
+        </ion-card>
+
+        <ion-card *ngIf="years">
+            <ion-item>
+                <ion-label stacked>Description</ion-label>
+                <ion-input [(ngModel)]="appreciationDescription" placeholder="Enter Description" required name="description">
+                </ion-input>
+            </ion-item>
+        </ion-card>
 
 
         <div padding>

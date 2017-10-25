@@ -8,8 +8,9 @@
     <ion-card>
         <ion-list>
             <button ion-item *ngFor="let search of searchTempList" (click)="dismiss(search)">
-                {{search.name}}
+                {{search.name || search.facultyName}}<span *ngIf="search.moduleName"> ({{search.moduleName}})</span>
             </button>
         </ion-list>
     </ion-card>
-</ion-content>
+</ion-content>        
+    

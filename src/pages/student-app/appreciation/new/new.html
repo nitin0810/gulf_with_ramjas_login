@@ -1,0 +1,41 @@
+<ion-header>
+    <nl-modal-navbar [title]="title" (modalClosed)="dismiss()"></nl-modal-navbar>
+</ion-header>
+
+<ion-content class="csGrayBackground">
+
+    <form #newAppreciationForm="ngForm" (ngSubmit)="onSubmit()" *ngIf="faculties">
+
+       
+
+        <ion-card *ngIf="faculties">
+            <ion-item>
+                <ion-label>Faculty</ion-label>
+                <ion-input [(ngModel)]="selectedFacultyName" disabled placeholder="Select Faculty" (tap)="openSelectionPage()" required name="faculty">
+                </ion-input>
+            </ion-item>
+        </ion-card>
+
+        <ion-card>
+            <ion-item>
+                <ion-label stacked>Title</ion-label>
+                <ion-input [(ngModel)]="appreciationTitle" placeholder="Enter Title" required name="title">
+                </ion-input>
+            </ion-item>
+        </ion-card>
+
+        <ion-card >
+            <ion-item>
+                <ion-label stacked>Description</ion-label>
+                <ion-input [(ngModel)]="appreciationDescription" placeholder="Enter Description" required name="description">
+                </ion-input>
+            </ion-item>
+        </ion-card>
+
+
+        <div padding>
+            <button [disabled]="!newAppreciationForm.valid || !selectedFaculty" ion-button full type="submit">Submit</button>
+        </div>
+    </form>
+
+</ion-content>
