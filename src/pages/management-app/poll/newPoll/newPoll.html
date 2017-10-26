@@ -11,9 +11,9 @@
                 <ion-label stacked>
                     <b>Question</b>
                 </ion-label>
-                <ion-textarea [(ngModel)]="question" placeholder="Enter question" maxlength=50 required name="question">
+                <ion-textarea [(ngModel)]="question" placeholder="Enter question" maxlength=200 required name="question">
                 </ion-textarea>
-                <ion-badge item-end>{{50 - question?.length}}</ion-badge>
+                <ion-badge item-end>{{200 - question?.length}}</ion-badge>
             </ion-item>
         </ion-card>
 
@@ -37,7 +37,7 @@
                     <ion-label stacked>
                         <b>Option {{i+1}}</b>
                     </ion-label>
-                    <ion-textarea [(ngModel)]="option.choice" placeholder="Enter option" maxlength=50 required name="option{{i}}">
+                    <ion-textarea [(ngModel)]="option.choice" placeholder="Enter option" maxlength=100 required name="option{{i}}">
                     </ion-textarea>
                     <button *ngIf="i>1" ion-button icon-only item-end (click)="removeOption(i)">
                         <ion-icon name="close"></ion-icon>

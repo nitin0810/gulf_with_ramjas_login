@@ -19,7 +19,7 @@
         <ion-card>
             <ion-item>
                 <ion-label stacked>Title</ion-label>
-                <ion-input [(ngModel)]="appreciationTitle" placeholder="Enter Title" required name="title">
+                <ion-input [(ngModel)]="appreciationTitle" placeholder="Enter Title" required maxlength="50" name="title">
                 </ion-input>
             </ion-item>
         </ion-card>
@@ -27,7 +27,7 @@
         <ion-card >
             <ion-item>
                 <ion-label stacked>Description</ion-label>
-                <ion-input [(ngModel)]="appreciationDescription" placeholder="Enter Description" required name="description">
+                <ion-input [(ngModel)]="appreciationDescription" placeholder="Enter Description" required maxlength="2500" name="description">
                 </ion-input>
             </ion-item>
         </ion-card>

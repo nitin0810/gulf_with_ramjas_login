@@ -39,7 +39,7 @@
         <ion-card *ngIf="years">
             <ion-item>
                 <ion-label stacked>Title</ion-label>
-                <ion-input [(ngModel)]="appreciationTitle" placeholder="Enter Title" required name="title">
+                <ion-input [(ngModel)]="appreciationTitle" placeholder="Enter Title" maxlength="50" required name="title">
                 </ion-input>
             </ion-item>
         </ion-card>
@@ -47,8 +47,8 @@
         <ion-card *ngIf="years">
             <ion-item>
                 <ion-label stacked>Description</ion-label>
-                <ion-input [(ngModel)]="appreciationDescription" placeholder="Enter Description" required name="description">
-                </ion-input>
+                <ion-textarea [(ngModel)]="appreciationDescription" placeholder="Enter Description" maxlength="2500" required name="description">
+                </ion-textarea>
             </ion-item>
         </ion-card>
 

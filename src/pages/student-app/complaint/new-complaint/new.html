@@ -53,10 +53,10 @@
             <ion-card>
                 <ion-item>
                     <ion-label stacked>Description</ion-label>
-                    <ion-textarea [(ngModel)]="complaintDescription" required name="description" rows="5" maxlength="200" placeholder="Enter Description"></ion-textarea>
+                    <ion-textarea [(ngModel)]="complaintDescription" required name="description" rows="5" maxlength="2500" placeholder="Enter Description"></ion-textarea>
                 </ion-item>
                 <ion-badge class="csFiftyLimit">
-                    <span>{{200 - complaintDescription?.length}}</span>
+                    <span>{{2500 - complaintDescription?.length}}</span>
                 </ion-badge>
             </ion-card>
 
