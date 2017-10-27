@@ -1,13 +1,13 @@
 
 
-import { Component, ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
 import { IonicPage, Tabs } from 'ionic-angular';
 
 @IonicPage()
 @Component({
     selector: 'poll',
     template: `
-        <ion-tabs (ionChange)="detectChangeTab()" #myTabs1  class="csGrayBackground" color="primary" tabsLayout='icon-start'>
+        <ion-tabs   class="csGrayBackground" color="primary" tabsLayout='icon-start'>
         <ion-tab tabTitle="CURRENT" tabIcon="mic" [root]="current"></ion-tab>
         <ion-tab tabTitle="CLOSED" tabIcon="mic-off"  [root]="closed"></ion-tab>
         </ion-tabs>
@@ -16,20 +16,11 @@ import { IonicPage, Tabs } from 'ionic-angular';
 })
    
 export class PollTabsPageManagement {
-    @ViewChild('myTabs1') tabRef: Tabs;
+
+    title:string="Polls (By Me)";
     current: string = "CurrentPollPageManagement";
     closed: string = "ClosedPollPageManagement";
 
     constructor() {       }
-    ionViewDidEnter() {
-        console.log('poll tab did enter called/////');
-        
-        // this.tabRef.select(0);
-        console.log(this.tabRef.getByIndex(0));
-    }
-
-    detectChangeTab(){
-        console.log('tab hcanged////////////////');
-        
-    }
+ 
 }

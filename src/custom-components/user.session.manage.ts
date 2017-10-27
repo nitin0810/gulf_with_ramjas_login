@@ -69,7 +69,7 @@ export class UserSessionManage {
     }
 
   /**maintain different side menu options for better understanding and also there might be some features
-   * present in one and not in other one
+   * present in one and not in other
    */
     decideSideMenuContent() {
         if (localStorage.getItem('isStudent') === "true") {
@@ -78,7 +78,6 @@ export class UserSessionManage {
 
                 { title: 'Home', component: DashboardPage, icon: 'assets/icon/home.png' },
                 { title: 'Complaints', component: "ComplaintPageStudent", icon: 'assets/icon/complaint.png' },
-                // { title: 'Suggestions', component: "SuggestionTabs", icon: 'assets/icon/suggestion.png' },
                 { title: 'Suggestions', component: "SuggestionTabsPageStudent", icon: 'assets/icon/suggestion.png' },
                 { title: 'Appreciations', component: "AppreciationTabsPageStudent", icon: 'assets/icon/appreciation.png' },
                 { title: 'Polls', component: "PollStudent", icon: 'assets/icon/poll.png' },
@@ -96,7 +95,7 @@ export class UserSessionManage {
                 { title: 'Complaints', component: "ComplaintPageManagement", icon: 'assets/icon/complaint.png' },
                 { title: 'Suggestions', component: "SuggestionTabsPageManagement", icon: 'assets/icon/suggestion.png' },
                 { title: 'Appreciations', component: "AppreciationTabsPageManagement", icon: 'assets/icon/appreciation.png' },
-                { title: 'Polls', component: "PollTabsPageManagement", icon: 'assets/icon/poll.png' },
+                { title: 'Polls', icon: 'assets/icon/poll.png' },
                 { title: 'Account', component: "AccountPage", icon: 'assets/icon/profile.png' },
                 
             ];

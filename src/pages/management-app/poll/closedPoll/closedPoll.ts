@@ -14,7 +14,7 @@ import { PollService } from '../../../../services/poll.service';
 
 export class ClosedPollPageManagement {
 
-    title: string = "Poll";
+    title: string = "Poll (For Me)";
     pollList: Array<any>;
     pageNo: number = 1;
     pageNoWithSearch: number = 1;

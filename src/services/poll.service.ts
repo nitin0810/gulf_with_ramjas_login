@@ -12,6 +12,7 @@ export class PollService {
         public http: CustomHttpService,
     ) { }
 
+    /**following urls are for student only */
     fetchPollListForStudent(pageNo: number) {
 
         return this.http.get(CONFIG.serverUrl + `/st/poll/page/${pageNo}`);
@@ -22,7 +23,19 @@ export class PollService {
         return this.http.post(CONFIG.serverUrl + `/st/poll/${pollId}`, pollResponse);
     }
 
-    fetchPollListForManagement(isExpired: boolean, pageNo: number) {
+    /**following urls are for management only */
+
+    fetchPollListToVoteForManagement(pageNo: number) { // fetches polls that management has to vote
+
+        return this.http.get(CONFIG.serverUrl + `/ma/poll/page/${pageNo}`);
+    }
+
+    votePollManagement(pollId: number, pollResponse: Array<number>) { 
+
+        return this.http.post(CONFIG.serverUrl + `/ma/poll/${pollId}`, pollResponse);
+    }
+
+    fetchPollListForManagement(isExpired: boolean, pageNo: number) {  // fetches polls that management has created
 
         return this.http.get(CONFIG.serverUrl + `/ma/poll/${isExpired}/page/${pageNo}`);
     }
@@ -31,9 +44,9 @@ export class PollService {
 
         return this.http.get(CONFIG.serverUrl + `/ma/poll/${id}`);
     }
-    searchManagement(isExpired: boolean, pageNo: number,searchValue:string) {
+    searchManagement(isExpired: boolean, pageNo: number, searchValue: string) {
 
-        return this.http.post(CONFIG.serverUrl + `/ma/poll/${isExpired}/search/page/${pageNo}`, {search:searchValue});
+        return this.http.post(CONFIG.serverUrl + `/ma/poll/${isExpired}/search/page/${pageNo}`, { search: searchValue });
     }
     fetchPollAudience() {
 

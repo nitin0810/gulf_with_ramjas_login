@@ -47,7 +47,7 @@
     "description": "An Ionic project",
     "cordova": {
         "platforms": [
-            "android"
+           
         ],
         "plugins": {
             "cordova-plugin-console": {},
