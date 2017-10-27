@@ -367,7 +367,25 @@ export class ComplaintMainPage {
 
     onSearchClear(event: any) {
 
-        this.getComplaints(1);
+        if (this.isFilterApplied) {
+
+            this.customService.showLoader();
+            this.complaintService.filterBy(this.appliedFilter, 1)
+                .subscribe((res: any) => {
+
+                    this.complaintList = res;
+                    this.isEmptyList = this.complaintList.length == 0;
+                    this.customService.hideLoader();
+                },
+                (err: any) => {
+                    this.customService.hideLoader();
+                    this.customService.showToast(err.msg);
+
+                });
+        } else {
+            this.getComplaints(1);
+
+        }
     }
 
     showSortFilterRemoveMsg() {

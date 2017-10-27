@@ -15,7 +15,7 @@ import { CustomService } from '../../../../services/custom.service';
 
 export class CurrentPollPageManagement {
 
-    title: string = "Poll (For Me)";
+    title: string = "Poll (By Me)";
     pollList: Array<any> = [];
     pageNo: number = 1;
     pageNoWithSearch: number = 1;

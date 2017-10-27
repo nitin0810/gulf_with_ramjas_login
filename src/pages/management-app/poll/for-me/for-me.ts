@@ -14,6 +14,7 @@ import { PollService } from '../../../../services/poll.service';
 
 export class PollForMePageManagement {
 
+    title:string="Poll (For Me)";
      pollList: Array<any>;
      pageNo: number = 1; //page counter for pagination
  
@@ -128,7 +129,7 @@ export class PollForMePageManagement {
  
      doInfinite(refresher: any) {
  
-         this.pollService.fetchPollListForStudent(this.pageNo + 1)
+         this.pollService.fetchPollListToVoteForManagement(this.pageNo + 1)
              .subscribe((res: any) => {
  
                  if (res && res.length != 0) {
