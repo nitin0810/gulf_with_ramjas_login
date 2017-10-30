@@ -31,9 +31,9 @@
                 <ion-icon name="clock" item-start></ion-icon>
                 <p>
                     <b>Expires: </b>
-                    <span>{{poll.expiredAt | amTimeAgo}}</span>
+                    <span>{{poll.expiredAt | amDateFormat: 'LL'}}</span>
                 </p>
-                <button ion-button clear item-end>EDIT</button>
+                <button ion-button clear item-end (click)="editExpiryDate()">EDIT</button>
             </ion-item>
 
             <ion-item>
@@ -100,6 +100,8 @@
                 </p>
                 <p *ngFor="let y of poll.years">{{y}}</p>
             </ion-item>
+
+            <ion-datetime #dateTime  max="2018" [min]="todayDate()" displayFormat="DD MMM YYYY" [(ngModel)]="newExpiryDate" doneText="Update" (ionChange)="updateExpiryDate()" hidden></ion-datetime>
         </ion-card-content>
     </ion-card>
 

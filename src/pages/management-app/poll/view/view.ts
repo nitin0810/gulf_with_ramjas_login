@@ -1,6 +1,6 @@
 
-import { Component } from '@angular/core';
-import { IonicPage, ViewController, ActionSheetController, NavController, NavParams } from 'ionic-angular';
+import { Component, ViewChild } from '@angular/core';
+import { IonicPage, ViewController, ActionSheetController, NavController, NavParams, DateTime } from 'ionic-angular';
 import { PollService } from '../../../../services/poll.service';
 import { CustomService } from '../../../../services/custom.service';
 
@@ -13,10 +13,12 @@ import { CustomService } from '../../../../services/custom.service';
 
 export class ViewPollPageManagement {
 
+    @ViewChild('dateTime') dateTime: DateTime;
     title: string = "view poll";
     pollId: number; // recieved from navparams
     poll: any; // complete poll info to be fetched from server
-    showInfo:boolean = false;
+    newExpiryDate: any = new Date().toISOString().substring(0, 10);
+    showInfo: boolean = false;
     constructor(
         private navparam: NavParams,
         private viewCtrl: ViewController,
@@ -34,6 +36,7 @@ export class ViewPollPageManagement {
             .subscribe((res: any) => {
 
                 this.poll = res;
+                this.newExpiryDate = this.poll.expiredAt;
                 this.customService.hideLoader();
             }, (err: any) => {
 
@@ -41,6 +44,30 @@ export class ViewPollPageManagement {
                 this.customService.showToast(err.msg);
             });
     }
+
+    todayDate() {
+        return new Date().toISOString().substring(0, 10);
+    }
+
+    editExpiryDate() {
+
+        this.dateTime.open();
+    }
+
+    updateExpiryDate() {
+
+        this.customService.showLoader();
+        this.pollService.editExpiryDate({ expiredAt: this.newExpiryDate }, this.poll.id)
+            .subscribe((res: any) => {
+                this.customService.hideLoader();
+                this.customService.showToast("Expiry date edited successfully");
+                this.poll.expiredAt = res.expiredAt; // same as this.newExpiryDate;
+            }, (err: any) => {
+                this.customService.hideLoader();
+                this.customService.showToast(err.msg);
+            });
+    }
+
 
     dismiss() {
         this.viewCtrl.dismiss();

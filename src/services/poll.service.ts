@@ -85,4 +85,9 @@ export class PollService {
         return this.http.post(CONFIG.serverUrl + `/ma/poll`, data);
     }
 
+    editExpiryDate(newDate:any,pollId: number){
+
+        return this.http.put(CONFIG.serverUrl + `/ma/poll/${pollId}`, newDate);
+    }
+
 }

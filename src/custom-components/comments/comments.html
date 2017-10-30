@@ -28,7 +28,7 @@
 
 </ion-content>
 
-<ion-footer *ngIf="complaint.statusId != 4 && complaint.statusId != 6 " keyboard-attach class="bar-stable">
+<ion-footer *ngIf="complaint.statusId != 4 && complaint.statusId != 6 " keyboard-attach style="position:fixed" class="bar-stable">
 
     <ion-grid>
         <ion-row>
@@ -39,7 +39,7 @@
 
             <ion-col>
 
-                <button [disabled]="inputChat?.trim().length==0" (click)="postChat()" style="width: 50px !important;" class="csCommentSend"
+                <button [disabled]="inputChat?.trim().length==0" (click)="postChat()" style="width: 50px !important; " class="csCommentSend"
                     color="primary" ion-button icon-only item-end>
                     <ion-icon name="md-send" role="img"></ion-icon>
                 </button>
