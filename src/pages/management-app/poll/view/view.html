@@ -33,7 +33,7 @@
                     <b>Expires: </b>
                     <span>{{poll.expiredAt | amDateFormat: 'LL'}}</span>
                 </p>
-                <button ion-button clear item-end (click)="editExpiryDate()">EDIT</button>
+                <button *ngIf="!isExpired" ion-button clear item-end (click)="editExpiryDate()">EDIT</button>
             </ion-item>
 
             <ion-item>

@@ -13,6 +13,7 @@ import { IonicPage, ModalController } from 'ionic-angular';
 export class ListPollPageManagement {
 
     @Input() pollList: any;
+    @Input() arePollExpired: boolean; // to make the poll editable or not
 
     constructor(
         private modalCtrl: ModalController
@@ -22,7 +23,7 @@ export class ListPollPageManagement {
 
     openViewPoll(pollId: number) {
 
-        let modal = this.modalCtrl.create("ViewPollPageManagement", { 'pollId': pollId });
+        let modal = this.modalCtrl.create("ViewPollPageManagement", { 'pollId': pollId,'isExpired':this.arePollExpired});
         modal.present();
     }
 

@@ -16,7 +16,11 @@ import { CustomService } from '../../../../services/custom.service';
 export class CurrentPollPageManagement {
 
     title: string = "Poll (By Me)";
+    /**properties bound to list template */
     pollList: Array<any> = [];
+    arePollExpired:boolean;
+
+    /**own properties */
     pageNo: number = 1;
     pageNoWithSearch: number = 1;
     searchInput: string = '';
@@ -46,6 +50,7 @@ export class CurrentPollPageManagement {
             .subscribe((res: any) => {
 
                 this.pollList = res;
+                this.arePollExpired = false;
                 this.customService.hideLoader();
             }, (err: any) => {
 

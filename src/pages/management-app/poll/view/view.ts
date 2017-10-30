@@ -16,6 +16,7 @@ export class ViewPollPageManagement {
     @ViewChild('dateTime') dateTime: DateTime;
     title: string = "view poll";
     pollId: number; // recieved from navparams
+    isExpired :boolean; // recieved from navparams
     poll: any; // complete poll info to be fetched from server
     newExpiryDate: any = new Date().toISOString().substring(0, 10);
     showInfo: boolean = false;
@@ -26,6 +27,7 @@ export class ViewPollPageManagement {
         private customService: CustomService
     ) {
         this.pollId = this.navparam.get('pollId');
+        this.isExpired =this.navparam.get('isExpired');
         this.getPollInfo();
     }
 

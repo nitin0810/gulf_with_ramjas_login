@@ -5,7 +5,7 @@ import { IonicPage, Tabs } from 'ionic-angular';
 
 @IonicPage()
 @Component({
-    selector: 'poll',
+    selector: 'survey',
     template: `
         <ion-tabs   class="csGrayBackground" color="primary" tabsLayout='icon-start'>
         <ion-tab tabTitle="CURRENT" tabIcon="mic" [root]="current"></ion-tab>
@@ -15,10 +15,10 @@ import { IonicPage, Tabs } from 'ionic-angular';
     styles: [` `]
 })
    
-export class PollTabsPageManagement {
+export class SurveyTabsPageManagement {
 
-    current: string = "CurrentPollPageManagement";
-    closed: string = "ClosedPollPageManagement";
+    current: string = "CurrentSurveyPageManagement";
+    closed: string = "ClosedSurveyPageManagement";
 
     constructor() {       }
  

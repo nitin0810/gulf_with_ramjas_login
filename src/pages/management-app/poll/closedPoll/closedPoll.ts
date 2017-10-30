@@ -15,7 +15,11 @@ import { PollService } from '../../../../services/poll.service';
 export class ClosedPollPageManagement {
 
     title: string = "Poll (By Me)";
-    pollList: Array<any>;
+    /**properties bound to list template */
+    pollList: Array<any> = [];
+    arePollExpired: boolean;
+
+    /**own properties */
     pageNo: number = 1;
     pageNoWithSearch: number = 1;
     searchInput: string = '';
@@ -38,6 +42,7 @@ export class ClosedPollPageManagement {
             .subscribe((res: any) => {
 
                 this.pollList = res;
+                this.arePollExpired = true;
                 this.customService.hideLoader();
             }, (err: any) => {
 

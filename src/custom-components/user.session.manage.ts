@@ -96,6 +96,7 @@ export class UserSessionManage {
                 { title: 'Suggestions', component: "SuggestionTabsPageManagement", icon: 'assets/icon/suggestion.png' },
                 { title: 'Appreciations', component: "AppreciationTabsPageManagement", icon: 'assets/icon/appreciation.png' },
                 { title: 'Polls', icon: 'assets/icon/poll.png' },
+                { title: 'Surveys', icon: 'assets/icon/survey.png' },
                 { title: 'Account', component: "AccountPage", icon: 'assets/icon/profile.png' },
                 
             ];
