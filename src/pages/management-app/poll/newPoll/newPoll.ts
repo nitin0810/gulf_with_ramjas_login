@@ -37,16 +37,18 @@ export class NewPollPageManagement {
 
     question: string;
     options: Array<{ choice: String }> = [{ choice: "" }, { choice: "" }];
-    expireDate:any =  new Date().toISOString().substring(0,10);
+    expireDate: any = new Date().toISOString().substring(0, 10);
     optionTypeId: number;
 
 
     constructor(
-        private viewCtrl: ViewController,
-        private pollService: PollService,
-        private customService: CustomService,
-        private actionSheetCtrl: ActionSheetController
-    ) {
+        public viewCtrl: ViewController,
+        public pollService: PollService,
+        public customService: CustomService,
+        public actionSheetCtrl: ActionSheetController
+    ) { }
+
+    ionViewWillEnter() {
 
         this.getMainAudeinceData();
     }
@@ -81,13 +83,16 @@ export class NewPollPageManagement {
     }
 
     todayDate() {
-        return new Date().toISOString().substring(0,10);
+        return new Date().toISOString().substring(0, 10);
     }
 
     onAudienceChange() {
+        // clear the appropriate ngModal variable on main audience change
 
+        if (this.mainAudience.id == 1) { this.audienceIds = null; }
         if (this.mainAudience.id == 2) {
 
+            this.audienceIds = this.departmentIds = null; // clear the ngModal variable
             if (!localStorage.getItem('pollDepartmentList')) {
 
                 this.customService.showLoader();
@@ -109,6 +114,7 @@ export class NewPollPageManagement {
 
         } else if (this.mainAudience.id == 3) {
 
+            this.programIds = this.yearIds = null;
             if (!localStorage.getItem('pollProgramList') && !localStorage.getItem('pollYearList')) {
 
                 this.customService.showLoader();
@@ -133,11 +139,12 @@ export class NewPollPageManagement {
             } else {
                 this.programList = JSON.parse(localStorage.getItem('pollProgramList'));
                 this.yearList = JSON.parse(localStorage.getItem('pollYearList'));
-                
+
 
             }
         } else if (this.mainAudience.id == 4) {
 
+            this.moduleIds = this.yearIds = null;
             if (!localStorage.getItem('pollModuleYears')) {
 
                 this.customService.showLoader();
@@ -164,6 +171,7 @@ export class NewPollPageManagement {
 
     onYearForModuleChange() {
 
+        this.moduleIds = null;
         if (this.yearForModule.modules) {
 
             this.moduleList = this.yearForModule.modules;
@@ -280,8 +288,8 @@ export class NewPollPageManagement {
     }
 
 
-    dismiss(data?:any) {
+    dismiss(data?: any) {
 
-        this.viewCtrl.dismiss({'data':data});
+        this.viewCtrl.dismiss({ 'data': data });
     }
 }

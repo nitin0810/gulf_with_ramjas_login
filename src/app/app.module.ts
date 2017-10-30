@@ -22,6 +22,7 @@ import { Network } from '@ionic-native/network';
 import { ComplaintService } from '../services/complaint.service';
 import { PollService } from '../services/poll.service';
 import { AppreciationService } from '../services/appreciation.service';
+import { SurveyService } from '../services/survey.service';
 
 /**import custom modules*/
 import { CustomNavbarModule } from '../custom-components/navbar/navbar.module';
@@ -65,6 +66,7 @@ import { ForgotPasswordModal } from '../custom-components/login/forgot-password/
     NetworkService,
     ComplaintService,
     PollService,
+    SurveyService,
     AppreciationService,
     { provide: ErrorHandler, useClass: IonicErrorHandler },
     {

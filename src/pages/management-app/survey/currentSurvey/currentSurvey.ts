@@ -13,4 +13,25 @@ import { CustomService } from '../../../../services/custom.service';
 export class CurrentSurveyPageManagement {
 
     title: string = "Survey (By Me)";
+
+    constructor(
+        private modalCtrl: ModalController
+    ){};
+
+
+
+
+    openNewPollModal() {
+
+        let modal = this.modalCtrl.create("NewSurveyPageManagement");
+        modal.present();
+        // modal.onDidDismiss((returnedData: any) => {
+
+        //     if (returnedData.data) {
+
+        //         this.pollList.unshift(returnedData.data);
+        //     }
+        // });
+
+    }
 }
