@@ -1,0 +1,47 @@
+<ion-header>
+    <nl-modal-navbar [title]="title" (modalClosed)="dismiss()"></nl-modal-navbar>
+</ion-header>
+
+<ion-content class="csGrayBackground">
+
+    <ion-list *ngIf="survey">
+        <form #surveyVoteForm="ngForm" (ngSubmit)="onSubmit()">
+
+            <ion-card *ngFor="let q of survey; let i = index">
+                <ion-card-header>
+                    {{q.question}}
+                    <p class="csParagraph smallGrayText">{{q.optionTypeName}}</p>
+                </ion-card-header>
+                <ion-card-content>
+
+                    <div class="csPollOptionsBack">
+                        <div *ngIf="q.optionTypeId== 2">
+                            <ion-list>
+                                <ion-item *ngFor="let option of q.options, let j=index" class="csPaddingLeft50 csqOptionsBack">
+                                    <ion-label>{{option.name}}</ion-label>
+                                    <ion-checkbox checked="false" [(ngModel)]="q.selectedOptions[j]" (ionChange)="checkValidity()" name="checkbox{{j}}" item-end color="primary">
+                                    </ion-checkbox>
+                                </ion-item>
+                            </ion-list>
+                        </div>
+
+                        <div *ngIf="q.optionTypeId == 1">
+                            <ion-list radio-group [(ngModel)]="q.selectedOptions" required name="radio">
+                                <ion-item *ngFor="let option of q.options" class="csPaddingLeft50 csPollOptionsBack">
+                                    <ion-label>{{option.name}}</ion-label>
+                                    <ion-radio checked="false" [value]="[option.id]">
+                                    </ion-radio>
+                                </ion-item>
+                            </ion-list>
+                        </div>
+                    </div>
+
+                </ion-card-content>
+            </ion-card>
+
+            <div padding>
+                <button [disabled]="!surveyVoteForm.valid" ion-button full type="submit">Vote</button>
+            </div>
+        </form>
+    </ion-list>
+</ion-content>

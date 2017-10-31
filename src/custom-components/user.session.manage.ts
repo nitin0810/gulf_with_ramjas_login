@@ -81,6 +81,7 @@ export class UserSessionManage {
                 { title: 'Suggestions', component: "SuggestionTabsPageStudent", icon: 'assets/icon/suggestion.png' },
                 { title: 'Appreciations', component: "AppreciationTabsPageStudent", icon: 'assets/icon/appreciation.png' },
                 { title: 'Polls', component: "PollStudent", icon: 'assets/icon/poll.png' },
+                { title: 'Surveys', component: "SurveyPageStudent", icon: 'assets/icon/survey.png' },
                 { title: 'Account', component: "AccountPage", icon: 'assets/icon/profile.png' },
                     
                 

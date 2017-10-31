@@ -1,4 +1,4 @@
-import { Component,Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { IonicPage, ModalController } from 'ionic-angular';
 
 @IonicPage()
@@ -14,11 +14,16 @@ export class SurveyListComponent {
     @Input() areSurveysExpired: boolean;
     constructor(
         private modalCtrl: ModalController
-    ) {
+    ) { }
 
-    }
+    openViewModal(survey: any, index: number) {
 
-    openViewModal(survey:any, index:number){
-
+        let modal = this.modalCtrl.create("SurveyVoteComponent", { 'surveyId': survey.id });
+        modal.present();
+        modal.onDidDismiss((returnedData: any) => {
+            if (returnedData) {
+                this.surveyList.splice(index, 1);
+            }
+        });
     }
 }

@@ -95,7 +95,7 @@ export class MyApp extends UserSessionManage {
           { title: 'ByMe', component: "SurveyTabsPageManagement", icon: 'assets/icon/survey.png' },
         );
       } else {
-        
+
         let i = this.pollSubOptionsShown ? 8 : 6;
 
         /**delete these two options below the survey option*/
