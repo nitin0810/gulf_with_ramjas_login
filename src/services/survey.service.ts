@@ -17,4 +17,9 @@ export class SurveyService {
     return this.http.post(CONFIG.serverUrl + `/ma/survey`,data);
     }
 
+    fetchSurveysForManagement(isExpired: boolean,pageNo: number){
+
+        return this.http.get(CONFIG.serverUrl + `/ma/survey/${isExpired}/page/${pageNo}`);
+    }
+
 }

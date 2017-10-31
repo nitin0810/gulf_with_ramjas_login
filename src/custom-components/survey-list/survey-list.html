@@ -1,0 +1,24 @@
+<ion-list class="complaint-list">
+
+    <a ion-item *ngFor="let survey of surveyList; let i =index" (click)="openViewModal(survey, i)" [style.border-left-color]="survey.mainAudienceColor">
+
+
+        <h2>
+            <b>{{survey.title}}</b>
+        </h2>
+        <p>{{survey.description}}</p>
+        <ion-row>
+            <ion-col col-6 class="no-padding-l csGray5353">
+                <span *ngIf="areSurveysExpired">Expired: </span>
+                <span *ngIf="!areSurveysExpired">Expires: </span>
+                <span>{{survey.expiredAt | amTimeAgo}}</span>
+            </ion-col>
+            <ion-col col-6 class="no-padding-l csGray5353" [style.color]="survey.mainAudienceColor">
+                <ion-icon name="at"></ion-icon>
+                <span>{{survey.mainAudienceName }}</span>
+            </ion-col>
+        </ion-row>
+
+    </a>
+
+</ion-list>

@@ -15,7 +15,9 @@
         </ion-row>
         <ion-row>
             <ion-col col-6 class="no-padding-l csGray5353">
-                Expires: {{poll.expiredAt | amTimeAgo}}
+                <span *ngIf="arePollExpired">Expired: </span>
+                <span *ngIf="!arePollExpired">Expires: </span>
+                {{poll.expiredAt | amTimeAgo}}
             </ion-col>
             <ion-col col-6 class="no-padding-l" [style.color]="poll.mainAudienceColor">
                 <ion-icon name="at"></ion-icon>

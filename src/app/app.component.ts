@@ -23,7 +23,7 @@ export class MyApp extends UserSessionManage {
   defaultUserImage: string = "assets/images/user.png";
   sideMenuOptions: Array<any>;
   pollSubOptionsShown: boolean = false; // to show and hide the poll suboptions
-  surveySubOptionsShown :boolean =  false; // to show and hide the survey suboptions
+  surveySubOptionsShown: boolean = false; // to show and hide the survey suboptions
 
   constructor(
     private platform: Platform,
@@ -86,15 +86,20 @@ export class MyApp extends UserSessionManage {
     if (page.title == "Surveys" && localStorage.getItem('isStudent') === "false") {
       if (!this.surveySubOptionsShown) {
 
+        /**index shud be based on whether pollOptions are hidden or shown */
+        let i = this.pollSubOptionsShown ? 8 : 6;
+
         /**insert these two options below the survey option*/
-        this.sideMenuOptions.splice(6, 0,
+        this.sideMenuOptions.splice(i, 0,
           { title: 'ForMe', component: "SurveyForMePageManagement", icon: 'assets/icon/survey.png' },
           { title: 'ByMe', component: "SurveyTabsPageManagement", icon: 'assets/icon/survey.png' },
         );
       } else {
+        
+        let i = this.pollSubOptionsShown ? 8 : 6;
 
         /**delete these two options below the survey option*/
-        this.sideMenuOptions.splice(6, 2);
+        this.sideMenuOptions.splice(i, 2);
 
       }
       this.surveySubOptionsShown = !this.surveySubOptionsShown;

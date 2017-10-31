@@ -1,8 +1,16 @@
 <ion-header>
-        <nl-navbar [title]="title"></nl-navbar>
-        <!-- <ion-searchbar [(ngModel)]="searchInput" (ionInput)="onSearchInput($event)" [debounce]="debounceDuration" (ionClear)="onSearchClear($event)"></ion-searchbar> -->
-    </ion-header>
-    
-    <ion-content class="csGrayBackground">
-        <p>closed surveys///////</p>
-    </ion-content>
+    <nl-navbar [title]="title"></nl-navbar>
+    <!-- <ion-searchbar [(ngModel)]="searchInput" (ionInput)="onSearchInput($event)" [debounce]="debounceDuration" (ionClear)="onSearchClear($event)"></ion-searchbar> -->
+</ion-header>
+
+<ion-content class="csGrayBackground">
+    <ion-refresher (ionRefresh)="doRefresh($event)">
+        <ion-refresher-content></ion-refresher-content>
+    </ion-refresher>
+
+    <survey-list [surveyList]="surveyList" [areSurveysExpired]="areSurveysExpired" ></survey-list>
+
+    <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
+        <ion-infinite-scroll-content></ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+</ion-content>

@@ -98,7 +98,7 @@ export class NewSurveyPageManagement extends NewPollPageManagement {
     finallySubmit() {
 
         let data: any = {
-            title: this.title,
+            title: this.surveyTitle,
             description: this.description,
             expiredAt: this.expireDate,
             questions: this.questions,
