@@ -1,4 +1,4 @@
-import { Component, ViewChild, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { IonicPage, ModalController } from 'ionic-angular';
 import { SurveyService } from '../../../services/survey.service';
 import { CustomService } from '../../../services/custom.service';

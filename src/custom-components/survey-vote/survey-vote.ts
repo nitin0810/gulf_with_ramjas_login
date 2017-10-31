@@ -15,7 +15,12 @@ export class SurveyVoteComponent {
     title: string = "vote";
     surveyId: number;;
     survey: any; /**survey data from server */
+    surveyFromList: any;// survey data from Navparams(partial data)
+
+    showInfo:boolean=false;
+    fetchService: any;
     isFormValid: boolean = false;
+    
     constructor(
         private viewCtrl: ViewController,
         private navParams: NavParams,
@@ -24,14 +29,16 @@ export class SurveyVoteComponent {
     ) {
 
         this.surveyId = this.navParams.get('surveyId');
+        this.surveyFromList = this.navParams.get('survey');
+        this.fetchService = localStorage.getItem('isStudent') === "true" ? this.surveyService.fetchSurveyByIdStudent
+            : this.surveyService.fetchSurveyByIdManagement;
         this.getSurvey();
     }
 
     getSurvey() {
 
-
         this.customService.showLoader();
-        this.surveyService.fetchSurveyById(this.surveyId)
+        this.fetchService.call(this.surveyService, this.surveyId)
             .subscribe((res: any) => {
                 console.log(res);
 
@@ -41,7 +48,7 @@ export class SurveyVoteComponent {
                     // and array of true false in case of ,multiple choice type
                 });
 
-                this.survey = res;
+                this.survey =res;
                 this.customService.hideLoader();
             }, (err: any) => {
                 this.customService.hideLoader();
@@ -73,9 +80,9 @@ export class SurveyVoteComponent {
             .subscribe((res: any) => {
 
                 this.customService.hideLoader();
-                this.customService. showToast(res.message || 'Response submitted successfully');
+                this.customService.showToast(res.message || 'Response submitted successfully');
                 this.dismiss(true);
-                
+
             }, (err: any) => {
 
                 this.customService.hideLoader();

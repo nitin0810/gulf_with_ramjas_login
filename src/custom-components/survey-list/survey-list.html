@@ -1,7 +1,6 @@
 <ion-list class="complaint-list">
 
-    <a ion-item *ngFor="let survey of surveyList; let i =index" (click)="openViewModal(survey, i)" [style.border-left-color]="survey.mainAudienceColor">
-
+    <a ion-item *ngFor="let survey of surveyList; let i =index" (click)="openModal(survey, i)" [style.border-left-color]="survey.mainAudienceColor">
 
         <h2>
             <b>{{survey.title}}</b>

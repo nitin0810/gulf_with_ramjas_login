@@ -16,14 +16,28 @@ export class SurveyListComponent {
         private modalCtrl: ModalController
     ) { }
 
-    openViewModal(survey: any, index: number) {
+    openModal(survey: any, index: number) {
 
-        let modal = this.modalCtrl.create("SurveyVoteComponent", { 'surveyId': survey.id });
-        modal.present();
-        modal.onDidDismiss((returnedData: any) => {
-            if (returnedData) {
-                this.surveyList.splice(index, 1);
-            }
-        });
+        /**view modal is to opened only when aresSurveysExpired is either true or false */
+        if (this.areSurveysExpired == true || this.areSurveysExpired == false) {
+
+            let modal = this.modalCtrl.create("ViewSurveyPageManagement", { 'surveyId': survey.id, 'isExpired': this.areSurveysExpired });
+            modal.present();
+            modal.onDidDismiss((returnedData: any) => {
+                if (returnedData) {
+                    this.surveyList.splice(index, 1);
+                }
+            });
+        }
+
+        /**open vote modal  when aresSurveysExpired undefined, no property binding has been done in this case*/
+        else {
+
+            let modal = this.modalCtrl.create("SurveyVoteComponent", { 'surveyId': survey.id, 'survey': survey });
+            modal.present();
+          
+        }
+
+
     }
 }
