@@ -170,7 +170,10 @@ export class NewPollPageManagement {
     }
 
     onYearForModuleChange() {
-
+        // console.log('on years for module change////');
+        // console.log(this.yearForModule);
+        // console.log(this.yearForModule.modules);
+        // console.log(this.yearsListForModule);
         this.moduleIds = null;
         if (this.yearForModule.modules) {
 
@@ -184,7 +187,7 @@ export class NewPollPageManagement {
                     let selectedYear = this.yearsListForModule.find((element: any) => {
                         return (this.yearForModule.id || this.yearForModule.yearId) == (element.id || element.yearId);
                     });
-
+                    // console.log('selevted year', selectedYear);
                     selectedYear.modules = res;
                     localStorage.setItem('pollModuleYears', JSON.stringify(this.yearsListForModule));
                     this.customService.hideLoader();
@@ -232,18 +235,6 @@ export class NewPollPageManagement {
 
     finallySubmit() {
 
-        // console.log('mainAudience', this.mainAudience);
-        // console.log('audince ids', this.audienceIds);
-        // console.log('depts', this.departmentIds);
-        // console.log('yearsids', this.yearIds);
-        // console.log('programIds', this.programIds);
-        // console.log('yearForModule', this.yearForModule);
-        // console.log('moduleIds', this.moduleIds);
-
-        // console.log('title', this.title);
-        // console.log('expireDate', this.expireDate);
-        // console.log('options', this.question);
-        // console.log('optionType', this.optionTypeId);
 
         let data: any = {
             question: this.question,

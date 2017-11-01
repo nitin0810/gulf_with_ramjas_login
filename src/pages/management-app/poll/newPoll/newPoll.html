@@ -4,7 +4,7 @@
 
 <ion-content class="csGrayBackground">
 
-    <form #newPollForm="ngForm" (ngSubmit)="onSubmit()">
+    <form *ngIf="audienceList" #newPollForm="ngForm" (ngSubmit)="onSubmit()">
 
         <ion-card>
             <ion-item>
@@ -116,7 +116,7 @@
                 <ion-item>
                     <ion-label><b>Select Year</b></ion-label>
                     <ion-select [(ngModel)]="yearForModule" (ionChange)="onYearForModuleChange()" required name="years">
-                        <ion-option *ngFor="let y of yearsListForModule" [value]="y">{{y.name || y.yearName}}</ion-option>
+                        <ion-option *ngFor="let y of yearsListForModule" [value]="y" >{{y.name || y.yearName}} </ion-option>
                     </ion-select>
                 </ion-item>
             </ion-card>
