@@ -144,7 +144,7 @@ export class NewPollPageManagement {
             }
         } else if (this.mainAudience.id == 4) {
 
-            this.moduleIds = this.yearIds = null;
+            this.moduleIds = this.yearForModule = null;
             if (!localStorage.getItem('pollModuleYears')) {
 
                 this.customService.showLoader();

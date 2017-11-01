@@ -23,11 +23,6 @@ export class SurveyListComponent {
 
             let modal = this.modalCtrl.create("ViewSurveyPageManagement", { 'surveyId': survey.id, 'isExpired': this.areSurveysExpired });
             modal.present();
-            modal.onDidDismiss((returnedData: any) => {
-                if (returnedData) {
-                    this.surveyList.splice(index, 1);
-                }
-            });
         }
 
         /**open vote modal  when aresSurveysExpired undefined, no property binding has been done in this case*/
@@ -35,7 +30,11 @@ export class SurveyListComponent {
 
             let modal = this.modalCtrl.create("SurveyVoteComponent", { 'surveyId': survey.id, 'survey': survey });
             modal.present();
-          
+            modal.onDidDismiss((returnedData: any) => {
+                if (returnedData) {
+                    this.surveyList.splice(index, 1);
+                }
+            });
         }
 
 

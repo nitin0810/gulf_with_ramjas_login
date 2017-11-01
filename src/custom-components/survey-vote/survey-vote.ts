@@ -17,10 +17,10 @@ export class SurveyVoteComponent {
     survey: any; /**survey data from server */
     surveyFromList: any;// survey data from Navparams(partial data)
 
-    showInfo:boolean=false;
+    showInfo: boolean = false;
     fetchService: any;
-    isFormValid: boolean = false;
-    
+    isSubmitBtnDisabled: boolean = true;
+
     constructor(
         private viewCtrl: ViewController,
         private navParams: NavParams,
@@ -48,30 +48,55 @@ export class SurveyVoteComponent {
                     // and array of true false in case of ,multiple choice type
                 });
 
-                this.survey =res;
+                this.survey = res;
                 this.customService.hideLoader();
             }, (err: any) => {
                 this.customService.hideLoader();
                 this.customService.showToast(err.msg);
             });
     }
-    checkValidity() {
-        console.log(this.survey);
 
-        // this.survey.forEach((ques: any) => {
-        //     if (ques.optionTypeId == 1) {
-        //         if (ques.selectedOptions.length == 0) {
-        //             this.isFormValid = false;
-        //             return;
-        //         } 
-        //     }
-        //     else if(ques.optionTypeId == 2){
-        //         let valid :boolean = false;
+    changeVoteBtnStatus() {
 
-        //     }
-        // });
+        this.isSubmitBtnDisabled = !this.checkValidity();
     }
 
+
+    checkValidity() {
+
+        let allAnswered = true;
+
+        for (let i = 0; i < this.survey.length; i++) {
+
+            if (this.survey[i].optionTypeId == 1) {
+
+                if (this.survey[i].selectedOptions.length == 0) {
+
+                    allAnswered = false;
+                    return allAnswered;
+                }
+
+            }
+            else if (this.survey[i].optionTypeId == 2) {
+
+                let valid: boolean;
+                for (let j = 0; j < this.survey[i].selectedOptions.length; j++) {
+
+                    if (this.survey[i].selectedOptions[j]) {
+                        valid = true;
+                        break;
+                    }
+                }
+                if (valid) { continue; }
+                allAnswered = false
+                return allAnswered;
+            }
+        }
+
+        return allAnswered;
+    }
+
+    
     onSubmit() {
         let data = this.buildPayload();
 
@@ -113,7 +138,7 @@ export class SurveyVoteComponent {
 
             data.push(obj);
         });
-        console.log(data);
+        // console.log(data);
         return data;
     }
 
