@@ -1,6 +1,6 @@
 
 
-import { Component, ViewChild } from '@angular/core';
+import { Component} from '@angular/core';
 import { IonicPage } from 'ionic-angular';
 import { CustomService } from '../../../../services/custom.service';
 import { PollService } from '../../../../services/poll.service';

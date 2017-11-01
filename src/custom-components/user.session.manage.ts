@@ -12,7 +12,7 @@ export class UserSessionManage {
     rootPage: any;
     userName: string;
     userImage: string;
-    sideMenuOptions:Array<any>;
+    sideMenuOptions: Array<any>;
     picUrl: any;
 
     constructor(
@@ -68,9 +68,9 @@ export class UserSessionManage {
         this.imageUpdate();
     }
 
-  /**maintain different side menu options for better understanding and also there might be some features
-   * present in one and not in other
-   */
+    /**maintain different side menu options for better understanding and also there might be some features
+     * present in one and not in other
+     */
     decideSideMenuContent() {
         if (localStorage.getItem('isStudent') === "true") {
 
@@ -83,8 +83,8 @@ export class UserSessionManage {
                 { title: 'Polls', component: "PollStudent", icon: 'assets/icon/poll.png' },
                 { title: 'Surveys', component: "SurveyPageStudent", icon: 'assets/icon/survey.png' },
                 { title: 'Account', component: "AccountPage", icon: 'assets/icon/profile.png' },
-                    
-                
+
+
 
             ];
 
@@ -99,8 +99,17 @@ export class UserSessionManage {
                 { title: 'Polls', icon: 'assets/icon/poll.png' },
                 { title: 'Surveys', icon: 'assets/icon/survey.png' },
                 { title: 'Account', component: "AccountPage", icon: 'assets/icon/profile.png' },
-                
+
             ];
+
+            /**insert the evaluation option in case user has a role of quality-coordinater */
+            let roles: Array<string> = JSON.parse(localStorage.getItem('roles'));
+            for (let x of roles) {
+                if (x == "QUALITYCOORDINATOR") {
+                    this.sideMenuOptions.splice(6, 0, { title: 'Evaluations', component: "EvaluationTabsPageManagement", icon: 'assets/icon/appreciation.png' });
+                    break;
+                }
+            }
         }
     }
 
