@@ -35,4 +35,9 @@ export class EvaluationService {
 
         return this.http.post(CONFIG.serverUrl + `/ma/evaluation`,data);
     }
+
+    fetchEvaluation(type:string,isExpired:boolean,pageNo:number){
+
+        return this.http.get(CONFIG.serverUrl + `/ma/evaluation/${type}/false/${isExpired}/page/${pageNo}`);
+    }
 }

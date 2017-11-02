@@ -1,14 +1,16 @@
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
-import { CustomNavbarModule } from '../../../../custom-components/navbar/navbar.module';
+// import { CustomNavbarModule } from '../../../../custom-components/navbar/navbar.module';
 import { LecturerEvaluationPageManagement } from './lecturer';
+import { MomentModule } from 'angular2-moment';
 
 @NgModule({
   
     declarations: [LecturerEvaluationPageManagement],
    
     imports: [
-        CustomNavbarModule,
+        // CustomNavbarModule,
+        MomentModule,
         IonicPageModule.forChild(LecturerEvaluationPageManagement)
     ],
     
