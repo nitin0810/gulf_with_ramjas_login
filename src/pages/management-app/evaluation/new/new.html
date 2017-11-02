@@ -1,7 +1,115 @@
 <ion-header>
-        <nl-modal-navbar [title]="title" (modalClosed)="dismiss()"></nl-modal-navbar>
-    </ion-header>
-    
-    <ion-content class="csGrayBackground">
-        <p>new ........</p>
-        </ion-content>
+    <nl-modal-navbar [title]="title" (modalClosed)="dismiss()"></nl-modal-navbar>
+</ion-header>
+
+<ion-content class="csGrayBackground">
+
+    <h1>{{evaluationType | titlecase}} Evaluation</h1>
+
+    <form #evaluationForm="ngForm" (ngSubmit)="onSubmit()">
+    <ion-card>
+        <ion-item>
+            <ion-label>Type: </ion-label>
+            <ion-select [(ngModel)]="evaluationType" name="type" (ionChange)="onTypeChange()" required>
+                <ion-option *ngFor="let type of evaluationTypesPossible" [value]="type">
+                    {{type | titlecase}}
+                </ion-option>
+            </ion-select>
+        </ion-item>
+    </ion-card>
+
+    <ion-card>
+        <ion-item>
+            <ion-label>Select Template </ion-label>
+            <ion-select [(ngModel)]="templateData" name="template" required>
+                <ion-option *ngFor="let template of templateList" [value]="template">
+                    {{template.title | titlecase}}
+                </ion-option>
+            </ion-select>
+        </ion-item>
+    </ion-card>
+
+
+    <ion-card *ngIf="yearList && templateData">
+        <ion-item>
+            <ion-label>Select Year</ion-label>
+            <ion-select [(ngModel)]="selectedYear" name="year" (ionChange)="onYearChange()" required>
+                <ion-option *ngFor="let year of yearList" [value]="year">
+                    {{year.name}}
+                </ion-option>
+            </ion-select>
+        </ion-item>
+    </ion-card>
+
+
+    <ion-card *ngIf="moduleList">
+        <ion-item>
+            <ion-label>Select Module</ion-label>
+            <ion-select [(ngModel)]="selectedModule" name="module" required>
+                <ion-option *ngFor="let module of moduleList" [value]="module">
+                    {{module.name || module.moduleName}}
+                </ion-option>
+            </ion-select>
+        </ion-item>
+    </ion-card>
+
+    <ion-card *ngIf="lecturerList">
+        <ion-item>
+            <ion-label>Select Lecturer</ion-label>
+            <ion-select [(ngModel)]="selectedLecturer" name="lecturer" (ionChange)="onLecturerChange()" required>
+                <ion-option *ngFor="let lecturer of lecturerList" [value]="lecturer">
+                    {{lecturer.name || lecturer.lecturerName}}
+                </ion-option>
+            </ion-select>
+        </ion-item>
+    </ion-card>
+
+    <ion-card *ngIf="moduleListForLecturer">
+        <ion-item>
+            <ion-label>Select Module</ion-label>
+            <ion-select [(ngModel)]="slectedModuleForLecturer" name="moduleForLecturer" required>
+                <ion-option *ngFor="let module of moduleListForLecturer" [value]="module">
+                    {{module.name || module.moduleName}}
+                </ion-option>
+            </ion-select>
+        </ion-item>
+    </ion-card>
+
+    <ion-card>
+        <ion-item>
+            <ion-label> <b>Due Date</b> </ion-label>
+            <ion-datetime max="2020" [min]="todayDate()" displayFormat="MMM DD YYYY" pickerFormat="DD MMM YYYY" name="expireDate" [(ngModel)]="expireDate"></ion-datetime>
+        </ion-item>
+    </ion-card>
+
+    <ion-card *ngIf="templateData">
+        <ion-card-header>
+            Title: {{templateData.title}}
+            <br> Description: {{templateData.description}}
+        </ion-card-header>
+
+        <ion-card-content>
+
+            <ion-list>
+                <ion-list-header>
+                    QUESTIONS:
+                </ion-list-header>
+
+                <ion-item text-wrap *ngFor="let q of templateData.questions;let i = index">
+
+                    <h2>Q{{i+1}}: {{q.question}}</h2>
+                    <p>{{q.optionTypeName}}</p>
+
+                    <ion-item-divider>OPTIONS:
+                        <p *ngFor="let option of q.options">{{option.name}}</p>
+                    </ion-item-divider>
+                </ion-item>
+            </ion-list>
+        </ion-card-content>
+    </ion-card>
+
+    <div padding>
+        <button type="submit" [disabled]="!evaluationForm.valid" ion-button full >SUBMIT</button>
+    </div>
+</form>
+</ion-content>

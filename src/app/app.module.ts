@@ -29,6 +29,7 @@ import { CustomNavbarModule } from '../custom-components/navbar/navbar.module';
 import { CustomModalNavbarModule } from '../custom-components/modal-navbar/modal-navbar.module';
 import { LoginPage } from '../custom-components/login/login';
 import { ForgotPasswordModal } from '../custom-components/login/forgot-password/forgot-password';
+import { EvaluationService } from '../services/evaluation.service';
 
 
 @NgModule({
@@ -68,6 +69,7 @@ import { ForgotPasswordModal } from '../custom-components/login/forgot-password/
     PollService,
     SurveyService,
     AppreciationService,
+    EvaluationService,
     { provide: ErrorHandler, useClass: IonicErrorHandler },
     {
       provide: CustomHttpService, useFactory: (backend: XHRBackend, defaultOptions: RequestOptions) => {

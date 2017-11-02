@@ -1,4 +1,4 @@
-import { Component} from '@angular/core';
+import { Component } from '@angular/core';
 import { IonicPage, ModalController } from 'ionic-angular';
 import { CustomService } from '../../../../services/custom.service';
 
@@ -12,12 +12,14 @@ import { CustomService } from '../../../../services/custom.service';
 export class ModuleEvaluationPageManagement {
 
     title: string = "Evaluation";
-constructor(
-    private modalCtrl: ModalController
-){}
-    openNewEvaluationModal(){
-let modal = this.modalCtrl.create("NewEvaluationPageManagement");
-modal.present();
 
+    constructor(
+        private modalCtrl: ModalController
+    ) { }
+
+    openNewEvaluationModal() {
+
+        let modal = this.modalCtrl.create("NewEvaluationPageManagement");
+        modal.present();
     }
 }
