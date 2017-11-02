@@ -52,7 +52,8 @@ export class ModuleEvaluationPageManagement {
     }
 
     openViewEvaluation(id: number) {
-
+        let modal = this.modalCtrl.create("ViewEvaluationPageManagement", { 'evaluationId': id });
+        modal.present();
     }
 
     doRefresh(refresher: any) {

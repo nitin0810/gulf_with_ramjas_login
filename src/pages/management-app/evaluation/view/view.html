@@ -1,0 +1,99 @@
+<ion-header>
+    <nl-modal-navbar [title]="title" (modalClosed)="dismiss()">
+        <button ion-button clear (click)="showInfo=!showInfo">
+                <ion-icon name="information-circle" class="csWhiteText csFont18em"></ion-icon>
+               
+            </button>
+    </nl-modal-navbar>
+</ion-header>
+
+<ion-content class="csGrayBackground">
+
+    <ion-card *ngIf="evaluation && showInfo">
+        <ion-card-header>
+            {{evaluation.title}}
+            <br> {{evaluation.description}}
+        </ion-card-header>
+
+        <ion-card-content>
+
+            <ion-item>
+                <ion-icon name="clock" item-start></ion-icon>
+                <p>
+                    <b>Created : </b>
+                    <span>{{evaluation.createdAt | amTimeAgo}}</span>
+                </p>
+            </ion-item>
+
+            <ion-item *ngIf="evaluation.expiredAt">
+                <ion-icon name="clock" item-start></ion-icon>
+                <p>
+                    <b>Expires: </b>
+                    <span>{{evaluation.expiredAt | amDateFormat: 'LL'}}</span>
+                </p>
+                <!-- <button *ngIf="!isExpired" ion-button clear item-end (click)="editExpiryDate()">EDIT</button> -->
+            </ion-item>
+<!-- 
+            <ion-item>
+                <ion-icon name="people" item-start></ion-icon>
+                <p>
+                    <b>Audience: </b>
+                    <span>{{evaluation.mainAudienceName}}</span>
+                </p>
+            </ion-item> -->
+
+            <ion-item *ngIf="evaluation.lecturer">
+                <ion-icon name="folder" item-start></ion-icon>
+                <p>
+                    <b>Lecturer: </b>{{evaluation.lecturer}}
+                </p>
+            </ion-item>
+
+            <ion-item *ngIf="evaluation.module">
+                <ion-icon name="folder" item-start></ion-icon>
+                <p>
+                    <b>Module: </b>
+                </p>
+                <p *ngFor="let md of evaluation.module">{{md}}</p>
+            </ion-item>
+
+
+            <ion-item *ngIf="evaluation.years">
+                <ion-icon name="folder" item-start></ion-icon>
+                <p>
+                    <b>Year: </b>
+                </p>
+                <p *ngFor="let y of evaluation.years">{{y}}</p>
+            </ion-item>
+
+            <!-- <ion-datetime #dateTime max="2018" [min]="todayDate()" displayFormat="DD MMM YYYY" [(ngModel)]="newExpiryDate" doneText="Update"
+                (ionChange)="updateExpiryDate()" hidden></ion-datetime> -->
+        </ion-card-content>
+    </ion-card>
+
+
+
+    <ion-card *ngFor="let q of evaluation?.questions">
+
+        <ion-card-content>
+            <ion-card-title>
+                Ques: {{q.question}}
+                <br> Total Vote: {{q.totalVote}}
+            </ion-card-title>
+            <ion-list>
+                <ion-item *ngFor="let option of q.options">
+                    <ion-row>
+                        <ion-col col-6>
+                            <p>{{option.name}}</p>
+                        </ion-col>
+                        <ion-col col-6>
+                            <p>{{option.percent}}%</p>
+                        </ion-col>
+                    </ion-row>
+                    <progress-bar [progress]="option.percent"></progress-bar>
+                </ion-item>
+            </ion-list>
+        </ion-card-content>
+
+    </ion-card>
+</ion-content>

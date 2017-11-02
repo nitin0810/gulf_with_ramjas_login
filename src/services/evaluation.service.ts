@@ -26,18 +26,23 @@ export class EvaluationService {
         return this.http.get(CONFIG.serverUrl + `/ma/evaluation/${type}/${yearId}`);
     }
 
-    fetchModuleListOfLecturer(yearId: number,lecturerId:number) {
+    fetchModuleListOfLecturer(yearId: number, lecturerId: number) {
 
         return this.http.get(CONFIG.serverUrl + `/ma/evaluation/module/${yearId}/${lecturerId}`);
     }
 
-    postEvaluation(data:any){
+    postEvaluation(data: any) {
 
-        return this.http.post(CONFIG.serverUrl + `/ma/evaluation`,data);
+        return this.http.post(CONFIG.serverUrl + `/ma/evaluation`, data);
     }
 
-    fetchEvaluation(type:string,isExpired:boolean,pageNo:number){
+    fetchEvaluation(type: string, isExpired: boolean, pageNo: number) {
 
         return this.http.get(CONFIG.serverUrl + `/ma/evaluation/${type}/false/${isExpired}/page/${pageNo}`);
+    }
+
+    fetchEvaluationById(id: number) {
+
+        return this.http.get(CONFIG.serverUrl + `/ma/evaluation/${id}`);
     }
 }
