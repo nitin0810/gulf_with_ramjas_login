@@ -25,5 +25,7 @@
     </ion-card>
 </ion-list>
 
-
-
+<ion-list class="no-comment" *ngIf="appreciationList?.length==0">
+    <ion-icon name="list-box"></ion-icon>
+    <br>NO RECORD FOUND
+</ion-list>

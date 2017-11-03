@@ -8,8 +8,12 @@
         <ion-refresher-content></ion-refresher-content>
     </ion-refresher>
 
-    <survey-list [surveyList]="surveyList" [areSurveysExpired]="areSurveysExpired" ></survey-list>
+    <survey-list [surveyList]="surveyList" [areSurveysExpired]="areSurveysExpired"></survey-list>
 
+    <div class="no-comment" *ngIf="surveyList?.length==0">
+        <ion-icon name="list-box"></ion-icon>
+        <br>NO RECORD FOUND
+    </div>
     <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
         <ion-infinite-scroll-content></ion-infinite-scroll-content>
     </ion-infinite-scroll>

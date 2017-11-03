@@ -17,13 +17,11 @@ export class ListPollPageManagement {
 
     constructor(
         private modalCtrl: ModalController
-    ) {
-    }
-
+    ) { }
 
     openViewPoll(pollId: number) {
 
-        let modal = this.modalCtrl.create("ViewPollPageManagement", { 'pollId': pollId,'isExpired':this.arePollExpired});
+        let modal = this.modalCtrl.create("ViewPollPageManagement", { 'pollId': pollId, 'isExpired': this.arePollExpired });
         modal.present();
     }
 

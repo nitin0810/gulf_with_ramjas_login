@@ -8,13 +8,19 @@
         <ion-refresher-content></ion-refresher-content>
     </ion-refresher>
 
-    <survey-list [surveyList]="surveyList" [areSurveysExpired]="areSurveysExpired"></survey-list>
 
     <ion-fab right bottom>
         <button ion-fab color="danger" (click)="openNewPollModal()">
             <ion-icon name="add"></ion-icon>
         </button>
     </ion-fab>
+
+    <survey-list [surveyList]="surveyList" [areSurveysExpired]="areSurveysExpired"></survey-list>
+
+    <div class="no-comment" *ngIf="surveyList?.length==0">
+        <ion-icon name="list-box"></ion-icon>
+        <br>NO RECORD FOUND
+    </div>
 
     <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
         <ion-infinite-scroll-content></ion-infinite-scroll-content>

@@ -16,7 +16,7 @@ export class ClosedPollPageManagement {
 
     title: string = "Poll (By Me)";
     /**properties bound to list template */
-    pollList: Array<any> = [];
+    pollList: Array<any> ;
     arePollExpired: boolean;
 
     /**own properties */
