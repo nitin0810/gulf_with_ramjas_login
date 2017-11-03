@@ -30,6 +30,10 @@ export class SurveyVoteComponent {
 
         this.surveyId = this.navParams.get('surveyId');
         this.surveyFromList = this.navParams.get('survey');
+        /**in case when survey is treated as an evaluation, module or/and lecturer name also to be shown
+         * convert the module into array if it is coming as a string
+         */
+        if(this.surveyFromList.module && (typeof this.surveyFromList.module=="string")){ this.surveyFromList.module=[this.surveyFromList.module];}
         this.fetchService = localStorage.getItem('isStudent') === "true" ? this.surveyService.fetchSurveyByIdStudent
             : this.surveyService.fetchSurveyByIdManagement;
         this.getSurvey();
