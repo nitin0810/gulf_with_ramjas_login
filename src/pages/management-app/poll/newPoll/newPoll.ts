@@ -22,7 +22,7 @@ export class NewPollPageManagement {
     programList: Array<any>;
     yearList: Array<any>;
     yearsListForModule: Array<any>;
-    moduleList: Array<any>;
+    modulesObject: any={}; // stores array of modules(as value) of multiple yearsIds(as property)
     optionTypesPossible: Array<any>;
     optionLimit: number;
 
@@ -87,7 +87,8 @@ export class NewPollPageManagement {
     }
 
     onAudienceChange() {
-        // clear the appropriate ngModal variable on main audience change
+        // clear the appropriate ngModal variable on main audience change to hide the options related to previous audience
+console.log("audience change called////");
 
         if (this.mainAudience.id == 1) { this.audienceIds = null; }
         if (this.mainAudience.id == 2) {
@@ -170,26 +171,18 @@ export class NewPollPageManagement {
     }
 
     onYearForModuleChange() {
-        // console.log('on years for module change////');
-        // console.log(this.yearForModule);
-        // console.log(this.yearForModule.modules);
-        // console.log(this.yearsListForModule);
+        console.log('on years for module change////');
+       
         this.moduleIds = null;
-        if (this.yearForModule.modules) {
-
-            this.moduleList = this.yearForModule.modules;
+        let id = this.yearForModule.id || this.yearForModule.yearId;
+        if (this.modulesObject[id]) {
+            return;
         } else {
             this.customService.showLoader();
-            this.pollService.fetchModulesByYearId(this.yearForModule.id || this.yearForModule.yearId)
+            this.pollService.fetchModulesByYearId(id)
                 .subscribe((res: any) => {
 
-                    this.moduleList = res;
-                    let selectedYear = this.yearsListForModule.find((element: any) => {
-                        return (this.yearForModule.id || this.yearForModule.yearId) == (element.id || element.yearId);
-                    });
-                    // console.log('selevted year', selectedYear);
-                    selectedYear.modules = res;
-                    localStorage.setItem('pollModuleYears', JSON.stringify(this.yearsListForModule));
+                    this.modulesObject[id] = res;
                     this.customService.hideLoader();
                 }, (err: any) => {
                     this.customService.hideLoader();
