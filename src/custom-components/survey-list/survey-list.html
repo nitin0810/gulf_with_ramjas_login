@@ -6,6 +6,7 @@
             <b>{{survey.title}}</b>
         </h2>
         <p>{{survey.description}}</p>
+        <p>{{survey.studentVoteCount + survey.employeeVoteCount}} Votes</p>
         <ion-row>
             <ion-col col-6 class="no-padding-l csGray5353">
                 <span *ngIf="areSurveysExpired">Expired: </span>

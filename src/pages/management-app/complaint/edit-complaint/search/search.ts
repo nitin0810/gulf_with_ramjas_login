@@ -21,7 +21,7 @@ export class FacultySearchPage {
     searchInput: string;
     noMatch: boolean = false;
 
-    @ViewChild(Searchbar) searchBar: Searchbar;
+    @ViewChild('searchbar') searchBar: Searchbar;
     constructor(
         private viewCtrl: ViewController,
         private navParam: NavParams
