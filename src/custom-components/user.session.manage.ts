@@ -14,6 +14,8 @@ export class UserSessionManage {
     userImage: string;
     sideMenuOptions: Array<any>;
     picUrl: any;
+    pollSubOptionsShown: boolean = false; // to show and hide the poll suboptions
+    surveySubOptionsShown: boolean = false; // to show and hide the survey suboptions
 
     constructor(
         public events: Events,
@@ -111,6 +113,10 @@ export class UserSessionManage {
                 }
             }
         }
+        /**update the following variables every time a new login is done 
+         * it is done to remove a bug, which messes up the order in which side menu options should appear
+         */
+        this.pollSubOptionsShown = this.surveySubOptionsShown = false;
     }
 
     public imageUpdate() {
