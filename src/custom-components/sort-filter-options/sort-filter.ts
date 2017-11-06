@@ -1,6 +1,6 @@
 
-import { Component, OnInit, Output, Input, EventEmitter, OnChanges } from '@angular/core';
-import { IonicPage, ActionSheetController, Events } from 'ionic-angular';
+import { Component, OnInit, Output, Input, EventEmitter } from '@angular/core';
+import { IonicPage, ActionSheetController } from 'ionic-angular';
 
 @IonicPage()
 @Component({
@@ -42,7 +42,6 @@ export class SortFilterOptionsPage implements OnInit {
 
     constructor(
         private actionSheetCtrl: ActionSheetController,
-        private events: Events
     ) { }
 
     ngOnInit() {

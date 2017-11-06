@@ -1,5 +1,5 @@
 
-import { Component, Input } from '@angular/core';
+import { Component } from '@angular/core';
 import { IonicPage, Events, NavParams, ViewController, ActionSheetController } from 'ionic-angular';
 import { ComplaintService } from '../../../../services/complaint.service';
 import { CustomService } from '../../../../services/custom.service';

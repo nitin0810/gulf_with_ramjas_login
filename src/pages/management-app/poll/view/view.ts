@@ -1,6 +1,6 @@
 
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, ViewController, ActionSheetController, NavController, NavParams, DateTime } from 'ionic-angular';
+import { IonicPage, ViewController, NavParams, DateTime } from 'ionic-angular';
 import { PollService } from '../../../../services/poll.service';
 import { CustomService } from '../../../../services/custom.service';
 

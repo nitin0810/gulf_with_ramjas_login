@@ -1,7 +1,7 @@
 
 
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, Events } from 'ionic-angular';
+import { IonicPage} from 'ionic-angular';
 import { ComplaintMainPage } from '../../../custom-components/complaint-main/complaint-main';
 import { ComplaintService } from '../../../services/complaint.service';
 
@@ -23,7 +23,6 @@ export class ComplaintPageManagement {
     debounceDuration: number = 400;
 
     constructor(
-        private events: Events,
         private complaintService: ComplaintService
     ) {
         this.complaintService.compOrSugg = "complaint";

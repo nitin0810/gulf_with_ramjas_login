@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, Tabs } from 'ionic-angular';
+import { IonicPage} from 'ionic-angular';
 
 @IonicPage()
 @Component({

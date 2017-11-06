@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component} from '@angular/core';
 import { IonicPage, ViewController, NavParams } from 'ionic-angular';
 import { SurveyService } from '../../services/survey.service';
 import { CustomService } from '../../services/custom.service';

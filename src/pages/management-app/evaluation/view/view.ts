@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, ViewController, ActionSheetController, NavParams } from 'ionic-angular';
+import { IonicPage, ViewController, NavParams } from 'ionic-angular';
 import { CustomService } from '../../../../services/custom.service';
 import { EvaluationService } from '../../../../services/evaluation.service';
 

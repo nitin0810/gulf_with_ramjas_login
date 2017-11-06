@@ -1,6 +1,6 @@
 
 
-import { Component, ViewChild } from '@angular/core';
+import { Component} from '@angular/core';
 import { IonicPage, ModalController } from 'ionic-angular';
 
 import { PollService } from '../../../../services/poll.service';

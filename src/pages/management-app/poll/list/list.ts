@@ -1,6 +1,6 @@
 
 
-import { Component, ViewChild, Input } from '@angular/core';
+import { Component,Input } from '@angular/core';
 import { IonicPage, ModalController } from 'ionic-angular';
 
 @IonicPage()
