@@ -134,7 +134,7 @@
         <ion-item *ngIf="complaint.anonymous">
             <ion-icon name="bug" [style.color]="complaint.statusColor" item-start></ion-icon>
             <span class="csFont12">
-                <b>Anonymous Complaint</b>
+                <b>Anonymous {{complaintService.compOrSugg | titlecase}}</b>
             </span>
         </ion-item>
         <ion-item *ngIf="complaint.priority">

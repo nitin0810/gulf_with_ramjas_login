@@ -12,5 +12,9 @@
             </button>
         </ion-list>
     </ion-card>
+
+    <p *ngIf="noMatch">No Match Found</p>
+    <p *ngIf="searchList.length == 0">No Data Available</p>
+    
 </ion-content>        
     

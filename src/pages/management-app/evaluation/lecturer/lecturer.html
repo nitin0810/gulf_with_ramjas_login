@@ -8,8 +8,8 @@
         </ion-title>
     </ion-navbar>
 
-    <ion-toolbar color="secondary">
-        <ion-segment [(ngModel)]="currentOrClosed" (ionChange)="oncurrentOrClosedChange()">
+    <ion-toolbar >
+        <ion-segment [(ngModel)]="currentOrClosed" (ionChange)="oncurrentOrClosedChange()" color="secondary">
             <ion-segment-button value="false" selected>
                 Current
             </ion-segment-button>

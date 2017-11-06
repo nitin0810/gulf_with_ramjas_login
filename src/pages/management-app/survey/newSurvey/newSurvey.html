@@ -168,21 +168,19 @@
                     <ion-label>
                         <b>Select Year</b>
                     </ion-label>
-                    <ion-select [(ngModel)]="yearForModule" (ionChange)="onYearForModuleChange()" required name="years">
+                    <ion-select [(ngModel)]="yearForModule" (ionChange)="onYearForModuleChange()" required name="yearsModule">
                         <ion-option *ngFor="let y of yearsListForModule" [value]="y">{{y.name || y.yearName}}</ion-option>
                     </ion-select>
                 </ion-item>
             </ion-card>
         </div>
 
-        <div *ngIf=" mainAudience?.id == 4 && moduleList">
+        <div *ngIf=" mainAudience?.id == 4 && yearForModule">
             <ion-card>
                 <ion-item>
-                    <ion-label>
-                        <b>Select Modules</b>
-                    </ion-label>
+                    <ion-label><b>Select Modules</b></ion-label>
                     <ion-select [(ngModel)]="moduleIds" multiple required name="years">
-                        <ion-option *ngFor="let module of moduleList" [value]="module.moduleId">{{module.moduleName}}</ion-option>
+                        <ion-option *ngFor="let module of modulesObject[yearForModule.id || yearForModule.yearId]" [value]="module.moduleId || module.id">{{module.moduleName || module.name}}</ion-option>
                     </ion-select>
                 </ion-item>
             </ion-card>

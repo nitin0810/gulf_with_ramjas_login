@@ -9,16 +9,17 @@ import { IonicPage, ViewController, NavParams, Searchbar } from 'ionic-angular';
 
 })
 
-/**this page is being used at may places where a particular name is to be selected from a , being also used at:
+/**this page is being used at many places where a particular name is to be selected from a , being also used at:
  * in NewAppreciationPage for both student and management
  * hence according conditions have been applied in html
  */
 export class FacultySearchPage {
 
-    title: string;;
+    title: string;
     searchTempList: Array<any>;
     searchList: Array<any>;
     searchInput: string;
+    noMatch: boolean = false;
 
     @ViewChild(Searchbar) searchBar: Searchbar;
     constructor(
@@ -34,23 +35,31 @@ export class FacultySearchPage {
     ionViewDidEnter() {
         this.searchBar.setFocus();
     }
+
     onSearchInput(event: any) {
 
-        if (event.type != 'input') { return; }
+        if (event.type != 'input' || this.searchList.length == 0) { return; }
 
-        if (this.searchInput.trim().length == 0) { this.searchTempList = this.searchList; return; }
+        if (this.searchInput.trim().length == 0) {
+            this.searchTempList = this.searchList;
+            this.noMatch = this.searchTempList.length == 0;
+            return;
+        }
 
         this.searchTempList = this.searchList.filter((search) => {
 
-            return search.name.toLowerCase().indexOf(this.searchInput.toLowerCase()) > -1;
+            return (search.name || search.facultyName).toLowerCase().indexOf(this.searchInput.toLowerCase()) > -1;
         });
+
+        this.noMatch = this.searchTempList.length == 0;
 
     }
 
     onSearchClear(event: any) {
 
+        if (this.searchList.length == 0) { return; }
         this.searchTempList = this.searchList;
-
+        this.noMatch = this.searchTempList.length == 0;
     }
 
     dismiss(selectedSearch?: any) {
