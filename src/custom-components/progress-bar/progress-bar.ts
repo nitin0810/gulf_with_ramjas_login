@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { IonicPage } from 'ionic-angular';
 
 @IonicPage()
@@ -12,14 +12,11 @@ import { IonicPage } from 'ionic-angular';
             </div>
             `
 })
-export class ProgressBarComponent implements OnInit{
+export class ProgressBarComponent  {
 
     @Input() progress;
 
-    constructor() { 
-    }
-
-    ngOnInit(){console.log(this.progress);
-    }
+    constructor() {}
+    
 
 }
