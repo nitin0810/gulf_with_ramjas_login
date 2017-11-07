@@ -72,11 +72,8 @@ export class MyApp extends UserSessionManage {
 
     /**Handle the case of polls */
     if (page.title == "Polls" && localStorage.getItem('isStudent') === "false") {
-      console.log("inside polls");
-      console.log('pollSuboptionsShown', this.pollSubOptionsShown);
 
       if (!this.pollSubOptionsShown) {
-        console.log('inserting poll suboptions');
 
         /**insert these two options below the poll option*/
         this.sideMenuOptions.splice(5, 0,
@@ -84,7 +81,6 @@ export class MyApp extends UserSessionManage {
           { title: 'ByMe', component: "PollTabsPageManagement", icon: 'assets/icon/poll.png' },
         );
       } else {
-        console.log('deleting poll suboptions');
         /**delete these two options below the poll option*/
         this.sideMenuOptions.splice(5, 2);
 
@@ -96,11 +92,8 @@ export class MyApp extends UserSessionManage {
 
     /**Handle the case of surveys */
     if (page.title == "Surveys" && localStorage.getItem('isStudent') === "false") {
-      console.log("inside survey");
-      console.log('surveySUboptions', this.surveySubOptionsShown);
 
       if (!this.surveySubOptionsShown) {
-        console.log('inserting survey suboptions');
 
         /**index shud be based on whether pollOptions are hidden or shown */
         let i = this.pollSubOptionsShown ? 8 : 6;
@@ -111,7 +104,6 @@ export class MyApp extends UserSessionManage {
           { title: 'ByMe', component: "SurveyTabsPageManagement", icon: 'assets/icon/survey.png' },
         );
       } else {
-        console.log('deleting survey suboptions');
 
         let i = this.pollSubOptionsShown ? 8 : 6;
 

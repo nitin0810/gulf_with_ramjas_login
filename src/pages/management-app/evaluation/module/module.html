@@ -45,7 +45,7 @@
                     Expires: {{evaluation.expiredAt | amTimeAgo}}
                 </ion-col>
                 <ion-col col-6 class="no-padding-l">
-                    {{evaluation.studentVoteCount || evaluation.totalVote || 0}} Votes
+                    {{evaluation.studentVoteCount + evaluation.employeeVoteCount}} Votes
                 </ion-col>
             </ion-row>
         </a>
