@@ -39,8 +39,6 @@ export class ViewSurveyPageManagement {
             .subscribe((res: any) => {
 
                 this.survey = res;
-                console.log(this.survey);
-                this.newExpiryDate = this.survey.expiredAt;
                 this.customService.hideLoader();
             }, (err: any) => {
 
@@ -60,16 +58,16 @@ export class ViewSurveyPageManagement {
 
     updateExpiryDate() {
 
-        // this.customService.showLoader();
-        // this.surveyService.editExpiryDate({ expiredAt: this.newExpiryDate }, this.poll.id)
-        //     .subscribe((res: any) => {
-        //         this.customService.hideLoader();
-        //         this.customService.showToast("Expiry date edited successfully");
-        //         this.poll.expiredAt = res.expiredAt; // same as this.newExpiryDate;
-        //     }, (err: any) => {
-        //         this.customService.hideLoader();
-        //         this.customService.showToast(err.msg);
-        //     });
+        this.customService.showLoader();
+        this.surveyService.editExpiryDate({ expiredAt: this.newExpiryDate }, this.surveyId)
+            .subscribe((res: any) => {
+                this.customService.hideLoader();
+                this.customService.showToast("Expiry date edited successfully");
+                this.survey.expiredAt = res.expiredAt; // same as this.newExpiryDate;
+            }, (err: any) => {
+                this.customService.hideLoader();
+                this.customService.showToast(err.msg);
+            });
     }
 
 

@@ -33,6 +33,9 @@ export class FacultySearchPage {
     }
 
     ionViewDidEnter() {
+        console.log('ionview did enter called');
+        console.log(this.searchBar);
+        
         this.searchBar.setFocus();
     }
 

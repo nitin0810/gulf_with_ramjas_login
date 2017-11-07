@@ -38,6 +38,11 @@ export class SurveyService {
         return this.http.get(CONFIG.serverUrl + `/ma/survey/${id}`);
     }
 
+    editExpiryDate(newDate:any,id:any){
+
+        return this.http.put(CONFIG.serverUrl + `/ma/survey/${id}`, newDate);
+    }
+
     /**for student */
     fetchSurveysForStudent(pageNo: number) {
 
