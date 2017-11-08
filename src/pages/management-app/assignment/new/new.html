@@ -1,0 +1,60 @@
+<ion-header>
+    <nl-modal-navbar [title]="title" (modalClosed)="dismiss()"></nl-modal-navbar>
+</ion-header>
+
+<ion-content class="csGrayBackground">
+
+    <form #newAssignmentForm="ngForm" (ngSubmit)="onSubmit()">
+
+        <ion-card>
+            <ion-item>
+                <ion-label stacked>
+                    <b>Description</b>
+                </ion-label>
+                <ion-textarea rows="5" [(ngModel)]="description" placeholder="Enter Description" maxlength=2500 required name="description">
+                </ion-textarea>
+                <ion-badge item-end>{{2500 - description?.length}}</ion-badge>
+            </ion-item>
+        </ion-card>
+
+
+
+        <ion-card *ngIf="yearList">
+            <ion-item>
+                <ion-label>
+                    <b>Select Year</b>
+                </ion-label>
+                <ion-select [(ngModel)]="year" (ionChange)="onYearChange()" required name="year">
+                    <ion-option *ngFor="let y of yearList" [value]="y">{{y.name || y.yearName}} </ion-option>
+                </ion-select>
+            </ion-item>
+        </ion-card>
+
+
+        <ion-card *ngIf="year && modulesObject">
+            <ion-item>
+                <ion-label>
+                    <b>Select Modules</b>
+                </ion-label>
+                <ion-select [(ngModel)]="module"  required name="module">
+                    <ion-option *ngFor="let module of modulesObject[year.id || year.yearId]" [value]="module">{{module.moduleName || module.name}}</ion-option>
+                </ion-select>
+            </ion-item>
+        </ion-card>
+
+        <ion-card>
+            <ion-item>
+                <ion-label>
+                    <b>Due Date</b>
+                </ion-label>
+                <ion-datetime max="2019" [min]="todayDate()" displayFormat="MMM DD YYYY" pickerFormat="DD MMM YYYY" name="expireDate" [(ngModel)]="dueDate"></ion-datetime>
+            </ion-item>
+        </ion-card>
+
+        <div padding>
+            <button [disabled]="!newAssignmentForm.valid" ion-button full type="submit">Submit</button>
+        </div>
+    </form>
+
+
+</ion-content>

@@ -1,0 +1,16 @@
+<ion-header>
+    <nl-navbar [title]="title"></nl-navbar>
+</ion-header>
+
+<ion-content class="csGrayBackground">
+
+    <ion-refresher (ionRefresh)="doRefresh($event)">
+        <ion-refresher-content></ion-refresher-content>
+    </ion-refresher>
+    <p>closed</p>
+
+    <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
+        <ion-infinite-scroll-content></ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+
+</ion-content>

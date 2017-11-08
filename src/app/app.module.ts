@@ -30,6 +30,7 @@ import { CustomModalNavbarModule } from '../custom-components/modal-navbar/modal
 import { LoginPage } from '../custom-components/login/login';
 import { ForgotPasswordModal } from '../custom-components/login/forgot-password/forgot-password';
 import { EvaluationService } from '../services/evaluation.service';
+import { AssignmentService } from '../services/assignment.service';
 
 
 @NgModule({
@@ -70,6 +71,7 @@ import { EvaluationService } from '../services/evaluation.service';
     SurveyService,
     AppreciationService,
     EvaluationService,
+    AssignmentService,
     { provide: ErrorHandler, useClass: IonicErrorHandler },
     {
       provide: CustomHttpService, useFactory: (backend: XHRBackend, defaultOptions: RequestOptions) => {

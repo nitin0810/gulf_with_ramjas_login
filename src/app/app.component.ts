@@ -46,18 +46,8 @@ export class MyApp extends UserSessionManage {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
     });
-    // reset the poll suboptions and surveysuboptions
-    console.log('aap componetnt constructor called');
-
 
   }
-
-  ionViewWillEnter(){
-    console.log('ion view called////');
-    this.pollSubOptionsShown = this.surveySubOptionsShown = false;
-    
-  }
-
 
 
   openPage(page: any) {

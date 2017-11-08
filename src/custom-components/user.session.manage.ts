@@ -100,8 +100,9 @@ export class UserSessionManage {
                 { title: 'Appreciations', component: "AppreciationTabsPageManagement", icon: 'assets/icon/appreciation.png' },
                 { title: 'Polls', icon: 'assets/icon/poll.png' },
                 { title: 'Surveys', icon: 'assets/icon/survey.png' },
+                { title: 'Assignment', component: "AssignmentTabsPageManagement", icon: 'assets/icon/rating.png' },
                 { title: 'Account', component: "AccountPage", icon: 'assets/icon/profile.png' },
-
+                
             ];
 
             /**insert the evaluation option in case user has a role of quality-coordinater */
