@@ -14,8 +14,23 @@
         </button>
     </ion-fab>
 
-    <p>current</p>
+    <ion-list>
+        <ion-card *ngFor="let assign  of assignmentList">
+        <ion-item text-wrap >
+            <h2>{{assign.moduleName}}</h2>
+            <p>{{assign.description}}</p>
+            <p>
+                <b>Year:</b> {{assign.yearName}}</p>
+            <p>
+                <b>Created Date: </b> {{assign.createdAt | amDateFormat: 'LL'}}</p>
+            <p>
+                <b>Due Date: </b> {{assign.dueDate | amDateFormat: 'LL'}}</p>
 
+
+        </ion-item>
+    </ion-card>
+    </ion-list>
+    
     <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
         <ion-infinite-scroll-content></ion-infinite-scroll-content>
     </ion-infinite-scroll>

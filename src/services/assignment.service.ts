@@ -25,6 +25,13 @@ export class AssignmentService {
         return this.http.get(CONFIG.serverUrl + `/ma/assignment/module/${yearId}/${isFaculty}`);
     }
 
+    fetchAssignments(isExpired:boolean,pageNo:number){
+
+        return this.http.get(CONFIG.serverUrl + `/ma/assignment/${isExpired}/page/${pageNo}`);
+        // return this.http.get(CONFIG.serverUrl + `/ma/assignment/${pageNo}`);
+        
+    }
+
     // fetchStudents(yearId: number, moduleId: number) {
 
     //     return this.http.get(CONFIG.serverUrl + `/ma/appreciation/students/${moduleId}/${yearId}`);

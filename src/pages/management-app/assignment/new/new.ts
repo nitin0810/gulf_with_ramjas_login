@@ -13,7 +13,7 @@ import { CustomService } from '../../../../services/custom.service';
 
 export class NewAssignmentPageManagement {
 
-    title: string = "Assignment";
+    title: string = "New Assignment";
 
     /**ngModal variables */
     description: string;
