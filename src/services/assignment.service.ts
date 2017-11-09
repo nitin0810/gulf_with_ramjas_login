@@ -36,7 +36,7 @@ export class AssignmentService {
 
     postAssignmentWithFile(data: any) {
 
-        let myFileName:string = this.generateFileName();
+        let myFileName: string = this.generateFileName();
 
         let options: FileUploadOptions = {
             fileKey: 'file',
@@ -44,32 +44,32 @@ export class AssignmentService {
             mimeType: "multipart/form-data",
             chunkedMode: false,
             headers: {
-                'Authorization': 'Bearer'+localStorage.getItem('access_token')
+                'Authorization': 'Bearer' + localStorage.getItem('access_token')
             },
             params: {
                 "description": data.description,
                 "dueDate": data.dueDate,
                 'moduleId': data.moduleId,
                 'yearId': data.yearId,
-                'files' :myFileName
+                'files': myFileName
 
             }
         }
 
-        const transfer:FileTransferObject  = this.fileTransfer.create();
-        return transfer.upload(data.imageString, CONFIG.serverUrl + `/ma/assignment`, options,false)
-            .then((data:any) => {
+        const transfer: FileTransferObject = this.fileTransfer.create();
+        return transfer.upload(data.imageString, CONFIG.serverUrl + `/ma/assignment`, options, false)
+            .then((data: any) => {
 
-                // console.log('inside service success', data);
+                // console.log('inside service success');
                 // alert(JSON.stringify(data));
                 return JSON.parse(data.response);
             });
-        
+
     }
 
-    generateFileName(){
+    generateFileName() {
         //generate unique filename based on current date-time
-        return new Date().toISOString() +".jpg";
+        return new Date().toISOString();
     }
 
     // fetchStudents(yearId: number, moduleId: number) {

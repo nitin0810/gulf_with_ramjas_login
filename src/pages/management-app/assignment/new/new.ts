@@ -4,6 +4,7 @@ import { IonicPage, ViewController, ActionSheetController } from 'ionic-angular'
 import { AssignmentService } from '../../../../services/assignment.service';
 import { CustomService } from '../../../../services/custom.service';
 import { CameraOptions, Camera } from '@ionic-native/camera';
+import { FileChooser } from '@ionic-native/file-chooser';
 
 @IonicPage()
 @Component({
@@ -22,7 +23,7 @@ export class NewAssignmentPageManagement {
     module: any;
     year: any;
     image: any;
-
+    file:any;
     /**data required to create the assignment */
     yearList: Array<any>;
     modulesObject: any = {};
@@ -33,7 +34,8 @@ export class NewAssignmentPageManagement {
         private assignmentService: AssignmentService,
         private customService: CustomService,
         private actionSheetCtrl: ActionSheetController,
-        private camera: Camera
+        private camera: Camera,
+        private fileChooser: FileChooser
     ) { }
 
     ngOnInit() {
@@ -94,6 +96,13 @@ export class NewAssignmentPageManagement {
                     text: 'Load from Library',
                     handler: () => {
                         this.fromLibrary();
+                    }
+
+                },
+                {
+                    text: 'File',
+                    handler: () => {
+                        this.selectFile();
                     }
 
                 },
@@ -178,6 +187,18 @@ export class NewAssignmentPageManagement {
             });
     }
 
+
+    selectFile() {
+        this.fileChooser.open()
+            .then(uri => {
+                console.log(uri);
+            this.file = uri;})
+            .catch(e => {
+                console.log(e)
+            });
+    }
+
+
     onSubmit() {
 
         const actionSheet = this.actionSheetCtrl.create({
@@ -205,7 +226,7 @@ export class NewAssignmentPageManagement {
 
     finallySubmit() {
 
-        if (!this.image) {
+        if (!this.image && !this.file) {
             let data = new FormData();
             data.append('description', this.description);
             data.append('yearId', this.year.yearId || this.year.id);
@@ -230,7 +251,7 @@ export class NewAssignmentPageManagement {
             data.dueDate = this.dueDate;
             data.moduleId = this.module.moduleId || this.module.id;
             data.yearId = this.year.yearId || this.year.id;
-            data.imageString = this.image;
+            data.imageString = this.image || this.file;
             this.customService.showLoader();
 
             this.assignmentService.postAssignmentWithFile(data)
@@ -248,7 +269,7 @@ export class NewAssignmentPageManagement {
                     let errMsg = JSON.parse(err.body).message;
                     this.customService.showToast(errMsg);
                 });
-        
+
         }
     }
 

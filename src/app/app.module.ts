@@ -27,7 +27,7 @@ import { SurveyService } from '../services/survey.service';
 import { Network } from '@ionic-native/network';
 import { Camera } from '@ionic-native/camera';
 import { FileTransfer} from '@ionic-native/file-transfer';
-
+import { FileChooser } from '@ionic-native/file-chooser';
 
 /**import custom modules*/
 import { CustomNavbarModule } from '../custom-components/navbar/navbar.module';
@@ -84,7 +84,8 @@ import { AssignmentService } from '../services/assignment.service';
       }, deps: [XHRBackend, RequestOptions]
     },
     Camera,
-    FileTransfer
+    FileTransfer,
+    FileChooser
   ]
 })
 export class AppModule { }
