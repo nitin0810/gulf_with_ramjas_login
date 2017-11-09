@@ -36,7 +36,7 @@
                 <ion-label>
                     <b>Select Modules</b>
                 </ion-label>
-                <ion-select [(ngModel)]="module"  required name="module">
+                <ion-select [(ngModel)]="module" required name="module">
                     <ion-option *ngFor="let module of modulesObject[year.id || year.yearId]" [value]="module">{{module.moduleName || module.name}}</ion-option>
                 </ion-select>
             </ion-item>
@@ -50,6 +50,28 @@
                 <ion-datetime max="2019" [min]="todayDate()" displayFormat="MMM DD YYYY" pickerFormat="DD MMM YYYY" name="expireDate" [(ngModel)]="dueDate"></ion-datetime>
             </ion-item>
         </ion-card>
+
+        <button type="button" ion-button (click)="onUploadBtn()">
+            <span *ngIf="!image">Upload Image</span>
+            <span *ngIf="image">Change Image</span>
+        </button>
+
+        <ion-spinner name="bubbles" *ngIf="showSpinner"></ion-spinner>
+        <!-- <p>FILE:  {{image}}</p> -->
+        <ion-card *ngIf="image">
+            Image Preview
+            <img [src]="image">
+        </ion-card>
+        
+        
+        <!-- 
+        <ion-item>
+            <h4>Image Preview</h4>
+            <img src="{{imageFileName}}" *ngIf="imageFileName" alt="Ionic File" width="300" />
+        </ion-item>
+        <ion-item>
+            <button ion-button (click)="uploadFile()">Upload</button>
+        </ion-item> -->
 
         <div padding>
             <button [disabled]="!newAssignmentForm.valid" ion-button full type="submit">Submit</button>

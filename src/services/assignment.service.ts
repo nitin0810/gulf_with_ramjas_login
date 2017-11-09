@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 
 import { APP_CONSTANTS as CONFIG } from '../services/app.constants';
 import { CustomHttpService } from './custom-http.service';
+import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer';
 
 
 @Injectable()
@@ -10,6 +11,7 @@ export class AssignmentService {
 
     constructor(
         public http: CustomHttpService,
+        private fileTransfer: FileTransfer
     ) { }
 
     /**services for management */
@@ -25,11 +27,49 @@ export class AssignmentService {
         return this.http.get(CONFIG.serverUrl + `/ma/assignment/module/${yearId}/${isFaculty}`);
     }
 
-    fetchAssignments(isExpired:boolean,pageNo:number){
+    fetchAssignments(isExpired: boolean, pageNo: number) {
 
         return this.http.get(CONFIG.serverUrl + `/ma/assignment/${isExpired}/page/${pageNo}`);
         // return this.http.get(CONFIG.serverUrl + `/ma/assignment/${pageNo}`);
+
+    }
+
+    postAssignmentWithFile(data: any) {
+
+        let myFileName:string = this.generateFileName();
+
+        let options: FileUploadOptions = {
+            fileKey: 'file',
+            fileName: myFileName,
+            mimeType: "multipart/form-data",
+            chunkedMode: false,
+            headers: {
+                'Authorization': 'Bearer'+localStorage.getItem('access_token')
+            },
+            params: {
+                "description": data.description,
+                "dueDate": data.dueDate,
+                'moduleId': data.moduleId,
+                'yearId': data.yearId,
+                'files' :myFileName
+
+            }
+        }
+
+        const transfer:FileTransferObject  = this.fileTransfer.create();
+        return transfer.upload(data.imageString, CONFIG.serverUrl + `/ma/assignment`, options,false)
+            .then((data:any) => {
+
+                // console.log('inside service success', data);
+                // alert(JSON.stringify(data));
+                return JSON.parse(data.response);
+            });
         
+    }
+
+    generateFileName(){
+        //generate unique filename based on current date-time
+        return new Date().toISOString() +".jpg";
     }
 
     // fetchStudents(yearId: number, moduleId: number) {

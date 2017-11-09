@@ -18,11 +18,16 @@ import { CustomHttpService } from '../services/custom-http.service';
 import { CustomService } from '../services/custom.service';
 import { AuthService } from '../services/auth.service';
 import { NetworkService } from '../services/network.service';
-import { Network } from '@ionic-native/network';
 import { ComplaintService } from '../services/complaint.service';
 import { PollService } from '../services/poll.service';
 import { AppreciationService } from '../services/appreciation.service';
 import { SurveyService } from '../services/survey.service';
+
+/**import native plugins*/
+import { Network } from '@ionic-native/network';
+import { Camera } from '@ionic-native/camera';
+import { FileTransfer} from '@ionic-native/file-transfer';
+
 
 /**import custom modules*/
 import { CustomNavbarModule } from '../custom-components/navbar/navbar.module';
@@ -77,7 +82,9 @@ import { AssignmentService } from '../services/assignment.service';
       provide: CustomHttpService, useFactory: (backend: XHRBackend, defaultOptions: RequestOptions) => {
         return new CustomHttpService(backend, defaultOptions);
       }, deps: [XHRBackend, RequestOptions]
-    }
+    },
+    Camera,
+    FileTransfer
   ]
 })
 export class AppModule { }
