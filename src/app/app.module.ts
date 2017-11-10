@@ -28,6 +28,8 @@ import { Network } from '@ionic-native/network';
 import { Camera } from '@ionic-native/camera';
 import { FileTransfer} from '@ionic-native/file-transfer';
 import { FileChooser } from '@ionic-native/file-chooser';
+import * as ionicGalleryModal from 'ionic-gallery-modal';
+import { HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
 
 /**import custom modules*/
 import { CustomNavbarModule } from '../custom-components/navbar/navbar.module';
@@ -47,6 +49,7 @@ import { AssignmentService } from '../services/assignment.service';
     HttpModule,
     ReactiveFormsModule,
     MomentModule,
+    ionicGalleryModal.GalleryModalModule,
     IonicModule.forRoot(MyApp)
   ],
   declarations: [
@@ -82,6 +85,10 @@ import { AssignmentService } from '../services/assignment.service';
       provide: CustomHttpService, useFactory: (backend: XHRBackend, defaultOptions: RequestOptions) => {
         return new CustomHttpService(backend, defaultOptions);
       }, deps: [XHRBackend, RequestOptions]
+    },
+    {
+      provide: HAMMER_GESTURE_CONFIG,
+      useClass: ionicGalleryModal.GalleryModalHammerConfig,
     },
     Camera,
     FileTransfer,

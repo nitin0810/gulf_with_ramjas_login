@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { IonicPage, ModalController } from 'ionic-angular';
 import { AssignmentService } from '../../../../services/assignment.service';
 import { CustomService } from '../../../../services/custom.service';
+import { GalleryModal } from 'ionic-gallery-modal';
 
 @IonicPage()
 @Component({
@@ -79,5 +80,44 @@ export class CurrentAssignmentPageManagement {
 
     }
 
+    openDocuments(assignMent: any) {
 
+        let fileName = assignMent.files[0].fileOriginalName;
+        let fileType = fileName.substring(fileName.lastIndexOf('.') + 1);
+
+
+        // console.log(fileName.slice(fileName.lastIndexOf('.') + 1, 0));
+
+        if (fileType == "jpeg" || fileType == "jpg" || fileType == "png") {
+
+            this.openImages(assignMent);
+        } else if (fileType == "pdf" || fileType == "doc" || fileType == "docx" || fileType == "txt") {
+
+            this.openOtherDocs(assignMent);
+        }
+    }
+
+
+    openImages(assignMent: any) {
+
+        let photos: Array<any> = [];
+        assignMent.files.forEach((file: any) => {
+
+            photos.push({
+                url: file.fileUrl,
+            });
+        });
+
+        let modal = this.modalCtrl.create(GalleryModal, {
+            photos: photos,
+            initialSlide: 0
+        });
+        modal.present();
+    }
+
+
+    openOtherDocs(assignMent:any) {
+
+        
+    }
 }
