@@ -86,7 +86,7 @@ export class CurrentAssignmentPageManagement {
         let fileType = fileName.substring(fileName.lastIndexOf('.') + 1);
 
 
-        // console.log(fileName.slice(fileName.lastIndexOf('.') + 1, 0));
+        console.log(fileType);
 
         if (fileType == "jpeg" || fileType == "jpg" || fileType == "png") {
 
@@ -117,7 +117,9 @@ export class CurrentAssignmentPageManagement {
 
 
     openOtherDocs(assignMent:any) {
+console.log('opening other docs');
 
-        
+        window.open(assignMent.files[0].fileUrl, '_system','location=no');
+
     }
 }

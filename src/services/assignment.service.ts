@@ -36,7 +36,7 @@ export class AssignmentService {
 
     postAssignmentWithFile(data: any) {
 
-        let myFileName: string = this.generateFileName();
+        let myFileName: string = this.generateFileName(data.file);
 
         let options: FileUploadOptions = {
             fileKey: 'file',
@@ -57,7 +57,7 @@ export class AssignmentService {
         }
 
         const transfer: FileTransferObject = this.fileTransfer.create();
-        return transfer.upload(data.imageString, CONFIG.serverUrl + `/ma/assignment`, options, false)
+        return transfer.upload(data.image || data.file, CONFIG.serverUrl + `/ma/assignment`, options, false)
             .then((data: any) => {
 
                 // console.log('inside service success');
@@ -67,16 +67,21 @@ export class AssignmentService {
 
     }
 
-    generateFileName() {
+    generateFileName(file:any) {
         //generate unique filename based on current date-time
-        return new Date().toISOString();
+        let date  = new Date().toISOString();
+        let fileName = date.substring(0,date.indexOf('.'));
+        console.log(fileName);
+        console.log(file);
+        
+        return file? fileName+'.pdf':fileName+'.jpg';
     }
 
     // fetchStudents(yearId: number, moduleId: number) {
 
     //     return this.http.get(CONFIG.serverUrl + `/ma/appreciation/students/${moduleId}/${yearId}`);
     // }
-
+  
     postAssignment(data: any) {
 
         return this.http.post(CONFIG.serverUrl + `/ma/assignment`, data);

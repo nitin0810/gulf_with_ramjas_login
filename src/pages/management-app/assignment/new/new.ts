@@ -23,7 +23,7 @@ export class NewAssignmentPageManagement {
     module: any;
     year: any;
     image: any;
-    file:any;
+    file: any;
     /**data required to create the assignment */
     yearList: Array<any>;
     modulesObject: any = {};
@@ -135,6 +135,7 @@ export class NewAssignmentPageManagement {
             // If it's base64:
             // console.log('inside camera clbl');
             this.image = 'data:image/jpeg;base64,' + imageData;
+            this.file = null;
             this.showSpinner = false;
         }, (err: any) => {
 
@@ -171,7 +172,7 @@ export class NewAssignmentPageManagement {
             this.showSpinner = false;
             console.log(imageData);
             this.image = 'data:image/jpeg;base64,' + imageData;
-
+            this.file = null;
         }, (err) => {
             // console.log('inside library 2nd clbk');
             this.showSpinner = false;
@@ -192,7 +193,9 @@ export class NewAssignmentPageManagement {
         this.fileChooser.open()
             .then(uri => {
                 console.log(uri);
-            this.file = uri;})
+                this.file = uri;
+                this.image = null;
+            })
             .catch(e => {
                 console.log(e)
             });
@@ -251,7 +254,9 @@ export class NewAssignmentPageManagement {
             data.dueDate = this.dueDate;
             data.moduleId = this.module.moduleId || this.module.id;
             data.yearId = this.year.yearId || this.year.id;
-            data.imageString = this.image || this.file;
+            data.image = this.image ;
+            data.file = this.file;
+            
             this.customService.showLoader();
 
             this.assignmentService.postAssignmentWithFile(data)
