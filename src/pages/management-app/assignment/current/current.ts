@@ -7,7 +7,7 @@ import { GalleryModal } from 'ionic-gallery-modal';
 
 @IonicPage()
 @Component({
-    selector: 'closed-assignment',
+    selector: 'current-assignment',
     templateUrl: './current.html',
     styles: [` `]
 })
@@ -18,6 +18,10 @@ export class CurrentAssignmentPageManagement {
     areAssignmentClosed: boolean;
     pageNo: number = 1;
     assignmentList: Array<any>;
+    /** 'fetchAssignmentMethod' holds which method to call in assignment.service,
+    this is done to reuse the CurrentAssignmentPageManagement component
+    */
+    fetchAssignmentMethod: any;
 
     constructor(
         public modalCtrl: ModalController,
@@ -25,6 +29,7 @@ export class CurrentAssignmentPageManagement {
         public assignmentService: AssignmentService
     ) {
         this.areAssignmentClosed = false;
+        this.fetchAssignmentMethod = this.assignmentService.fetchAssignments;
     }
 
     ngOnInit() {
@@ -36,11 +41,17 @@ export class CurrentAssignmentPageManagement {
         if (!refresher) {
             this.customService.showLoader();
         }
-        this.assignmentService.fetchAssignments(this.areAssignmentClosed, 1)
+        this.fetchAssignmentMethod.call(this.assignmentService, this.areAssignmentClosed, 1)
             .subscribe((res: any) => {
 
                 this.assignmentList = res;
-                refresher ? refresher.complete() : this.customService.hideLoader();
+                if (refresher) {
+
+                    refresher.complete();
+                    this.pageNo = 1;
+                } else {
+                    this.customService.hideLoader();
+                }
             }, (err: any) => {
 
                 refresher ? refresher.complete() : this.customService.hideLoader();
@@ -66,7 +77,7 @@ export class CurrentAssignmentPageManagement {
 
 
 
-        this.assignmentService.fetchAssignments(this.areAssignmentClosed, this.pageNo + 1)
+        this.fetchAssignmentMethod.call(this.assignmentService, this.areAssignmentClosed, this.pageNo + 1)
             .subscribe((res: any) => {
 
                 this.assignmentList = this.assignmentList.concat(res);
@@ -104,7 +115,8 @@ export class CurrentAssignmentPageManagement {
         assignMent.files.forEach((file: any) => {
 
             photos.push({
-                url: file.fileUrl,
+                url: file.fileUrl
+                // url: "https://www.google.co.in/imgres?imgurl=http://www.planwallpaper.com/static/images/desktop-year-of-the-tiger-images-wallpaper.jpg&imgrefurl=http://www.planwallpaper.com/images&h=1200&w=1600&tbnid=sYibpKnJxiFExM:&tbnh=150&tbnw=200&usg=__1KVXTMMLh1TflUINMeGakPVZBuU=&vet=10ahUKEwjNxebp8LPXAhUGKY8KHRtLDbIQ_B0IfzAM..i&docid=z8O4lWNcsz2mNM&itg=1&sa=X&ved=0ahUKEwjNxebp8LPXAhUGKY8KHRtLDbIQ_B0IfzAM"
             });
         });
 
@@ -116,10 +128,10 @@ export class CurrentAssignmentPageManagement {
     }
 
 
-    openOtherDocs(assignMent:any) {
-console.log('opening other docs');
+    openOtherDocs(assignMent: any) {
+        console.log('opening other docs');
 
-        window.open(assignMent.files[0].fileUrl, '_system','location=no');
+        window.open(assignMent.files[0].fileUrl, '_system', 'location=no');
 
     }
 }

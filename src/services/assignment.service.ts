@@ -67,58 +67,27 @@ export class AssignmentService {
 
     }
 
-    generateFileName(file:any) {
+    generateFileName(file: any) {
         //generate unique filename based on current date-time
-        let date  = new Date().toISOString();
-        let fileName = date.substring(0,date.indexOf('.'));
+        let date = new Date().toISOString();
+        let fileName = date.substring(0, date.indexOf('.'));
         console.log(fileName);
         console.log(file);
-        
-        return file? fileName+'.pdf':fileName+'.jpg';
+
+        return file ? fileName + '.pdf' : fileName + '.jpg';
     }
 
-    // fetchStudents(yearId: number, moduleId: number) {
-
-    //     return this.http.get(CONFIG.serverUrl + `/ma/appreciation/students/${moduleId}/${yearId}`);
-    // }
-  
     postAssignment(data: any) {
 
         return this.http.post(CONFIG.serverUrl + `/ma/assignment`, data);
     }
 
-    // fetchAppreciationsManagementByMe(pageNo: number) {
+    /**for student */
 
-    //     return this.http.get(CONFIG.serverUrl + `/ma/appreciation/page/${pageNo}`);
-    // }
+    fetchAssignmentsForStudent(isExpired: boolean, pageNo: number) {
 
-    // fetchAppreciationsManagementForMe(pageNo: number) {
+        return this.http.get(CONFIG.serverUrl + `/st/assignment/page/${pageNo}`);
+    }
 
-    //     return this.http.get(CONFIG.serverUrl + `/ma/appreciation/forFaculty/page/${pageNo}`);
-    // }
 
-    // /**services for management */
-    // fetchFaculties() {
-
-    //     let programId = localStorage.getItem('programId');
-    //     let yearId = localStorage.getItem('yearId');
-    //     let isEvenSem = localStorage.getItem('isEvenSemester') === "true";
-
-    //     return this.http.get(CONFIG.serverUrl + `/st/appreciation/faculty/${programId}/${yearId}/${isEvenSem}`);
-    // }
-
-    // postAppreciationStudent(data: any) {
-
-    //     return this.http.post(CONFIG.serverUrl + `/st/appreciation`, data);
-    // }
-
-    // fetchAppreciationsStudentByMe(pageNo: number) {
-
-    //     return this.http.get(CONFIG.serverUrl + `/st/appreciation/page/${pageNo}`);
-    // }
-
-    // fetchAppreciationsStudentForMe(pageNo: number) {
-
-    //     return this.http.get(CONFIG.serverUrl + `/st/appreciation/forStudent/page/${pageNo}`);
-    // }
 }
