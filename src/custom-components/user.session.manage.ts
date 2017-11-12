@@ -178,8 +178,6 @@ export class UserSessionManage {
             .subscribe((res: any) => {
 
                 this.authService.storeUserData(res);
-                console.log('above name////');
-
                 this.userName = localStorage.getItem('name');
                 this.imageUpdate();
             }, (err: any) => {

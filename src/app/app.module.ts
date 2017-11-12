@@ -1,6 +1,6 @@
 /**import inbuiit modules/classes */
 import { BrowserModule } from '@angular/platform-browser';
-import { ErrorHandler, NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { ErrorHandler, NgModule} from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
@@ -28,9 +28,8 @@ import { Network } from '@ionic-native/network';
 import { Camera } from '@ionic-native/camera';
 import { FileTransfer} from '@ionic-native/file-transfer';
 import { FileChooser } from '@ionic-native/file-chooser';
-import { GalleryModal } from 'ionic-gallery-modal';
-// import * as ionicGalleryModal from 'ionic-gallery-modal';
-// import { HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
+import * as ionicGalleryModal from 'ionic-gallery-modal';
+import { HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
 
 /**import custom modules*/
 import { CustomNavbarModule } from '../custom-components/navbar/navbar.module';
@@ -50,7 +49,7 @@ import { AssignmentService } from '../services/assignment.service';
     HttpModule,
     ReactiveFormsModule,
     MomentModule,
-    // ionicGalleryModal.GalleryModalModule,
+    ionicGalleryModal.GalleryModalModule,
     IonicModule.forRoot(MyApp)
   ],
   declarations: [
@@ -59,7 +58,6 @@ import { AssignmentService } from '../services/assignment.service';
     ForgotPasswordModal,
     NoInternet,
     DashboardPage,
-    GalleryModal,
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -68,7 +66,6 @@ import { AssignmentService } from '../services/assignment.service';
     ForgotPasswordModal,
     NoInternet,
     DashboardPage,
-    GalleryModal,
   ],
   providers: [
     StatusBar,
@@ -89,14 +86,13 @@ import { AssignmentService } from '../services/assignment.service';
         return new CustomHttpService(backend, defaultOptions);
       }, deps: [XHRBackend, RequestOptions]
     },
-    // {
-    //   provide: HAMMER_GESTURE_CONFIG,
-    //   useClass: ionicGalleryModal.GalleryModalHammerConfig,
-    // },
+    {
+      provide: HAMMER_GESTURE_CONFIG,
+      useClass: ionicGalleryModal.GalleryModalHammerConfig,
+    },
     Camera,
     FileTransfer,
     FileChooser
   ],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class AppModule { }
