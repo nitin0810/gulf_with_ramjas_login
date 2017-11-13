@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { IonicPage, Nav,Events} from 'ionic-angular';
-import { LoginPage } from '../login/login';
+import { IonicPage, Events } from 'ionic-angular';
+import { locale } from 'moment';
 
 
 @IonicPage()
@@ -11,55 +11,59 @@ import { LoginPage } from '../login/login';
 })
 export class AccountPage {
 
-    name: string;
-    emailId: string;
-    contactNo: string;
-    id: string;
-    nickname: string;
-    userImage: string = "assets/images/user.png";
-    moreDetails = [];
-    moreDetailsShown = false;
 
     title = "Account";
-    public showLoader: boolean = false;
-    public imagePath: string = localStorage.getItem('fileUrl') + "/";
-    public basePath = localStorage.getItem('fileUrl') + "/";
-    // public userImage: string = localStorage.getItem("picTimestamp");
+    name: string;
+    nickName: string;
+    userImage: string;
+
+    moreDetails = [];
+
 
     constructor(
-        private nav: Nav,
-        private events:Events
-    ) {    }
+        private events: Events
+    ) {
+        this.setDetails();
+    }
 
 
-    ionViewWillEnter() {
-        console.log("inside ionviewwillenter");
-        // main details
-        this.name = localStorage.getItem("name");
-        this.emailId = localStorage.getItem("email");
-        this.contactNo = localStorage.getItem("contactNo");
-        this.id = localStorage.getItem("id");
+    setDetails() {
 
-        //extra details
+        this.name = localStorage.getItem('name');
+        localStorage.getItem('nickName')!="null" ? this.nickName = localStorage.getItem('nickName') : this.nickName = null;
+        localStorage.getItem('picUrl') != "null" ? this.userImage = localStorage.getItem('picUrl') : this.userImage = "assets/images/user.png";
 
         this.moreDetails = [
-            { name: 'Designation', value: localStorage.getItem('designation'), icon: 'person' },
-            { name: 'Organisation', value: localStorage.getItem('organisation'), icon: 'home' },
-            { name: 'Area of Interest', value: localStorage.getItem('areaOfInterest'), icon: 'construct' },
-            { name: 'Address1', value: localStorage.getItem('address1'), icon: 'home' },
-            { name: 'Address2', value: localStorage.getItem('address2'), icon: 'home' },
-            { name: 'City', value: localStorage.getItem('city'), icon: '' },
-            { name: 'State', value: localStorage.getItem('state'), icon: '' },
 
-        ]
+            { name: 'ID', value: localStorage.getItem('id'), icon: 'finger-print' },
+            { name: 'Username', value: localStorage.getItem('userName'), icon: 'person' },
+            { name: 'Password', value: "******", icon: 'lock' },
+            { name: 'Contact', value: localStorage.getItem('contactNo'), icon: 'call' },
+            { name: 'Email-ID', value: localStorage.getItem('email'), icon: 'mail' },
 
-    };
+        ];
+
+        /**only in case of student */
+        if (localStorage.getItem('isStudent') == "true") {
+
+            this.moreDetails.push(
+                { name: 'Program', value: localStorage.getItem('programName'), icon: 'folder' },
+                { name: 'Year', value: localStorage.getItem('yearName'), icon: 'folder' },
+            );
+        } else {
+
+            /**only in case of management */
+            this.moreDetails.push(
+                { name: 'Roles', value: localStorage.getItem('roles'), icon: 'person' },
+            );
+        }
 
 
+    }
 
-
-
-    logout() {
+    onPwdChange(){
+        console.log('pwd change callled/////////');
+        
     }
 
     // public openImageActionSheet(data) {

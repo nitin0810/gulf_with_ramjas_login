@@ -3,6 +3,34 @@
 </ion-header>
 
 <ion-content class="csGrayBackground">
-    <p>ACCOUNT....</p>
-    <button ion-button padding (click)="onLogOut()">LOG OUT</button>
+
+    <ion-card>
+        <img [src]="userImage" style="height:50%;width:50%;margin:auto">
+        <h2 style="text-align:center">
+            {{name | titlecase}}
+            <span *ngIf="nickName">{{nickName | titlecase}}</span>
+        </h2>
+
+        <ion-list>
+            <ion-card *ngFor="let detail of moreDetails ">
+                <ion-item>
+                    <ion-icon item-start [name]="detail.icon"></ion-icon>
+                    <h4>{{detail.name}}</h4>
+                    <p>{{detail.value}}</p>
+                    <button ion-button item-end icon-only *ngIf="detail.name==='Password'" (click)="onPwdChange()">
+                        <ion-icon name="create"></ion-icon>
+                    </button>
+                </ion-item>
+            </ion-card>
+        </ion-list>
+
+    </ion-card>
+    
+    <div padding>
+        <button ion-button full (click)="onLogOut()">
+            <ion-icon name="power"></ion-icon>
+            LOGOUT
+        </button>
+    </div>
+
 </ion-content>
