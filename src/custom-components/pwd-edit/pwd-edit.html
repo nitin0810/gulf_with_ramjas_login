@@ -1,0 +1,35 @@
+<ion-header>
+    <nl-modal-navbar [title]="title" (modalClosed)="dismiss()"></nl-modal-navbar>
+</ion-header>
+
+<ion-content class="csGrayBackground">
+
+    <form (ngSubmit)="onChangePwd()" novalidate>
+
+        <ion-list>
+            <ion-card>
+                <ion-item>
+                    <ion-icon name="unlock" item-start> </ion-icon>
+                    <ion-label stacked>Old Password</ion-label>
+                    <ion-input type="password" [(ngModel)]="oldPwd" name="oldPwd"></ion-input>
+                </ion-item>
+            </ion-card>
+            <ion-card>
+                <ion-item>
+                    <ion-icon name="lock" item-start> </ion-icon>
+                    <ion-label stacked>New Password</ion-label>
+                    <ion-input type="password" [(ngModel)]="newPwd" name="newPwd"></ion-input>
+                </ion-item>
+                <ion-item>
+                    <ion-icon name="lock" item-start> </ion-icon>
+                    <ion-label stacked>Confirm New Password</ion-label>
+                    <ion-input type="password" [(ngModel)]="newPwdConfirm" name="newPwdConfirm"></ion-input>
+                </ion-item>
+            </ion-card>
+        </ion-list>
+
+        <div padding>
+            <button ion-button full color="primary" type="submit">CHANGE PASSWORD</button>
+        </div>
+    </form>
+</ion-content>

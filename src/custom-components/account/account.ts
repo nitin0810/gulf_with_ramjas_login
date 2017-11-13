@@ -1,6 +1,10 @@
 import { Component } from '@angular/core';
-import { IonicPage, Events } from 'ionic-angular';
+import { IonicPage, Events, ModalController, ActionSheetController } from 'ionic-angular';
+import { Camera, CameraOptions } from '@ionic-native/camera';
+import { CustomService } from '../../services/custom.service';
+import { AuthService } from '../../services/auth.service';
 import { locale } from 'moment';
+
 
 
 @IonicPage()
@@ -11,17 +15,21 @@ import { locale } from 'moment';
 })
 export class AccountPage {
 
-
     title = "Account";
+
     name: string;
     nickName: string;
     userImage: string;
-
     moreDetails = [];
 
-
     constructor(
-        private events: Events
+        private events: Events,
+        private modalCtrl: ModalController,
+        private actionSheetCtrl: ActionSheetController,
+        private customService: CustomService,
+        private authService: AuthService,
+        private camera: Camera,
+
     ) {
         this.setDetails();
     }
@@ -30,7 +38,7 @@ export class AccountPage {
     setDetails() {
 
         this.name = localStorage.getItem('name');
-        localStorage.getItem('nickName')!="null" ? this.nickName = localStorage.getItem('nickName') : this.nickName = null;
+        localStorage.getItem('nickName') != "null" ? this.nickName = localStorage.getItem('nickName') : this.nickName = null;
         localStorage.getItem('picUrl') != "null" ? this.userImage = localStorage.getItem('picUrl') : this.userImage = "assets/images/user.png";
 
         this.moreDetails = [
@@ -54,97 +62,122 @@ export class AccountPage {
 
             /**only in case of management */
             this.moreDetails.push(
-                { name: 'Roles', value: localStorage.getItem('roles'), icon: 'person' },
+                { name: 'Roles', value: JSON.parse(localStorage.getItem('roles')).toString(), icon: 'person' },
             );
+        }
+    }
+
+    onPwdChange() {
+
+        const modal = this.modalCtrl.create("EditPasswordPage");
+        modal.present();
+    }
+
+    onImageClick() {
+
+        let actionSheet = this.actionSheetCtrl.create({
+
+            title: 'Select Option',
+            buttons: [
+                {
+                    text: 'Delete Photo',
+                    role: 'destructive',
+                    handler: () => { }
+                },
+                {
+                    text: 'Open Camera',
+                    handler: () => { this.openCamera(); }
+                }, {
+                    text: 'Open Gallary',
+                    handler: () => { this.openGallery(); }
+                },
+                {
+                    text: 'Cancel',
+                    role: 'cancel',
+                    handler: () => { }
+                }]
+        });
+        actionSheet.present();
+    }
+
+
+
+    openGallery() {
+
+        const options: CameraOptions = {
+            quality: 30,
+            destinationType: this.camera.DestinationType.FILE_URI,
+            sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
+            encodingType: this.camera.EncodingType.JPEG,
+            mediaType: this.camera.MediaType.PICTURE, // only used in case of photo library
+            allowEdit: true,
+            correctOrientation: true
         }
 
 
+        this.camera.getPicture(options)
+            .then((imageData) => {
+
+                this.saveImage(imageData);
+
+            }, (err) => { })
+            .catch((err) => {
+                // Handle error
+                console.log('inside library catch ');
+                this.customService.showToast('Error in uploading image');
+
+            });
     }
 
-    onPwdChange(){
-        console.log('pwd change callled/////////');
-        
+
+    openCamera() {
+
+        const options: CameraOptions = {
+            quality: 30,
+            destinationType: this.camera.DestinationType.FILE_URI,
+            sourceType: this.camera.PictureSourceType.CAMERA,
+            encodingType: this.camera.EncodingType.JPEG,
+            allowEdit: true,
+            correctOrientation: true
+        }
+
+        this.camera.getPicture(options)
+            .then((imageData) => {
+
+                this.saveImage(imageData);
+            }, (err) => { })
+            .catch((err) => {
+                // Handle error
+                console.log('inside library catch ');
+                this.customService.showToast('Error in uploading image');
+
+            });;
     }
 
-    // public openImageActionSheet(data) {
-    //     let actionSheet = this.actionSheetCtrl.create({
-    //         title: 'Choose Album',
-    //         buttons: [{
-    //             text: 'Delete Photo',
-    //             role: 'destructive',
-    //             handler: () => {
-    //             }
-    //         }, {
-    //             text: 'Take Photo',
-    //             handler: () => {
-    //                 // this.openCamera();
-    //             }
-    //         }, {
-    //             text: 'Choose Photo',
-    //             handler: () => {
-    //                 // this.openGallery();
-    //             }
-    //         }, {
-    //             text: 'Cancel',
-    //             role: 'cancel',
-    //             handler: () => {
-    //                 console.log('Cancel clicked');
-    //             }
-    //         }]
-    //     });
-    //     actionSheet.present();
-    // }
 
-    // public openGallery() {
-    //   this.camera.getPicture({
-    //     destinationType: this.camera.DestinationType.DATA_URL,
-    //     sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
-    //     allowEdit: true,
-    //     quality: 30
-    //   }).then((imagedata) => {
-    //     this.basePath = 'data:image/jpeg;base64,';
-    //     this.userImage = imagedata;
-    //     // this.saveImage(this.basePath + this.userImage);
-    //   }, (err) => {
-    //   });
-    // }
 
-    // public openCamera() {
-    //   this.camera.getPicture({
-    //     destinationType: this.camera.DestinationType.DATA_URL,
-    //     targetWidth: 1000,
-    //     targetHeight: 1000,
-    //     encodingType: this.camera.EncodingType.JPEG,
-    //     mediaType: this.camera.MediaType.PICTURE,
-    //     correctOrientation: true,
-    //     allowEdit: true,
-    //     quality: 30
-    //   }).then((imagedata) => {
-    //     this.basePath = 'data:image/jpeg;base64,';
-    //     this.userImage = imagedata;
-    //     this.saveImage(this.basePath + this.userImage);
-    //   }, (err) => {
-    //   });
-    // }
+    saveImage(image: any) {
 
-    // public saveImage(image) {
-    //   this.showLoader = true;
-    //   this.auth.uploadPic(image).then((res) => {
-    //     this.showLoader = false;
-    //     this.events.publish("user:image", image);
-    //     localStorage.setItem("picTimestamp", res.fileTimestamp);
-    //     localStorage.setItem("picOriginalName", res.fileOriginalName);
-    //   }, (err) => {
-    //     this.showLoader = false;
-    //     this.custom.errMessage();
-    //   });
-    // }
+        this.customService.showLoader();
+        this.authService.uploadPic(image)
+            .then((res:any) => {
 
-    // public openModal() {
-    //     console.log("inside open modal");
-    //     let viewComplaint = this.modalCtrl.create(resetPasswordModal);
-    //     viewComplaint.present();
-    // }
+                // alert(JSON.stringify(res));
+                this.userImage = res.fileUrl;
+                this.events.publish("user:image", res.fileUrl);
+                localStorage.setItem('picUrl',res.fileUrl);
+                localStorage.setItem('picOriginalName',res.fileName);
+                this.customService.hideLoader();
+                this.customService.showToast('Picture Updated Successfully');
+
+            }, (err) => {
+
+                this.customService.hideLoader();
+                let errMsg = JSON.parse(err.body).error_description || JSON.parse(err.body).error || 'Some Error Occured';
+                this.customService.showToast(errMsg);
+            });
+    }
+
 
     onLogOut() {
 

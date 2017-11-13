@@ -57,21 +57,12 @@
         </button>
 
         <ion-spinner name="bubbles" *ngIf="showSpinner"></ion-spinner>
-        <!-- <p>FILE:  {{image}}</p> -->
+
         <ion-card *ngIf="image">
             Image Preview
-            <img [src]="image">
+            <img [src]="image" alt="Image File">
         </ion-card>
-        
-        
-        <!-- 
-        <ion-item>
-            <h4>Image Preview</h4>
-            <img src="{{imageFileName}}" *ngIf="imageFileName" alt="Ionic File" width="300" />
-        </ion-item>
-        <ion-item>
-            <button ion-button (click)="uploadFile()">Upload</button>
-        </ion-item> -->
+      
 
         <div padding>
             <button [disabled]="!newAssignmentForm.valid" ion-button full type="submit">Submit</button>

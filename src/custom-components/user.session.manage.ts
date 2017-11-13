@@ -123,9 +123,7 @@ export class UserSessionManage {
 
     public imageUpdate() {
 
-        let picTimestamp = localStorage.getItem("picTimestamp");
-        this.picUrl = localStorage.getItem("picUrl");
-        this.userImage = this.picUrl + "/" + picTimestamp;
+        this.userImage = localStorage.getItem('picUrl');
         this.userName = localStorage.getItem('name') || '';
     }
 

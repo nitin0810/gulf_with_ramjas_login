@@ -5,7 +5,7 @@
 <ion-content class="csGrayBackground">
 
     <ion-card>
-        <img [src]="userImage" style="height:50%;width:50%;margin:auto">
+        <img [src]="userImage" (click)="onImageClick()" style="height:50%;width:50%;margin:auto">
         <h2 style="text-align:center">
             {{name | titlecase}}
             <span *ngIf="nickName">{{nickName | titlecase}}</span>
@@ -25,7 +25,7 @@
         </ion-list>
 
     </ion-card>
-    
+
     <div padding>
         <button ion-button full (click)="onLogOut()">
             <ion-icon name="power"></ion-icon>

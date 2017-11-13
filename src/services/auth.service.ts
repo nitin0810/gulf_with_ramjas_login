@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 
 import { CustomHttpService } from './custom-http.service';
 import { APP_CONSTANTS as CONFIG } from './app.constants';
+import { FileUploadOptions, FileTransferObject, FileTransfer } from '@ionic-native/file-transfer';
 
 declare const SockJS;
 declare const Stomp;
@@ -12,6 +13,7 @@ export class AuthService {
 
     constructor(
         public http: CustomHttpService,
+        private fileTransfer:FileTransfer
     ) { }
 
     isLoggedIn() {
@@ -34,8 +36,6 @@ export class AuthService {
 
         return this.http.post(CONFIG.loginUrl + `/oauth/token?grant_type=password&username=${data.username}&password=${data.password}`, {});
     }
-
-
 
     storeUserData(user) {
 
@@ -67,6 +67,41 @@ export class AuthService {
         }
     }
 
+    uploadPic(image: any) {
+
+        let myFileName: string = this.generatePicName();
+
+        let options: FileUploadOptions = {
+            fileKey: 'file',
+            fileName: myFileName,
+            mimeType: "image/jpeg",
+            chunkedMode: false,
+            headers: {
+                'Authorization': 'Bearer' + localStorage.getItem('access_token')
+            },
+        }
+
+
+
+        let userType = localStorage.getItem('isStudent') === "true" ? 'st' : 'ma';
+        const transfer: FileTransferObject = this.fileTransfer.create();
+
+        return transfer.upload(image, CONFIG.serverUrl + `/${userType}/pic`, options, false)
+            .then((data: any) => {
+
+                return JSON.parse(data.response);
+            });
+
+    }
+
+    generatePicName() {
+
+        //generate unique filename based on current date-time
+        let date = new Date().toISOString();
+        let picName = date.substring(0, date.indexOf('.'));
+
+        return `IMG_${picName}.jpg`;
+    }
 
     getSockJs() {
 

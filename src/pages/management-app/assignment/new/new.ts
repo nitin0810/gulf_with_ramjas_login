@@ -181,7 +181,6 @@ export class NewAssignmentPageManagement {
             .catch((err) => {
                 // Handle error
                 console.log('inside library catch ');
-                console.log(err);
                 this.customService.showToast('Error in uploading image');
                 this.showSpinner = false;
 
@@ -271,7 +270,7 @@ export class NewAssignmentPageManagement {
                     // alert(JSON.stringify(err.body));
                     // console.log('inside finally submit catch');
                     this.customService.hideLoader();
-                    let errMsg = JSON.parse(err.body).message;
+                    let errMsg = JSON.parse(err.body).message || 'Some Error Occured';
                     this.customService.showToast(errMsg);
                 });
 

@@ -43,9 +43,9 @@ export class AssignmentService {
             fileName: myFileName,
             mimeType: "multipart/form-data",
             chunkedMode: false,
-            headers: {
-                'Authorization': 'Bearer' + localStorage.getItem('access_token')
-            },
+            // headers: {
+            //     'Authorization': 'Bearer' + localStorage.getItem('access_token')
+            // },
             params: {
                 "description": data.description,
                 "dueDate": data.dueDate,
