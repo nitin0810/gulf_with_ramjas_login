@@ -1,0 +1,151 @@
+<ion-header>
+    <nl-modal-navbar [title]="title" (modalClosed)="dismiss()"></nl-modal-navbar>
+</ion-header>
+
+<ion-content class="csGrayBackground">
+
+    <form *ngIf="audienceList" #newPlannerForm="ngForm" (ngSubmit)="onSubmit()">
+
+        <ion-card>
+            <ion-item>
+                <ion-label stacked>Title</ion-label>
+                <ion-textarea [(ngModel)]="eventTitle" required name="title" maxlength="50" placeholder="Enter Title"></ion-textarea>
+            </ion-item>
+            <ion-badge class="csFiftyLimit">
+                <span>{{50 - eventTitle?.length}}</span>
+            </ion-badge>
+        </ion-card>
+
+        <ion-card>
+            <ion-item>
+                <ion-label stacked>Description</ion-label>
+                <ion-textarea [(ngModel)]="description" required name="description" rows="3" maxlength="2500" placeholder="Enter Description"></ion-textarea>
+            </ion-item>
+            <ion-badge class="csFiftyLimit">
+                <span>{{2500 - description?.length}}</span>
+            </ion-badge>
+        </ion-card>
+
+        <ion-card>
+            <ion-item>
+                <ion-label>Event Start</ion-label>
+                <ion-datetime displayFormat="MMM DD, YYYY HH:mm"  [(ngModel)]="startDateTime"  (ionChange)="onEndDateChange()" [min]="minDate" max="2019" name="startDateTime" required></ion-datetime>
+            </ion-item>
+
+            <ion-item>
+                <ion-label>Event End</ion-label>
+                <ion-datetime displayFormat="MMM DD, YYYY HH:mm"  [(ngModel)]="endDateTime" (ionChange)="onEndDateChange()" [min]="minDate" max="2019" name="endDateTime" required></ion-datetime>
+            </ion-item>
+        </ion-card>
+       
+        <ion-card *ngIf="audienceList">
+            <ion-item>
+                <ion-label>
+                    <b>Select Audience</b>
+                </ion-label>
+                <ion-select [(ngModel)]="mainAudience" (ionChange)="onAudienceChange()" required name="mainAudience">
+                    <ion-option *ngFor="let audience of audienceList" [value]="audience">{{audience.name}}</ion-option>
+                </ion-select>
+            </ion-item>
+        </ion-card>  
+   
+        <div *ngIf="departmentList && mainAudience.id == 2">
+            <ion-card>
+                <ion-item>
+                    <ion-label>
+                        <b>Select Departments</b>
+                    </ion-label>
+                    <ion-select [(ngModel)]="departmentIds" multiple required name="departments">
+                        <ion-option *ngFor="let dep of departmentList" [value]="dep.id">{{dep.name}}</ion-option>
+                    </ion-select>
+                </ion-item>
+            </ion-card>
+        </div>
+
+        <div *ngIf="mainAudience?.subAudience && (mainAudience.id == 1 || mainAudience.id == 2)">
+            <ion-card>
+                <ion-item>
+                    <ion-label>
+                        <b>Subcategories</b>
+                    </ion-label>
+                    <ion-select [(ngModel)]="audienceIds" multiple required name="subCategory">
+                        <ion-option *ngFor="let subCat of mainAudience.subAudience" [value]="subCat.id">{{subCat.name }}</ion-option>
+                    </ion-select>
+                </ion-item>
+            </ion-card>
+        </div>
+
+        <div *ngIf=" programList && mainAudience?.id == 3 ">
+            <ion-card>
+                <ion-item>
+                    <ion-label>
+                        <b>Select Programs</b>
+                    </ion-label>
+                    <ion-select [(ngModel)]="programIds" multiple required name="programs">
+                        <ion-option *ngFor="let pgm of programList" [value]="pgm.id">{{pgm.name}}</ion-option>
+                    </ion-select>
+                </ion-item>
+            </ion-card>
+        </div>
+
+        <div *ngIf=" mainAudience?.id == 3 ">
+            <ion-card>
+                <ion-item>
+                    <ion-label>
+                        <b>Select Years</b>
+                    </ion-label>
+                    <ion-select [(ngModel)]="yearIds" multiple required name="years">
+                        <ion-option *ngFor="let y of yearList" [value]="y.id">{{y.name}}</ion-option>
+                    </ion-select>
+                </ion-item>
+            </ion-card>
+        </div>
+
+        <div *ngIf=" mainAudience?.id == 4 && yearsListForModule">
+            <ion-card>
+                <ion-item>
+                    <ion-label>
+                        <b>Select Year</b>
+                    </ion-label>
+                    <ion-select [(ngModel)]="yearForModule" (ionChange)="onYearForModuleChange()" required name="yearsModule">
+                        <ion-option *ngFor="let y of yearsListForModule" [value]="y">{{y.name || y.yearName}} </ion-option>
+                    </ion-select>
+                </ion-item>
+            </ion-card>
+        </div>
+
+        <div *ngIf=" mainAudience?.id == 4 && yearForModule ">
+            <ion-card>
+                <ion-item>
+                    <ion-label>
+                        <b>Select Modules</b>
+                    </ion-label>
+                    <ion-select [(ngModel)]="moduleIds" multiple required name="years">
+                        <ion-option *ngFor="let module of modulesObject[yearForModule.id || yearForModule.yearId]" [value]="module.moduleId">{{module.moduleName}}</ion-option>
+                    </ion-select>
+                </ion-item>
+            </ion-card>
+        </div>
+
+        <button type="button" ion-button clear (click)="onFileUpload()">Upload File (Optional)</button>
+        <button type="button" ion-button clear (click)="onFileUnselect()" *ngIf="this.image || this.file">unselect File </button>
+        
+        <ion-spinner name="bubbles" *ngIf="showSpinner"></ion-spinner>
+        <ion-card *ngIf="image">
+                Image Preview
+                <img [src]="image" alt="Image File">
+            </ion-card>
+            <ion-card *ngIf="file" >
+                File: {{file}}
+            </ion-card>
+        <div padding>
+            <button type="submit" [disabled]="!newPlannerForm.valid || !isEndGreaterThanStart" ion-button full type="submit">Submit</button>
+        </div>
+
+
+
+
+
+    </form>
+
+</ion-content>

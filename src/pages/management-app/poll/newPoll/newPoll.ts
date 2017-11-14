@@ -22,7 +22,7 @@ export class NewPollPageManagement {
     programList: Array<any>;
     yearList: Array<any>;
     yearsListForModule: Array<any>;
-    modulesObject: any={}; // stores array of modules(as value) of multiple yearsIds(as property)
+    modulesObject: any = {}; // stores array of modules(as value) of multiple yearsIds(as property)
     optionTypesPossible: Array<any>;
     optionLimit: number;
 
@@ -53,6 +53,9 @@ export class NewPollPageManagement {
         this.getMainAudeinceData();
     }
 
+    /**Poll,Survey,Events and Circular all have same audience,
+     * hence NewPoll page is extended in other three
+    */
     getMainAudeinceData() {
 
         if (!localStorage.getItem('pollAudienceList')) {
@@ -88,7 +91,7 @@ export class NewPollPageManagement {
 
     onAudienceChange() {
         // clear the appropriate ngModal variable on main audience change to hide the options related to previous audience
-console.log("audience change called////");
+        // console.log("audience change called////");
 
         if (this.mainAudience.id == 1) { this.audienceIds = null; }
         if (this.mainAudience.id == 2) {
@@ -172,7 +175,7 @@ console.log("audience change called////");
 
     onYearForModuleChange() {
         console.log('on years for module change////');
-       
+
         this.moduleIds = null;
         let id = this.yearForModule.id || this.yearForModule.yearId;
         if (this.modulesObject[id]) {

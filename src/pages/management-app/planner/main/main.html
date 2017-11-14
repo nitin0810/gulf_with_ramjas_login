@@ -1,0 +1,17 @@
+<ion-header>
+    <nl-navbar [title]="viewTitle" ></nl-navbar>
+</ion-header>
+
+<ion-content>
+
+    <calendar [eventSource]="eventSource" [calendarMode]="calendar.mode" [currentDate]="calendar.currentDate" queryMode="remote"
+        (onCurrentDateChanged)="onCurrentDateChanged($event)" (onRangeChanged)="reloadSource(startTime, endTime)" (onEventSelected)="onEventSelected($event)"
+        (onTitleChanged)="onViewTitleChanged($event)" (onTimeSelected)="onTimeSelected($event)" step="30">
+    </calendar>
+
+
+    <div padding>
+        <button ion-button full (click)="openNewEventModal()">ADD NEW EVENT</button>
+    </div>
+
+</ion-content>

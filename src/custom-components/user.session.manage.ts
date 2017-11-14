@@ -100,6 +100,7 @@ export class UserSessionManage {
                 { title: 'Appreciations', component: "AppreciationTabsPageManagement", icon: 'assets/icon/appreciation.png' },
                 { title: 'Polls', icon: 'assets/icon/poll.png' },
                 { title: 'Surveys', icon: 'assets/icon/survey.png' },
+                { title: 'Events', component: "MainPlannerPageManagement", icon: 'assets/icon/event.png' },
                 { title: 'Assignment', component: "AssignmentTabsPageManagement", icon: 'assets/icon/rating.png' },
                 { title: 'Account', component: "AccountPage", icon: 'assets/icon/profile.png' },
 
@@ -109,7 +110,7 @@ export class UserSessionManage {
             let roles: Array<string> = JSON.parse(localStorage.getItem('roles'));
             for (let x of roles) {
                 if (x == "QUALITYCOORDINATOR") {
-                    this.sideMenuOptions.splice(6, 0, { title: 'Evaluations', component: "EvaluationTabsPageManagement", icon: 'assets/icon/appreciation.png' });
+                    this.sideMenuOptions.splice(7, 0, { title: 'Evaluations', component: "EvaluationTabsPageManagement", icon: 'assets/icon/appreciation.png' });
                     break;
                 }
             }

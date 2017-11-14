@@ -23,13 +23,14 @@ import { PollService } from '../services/poll.service';
 import { AppreciationService } from '../services/appreciation.service';
 import { SurveyService } from '../services/survey.service';
 
-/**import native plugins*/
+/**import native plugins and 3rd party modules*/
 import { Network } from '@ionic-native/network';
 import { Camera } from '@ionic-native/camera';
 import { FileTransfer} from '@ionic-native/file-transfer';
 import { FileChooser } from '@ionic-native/file-chooser';
 import * as ionicGalleryModal from 'ionic-gallery-modal';
 import { HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
+
 
 /**import custom modules*/
 import { CustomNavbarModule } from '../custom-components/navbar/navbar.module';
@@ -38,6 +39,7 @@ import { LoginPage } from '../custom-components/login/login';
 import { ForgotPasswordModal } from '../custom-components/login/forgot-password/forgot-password';
 import { EvaluationService } from '../services/evaluation.service';
 import { AssignmentService } from '../services/assignment.service';
+import { PlannerService } from '../services/planner.service';
 
 
 @NgModule({
@@ -80,6 +82,7 @@ import { AssignmentService } from '../services/assignment.service';
     AppreciationService,
     EvaluationService,
     AssignmentService,
+    PlannerService,
     { provide: ErrorHandler, useClass: IonicErrorHandler },
     {
       provide: CustomHttpService, useFactory: (backend: XHRBackend, defaultOptions: RequestOptions) => {
