@@ -82,7 +82,7 @@ export class AccountPage {
                 {
                     text: 'Delete Photo',
                     role: 'destructive',
-                    handler: () => { }
+                    handler: () => { this.deletePhoto(); }
                 },
                 {
                     text: 'Open Camera',
@@ -100,7 +100,24 @@ export class AccountPage {
         actionSheet.present();
     }
 
+    deletePhoto() {
+        
+        this.customService.showLoader();
+        this.authService.deletePic()
+            .subscribe((res: any) => {
 
+                this.customService.hideLoader();
+                this.customService.showToast('Picture deleted successfully');
+                this.userImage = "assets/images/user.png";
+                localStorage.setItem('picUrl', "null");
+                localStorage.setItem('picOriginalName', "null");
+                this.events.publish("user:image");
+            }, (err: any) => {
+
+                this.customService.hideLoader();
+                this.customService.showToast(err.msg);
+            });
+    }
 
     openGallery() {
 
@@ -160,13 +177,13 @@ export class AccountPage {
 
         this.customService.showLoader();
         this.authService.uploadPic(image)
-            .then((res:any) => {
+            .then((res: any) => {
 
                 // alert(JSON.stringify(res));
                 this.userImage = res.fileUrl;
+                localStorage.setItem('picUrl', res.fileUrl);
+                localStorage.setItem('picOriginalName', res.fileName);
                 this.events.publish("user:image", res.fileUrl);
-                localStorage.setItem('picUrl',res.fileUrl);
-                localStorage.setItem('picOriginalName',res.fileName);
                 this.customService.hideLoader();
                 this.customService.showToast('Picture Updated Successfully');
 

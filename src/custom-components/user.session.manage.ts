@@ -13,7 +13,6 @@ export class UserSessionManage {
     userName: string;
     userImage: string;
     sideMenuOptions: Array<any>;
-    picUrl: any;
     pollSubOptionsShown: boolean = false; // to show and hide the poll suboptions
     surveySubOptionsShown: boolean = false; // to show and hide the survey suboptions
 
@@ -46,8 +45,8 @@ export class UserSessionManage {
         this.events.subscribe("online", () => {
             this.online();
         });
-        this.events.subscribe("user:image", (image) => {
-            this.userImage = image;
+        this.events.subscribe("user:image", () => {
+            this.imageUpdate();
         });
     }
 
@@ -103,7 +102,7 @@ export class UserSessionManage {
                 { title: 'Surveys', icon: 'assets/icon/survey.png' },
                 { title: 'Assignment', component: "AssignmentTabsPageManagement", icon: 'assets/icon/rating.png' },
                 { title: 'Account', component: "AccountPage", icon: 'assets/icon/profile.png' },
-                
+
             ];
 
             /**insert the evaluation option in case user has a role of quality-coordinater */

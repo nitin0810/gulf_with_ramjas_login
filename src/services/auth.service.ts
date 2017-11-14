@@ -103,6 +103,12 @@ export class AuthService {
         return `IMG_${picName}.jpg`;
     }
 
+    deletePic(){
+
+        let loginType = localStorage.getItem('isStudent') === "true" ? 'st' : 'ma';
+        return this.http.delete(CONFIG.serverUrl + `/${loginType}/pic`);
+    }
+    
     getSockJs() {
 
         let access_token = localStorage.getItem('access_token');
