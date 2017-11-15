@@ -66,4 +66,9 @@ export class PlannerService {
         return file ? fileName + '.pdf' : fileName + '.jpg';
     }
 
+    fetchEventsByMonth(month:any){
+
+        return this.http.get(CONFIG.serverUrl+`/ma/planner/month/${month}`);
+    }
+
 }

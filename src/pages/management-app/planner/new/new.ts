@@ -69,7 +69,7 @@ export class NewPlannerPageManagement extends NewPollPageManagement {
         if (new Date(this.endDateTime).getTime() < new Date(this.startDateTime).getTime()) {
             this.isEndGreaterThanStart = false;
             this.customService.showToast("End Date should be later than Start Date");
-            return ;
+            return;
         }
         this.isEndGreaterThanStart = true;
 
@@ -246,8 +246,8 @@ export class NewPlannerPageManagement extends NewPollPageManagement {
         let data: any = {
             title: this.eventTitle,
             description: this.description,
-            start: this.startDateTime.slice(0,-1),
-            end: this.endDateTime.slice(0,-1),
+            start: this.startDateTime.slice(0, -1),
+            end: this.endDateTime.slice(0, -1),
             mainAudienceId: this.mainAudience.id
         }
         console.log(data);
@@ -287,6 +287,7 @@ export class NewPlannerPageManagement extends NewPollPageManagement {
 
                 this.customService.hideLoader();
                 this.customService.showToast('Event created successfully');
+                this.dismiss(res);
             }, (err: any) => {
 
                 this.customService.hideLoader();
@@ -320,7 +321,8 @@ export class NewPlannerPageManagement extends NewPollPageManagement {
             });
     }
 
-    dismiss(res?:any) {
+    dismiss(res?: any) {
+        console.log('iiiiiiiiiiiii');
 
         this.viewCtrl.dismiss(res);
     }

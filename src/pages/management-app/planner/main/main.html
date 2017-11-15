@@ -1,12 +1,35 @@
 <ion-header>
-    <nl-navbar [title]="viewTitle" ></nl-navbar>
+    <nl-navbar [title]="viewTitle"></nl-navbar>
 </ion-header>
 
 <ion-content>
 
+    <ng-template #template>
+        <ion-item *ngIf="currentDateSelected?.events.length==0 && !showSpinner">
+            <ion-icon item-start name="calendar"></ion-icon>
+            <br>No Event
+        </ion-item>
+        <ion-spinner name="bubbles" *ngIf="showSpinner"></ion-spinner>
+
+        <ion-list>
+
+            <button ion-item *ngFor="let event of currentDateSelected?.events; let i = index" (click)="onEventItemSelect(event)">
+                <div [style.border-left-color]="event.mainAudienceColor">
+                    <h2>{{event.title}}</h2>
+                    <span>{{event.startTime | amLocale:'en' | amDateFormat:'h:mm A'}}</span>
+                    <span> - {{ event.endTime | amLocale:'en' | amDateFormat:'h:mm A'}}</span>
+                    <span *ngIf="event.noOfDays > 1 ">( {{ event.noOfDays}} days event )</span>
+                    <!-- <span [style.text-color]="event.mainAudienceColor">@{{event.mainAudienceName }}</span> -->
+                </div>
+            </button>
+        </ion-list>
+    </ng-template>
+
+
     <calendar [eventSource]="eventSource" [calendarMode]="calendar.mode" [currentDate]="calendar.currentDate" queryMode="remote"
-        (onCurrentDateChanged)="onCurrentDateChanged($event)" (onRangeChanged)="reloadSource(startTime, endTime)" (onEventSelected)="onEventSelected($event)"
-        (onTitleChanged)="onViewTitleChanged($event)" (onTimeSelected)="onTimeSelected($event)" step="30">
+        (onCurrentDateChanged)="onCurrentDateChanged($event)" (onRangeChanged)="reloadSource($event)" (onEventSelected)="onEventSelected($event)"
+        (onTitleChanged)="onViewTitleChanged($event)" (onTimeSelected)="onTimeSelected($event)" [monthviewEventDetailTemplate]="template"
+        step="30">
     </calendar>
 
 

@@ -3,6 +3,7 @@ import { IonicPageModule } from 'ionic-angular';
 import { MainPlannerPageManagement } from './main';
 import { NgCalendarModule } from 'ionic2-calendar';
 import { CustomNavbarModule } from '../../../../custom-components/navbar/navbar.module';
+import { MomentModule } from 'angular2-moment';
 
 @NgModule({
 
@@ -11,6 +12,7 @@ import { CustomNavbarModule } from '../../../../custom-components/navbar/navbar.
     imports: [
         CustomNavbarModule,
         NgCalendarModule,
+        MomentModule,
         IonicPageModule.forChild(MainPlannerPageManagement)
     ],
 
