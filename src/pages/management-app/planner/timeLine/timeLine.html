@@ -1,0 +1,25 @@
+<ion-header>
+    <nl-modal-navbar [title]="title" (modalClosed)="dismiss()"></nl-modal-navbar>
+</ion-header>
+
+<ion-content class="csGrayBackground">
+
+    <ion-refresher (ionRefresh)="doRefresh($event)">
+        <ion-refresher-content></ion-refresher-content>
+    </ion-refresher>
+
+    <ion-list>
+        <button ion-item *ngFor="let event of eventList" [style.border-left-color]="event.mainAudienceColor" (click)="onEventClick(event.id)">
+            <h2>{{event.title}}</h2>
+
+            <p>Start: {{event.start | amLocale:'en' | amDateFormat:'MMM Do, h:mm A' }}</p>
+            <p>End: {{event.end | amLocale:'en' | amDateFormat:'MMM Do, h:mm A' }}</p>
+
+
+        </button>
+    </ion-list>
+
+    <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
+        <ion-infinite-scroll-content></ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+</ion-content>

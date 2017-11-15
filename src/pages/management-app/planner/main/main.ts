@@ -25,6 +25,7 @@ export class MainPlannerPageManagement {
         currentDate: new Date()
     };
     showSpinner: boolean = false;
+    isStudent: boolean = localStorage.getItem('isStudent') == "true";
 
     constructor(
         private modalCtrl: ModalController,
@@ -117,8 +118,8 @@ export class MainPlannerPageManagement {
     }
 
     onEventItemSelect(ev: any) {
-     
-        const modal = this.modalCtrl.create("ViewPlannerPageManagement",{'eventId':ev.id});
+
+        const modal = this.modalCtrl.create("ViewPlannerPageManagement", { 'eventId': ev.id });
         modal.present();
     }
 
@@ -138,5 +139,11 @@ export class MainPlannerPageManagement {
                 this.myCalendar.loadEvents();
             }
         });
+    }
+
+    onTimeLineBtn() {
+
+        const modal = this.modalCtrl.create("TimelinePageManagement");
+        modal.present();
     }
 }

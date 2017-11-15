@@ -60,20 +60,34 @@ export class PlannerService {
         //generate unique filename based on current date-time
         let date = new Date().toISOString();
         let fileName = date.substring(0, date.indexOf('.'));//ignore milliseconds
-        console.log(fileName);
-        console.log(file);
 
         return file ? fileName + '.pdf' : fileName + '.jpg';
     }
 
     fetchEventsByMonth(month: any) {
 
-        return this.http.get(CONFIG.serverUrl + `/ma/planner/month/${month}`);
+        let loginType = localStorage.getItem('isStudent') === "true" ? 'st' : 'ma';
+        return this.http.get(CONFIG.serverUrl + `/${loginType}/planner/month/${month}`);
     }
 
     fetchEventsById(id: number) {
 
-        return this.http.get(CONFIG.serverUrl + `/ma/planner/${id}`);
+        let loginType = localStorage.getItem('isStudent') === "true" ? 'st' : 'ma';
+        return this.http.get(CONFIG.serverUrl + `/${loginType}/planner/${id}`);
     }
 
+    fetchTimeline(pageNo: number) {
+
+
+        if (localStorage.getItem('isStudent') === "true") {
+
+            return this.http.get(CONFIG.serverUrl + `/st/planner/page/${pageNo}`);
+
+        }else {
+
+            return this.http.get(CONFIG.serverUrl + `/ma/planner/false/page/${pageNo}`);
+        }
+    }
+
+   
 }

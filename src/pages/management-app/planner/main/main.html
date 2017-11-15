@@ -1,5 +1,22 @@
 <ion-header>
-    <nl-navbar [title]="viewTitle"></nl-navbar>
+
+    <ion-navbar color="primary">
+        <ion-toolbar>
+            <button ion-button menuToggle>
+                <ion-icon name="menu"></ion-icon>
+            </button>
+            <ion-title>
+                <span>{{viewTitle | uppercase}}</span>
+            </ion-title>
+            <ion-buttons end>
+                <button ion-button icon-only clear (click)="onTimeLineBtn()">
+                    <ion-icon name="clock"></ion-icon>
+                </button>
+            </ion-buttons>
+
+        </ion-toolbar>
+    </ion-navbar>
+
 </ion-header>
 
 <ion-content class="csGrayBackground">
@@ -33,7 +50,7 @@
     </calendar>
 
 
-    <div padding>
+    <div padding *ngIf="!isStudent">
         <button ion-button full (click)="openNewEventModal()">ADD NEW EVENT</button>
     </div>
 
