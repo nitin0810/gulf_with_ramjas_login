@@ -121,7 +121,7 @@
                         <b>Select Modules</b>
                     </ion-label>
                     <ion-select [(ngModel)]="moduleIds" multiple required name="years">
-                        <ion-option *ngFor="let module of modulesObject[yearForModule.id || yearForModule.yearId]" [value]="module.moduleId">{{module.moduleName}}</ion-option>
+                        <ion-option *ngFor="let module of modulesObject[yearForModule.id || yearForModule.yearId]" [value]="module.moduleId || module.id">{{module.moduleName || module.name}}</ion-option>
                     </ion-select>
                 </ion-item>
             </ion-card>

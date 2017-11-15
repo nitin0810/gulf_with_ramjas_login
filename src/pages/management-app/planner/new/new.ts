@@ -305,16 +305,16 @@ export class NewPlannerPageManagement extends NewPollPageManagement {
         this.plannerService.submitWithFile(data)
             .then((res: any) => {
 
-                // console.log('inside finally submit then');
-                alert(JSON.stringify(res));
+                console.log('inside finally submit then');
+                // alert(JSON.stringify(res));
 
                 this.customService.hideLoader();
                 this.customService.showToast('Assignment submitted successfully');
                 this.dismiss(res);
             }, (err: any) => {
 
-                alert(JSON.stringify(err.body));
-                // console.log('inside finally submit catch');
+                // alert(JSON.stringify(err.body));
+                console.log('inside finally submit catch');
                 this.customService.hideLoader();
                 let errMsg = JSON.parse(err.body).message || 'Some Error Occured';
                 this.customService.showToast(errMsg);

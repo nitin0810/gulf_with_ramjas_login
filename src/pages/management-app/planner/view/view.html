@@ -1,0 +1,94 @@
+<ion-header>
+    <nl-modal-navbar [title]="title" (modalClosed)="dismiss()"></nl-modal-navbar>
+</ion-header>
+
+<ion-content class="csGrayBackground">
+    <div *ngIf="event">
+        <ion-card>
+            <ion-card-header>
+                {{event.title}}
+            </ion-card-header>
+            <ion-card-content>
+                {{event.description}}
+            </ion-card-content>
+        </ion-card>
+
+        <ion-card>
+            <ion-item>
+                <ion-icon item-start name="clock"></ion-icon>
+
+                <p>
+                    <b>Start: </b>{{event.startTime | amLocale:'en' | amDateFormat:'MMM Do , h:mm A'}}</p>
+                <p>
+                    <b>End: </b>{{event.endTime | amLocale:'en' | amDateFormat:'MMM Do , h:mm A'}}</p>
+
+            </ion-item>
+        </ion-card>
+
+        <ion-card>
+            <ion-item>
+                <ion-icon item-start name="person"></ion-icon>
+                <ion-label>
+                    <b>Created By: </b>{{event.employeName}}</ion-label>
+            </ion-item>
+        </ion-card>
+
+        <ion-card *ngIf="event.location">
+            <ion-item>
+                <ion-icon item-start name="home"></ion-icon>
+                <ion-label>
+                    <b>Location: </b>{{event.location}}</ion-label>
+            </ion-item>
+        </ion-card>
+
+
+        <ion-card *ngIf="event.programs && event.programs.length!=0">
+            <ion-item>
+                <ion-icon item-start name="people"></ion-icon>
+                <p>
+                    <b>Programs : </b>
+                </p>
+                <p *ngFor="let audience of event.programs">
+                    {{audience}}
+                </p>
+            </ion-item>
+        </ion-card>
+
+        <ion-card *ngIf="event.departments && event.departments.length!=0">
+            <ion-item>
+                <ion-icon item-start name="people"></ion-icon>
+                <p>
+                    <b>Departments : </b>
+                </p>
+                <p *ngFor="let audience of event.departments">
+                    {{audience}}
+                </p>
+            </ion-item>
+        </ion-card>
+
+        <ion-card *ngIf="event.modules && event.modules.length!=0">
+            <ion-item>
+                <ion-icon item-start name="people"></ion-icon>
+                <p>
+                    <b>Modules : </b>
+                </p>
+                <p *ngFor="let audience of event.modules">
+                    {{audience}}
+                </p>
+            </ion-item>
+        </ion-card>
+
+        <ion-card *ngIf="event.audiences && event.audiences.length!=0">
+            <ion-item>
+                <ion-icon item-start name="people"></ion-icon>
+                <p>
+                    <b>Audience : </b>
+                </p>
+                <p *ngFor="let audience of event.audiences">
+                    {{audience}}
+                </p>
+            </ion-item>
+        </ion-card>
+
+    </div>
+</ion-content>

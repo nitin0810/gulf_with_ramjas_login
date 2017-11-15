@@ -49,8 +49,8 @@ export class PlannerService {
         return transfer.upload(data.image || data.file, CONFIG.serverUrl + `/ma/planner`, options, false)
             .then((data: any) => {
 
-                // console.log('inside service success');
-                alert(JSON.stringify(data));
+                console.log('inside service success');
+                // alert(JSON.stringify(data));
                 return JSON.parse(data.response);
             });
 
@@ -66,9 +66,14 @@ export class PlannerService {
         return file ? fileName + '.pdf' : fileName + '.jpg';
     }
 
-    fetchEventsByMonth(month:any){
+    fetchEventsByMonth(month: any) {
 
-        return this.http.get(CONFIG.serverUrl+`/ma/planner/month/${month}`);
+        return this.http.get(CONFIG.serverUrl + `/ma/planner/month/${month}`);
+    }
+
+    fetchEventsById(id: number) {
+
+        return this.http.get(CONFIG.serverUrl + `/ma/planner/${id}`);
     }
 
 }

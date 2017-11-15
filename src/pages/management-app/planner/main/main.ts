@@ -13,7 +13,7 @@ import { CalendarComponent } from "ionic2-calendar/calendar";
 
 export class MainPlannerPageManagement {
 
-    @ViewChild(CalendarComponent) myCalendar:CalendarComponent;
+    @ViewChild(CalendarComponent) myCalendar: CalendarComponent;
     viewTitle: string;
     currentMonth: any;
 
@@ -117,16 +117,16 @@ export class MainPlannerPageManagement {
     }
 
     onEventItemSelect(ev: any) {
-
-        console.log('///////////////');
-
+     
+        const modal = this.modalCtrl.create("ViewPlannerPageManagement",{'eventId':ev.id});
+        modal.present();
     }
+
     openNewEventModal() {
 
         const modal = this.modalCtrl.create("NewPlannerPageManagement");
         modal.present();
         modal.onDidDismiss((returnedData: any) => {
-            console.log('retruundData', returnedData);
 
             if (returnedData) {
                 returnedData.startTime = new Date(returnedData.start);
