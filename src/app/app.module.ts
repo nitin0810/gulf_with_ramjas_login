@@ -28,6 +28,7 @@ import { Network } from '@ionic-native/network';
 import { Camera } from '@ionic-native/camera';
 import { FileTransfer} from '@ionic-native/file-transfer';
 import { FileChooser } from '@ionic-native/file-chooser';
+import { FilePath } from '@ionic-native/file-path';
 import * as ionicGalleryModal from 'ionic-gallery-modal';
 import { HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
 
@@ -95,7 +96,8 @@ import { PlannerService } from '../services/planner.service';
     },
     Camera,
     FileTransfer,
-    FileChooser
+    FileChooser,
+    FilePath
   ],
 })
 export class AppModule { }

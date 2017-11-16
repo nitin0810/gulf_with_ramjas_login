@@ -8,6 +8,7 @@ import { PlannerService } from '../../../../services/planner.service';
 
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import { FileChooser } from '@ionic-native/file-chooser';
+import { FilePath } from '@ionic-native/file-path';
 
 
 
@@ -26,13 +27,16 @@ export class NewPlannerPageManagement extends NewPollPageManagement {
     /**ngModel variables */
     eventTitle: string;
     description: string;
+    location: string;
     startDateTime: any;
     endDateTime: any;
     minDate: any = new Date().toISOString().substring(0, 10);
     isEndGreaterThanStart: boolean = false;
 
     file: any;
+    fileName: string;
     image: any;
+
     showSpinner: boolean = false;
 
     constructor(
@@ -42,7 +46,8 @@ export class NewPlannerPageManagement extends NewPollPageManagement {
         public actionSheetCtrl: ActionSheetController,
         private plannerService: PlannerService,
         private camera: Camera,
-        private fileChooser: FileChooser
+        private fileChooser: FileChooser,
+        private filePath: FilePath
 
     ) {
         super(viewCtrl, pollService, customService, actionSheetCtrl);
@@ -64,17 +69,15 @@ export class NewPlannerPageManagement extends NewPollPageManagement {
         return (new Date(Date.now() - tzoffset)).toISOString().slice(0, -5) + "Z";
     }
 
+
     onEndDateChange() {
 
-        if (new Date(this.endDateTime).getTime() < new Date(this.startDateTime).getTime()) {
+        if (new Date(this.endDateTime) < new Date(this.startDateTime)) {
             this.isEndGreaterThanStart = false;
             this.customService.showToast("End Date should be later than Start Date");
             return;
         }
         this.isEndGreaterThanStart = true;
-
-
-
     }
 
     onFileUpload() {
@@ -171,6 +174,7 @@ export class NewPlannerPageManagement extends NewPollPageManagement {
             // If it's base64:
             // console.log('inside library clbk');
             this.showSpinner = false;
+
             this.image = 'data:image/jpeg;base64,' + imageData;
             this.file = null;
         }, (err) => {
@@ -189,17 +193,54 @@ export class NewPlannerPageManagement extends NewPollPageManagement {
 
 
     selectFile() {
+
+        /**We Want the file path to be native(i.e starting with file://)
+         * so that we can extract the file name and type from the path.
+         * Hence resolve the url when recieved as starting from content:// 
+         */
         this.fileChooser.open()
             .then(uri => {
-                console.log(uri);
-                this.file = uri;
-                this.image = null;
+                if (uri.startsWith("content://")) {
+
+                    this.filePath.resolveNativePath(uri)
+                        .then(nativeUri => {
+
+                            this.file = nativeUri;
+                            // console.log(nativeUri);
+                            this.image = null;
+                            this.fileName = this.file.split('/').pop();
+                            this.checkCompatibleFile(this.fileName);
+                        }, (err: any) => {
+                            /**files path from google drive are not convertable to native path */
+                            let errMsg = err.message + "\nYou might be uploading a file from cloud/Google drive";
+                            this.customService.showToast(errMsg);
+                        });
+                } else {
+
+                    this.file = uri;
+                    this.image = null;
+                    this.fileName = this.file.split('/').pop();
+                    this.checkCompatibleFile(this.fileName);
+                }
+            }, (err: any) => {
+                // console.log('inside 2nd clllll');
+
+                alert('Unable to Choose the file at the moment');
             })
             .catch(e => {
-                console.log(e)
+                // console.log('inside catch//////');
+
+                alert(JSON.stringify(e));
             });
     }
 
+    checkCompatibleFile(name: string) {
+        let type = name.slice(name.lastIndexOf('.') + 1);
+        if (!(type == "pdf" || type == "jpg" || type == "jpeg" || type == "png" || type == "doc" || type == "docx" || type == "txt")) {
+            this.file = null;
+            this.customService.showToast('Unsupported File Type');
+        }
+    }
 
     onSubmit() {
 
@@ -250,7 +291,8 @@ export class NewPlannerPageManagement extends NewPollPageManagement {
             end: this.endDateTime.slice(0, -1),
             mainAudienceId: this.mainAudience.id
         }
-        console.log(data);
+
+        if (this.location && this.location.trim().length != 0) { data.location = this.location; }
 
         switch (this.mainAudience.id) {
 
@@ -298,6 +340,7 @@ export class NewPlannerPageManagement extends NewPollPageManagement {
     submitEventWithFile(data: any) {
 
         data.file = this.file;
+        data.fileName = this.fileName;
         data.image = this.image;
 
         this.customService.showLoader();
@@ -305,7 +348,7 @@ export class NewPlannerPageManagement extends NewPollPageManagement {
         this.plannerService.submitWithFile(data)
             .then((res: any) => {
 
-                console.log('inside finally submit then');
+                // console.log('inside finally submit then');
                 // alert(JSON.stringify(res));
 
                 this.customService.hideLoader();
@@ -314,7 +357,7 @@ export class NewPlannerPageManagement extends NewPollPageManagement {
             }, (err: any) => {
 
                 // alert(JSON.stringify(err.body));
-                console.log('inside finally submit catch');
+                // console.log('inside finally submit catch');
                 this.customService.hideLoader();
                 let errMsg = JSON.parse(err.body).message || 'Some Error Occured';
                 this.customService.showToast(errMsg);
@@ -322,7 +365,6 @@ export class NewPlannerPageManagement extends NewPollPageManagement {
     }
 
     dismiss(res?: any) {
-        console.log('iiiiiiiiiiiii');
 
         this.viewCtrl.dismiss(res);
     }

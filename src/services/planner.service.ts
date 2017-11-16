@@ -23,7 +23,7 @@ export class PlannerService {
 
     submitWithFile(data: any) {
 
-        let myFileName: string = this.generateFileName(data.file);
+        let myFileName: string = data.file ? data.fileName: this.generateImageName();
 
         let options: FileUploadOptions = {
             fileKey: 'file',
@@ -49,19 +49,17 @@ export class PlannerService {
         return transfer.upload(data.image || data.file, CONFIG.serverUrl + `/ma/planner`, options, false)
             .then((data: any) => {
 
-                console.log('inside service success');
+                // console.log('inside service success');
                 // alert(JSON.stringify(data));
                 return JSON.parse(data.response);
             });
 
     }
 
-    generateFileName(file: any) {
-        //generate unique filename based on current date-time
+    generateImageName() {
+        //generate unique imagename based on current date-time(upto seconds)
         let date = new Date().toISOString();
-        let fileName = date.substring(0, date.indexOf('.'));//ignore milliseconds
-
-        return file ? fileName + '.pdf' : fileName + '.jpg';
+        return 'IMG_'+date.substring(0, date.indexOf('.'))+ '.jpg';
     }
 
     fetchEventsByMonth(month: any) {

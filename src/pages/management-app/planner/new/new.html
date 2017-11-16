@@ -29,15 +29,27 @@
         <ion-card>
             <ion-item>
                 <ion-label>Event Start</ion-label>
-                <ion-datetime displayFormat="MMM DD, YYYY HH:mm"  [(ngModel)]="startDateTime"  (ionChange)="onEndDateChange()" [min]="minDate" max="2019" name="startDateTime" required></ion-datetime>
+                <ion-datetime displayFormat="MMM DD, YYYY HH:mm" [(ngModel)]="startDateTime" (ionChange)="onEndDateChange()" [min]="minDate"
+                    max="2019" name="startDateTime" required></ion-datetime>
             </ion-item>
 
             <ion-item>
                 <ion-label>Event End</ion-label>
-                <ion-datetime displayFormat="MMM DD, YYYY HH:mm"  [(ngModel)]="endDateTime" (ionChange)="onEndDateChange()" [min]="minDate" max="2019" name="endDateTime" required></ion-datetime>
+                <ion-datetime displayFormat="MMM DD, YYYY HH:mm" [(ngModel)]="endDateTime" (ionChange)="onEndDateChange()" [min]="minDate"
+                    max="2019" name="endDateTime" required></ion-datetime>
             </ion-item>
         </ion-card>
-       
+
+        <ion-card>
+            <ion-item>
+                <ion-label stacked>Location (Optional)</ion-label>
+                <ion-textarea [(ngModel)]="location" name="location" maxlength="100" placeholder="Enter Location"></ion-textarea>
+            </ion-item>
+            <ion-badge class="csFiftyLimit">
+                <span>{{100 - location?.length}}</span>
+            </ion-badge>
+        </ion-card>
+
         <ion-card *ngIf="audienceList">
             <ion-item>
                 <ion-label>
@@ -47,8 +59,8 @@
                     <ion-option *ngFor="let audience of audienceList" [value]="audience">{{audience.name}}</ion-option>
                 </ion-select>
             </ion-item>
-        </ion-card>  
-   
+        </ion-card>
+
         <div *ngIf="departmentList && mainAudience.id == 2">
             <ion-card>
                 <ion-item>
@@ -128,16 +140,20 @@
         </div>
 
         <button type="button" ion-button clear (click)="onFileUpload()">Upload File (Optional)</button>
-        <button type="button" ion-button clear (click)="onFileUnselect()" *ngIf="this.image || this.file">unselect File </button>
-        
+        <button type="button" ion-button clear (click)="onFileUnselect()" *ngIf="image || file">unselect File </button>
+
         <ion-spinner name="bubbles" *ngIf="showSpinner"></ion-spinner>
+
         <ion-card *ngIf="image">
-                Image Preview
-                <img [src]="image" alt="Image File">
-            </ion-card>
-            <ion-card *ngIf="file" >
-                File: {{file}}
-            </ion-card>
+            Image Preview
+
+            <img [src]="image" alt="Image File">
+        </ion-card>
+
+        <h2 *ngIf="file && fileName">
+            Attached File: {{fileName}}
+        </h2>
+
         <div padding>
             <button type="submit" [disabled]="!newPlannerForm.valid || !isEndGreaterThanStart" ion-button full type="submit">Submit</button>
         </div>
