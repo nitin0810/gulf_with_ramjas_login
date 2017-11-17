@@ -1,0 +1,56 @@
+<ion-header>
+    <nl-modal-navbar [title]="title" (modalClosed)="dismiss()"></nl-modal-navbar>
+</ion-header>
+
+<ion-content class="csGrayBackground">
+   
+   
+
+
+        <ion-card>
+            <ion-item>
+                <ion-label stacked>Title</ion-label>
+                <ion-textarea [(ngModel)]="eventNew.title"  maxlength="50" placeholder="Enter Title"></ion-textarea>
+            </ion-item>
+            <ion-badge class="csFiftyLimit">
+                <span>{{50 - eventNew.title?.length}}</span>
+            </ion-badge>
+        </ion-card>
+
+        <ion-card>
+            <ion-item>
+                <ion-label stacked>Description</ion-label>
+                <ion-textarea [(ngModel)]="eventNew.description" rows="3" maxlength="2500" placeholder="Enter Description"></ion-textarea>
+            </ion-item>
+            <ion-badge class="csFiftyLimit">
+                <span>{{2500 - eventNew.description?.length}}</span>
+            </ion-badge>
+        </ion-card>
+
+        <ion-card>
+            <ion-item>
+                <ion-label>Event Start</ion-label>
+                <ion-datetime displayFormat="MMM DD, YYYY HH:mm" [(ngModel)]="eventNew.start" (ionChange)="onEndDateChange()" [min]="minDate"
+                    max="2019" ></ion-datetime>
+            </ion-item>
+
+            <ion-item>
+                <ion-label>Event End</ion-label>
+                <ion-datetime displayFormat="MMM DD, YYYY HH:mm" [(ngModel)]="eventNew.end" (ionChange)="onEndDateChange()" [min]="minDate"
+                    max="2019" ></ion-datetime>
+            </ion-item>
+        </ion-card>
+
+        <ion-card>
+            <ion-item>
+                <ion-label stacked>Location (Optional)</ion-label>
+                <ion-textarea [(ngModel)]="eventNew.location"  maxlength="100" placeholder="Enter Location"></ion-textarea>
+            </ion-item>
+            <ion-badge class="csFiftyLimit">
+                <span>{{100 - eventNew.location?.length}}</span>
+            </ion-badge>
+        </ion-card>
+
+        <button ion-button full [disabled]="!isEndGreaterThanStart" (click)="onEditBtn()">EDIT</button>
+
+</ion-content>

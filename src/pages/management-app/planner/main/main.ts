@@ -102,8 +102,7 @@ export class MainPlannerPageManagement {
                     event.startTime = new Date(event.start);
                     event.endTime = new Date(event.end);
                     event.noOfDays = this.daysBtwnDates(event.endTime, event.startTime);
-                    delete event.end;
-                    delete event.start;
+
                 });
                 this.showSpinner = false;
             }, (err: any) => {
@@ -111,16 +110,32 @@ export class MainPlannerPageManagement {
                 this.customService.showToast(err.msg);
             });
     }
+
     daysBtwnDates(end: any, start: any) {
         console.log('inside days difff//');
 
         return Math.ceil((end - start) / (1000 * 60 * 60 * 24));
     }
 
-    onEventItemSelect(ev: any) {
+    onEventItemSelect(ev: any, index: number) {
 
         const modal = this.modalCtrl.create("ViewPlannerPageManagement", { 'eventId': ev.id });
         modal.present();
+        modal.onDidDismiss((returnedData: any) => {
+            console.log('in main ondididismiss', returnedData);
+
+            if (returnedData && returnedData.op == "deleted") {
+
+                this.currentDateSelected.events.splice(index, 1);
+            } else if (returnedData && returnedData.op == "edited") {
+
+                this.currentDateSelected.events[index].startTime = returnedData.newData.startTime;
+                this.currentDateSelected.events[index].endTime = returnedData.newData.endTime;
+                this.currentDateSelected.events[index].title = returnedData.newData.title;
+                this.currentDateSelected.events[index].noOfDays = this.daysBtwnDates(returnedData.newData.endTime, returnedData.newData.startTime);
+
+            }
+        });
     }
 
     openNewEventModal() {
@@ -132,8 +147,6 @@ export class MainPlannerPageManagement {
             if (returnedData) {
                 returnedData.startTime = new Date(returnedData.start);
                 returnedData.endTime = new Date(returnedData.end);
-                delete returnedData.start;
-                delete returnedData.end;
 
                 this.eventSource.push(returnedData);
                 this.myCalendar.loadEvents();
@@ -145,5 +158,11 @@ export class MainPlannerPageManagement {
 
         const modal = this.modalCtrl.create("TimelinePageManagement");
         modal.present();
+        modal.onDidDismiss((returnData: any) => {
+            if (returnData) {
+                /**in case of true only we need to refresh the eventSource data */
+                this.fetchEvents(this.currentMonth);
+            }
+        });
     }
 }

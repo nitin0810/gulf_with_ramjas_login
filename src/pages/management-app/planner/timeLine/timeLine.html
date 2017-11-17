@@ -9,7 +9,7 @@
     </ion-refresher>
 
     <ion-list>
-        <button ion-item *ngFor="let event of eventList" [style.border-left-color]="event.mainAudienceColor" (click)="onEventClick(event.id)">
+        <button ion-item *ngFor="let event of eventList; let i=index" [style.border-left-color]="event.mainAudienceColor" (click)="onEventClick(event.id,i)">
             <h2>{{event.title}}</h2>
 
             <p>Start: {{event.start | amLocale:'en' | amDateFormat:'MMM Do, h:mm A' }}</p>

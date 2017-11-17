@@ -30,7 +30,7 @@
 
         <ion-list>
 
-            <button ion-item *ngFor="let event of currentDateSelected?.events; let i = index" (click)="onEventItemSelect(event)">
+            <button ion-item *ngFor="let event of currentDateSelected?.events; let i = index" (click)="onEventItemSelect(event,i)">
                 <div [style.border-left-color]="event.mainAudienceColor">
                     <h2>{{event.title}}</h2>
                     <span>{{event.startTime | amLocale:'en' | amDateFormat:'h:mm A'}}</span>

@@ -23,7 +23,7 @@ export class PlannerService {
 
     submitWithFile(data: any) {
 
-        let myFileName: string = data.file ? data.fileName: this.generateImageName();
+        let myFileName: string = data.file ? data.fileName : this.generateImageName();
 
         let options: FileUploadOptions = {
             fileKey: 'file',
@@ -59,8 +59,12 @@ export class PlannerService {
     generateImageName() {
         //generate unique imagename based on current date-time(upto seconds)
         let date = new Date().toISOString();
-        return 'IMG_'+date.substring(0, date.indexOf('.'))+ '.jpg';
+        return 'IMG_' + date.substring(0, date.indexOf('.')) + '.jpg';
     }
+
+
+    /**-------------------- methods above this are related with files--------------------- */
+
 
     fetchEventsByMonth(month: any) {
 
@@ -81,11 +85,19 @@ export class PlannerService {
 
             return this.http.get(CONFIG.serverUrl + `/st/planner/page/${pageNo}`);
 
-        }else {
+        } else {
 
             return this.http.get(CONFIG.serverUrl + `/ma/planner/false/page/${pageNo}`);
         }
     }
 
-   
+    deleteEvent(id: number) {
+
+        return this.http.delete(CONFIG.serverUrl + `/ma/planner/${id}`);
+    }
+
+    editEvent(id: number, editedData: any) {
+
+        return this.http.put(CONFIG.serverUrl + `/ma/planner/${id}`, editedData);
+    }
 }

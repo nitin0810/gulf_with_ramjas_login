@@ -19,6 +19,7 @@ export class TimelinePageManagement {
 
     title: string = "Timeline";
     eventList: Array<any>;
+    eventListEdited:boolean=false;// to check whether any event has been edited/deleted from timeline event list
     pageNo: number = 1;
 
     constructor(
@@ -48,9 +49,23 @@ export class TimelinePageManagement {
             });
     }
 
-    onEventClick(id: number) {
+    onEventClick(id: number, index: number) {
+
         const modal = this.modalCtrl.create("ViewPlannerPageManagement", { 'eventId': id });
         modal.present();
+        modal.onDidDismiss((returnedData: any) => {
+            console.log('rrrrrrr',returnedData);
+            
+            if (returnedData && returnedData.op == "deleted" ) {
+
+                this.eventList.splice(index,1);
+                this.eventListEdited =true;
+            }else if(returnedData && returnedData.op == "edited"){
+
+                this.eventList[index] = returnedData.newData;
+                this.eventListEdited =true;
+            }
+        });
     }
 
     doRefresh(refresher: any) {
@@ -73,6 +88,6 @@ export class TimelinePageManagement {
     }
 
     dismiss() {
-        this.viewCtrl.dismiss();
+        this.viewCtrl.dismiss(this.eventListEdited);
     }
 }
