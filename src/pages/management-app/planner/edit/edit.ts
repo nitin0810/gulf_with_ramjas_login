@@ -4,10 +4,9 @@ import { IonicPage, ViewController, ActionSheetController, NavParams } from 'ion
 import { CustomService } from '../../../../services/custom.service';
 import { PlannerService } from '../../../../services/planner.service';
 
-import { Camera, CameraOptions } from '@ionic-native/camera';
+import { Camera} from '@ionic-native/camera';
 import { FileChooser } from '@ionic-native/file-chooser';
 import { FilePath } from '@ionic-native/file-path';
-import { Jsonp } from '@angular/http/src/http';
 
 
 
@@ -130,17 +129,19 @@ export class EditPlannerPageManagement {
     }
 
     onDeleteFile(file: any, index: number) {
-// console.log('on Delete file',file,index);
+        // console.log('on Delete file',file,index);
 
         this.customService.showLoader('Deleting File...');
         this.plannerService.deleteEventFile(this.eventNew.id, file.fileUrl)
             .subscribe((res: any) => {
+
                 alert(JSON.stringify(res));
                 this.customService.hideLoader();
                 this.eventNew.files.splice(index, 1);
                 this.eventEdited = true;
                 this.customService.showToast('File deleted successfuly');
             }, (err: any) => {
+                
                 alert(JSON.stringify(err));
                 this.customService.hideLoader();
                 this.customService.showToast(err.msg);
@@ -187,14 +188,12 @@ export class EditPlannerPageManagement {
 
     fromCamera() {
 
-        const options: CameraOptions = {
-            quality: 30,
-            destinationType: this.camera.DestinationType.DATA_URL,
-            sourceType: this.camera.PictureSourceType.CAMERA,
-            encodingType: this.camera.EncodingType.JPEG,
-            allowEdit: true,
-            correctOrientation: true
-        }
+        const options = this.plannerService.getCameraOptions(
+            this.camera.DestinationType.DATA_URL,
+            this.camera.PictureSourceType.CAMERA,
+            this.camera.EncodingType.JPEG
+        );
+
         this.showSpinner = true;
         this.camera.getPicture(options).then((imageData) => {
 
@@ -221,15 +220,11 @@ export class EditPlannerPageManagement {
 
     fromLibrary() {
         // console.log('from library.....');
-        const options: CameraOptions = {
-            quality: 30,
-            destinationType: this.camera.DestinationType.DATA_URL,
-            sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
-            encodingType: this.camera.EncodingType.JPEG,
-            mediaType: this.camera.MediaType.PICTURE, // only used in case of photo library
-            allowEdit: true,
-            correctOrientation: true
-        }
+        const options = this.plannerService.getCameraOptions(
+            this.camera.DestinationType.DATA_URL,
+            this.camera.PictureSourceType.PHOTOLIBRARY,
+            this.camera.EncodingType.JPEG
+        );
 
         this.showSpinner = true;
         this.camera.getPicture(options).then((imageData) => {
@@ -259,7 +254,7 @@ export class EditPlannerPageManagement {
 
         /**We Want the file path to be native(i.e starting with file://)
          * so that we can extract the file name and type from the path.
-         * Hence resolve the url when recieved as starting from content:// 
+         * Hence resolve the url when recieved as starting with content:// 
          */
         this.fileChooser.open()
             .then(uri => {
@@ -272,7 +267,10 @@ export class EditPlannerPageManagement {
                             // console.log(nativeUri);
                             this.image = null;
                             this.fileName = this.file.split('/').pop();
-                            this.checkCompatibleFile(this.fileName);
+                            if (!this.plannerService.checkCompatibleFile(this.fileName)) {
+                                this.file = null;
+                                this.customService.showToast('Unsupported File Type');
+                            }
                         }, (err: any) => {
                             /**files path from google drive are not convertable to native path */
                             let errMsg = err.message + "\nYou might be uploading a file from cloud/Google drive";
@@ -283,7 +281,11 @@ export class EditPlannerPageManagement {
                     this.file = uri;
                     this.image = null;
                     this.fileName = this.file.split('/').pop();
-                    this.checkCompatibleFile(this.fileName);
+
+                    if (!this.plannerService.checkCompatibleFile(this.fileName)) {
+                        this.file = null;
+                        this.customService.showToast('Unsupported File Type');
+                    }
                 }
             }, (err: any) => {
                 // console.log('inside 2nd clllll');
@@ -302,14 +304,6 @@ export class EditPlannerPageManagement {
         this.image = this.file = null;
     }
 
-    checkCompatibleFile(name: string) {
-
-        let type = name.slice(name.lastIndexOf('.') + 1);
-        if (!(type == "pdf" || type == "jpg" || type == "jpeg" || type == "png" || type == "doc" || type == "docx" || type == "txt")) {
-            this.file = null;
-            this.customService.showToast('Unsupported File Type');
-        }
-    }
 
     onUploadFile() {
 
@@ -356,7 +350,7 @@ export class EditPlannerPageManagement {
 
         if (this.eventEdited) {
             this.viewCtrl.dismiss(this.eventNew);
-        }else{
+        } else {
             this.viewCtrl.dismiss();
         }
     }

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, Events, ModalController, ActionSheetController } from 'ionic-angular';
-import { Camera, CameraOptions } from '@ionic-native/camera';
+import { Camera } from '@ionic-native/camera';
 import { CustomService } from '../../services/custom.service';
 import { AuthService } from '../../services/auth.service';
 import { locale } from 'moment';
@@ -101,7 +101,7 @@ export class AccountPage {
     }
 
     deletePhoto() {
-        
+
         this.customService.showLoader();
         this.authService.deletePic()
             .subscribe((res: any) => {
@@ -121,16 +121,11 @@ export class AccountPage {
 
     openGallery() {
 
-        const options: CameraOptions = {
-            quality: 30,
-            destinationType: this.camera.DestinationType.FILE_URI,
-            sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
-            encodingType: this.camera.EncodingType.JPEG,
-            mediaType: this.camera.MediaType.PICTURE, // only used in case of photo library
-            allowEdit: true,
-            correctOrientation: true
-        }
-
+        const options = this.authService.getCameraOptions(
+            this.camera.DestinationType.FILE_URI,
+            this.camera.PictureSourceType.PHOTOLIBRARY,
+            this.camera.EncodingType.JPEG
+        );
 
         this.camera.getPicture(options)
             .then((imageData) => {
@@ -149,14 +144,11 @@ export class AccountPage {
 
     openCamera() {
 
-        const options: CameraOptions = {
-            quality: 30,
-            destinationType: this.camera.DestinationType.FILE_URI,
-            sourceType: this.camera.PictureSourceType.CAMERA,
-            encodingType: this.camera.EncodingType.JPEG,
-            allowEdit: true,
-            correctOrientation: true
-        }
+        const options = this.authService.getCameraOptions(
+            this.camera.DestinationType.FILE_URI,
+            this.camera.PictureSourceType.CAMERA,
+            this.camera.EncodingType.JPEG
+        );
 
         this.camera.getPicture(options)
             .then((imageData) => {
@@ -188,6 +180,7 @@ export class AccountPage {
                 this.customService.showToast('Picture Updated Successfully');
 
             }, (err) => {
+                alert(JSON.stringify(err));
 
                 this.customService.hideLoader();
                 let errMsg = JSON.parse(err.body).error_description || JSON.parse(err.body).error || 'Some Error Occured';

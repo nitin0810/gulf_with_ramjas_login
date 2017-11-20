@@ -6,7 +6,7 @@ import { NewPollPageManagement } from '../../poll/newPoll/newPoll';
 import { PollService } from '../../../../services/poll.service';
 import { PlannerService } from '../../../../services/planner.service';
 
-import { Camera, CameraOptions } from '@ionic-native/camera';
+import { Camera} from '@ionic-native/camera';
 import { FileChooser } from '@ionic-native/file-chooser';
 import { FilePath } from '@ionic-native/file-path';
 
@@ -124,14 +124,12 @@ export class NewPlannerPageManagement extends NewPollPageManagement {
 
     fromCamera() {
 
-        const options: CameraOptions = {
-            quality: 30,
-            destinationType: this.camera.DestinationType.DATA_URL,
-            sourceType: this.camera.PictureSourceType.CAMERA,
-            encodingType: this.camera.EncodingType.JPEG,
-            allowEdit: true,
-            correctOrientation: true
-        }
+        const options = this.plannerService.getCameraOptions(
+            this.camera.DestinationType.DATA_URL,
+            this.camera.PictureSourceType.CAMERA,
+            this.camera.EncodingType.JPEG
+        );
+
         this.showSpinner = true;
         this.camera.getPicture(options).then((imageData) => {
 
@@ -158,15 +156,11 @@ export class NewPlannerPageManagement extends NewPollPageManagement {
 
     fromLibrary() {
         // console.log('from library.....');
-        const options: CameraOptions = {
-            quality: 30,
-            destinationType: this.camera.DestinationType.DATA_URL,
-            sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
-            encodingType: this.camera.EncodingType.JPEG,
-            mediaType: this.camera.MediaType.PICTURE, // only used in case of photo library
-            allowEdit: true,
-            correctOrientation: true
-        }
+        const options = this.plannerService.getCameraOptions(
+            this.camera.DestinationType.DATA_URL,
+            this.camera.PictureSourceType.PHOTOLIBRARY,
+            this.camera.EncodingType.JPEG
+        );
 
         this.showSpinner = true;
         this.camera.getPicture(options).then((imageData) => {

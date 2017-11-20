@@ -1,7 +1,7 @@
 
 import { Injectable } from '@angular/core';
 
-import { APP_CONSTANTS as CONFIG } from '../services/app.constants';
+import *  as config from '../services/app.constants';
 import { CustomHttpService } from './custom-http.service';
 import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer';
 
@@ -15,9 +15,19 @@ export class PlannerService {
 
     ) { }
 
+    getCameraOptions(dType: number, sType: number, eType: number) {
+
+        return config.getCameraOptions(dType, sType, eType);
+    }
+
+    checkCompatibleFile(name: string) {
+
+        return config.checkCompatibleFile(name);
+    }
+
     submitWithoutFile(formData: any) {
 
-        return this.http.post(CONFIG.serverUrl + `/ma/planner`, formData);
+        return this.http.post(config.APP_CONSTANTS.serverUrl + `/ma/planner`, formData);
     }
 
 
@@ -25,15 +35,7 @@ export class PlannerService {
 
         let myFileName: string = data.file ? data.fileName : this.generateImageName();
 
-        let options: FileUploadOptions = {
-            fileKey: 'file',
-            fileName: myFileName,
-            mimeType: "multipart/form-data",
-            chunkedMode: false,
-            headers: {
-                'Authorization': 'Bearer' + localStorage.getItem('access_token')
-            },
-        }
+        let options: FileUploadOptions = config.fileUploadOptions(myFileName);
 
         options.params = {};
         for (let key in data) {
@@ -46,7 +48,7 @@ export class PlannerService {
 
 
         const transfer: FileTransferObject = this.fileTransfer.create();
-        return transfer.upload(data.image || data.file, CONFIG.serverUrl + `/ma/planner`, options, false)
+        return transfer.upload(data.image || data.file, config.APP_CONSTANTS.serverUrl + `/ma/planner`, options, false)
             .then((data: any) => {
 
                 // console.log('inside service success');
@@ -60,19 +62,10 @@ export class PlannerService {
 
         let myFileName: string = data.file ? data.fileName : this.generateImageName();
 
-        let options: FileUploadOptions = {
-            fileKey: 'file',
-            fileName: myFileName,
-            mimeType: "multipart/form-data",
-            chunkedMode: false,
-            httpMethod:"PUT",
-            headers: {
-                'Authorization': 'Bearer' + localStorage.getItem('access_token')
-            },
-        }
+        let options: FileUploadOptions = config.fileUploadOptions(myFileName,undefined,"PUT");
 
         const transfer: FileTransferObject = this.fileTransfer.create();
-        return transfer.upload(data.image || data.file, CONFIG.serverUrl + `/ma/planner/${data.eventId}/file`, options, false)
+        return transfer.upload(data.image || data.file, config.APP_CONSTANTS.serverUrl + `/ma/planner/${data.eventId}/file`, options, false)
             .then((data: any) => {
 
                 // console.log('inside file add service success');
@@ -94,13 +87,13 @@ export class PlannerService {
     fetchEventsByMonth(month: any) {
 
         let loginType = localStorage.getItem('isStudent') === "true" ? 'st' : 'ma';
-        return this.http.get(CONFIG.serverUrl + `/${loginType}/planner/month/${month}`);
+        return this.http.get(config.APP_CONSTANTS.serverUrl + `/${loginType}/planner/month/${month}`);
     }
 
     fetchEventsById(id: number) {
 
         let loginType = localStorage.getItem('isStudent') === "true" ? 'st' : 'ma';
-        return this.http.get(CONFIG.serverUrl + `/${loginType}/planner/${id}`);
+        return this.http.get(config.APP_CONSTANTS.serverUrl + `/${loginType}/planner/${id}`);
     }
 
     fetchTimeline(pageNo: number) {
@@ -108,27 +101,27 @@ export class PlannerService {
 
         if (localStorage.getItem('isStudent') === "true") {
 
-            return this.http.get(CONFIG.serverUrl + `/st/planner/page/${pageNo}`);
+            return this.http.get(config.APP_CONSTANTS.serverUrl + `/st/planner/page/${pageNo}`);
 
         } else {
 
-            return this.http.get(CONFIG.serverUrl + `/ma/planner/false/page/${pageNo}`);
+            return this.http.get(config.APP_CONSTANTS.serverUrl + `/ma/planner/false/page/${pageNo}`);
         }
     }
 
     deleteEvent(id: number) {
 
-        return this.http.delete(CONFIG.serverUrl + `/ma/planner/${id}`);
+        return this.http.delete(config.APP_CONSTANTS.serverUrl + `/ma/planner/${id}`);
     }
 
     editEvent(id: number, editedData: any) {
 
-        return this.http.put(CONFIG.serverUrl + `/ma/planner/${id}`, editedData);
+        return this.http.put(config.APP_CONSTANTS.serverUrl + `/ma/planner/${id}`, editedData);
     }
 
     deleteEventFile(eventId: number, fileUrl: string) {
 
-        return this.http.delete(CONFIG.serverUrl + `/ma/planner/${eventId}/file/${fileUrl}`);
+        return this.http.delete(config.APP_CONSTANTS.serverUrl + `/ma/planner/${eventId}/file/${fileUrl}`);
     }
 
 }

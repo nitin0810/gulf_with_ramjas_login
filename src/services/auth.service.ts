@@ -2,7 +2,7 @@
 import { Injectable } from '@angular/core';
 
 import { CustomHttpService } from './custom-http.service';
-import { APP_CONSTANTS as CONFIG } from './app.constants';
+import * as config from './app.constants';
 import { FileUploadOptions, FileTransferObject, FileTransfer } from '@ionic-native/file-transfer';
 
 declare const SockJS;
@@ -13,7 +13,7 @@ export class AuthService {
 
     constructor(
         public http: CustomHttpService,
-        private fileTransfer:FileTransfer
+        private fileTransfer: FileTransfer
     ) { }
 
     isLoggedIn() {
@@ -29,12 +29,12 @@ export class AuthService {
     getUserInfo() {
 
         let userType = localStorage.getItem('isStudent') === "true" ? 'st' : 'ma';
-        return this.http.get(CONFIG.serverUrl + `/${userType}/info`);
+        return this.http.get(config.APP_CONSTANTS.serverUrl + `/${userType}/info`);
     }
 
     verifyCredentials(data) {
 
-        return this.http.post(CONFIG.loginUrl + `/oauth/token?grant_type=password&username=${data.username}&password=${data.password}`, {});
+        return this.http.post(config.APP_CONSTANTS.loginUrl + `/oauth/token?grant_type=password&username=${data.username}&password=${data.password}`, {});
     }
 
     storeUserData(user) {
@@ -71,27 +71,22 @@ export class AuthService {
 
         let myFileName: string = this.generatePicName();
 
-        let options: FileUploadOptions = {
-            fileKey: 'file',
-            fileName: myFileName,
-            mimeType: "image/jpeg",
-            chunkedMode: false,
-            headers: {
-                'Authorization': 'Bearer' + localStorage.getItem('access_token')
-            },
-        }
-
-
+        let options: FileUploadOptions = config.fileUploadOptions(myFileName, "image/jpeg");
 
         let userType = localStorage.getItem('isStudent') === "true" ? 'st' : 'ma';
         const transfer: FileTransferObject = this.fileTransfer.create();
 
-        return transfer.upload(image, CONFIG.serverUrl + `/${userType}/pic`, options, false)
+        return transfer.upload(image, config.APP_CONSTANTS.serverUrl + `/${userType}/pic`, options, false)
             .then((data: any) => {
 
                 return JSON.parse(data.response);
             });
 
+    }
+
+    getCameraOptions(dType: number, sType: number, eType: number) {
+
+        return config.getCameraOptions(dType, sType, eType);
     }
 
     generatePicName() {
@@ -103,17 +98,17 @@ export class AuthService {
         return `IMG_${picName}.jpg`;
     }
 
-    deletePic(){
+    deletePic() {
 
         let loginType = localStorage.getItem('isStudent') === "true" ? 'st' : 'ma';
-        return this.http.delete(CONFIG.serverUrl + `/${loginType}/pic`);
+        return this.http.delete(config.APP_CONSTANTS.serverUrl + `/${loginType}/pic`);
     }
-    
+
     getSockJs() {
 
         let access_token = localStorage.getItem('access_token');
         let loginType = localStorage.getItem('isStudent') === "true" ? 'st' : 'ma';
-        let url = CONFIG.serverUrl + `/${loginType}/nxtlife-websocket?access_token=${access_token}`;
+        let url = config.APP_CONSTANTS.serverUrl + `/${loginType}/nxtlife-websocket?access_token=${access_token}`;
         var socket = new SockJS(url);
         return Stomp.over(socket);
     }
