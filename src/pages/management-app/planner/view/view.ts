@@ -3,6 +3,7 @@ import { IonicPage, ViewController, ActionSheetController, NavParams, ModalContr
 
 import { CustomService } from '../../../../services/custom.service';
 import { PlannerService } from '../../../../services/planner.service';
+import { GalleryModal } from 'ionic-gallery-modal';
 
 
 @IonicPage()
@@ -47,18 +48,67 @@ export class ViewPlannerPageManagement {
     }
 
 
+    onFileClick(file: any, index: number) {
+
+        let fileType = this.giveFileType(file);
+
+        console.log(fileType);
+
+        if (fileType == "jpeg" || fileType == "jpg" || fileType == "png") {
+
+            this.openImages(this.event.files, index);
+        } else if (fileType == "pdf" || fileType == "doc" || fileType == "docx" || fileType == "txt") {
+
+            this.openOtherDocs(file);
+        } else {
+            this.customService.showToast('Unsupported File Format');
+        }
+    }
+
+    giveFileType(file: any) {
+        return file.fileOriginalName.substring(file.fileOriginalName.lastIndexOf('.') + 1);
+    }
+
+    openImages(files: any, index: number) {
+
+        let photos: Array<any> = [];
+        files.forEach((file: any) => {
+
+            if (this.giveFileType(file) == "jpeg" || this.giveFileType(file) == "jpg" || this.giveFileType(file) == "png") {
+                photos.push({
+                    url: file.fileUrl
+                });
+            }
+        });
+
+        let modal = this.modalCtrl.create(GalleryModal, {
+            photos: photos,
+            initialSlide: index
+        });
+        modal.present();
+    }
+
+
+    openOtherDocs(file: any) {
+        console.log('opening other docs');
+
+        window.open(file.fileUrl, '_system', 'location=no');
+
+    }
+
     onEditBtn() {
 
         const modal = this.modalCtrl.create("EditPlannerPageManagement", { 'event': this.event });
         modal.present();
         modal.onDidDismiss((returnedData: any) => {
             if (returnedData) {
-console.log('inside view ts ondiddismiss',returnedData);
+                console.log('inside view ts ondiddismiss', returnedData);
 
                 this.event = returnedData;
                 /**reassigning the startTime and endTime in required format */
                 this.event.startTime = new Date(this.event.start);
                 this.event.endTime = new Date(this.event.end);
+                // this.event.files = returnedData.files;
                 this.eventChange = "edited";
             }
         });
@@ -97,6 +147,7 @@ console.log('inside view ts ondiddismiss',returnedData);
 
                 this.customService.hideLoader();
                 this.eventChange = "deleted";
+                this.customService.showToast('Event Deleted successfully');
                 this.dismiss();
             }, (err: any) => {
 
@@ -108,7 +159,7 @@ console.log('inside view ts ondiddismiss',returnedData);
     dismiss() {
 
         if (this.eventChange) {
-            this.viewCtrl.dismiss({ 'op': this.eventChange,'newData':this.event });//newData is only to be used in edited case
+            this.viewCtrl.dismiss({ 'op': this.eventChange, 'newData': this.event });//newData is only to be used in edited case
         } else {
             this.viewCtrl.dismiss();
         }

@@ -79,19 +79,12 @@ export class MainPlannerPageManagement {
         //service to fetch the events to be called here
         //parameter ev is of no use to us here, instead this.currentMonth is for sending request
 
+        this.currentDateSelected && (this.currentDateSelected.events = []); //empty the list of events, so that no event list is visisble until respons from server is reveived
         this.fetchEvents(this.currentMonth);
     }
 
-    /**
-   1) called whenever a date with some event is selected
-    */
-    onEventSelected(ev: any) {
-        console.log("onevent selected///////////");
-
-    }
 
     fetchEvents(currentMonth: any) {
-        console.log();
 
         this.showSpinner = true;
         this.plannerService.fetchEventsByMonth(currentMonth)
@@ -112,7 +105,6 @@ export class MainPlannerPageManagement {
     }
 
     daysBtwnDates(end: any, start: any) {
-        console.log('inside days difff//');
 
         return Math.ceil((end - start) / (1000 * 60 * 60 * 24));
     }
@@ -127,6 +119,7 @@ export class MainPlannerPageManagement {
             if (returnedData && returnedData.op == "deleted") {
 
                 this.currentDateSelected.events.splice(index, 1);
+
             } else if (returnedData && returnedData.op == "edited") {
 
                 this.currentDateSelected.events[index].startTime = returnedData.newData.startTime;

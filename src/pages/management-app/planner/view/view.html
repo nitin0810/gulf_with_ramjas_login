@@ -90,7 +90,15 @@
             </ion-item>
         </ion-card>
 
+        <div *ngIf="event.fileCount>0">
+
+            <h4>Attachments:</h4>
+            <a style="display:block" *ngFor="let file of event.files;let i = index" (click)="onFileClick(file,i)">
+                {{file.fileOriginalName}}
+            </a>
+        </div>
     </div>
+
 </ion-content>
 
 <ion-footer>

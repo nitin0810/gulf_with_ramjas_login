@@ -56,6 +56,31 @@ export class PlannerService {
 
     }
 
+    addFileToEvent(data: any) {
+
+        let myFileName: string = data.file ? data.fileName : this.generateImageName();
+
+        let options: FileUploadOptions = {
+            fileKey: 'file',
+            fileName: myFileName,
+            mimeType: "multipart/form-data",
+            chunkedMode: false,
+            httpMethod:"PUT",
+            headers: {
+                'Authorization': 'Bearer' + localStorage.getItem('access_token')
+            },
+        }
+
+        const transfer: FileTransferObject = this.fileTransfer.create();
+        return transfer.upload(data.image || data.file, CONFIG.serverUrl + `/ma/planner/${data.eventId}/file`, options, false)
+            .then((data: any) => {
+
+                // console.log('inside file add service success');
+                // alert(JSON.stringify(data));
+                return JSON.parse(data.response);
+            });
+    }
+
     generateImageName() {
         //generate unique imagename based on current date-time(upto seconds)
         let date = new Date().toISOString();
@@ -100,4 +125,10 @@ export class PlannerService {
 
         return this.http.put(CONFIG.serverUrl + `/ma/planner/${id}`, editedData);
     }
+
+    deleteEventFile(eventId: number, fileUrl: string) {
+
+        return this.http.delete(CONFIG.serverUrl + `/ma/planner/${eventId}/file/${fileUrl}`);
+    }
+
 }
