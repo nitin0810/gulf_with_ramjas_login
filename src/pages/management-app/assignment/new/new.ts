@@ -3,8 +3,9 @@ import { Component } from '@angular/core';
 import { IonicPage, ViewController, ActionSheetController } from 'ionic-angular';
 import { AssignmentService } from '../../../../services/assignment.service';
 import { CustomService } from '../../../../services/custom.service';
-import { CameraOptions, Camera } from '@ionic-native/camera';
+import { Camera } from '@ionic-native/camera';
 import { FileChooser } from '@ionic-native/file-chooser';
+import { FilePath } from '@ionic-native/file-path';
 
 @IonicPage()
 @Component({
@@ -22,20 +23,25 @@ export class NewAssignmentPageManagement {
     dueDate: string = new Date().toISOString().substring(0, 10);
     module: any;
     year: any;
+    showSpinner: boolean = false;
+
     image: any;
     file: any;
+    fileName: string;
     /**data required to create the assignment */
     yearList: Array<any>;
     modulesObject: any = {};
 
-    showSpinner: boolean = false;
+
     constructor(
         private viewCtrl: ViewController,
         private assignmentService: AssignmentService,
         private customService: CustomService,
         private actionSheetCtrl: ActionSheetController,
         private camera: Camera,
-        private fileChooser: FileChooser
+        private fileChooser: FileChooser,
+        private filePath: FilePath
+
     ) { }
 
     ngOnInit() {
@@ -83,24 +89,24 @@ export class NewAssignmentPageManagement {
 
         const actionSheet = this.actionSheetCtrl.create({
 
-            title: 'Select Image',
+            title: 'Select File Using',
             buttons: [
                 {
-                    text: 'Use Camera',
+                    text: 'Camera',
                     handler: () => {
                         this.fromCamera();
                     }
 
                 },
                 {
-                    text: 'Load from Library',
+                    text: 'Photo Library',
                     handler: () => {
                         this.fromLibrary();
                     }
 
                 },
                 {
-                    text: 'File',
+                    text: 'File System(pdf only)',
                     handler: () => {
                         this.selectFile();
                     }
@@ -117,17 +123,20 @@ export class NewAssignmentPageManagement {
         actionSheet.present();
     }
 
+
+    onFileUnselect() {
+
+        this.image = this.file = null;
+    }
+
     fromCamera() {
 
-        const options: CameraOptions = {
-            quality: 30,
-            destinationType: this.camera.DestinationType.DATA_URL,
-            sourceType: this.camera.PictureSourceType.CAMERA,
-            encodingType: this.camera.EncodingType.JPEG,
-            allowEdit: true,
-            // saveToPhotoAlbum: true,
-            correctOrientation: true
-        }
+        const options = this.assignmentService.getCameraOptions(
+            this.camera.DestinationType.DATA_URL,
+            this.camera.PictureSourceType.CAMERA,
+            this.camera.EncodingType.JPEG
+        );
+
         this.showSpinner = true;
         this.camera.getPicture(options).then((imageData) => {
 
@@ -148,29 +157,26 @@ export class NewAssignmentPageManagement {
                 // console.log('inside camera catch');
                 console.log(err);
                 this.showSpinner = false;
-
+                this.customService.showToast('Error in uploading image');
             });
     }
 
     fromLibrary() {
         // console.log('from library.....');
-        const options: CameraOptions = {
-            quality: 30,
-            destinationType: this.camera.DestinationType.DATA_URL,
-            sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
-            encodingType: this.camera.EncodingType.JPEG,
-            mediaType: this.camera.MediaType.PICTURE, // only used in case of photo library
-            allowEdit: true,
-            correctOrientation: true
-        }
+
+        const options = this.assignmentService.getCameraOptions(
+            this.camera.DestinationType.DATA_URL,
+            this.camera.PictureSourceType.PHOTOLIBRARY,
+            this.camera.EncodingType.JPEG
+        );
 
         this.showSpinner = true;
         this.camera.getPicture(options).then((imageData) => {
             // imageData is either a base64 encoded string or a file URI
             // If it's base64:
             // console.log('inside library clbk');
+            // console.log(imageData);
             this.showSpinner = false;
-            console.log(imageData);
             this.image = 'data:image/jpeg;base64,' + imageData;
             this.file = null;
         }, (err) => {
@@ -189,17 +195,54 @@ export class NewAssignmentPageManagement {
 
 
     selectFile() {
+
+        /**We Want the file path to be native(i.e starting with file://)
+         * so that we can extract the file name and type from the path.
+         * Hence resolve the url when recieved as starting from content:// 
+         */
         this.fileChooser.open()
             .then(uri => {
-                console.log(uri);
-                this.file = uri;
-                this.image = null;
+                if (uri.startsWith("content://")) {
+
+                    this.filePath.resolveNativePath(uri)
+                        .then(nativeUri => {
+
+                            this.file = nativeUri;
+                            // console.log(nativeUri);
+                            this.image = null;
+                            this.fileName = this.file.split('/').pop();
+                            this.checkCompatibleFile(this.fileName);
+                        }, (err: any) => {
+                            /**files path from google drive are not convertable to native path */
+                            let errMsg = err.message + "\nYou might be uploading a file from cloud/Google drive";
+                            this.customService.showToast(errMsg);
+                        });
+                } else {
+
+                    this.file = uri;
+                    this.image = null;
+                    this.fileName = this.file.split('/').pop();
+                    this.checkCompatibleFile(this.fileName);
+                }
+            }, (err: any) => {
+                // console.log('inside 2nd clllll');
+
+                alert('Unable to Choose the file at the moment');
             })
             .catch(e => {
-                console.log(e)
+                // console.log('inside catch//////');
+
+                alert(JSON.stringify(e));
             });
     }
 
+    checkCompatibleFile(name: string) {
+        let type = name.slice(name.lastIndexOf('.') + 1);
+        if (!(type == "pdf" || type == "jpg" || type == "jpeg" || type == "png" || type == "doc" || type == "docx" || type == "txt")) {
+            this.file = null;
+            this.customService.showToast('Unsupported File Type');
+        }
+    }
 
     onSubmit() {
 
@@ -245,6 +288,7 @@ export class NewAssignmentPageManagement {
                 }, (err: any) => {
 
                     this.customService.hideLoader();
+                    this.customService.showToast(err.msg);
                 });
         } else {
 
@@ -253,9 +297,9 @@ export class NewAssignmentPageManagement {
             data.dueDate = this.dueDate;
             data.moduleId = this.module.moduleId || this.module.id;
             data.yearId = this.year.yearId || this.year.id;
-            data.image = this.image ;
+            data.image = this.image;
             data.file = this.file;
-            
+
             this.customService.showLoader();
 
             this.assignmentService.postAssignmentWithFile(data)
@@ -271,7 +315,14 @@ export class NewAssignmentPageManagement {
                     // console.log('inside finally submit catch');
                     this.customService.hideLoader();
                     let errMsg = JSON.parse(err.body).message || 'Some Error Occured';
-                    this.customService.showToast(errMsg);
+                    alert(JSON.stringify(errMsg));
+                })
+                .catch((err: any) => {
+                    // console.log('inside finally submit catch');
+                    // alert(JSON.stringify(err.body));
+                    this.customService.hideLoader();
+                    let errMsg = JSON.parse(err.body).message || 'Some Error Occured';
+                    alert(JSON.stringify(errMsg));
                 });
 
         }

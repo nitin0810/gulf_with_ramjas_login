@@ -214,7 +214,8 @@ export class EditPlannerPageManagement {
                 // console.log('inside camera catch');
                 console.log(err);
                 this.showSpinner = false;
-
+                this.customService.showToast('Error in uploading image');
+                
             });
     }
 
@@ -267,10 +268,8 @@ export class EditPlannerPageManagement {
                             // console.log(nativeUri);
                             this.image = null;
                             this.fileName = this.file.split('/').pop();
-                            if (!this.plannerService.checkCompatibleFile(this.fileName)) {
-                                this.file = null;
-                                this.customService.showToast('Unsupported File Type');
-                            }
+                            this.checkCompatibleFile(this.fileName);
+                            
                         }, (err: any) => {
                             /**files path from google drive are not convertable to native path */
                             let errMsg = err.message + "\nYou might be uploading a file from cloud/Google drive";
@@ -282,10 +281,8 @@ export class EditPlannerPageManagement {
                     this.image = null;
                     this.fileName = this.file.split('/').pop();
 
-                    if (!this.plannerService.checkCompatibleFile(this.fileName)) {
-                        this.file = null;
-                        this.customService.showToast('Unsupported File Type');
-                    }
+                    this.checkCompatibleFile(this.fileName);
+                    
                 }
             }, (err: any) => {
                 // console.log('inside 2nd clllll');
@@ -298,6 +295,16 @@ export class EditPlannerPageManagement {
                 alert(JSON.stringify(e));
             });
     }
+
+
+    checkCompatibleFile(name: string) {
+        let type = name.slice(name.lastIndexOf('.') + 1);
+        if (!(type == "pdf" || type == "jpg" || type == "jpeg" || type == "png" || type == "doc" || type == "docx" || type == "txt")) {
+            this.file = null;
+            this.customService.showToast('Unsupported File Type');
+        }
+    }
+
 
     onFileUnselect() {
 

@@ -6,7 +6,7 @@ import { NewPollPageManagement } from '../../poll/newPoll/newPoll';
 import { PollService } from '../../../../services/poll.service';
 import { PlannerService } from '../../../../services/planner.service';
 
-import { Camera} from '@ionic-native/camera';
+import { Camera } from '@ionic-native/camera';
 import { FileChooser } from '@ionic-native/file-chooser';
 import { FilePath } from '@ionic-native/file-path';
 
@@ -36,7 +36,6 @@ export class NewPlannerPageManagement extends NewPollPageManagement {
     file: any;
     fileName: string;
     image: any;
-
     showSpinner: boolean = false;
 
     constructor(
@@ -150,7 +149,7 @@ export class NewPlannerPageManagement extends NewPollPageManagement {
                 // console.log('inside camera catch');
                 console.log(err);
                 this.showSpinner = false;
-
+                this.customService.showToast('Error in uploading image');
             });
     }
 
@@ -179,8 +178,8 @@ export class NewPlannerPageManagement extends NewPollPageManagement {
             .catch((err) => {
                 // Handle error
                 // console.log('inside library catch ');
-                this.customService.showToast('Error in uploading image');
                 this.showSpinner = false;
+                this.customService.showToast('Error in uploading image');
 
             });
     }
@@ -346,20 +345,20 @@ export class NewPlannerPageManagement extends NewPollPageManagement {
                 // alert(JSON.stringify(res));
 
                 this.customService.hideLoader();
-                this.customService.showToast('Event submitted successfully');
+                this.customService.showToast('Event created successfully');
                 this.dismiss(res);
             }, (err: any) => {
 
                 this.customService.hideLoader();
                 let errMsg = JSON.parse(err.body).message || 'Some Error Occured';
-                this.customService.showToast(errMsg);
+                alert(JSON.stringify(errMsg));
             })
             .catch((err: any) => {
-                console.log('inside finally submit catch');
-                alert(JSON.stringify(err.body));
+                // console.log('inside finally submit catch');
+                // alert(JSON.stringify(err.body));
                 this.customService.hideLoader();
                 let errMsg = JSON.parse(err.body).message || 'Some Error Occured';
-                this.customService.showToast(errMsg);
+                alert(JSON.stringify(errMsg));
             });
     }
 

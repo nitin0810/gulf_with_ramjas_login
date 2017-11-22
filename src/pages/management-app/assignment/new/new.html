@@ -52,9 +52,13 @@
         </ion-card>
 
         <button type="button" ion-button (click)="onUploadBtn()">
-            <span *ngIf="!image">Upload Image</span>
-            <span *ngIf="image">Change Image</span>
+            <span *ngIf="!image">Add File (Optional)</span>
+            <span *ngIf="image">Change File</span>
         </button>
+        <button type="button" ion-button clear (click)="onFileUnselect()" *ngIf="image || file">Remove File </button>
+        
+        <button type="button" ion-button clear (click)="onFileUpload()">Upload File (Optional)</button>
+        <button type="button" ion-button clear (click)="onFileUnselect()" *ngIf="image || file">unselect File </button>
 
         <ion-spinner name="bubbles" *ngIf="showSpinner"></ion-spinner>
 
@@ -62,7 +66,9 @@
             Image Preview
             <img [src]="image" alt="Image File">
         </ion-card>
-      
+        <h2 *ngIf="file && fileName">
+            Attached File: {{fileName}}
+        </h2>
 
         <div padding>
             <button [disabled]="!newAssignmentForm.valid" ion-button full type="submit">Submit</button>
