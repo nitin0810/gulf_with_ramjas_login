@@ -10,7 +10,7 @@ function getToken(): any {
 
     let token = localStorage.getItem('access_token');
     let header;
-    let userId = localStorage.getItem('isStudent')==="true"? "gulf_student:riddhi":"gulf_management:riddhi";
+    let userId = localStorage.getItem('isStudent') === "true" ? "gulf_student:riddhi" : "gulf_management:riddhi";
     if (!token) {
         header = 'Basic ' + btoa(userId);
     } else {
@@ -45,9 +45,11 @@ export class CustomHttpService extends Http {
             options.headers.set('Authorization', `${getToken()}`);
             options.headers.set('account', localStorage.getItem('loginType'));
         } else {
+            
+                url.headers.set('Authorization', `${getToken()}`);
+                url.headers.set('account', localStorage.getItem('loginType'));
+           
 
-            url.headers.set('Authorization', `${getToken()}`);
-            url.headers.set('account', localStorage.getItem('loginType'));
         }
         return super.request(url, options);
     }
@@ -73,7 +75,7 @@ export class CustomHttpService extends Http {
             .catch(this.handleError);
     }
 
-
+    
     extractData(res: Response) {
         /**
         * res.json() raises exception if body is not a valid json or body is not present in response

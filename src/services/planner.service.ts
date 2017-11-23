@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
 import *  as config from '../services/app.constants';
 import { CustomHttpService } from './custom-http.service';
 import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer';
-
+import { RequestOptions, Headers } from '@angular/http';
 
 @Injectable()
 export class PlannerService {
@@ -62,7 +62,7 @@ export class PlannerService {
 
         let myFileName: string = data.file ? data.fileName : this.generateImageName();
 
-        let options: FileUploadOptions = config.fileUploadOptions(myFileName,undefined,"PUT");
+        let options: FileUploadOptions = config.fileUploadOptions(myFileName, undefined, "PUT");
 
         const transfer: FileTransferObject = this.fileTransfer.create();
         return transfer.upload(data.image || data.file, config.APP_CONSTANTS.serverUrl + `/ma/planner/${data.eventId}/file`, options, false)
@@ -121,7 +121,19 @@ export class PlannerService {
 
     deleteEventFile(eventId: number, fileUrl: string) {
 
-        return this.http.delete(config.APP_CONSTANTS.serverUrl + `/ma/planner/${eventId}/file/${fileUrl}`);
+        let headers = new Headers();
+        headers.append('Authorization', localStorage.getItem('access_token'));
+        headers.append('account', localStorage.getItem('loginType'));
+        headers.append('fileUrl', fileUrl);
+
+        const options = new RequestOptions(
+            { headers: headers }
+        );
+
+        return this.http.delete(config.APP_CONSTANTS.serverUrl + `/ma/planner/${eventId}/file`, options)
+            .map(this.http.extractData)
+            .catch(this.http.handleError);
     }
+    
 
 }

@@ -57,8 +57,6 @@
         </button>
         <button type="button" ion-button clear (click)="onFileUnselect()" *ngIf="image || file">Remove File </button>
         
-        <button type="button" ion-button clear (click)="onFileUpload()">Upload File (Optional)</button>
-        <button type="button" ion-button clear (click)="onFileUnselect()" *ngIf="image || file">unselect File </button>
 
         <ion-spinner name="bubbles" *ngIf="showSpinner"></ion-spinner>
 

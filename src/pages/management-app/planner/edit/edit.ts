@@ -135,14 +135,14 @@ export class EditPlannerPageManagement {
         this.plannerService.deleteEventFile(this.eventNew.id, file.fileUrl)
             .subscribe((res: any) => {
 
-                alert(JSON.stringify(res));
+                // alert(JSON.stringify(res));
                 this.customService.hideLoader();
                 this.eventNew.files.splice(index, 1);
                 this.eventEdited = true;
                 this.customService.showToast('File deleted successfuly');
             }, (err: any) => {
                 
-                alert(JSON.stringify(err));
+                // alert(JSON.stringify(err));
                 this.customService.hideLoader();
                 this.customService.showToast(err.msg);
             });

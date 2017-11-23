@@ -30,7 +30,7 @@ export class NewPlannerPageManagement extends NewPollPageManagement {
     location: string;
     startDateTime: any;
     endDateTime: any;
-    minDate: any = new Date().toISOString().substring(0, 10);
+    minDate: any;
     isEndGreaterThanStart: boolean = false;
 
     file: any;
@@ -50,7 +50,7 @@ export class NewPlannerPageManagement extends NewPollPageManagement {
 
     ) {
         super(viewCtrl, pollService, customService, actionSheetCtrl);
-        this.startDateTime = this.endDateTime = this.getCorrectISOStringDate();
+        this.startDateTime = this.endDateTime = this.minDate=this.getCorrectISOStringDate();
 
     }
 
@@ -64,8 +64,10 @@ export class NewPlannerPageManagement extends NewPollPageManagement {
         /**new Date().toISOString returns incorrrect time( by ignoring the time zone)
          * hence, this method has been made to get the correct isoString time
         */
+        let today:any = new Date();
+        today.setHours(today.getHours()+1);
         let tzoffset = (new Date()).getTimezoneOffset() * 60000; //offset in milliseconds
-        return (new Date(Date.now() - tzoffset)).toISOString().slice(0, -5) + "Z";
+        return (new Date(today - tzoffset)).toISOString().slice(0, -5) + "Z";
     }
 
 
