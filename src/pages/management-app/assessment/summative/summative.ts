@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { IonicPage, ModalController } from 'ionic-angular';
+import { Component, ViewChild } from '@angular/core';
+import { IonicPage, ModalController, FabContainer } from 'ionic-angular';
 import { CustomService } from '../../../../services/custom.service';
 
 @IonicPage()
@@ -10,6 +10,8 @@ import { CustomService } from '../../../../services/custom.service';
 
 export class AssessmentSummativePageManagement {
 
+    @ViewChild('fab') fab:FabContainer
+    
     title: string = "Assessment";
 
     constructor(
@@ -18,11 +20,13 @@ export class AssessmentSummativePageManagement {
 
     }
     onFormativeBtn() {
+        this.fab.close();
         const modal = this.modalCtrl.create("NewFormativePageManagement");
         modal.present();
     }
 
     onSummativeBtn() {
+        this.fab.close();
         const modal = this.modalCtrl.create("NewSummativePageManagement");
         modal.present();
     }   

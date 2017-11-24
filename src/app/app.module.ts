@@ -41,6 +41,7 @@ import { ForgotPasswordModal } from '../custom-components/login/forgot-password/
 import { EvaluationService } from '../services/evaluation.service';
 import { AssignmentService } from '../services/assignment.service';
 import { PlannerService } from '../services/planner.service';
+import { AssessmentService } from '../services/assessment.service';
 
 
 @NgModule({
@@ -84,6 +85,7 @@ import { PlannerService } from '../services/planner.service';
     EvaluationService,
     AssignmentService,
     PlannerService,
+    AssessmentService,
     { provide: ErrorHandler, useClass: IonicErrorHandler },
     {
       provide: CustomHttpService, useFactory: (backend: XHRBackend, defaultOptions: RequestOptions) => {
