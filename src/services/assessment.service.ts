@@ -41,4 +41,14 @@ export class AssessmentService {
         return this.http.post(CONFIG.serverUrl+ `/ma/assesment/${formOrSumm}`,data);
         
     }
+
+    fetchAssessments(formOrSumm:string,pageNo:number){
+
+        return this.http.get(CONFIG.serverUrl+ `/ma/assesment/${formOrSumm}/page/${pageNo}`);
+    }
+    fetchAssessmentsById(formOrSumm:string,id:number){
+        
+        return this.http.get(CONFIG.serverUrl+ `/ma/assesment/${formOrSumm}/${id}`);
+        
+    }
 }

@@ -3,26 +3,34 @@
 </ion-header>
 
 <ion-content class="csGrayBackground">
-    <!-- <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher (ionRefresh)="doRefresh($event)">
         <ion-refresher-content></ion-refresher-content>
-    </ion-refresher> -->
-ssssssssss
+    </ion-refresher>
+
+    <ion-list>
+        <button ion-item *ngFor="let assess of assessmentList" (click)="openSingleAssessment(assess.id)">
+            <h4><b>Title: </b>{{assess.title}}</h4>
+            <p>Year: {{assess.yearName}}</p>
+            <p>Module: {{assess.moduleName}}</p>
+            <p>Student: {{assess.studentName}}</p>
+        </button>
+    </ion-list>
+
     <ion-fab #fab right bottom>
-        <button ion-fab color="danger" >
+        <button ion-fab color="danger">
             <ion-icon name="add"></ion-icon>
         </button>
         <ion-fab-list side="top">
-                <button ion-fab (click)="onFormativeBtn()">
-                    F
-                </button>
-                <button ion-fab (click)="onSummativeBtn()">
-                    S
-                </button>
-            </ion-fab-list>
+            <button ion-fab (click)="onFormativeBtn() ">
+                F
+            </button>
+            <button ion-fab (click)="onSummativeBtn() ">
+                S
+            </button>
+        </ion-fab-list>
     </ion-fab>
-    
-    <!-- <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
-        <ion-infinite-scroll-content></ion-infinite-scroll-content>
-    </ion-infinite-scroll> -->
 
+<ion-infinite-scroll (ionInfinite)="doInfinite($event)">
+        <ion-infinite-scroll-content></ion-infinite-scroll-content>
+    </ion-infinite-scroll>
 </ion-content>
