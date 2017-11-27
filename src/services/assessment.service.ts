@@ -7,48 +7,52 @@ import { CustomHttpService } from './custom-http.service';
 @Injectable()
 export class AssessmentService {
 
-    isFaculty:boolean;
     constructor(
         public http: CustomHttpService,
     ) {
-        this.isFaculty = localStorage.getItem('faculty')==="true";
-     }
+    }
 
     /**for management */
 
-    fetchYears(){
+    fetchYears() {
 
-        return this.http.get(CONFIG.serverUrl+ `/ma/assesment/year/${this.isFaculty}`);
+        let isManagement = localStorage.getItem('isStudent') !== "true";
+        return this.http.get(CONFIG.serverUrl + `/ma/assesment/year/${isManagement}`);
     }
 
-    fetchModules(yearId:number){
-        
-        return this.http.get(CONFIG.serverUrl+ `/ma/assesment/module/${yearId}/${this.isFaculty}`);
+    fetchModules(yearId: number) {
+
+        let isManagement = localStorage.getItem('isStudent') !== "true";
+        return this.http.get(CONFIG.serverUrl + `/ma/assesment/module/${yearId}/${isManagement}`);
     }
 
-    fetchStudents(formOrSumm:string,yearId:number,moduleId:number){
+    fetchStudents(formOrSumm: string, yearId: number, moduleId: number) {
 
-        return this.http.get(CONFIG.serverUrl+ `/ma/assesment/${formOrSumm}/students/${moduleId}/${yearId}`);
+        return this.http.get(CONFIG.serverUrl + `/ma/assesment/${formOrSumm}/students/${moduleId}/${yearId}`);
     }
 
-    fetchAssessmentTypes(formOrSumm:string){
-        
-                return this.http.get(CONFIG.serverUrl+ `/ma/assesment/${formOrSumm}/type`);
-            }
+    fetchAssessmentTypes(formOrSumm: string) {
 
-    submitAssessment(formOrSumm:string,data:any){
-
-        return this.http.post(CONFIG.serverUrl+ `/ma/assesment/${formOrSumm}`,data);
-        
+        return this.http.get(CONFIG.serverUrl + `/ma/assesment/${formOrSumm}/type`);
     }
 
-    fetchAssessments(formOrSumm:string,pageNo:number){
+    submitAssessment(formOrSumm: string, data: any) {
 
-        return this.http.get(CONFIG.serverUrl+ `/ma/assesment/${formOrSumm}/page/${pageNo}`);
+        return this.http.post(CONFIG.serverUrl + `/ma/assesment/${formOrSumm}`, data);
+
     }
-    fetchAssessmentsById(formOrSumm:string,id:number){
-        
-        return this.http.get(CONFIG.serverUrl+ `/ma/assesment/${formOrSumm}/${id}`);
-        
+
+    /**for both management and student */
+    fetchAssessments(formOrSumm: string, pageNo: number) {
+
+        let user = localStorage.getItem('isStudent') === "true" ? 'st' : 'ma';
+        return this.http.get(CONFIG.serverUrl + `/${user}/assesment/${formOrSumm}/page/${pageNo}`);
+    }
+
+    fetchAssessmentsById(formOrSumm: string, id: number) {
+
+        let user = localStorage.getItem('isStudent') === "true" ? 'st' : 'ma';
+        return this.http.get(CONFIG.serverUrl + `/${user}/assesment/${formOrSumm}/${id}`);
+
     }
 }

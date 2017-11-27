@@ -20,7 +20,8 @@
                 <p>
                     <b>Due Date: </b> {{assign.dueDate | amDateFormat: 'LL'}}</p>
     
-    
+                    <button *ngIf="assign.fileCount>0" ion-button clear (click)="openDocuments(assign)" >View Attached Documents</button>
+                    
             </ion-item>
         </ion-card>
         </ion-list>

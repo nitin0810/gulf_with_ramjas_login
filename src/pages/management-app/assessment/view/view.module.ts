@@ -14,4 +14,4 @@ import { CustomModalNavbarModule } from '../../../../custom-components/modal-nav
     ],
 
 })
-export class AssessmentTabModuleManagement { }  
+export class AssessmentViewModuleManagement { }  

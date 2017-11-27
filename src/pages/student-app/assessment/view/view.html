@@ -1,0 +1,93 @@
+<ion-header>
+    <nl-modal-navbar [title]="title" (modalClosed)="dismiss()"></nl-modal-navbar>
+</ion-header>
+
+<ion-content class="csGrayBackground">
+
+    <ion-card *ngIf="assessment">
+        <ion-card-content>
+                <ion-item>
+                        <ion-icon name="folder" item-start></ion-icon>
+                        <p>
+                            <b>Module : </b>
+                            <span>{{assessment.moduleName}}</span>
+                        </p>
+                    </ion-item>
+
+            <ion-item>
+                <ion-icon name="person" item-start></ion-icon>
+                <p>
+                    <b>Faculty: </b>
+                    <span>{{assessment.facultyName}}</span>
+                </p>
+            </ion-item>
+
+            <ion-item>
+                    <ion-icon name="clock" item-start></ion-icon>
+                    <p>
+                        <b>Created: </b>
+                        <span>{{assessment.createdAt | amDateFormat: 'LL'}}</span>
+                    </p>
+                </ion-item>
+
+            <!-- <ion-item>
+                <ion-icon name="folder" item-start></ion-icon>
+                <p>
+                    <b>Year: </b>
+                    <span>{{assessment.yearName}}</span>
+                </p>
+            </ion-item>
+
+            <ion-item>
+                <ion-icon name="folder" item-start></ion-icon>
+                <p>
+                    <b>Program: </b>
+                    <span>{{assessment.programName}}</span>
+                </p>
+            </ion-item> -->
+
+            <!-- <ion-item>
+                <ion-icon name="folder" item-start></ion-icon>
+                <p>
+                    <b>Department: </b>
+                    <span>{{assessment.departmentName}}</span>
+                </p>
+            </ion-item> -->
+
+            <ion-item>
+                <p>
+                    <b>Assessment Title: </b>
+                    <span>{{assessment.title}}</span>
+                </p>
+            </ion-item>
+
+            <ion-item>
+                <p>
+                    <b>Assessment Type: </b>
+                    <span>{{assessment.assesmentTypeName}}</span>
+                </p>
+            </ion-item>
+
+            <ion-item>
+                <p>
+                    <b>Weighting: </b>
+                    <span>{{assessment.weighting}}</span>
+                </p>
+            </ion-item>
+
+            <ion-item text-wrap>
+                <p>
+                    <b>Feedback: </b>
+                </p>
+                <ion-list>
+                    <ion-item *ngFor="let f of assessment.feedbacks">
+                        <p>Title: {{f.title}}</p>
+                        <p>Description: {{f.description}}</p>
+                    </ion-item>
+                </ion-list>
+            </ion-item>
+
+
+        </ion-card-content>
+    </ion-card>
+</ion-content>

@@ -9,11 +9,12 @@
 
     <ion-list>
         <button ion-item *ngFor="let assess of assessmentList" (click)="openSingleAssessment(assess.id)">
-            <h4>
-                <b>Title: </b>{{assess.title}}</h4>
-            <p>Year: {{assess.yearName}}</p>
-            <p>Module: {{assess.moduleName}}</p>
-            <p>Student: {{assess.studentName}}</p>
+            <p>
+                <b>Module: </b>{{assess.moduleName}}</p>
+            <p>
+                <b>Faculty: </b>{{assess.facultyName}}</p>
+            <p>
+                <b>Title: </b>{{assess.title}}</p>
         </button>
     </ion-list>
 
@@ -22,21 +23,8 @@
         <br>NO RECORD FOUND
     </ion-list>
 
-    <ion-fab #fab right bottom>
-        <button ion-fab color="danger">
-            <ion-icon name="add"></ion-icon>
-        </button>
-        <ion-fab-list side="top">
-            <button ion-fab (click)="onFormativeBtn() ">
-                F
-            </button>
-            <button ion-fab (click)="onSummativeBtn() ">
-                S
-            </button>
-        </ion-fab-list>
-    </ion-fab>
-
     <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
         <ion-infinite-scroll-content></ion-infinite-scroll-content>
     </ion-infinite-scroll>
+
 </ion-content>
