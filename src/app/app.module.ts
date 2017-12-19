@@ -22,6 +22,10 @@ import { ComplaintService } from '../services/complaint.service';
 import { PollService } from '../services/poll.service';
 import { AppreciationService } from '../services/appreciation.service';
 import { SurveyService } from '../services/survey.service';
+import { EvaluationService } from '../services/evaluation.service';
+import { AssignmentService } from '../services/assignment.service';
+import { PlannerService } from '../services/planner.service';
+import { AssessmentService } from '../services/assessment.service';
 
 /**import native plugins and 3rd party modules*/
 import { Network } from '@ionic-native/network';
@@ -38,10 +42,7 @@ import { CustomNavbarModule } from '../custom-components/navbar/navbar.module';
 import { CustomModalNavbarModule } from '../custom-components/modal-navbar/modal-navbar.module';
 import { LoginPage } from '../custom-components/login/login';
 import { ForgotPasswordModal } from '../custom-components/login/forgot-password/forgot-password';
-import { EvaluationService } from '../services/evaluation.service';
-import { AssignmentService } from '../services/assignment.service';
-import { PlannerService } from '../services/planner.service';
-import { AssessmentService } from '../services/assessment.service';
+
 
 
 @NgModule({
