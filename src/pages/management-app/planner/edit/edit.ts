@@ -4,9 +4,10 @@ import { IonicPage, ViewController, ActionSheetController, NavParams } from 'ion
 import { CustomService } from '../../../../services/custom.service';
 import { PlannerService } from '../../../../services/planner.service';
 
-import { Camera} from '@ionic-native/camera';
+import { Camera } from '@ionic-native/camera';
 import { FileChooser } from '@ionic-native/file-chooser';
 import { FilePath } from '@ionic-native/file-path';
+import { FileSelectService } from '../../../../services/fileSelect.service';
 
 
 
@@ -41,6 +42,7 @@ export class EditPlannerPageManagement {
         private actionSheetCtrl: ActionSheetController,
         private navParams: NavParams,
         private plannerService: PlannerService,
+        private fileSelectService: FileSelectService,
         private camera: Camera,
         private fileChooser: FileChooser,
         private filePath: FilePath
@@ -141,7 +143,7 @@ export class EditPlannerPageManagement {
                 this.eventEdited = true;
                 this.customService.showToast('File deleted successfuly');
             }, (err: any) => {
-                
+
                 // alert(JSON.stringify(err));
                 this.customService.hideLoader();
                 this.customService.showToast(err.msg);
@@ -215,7 +217,7 @@ export class EditPlannerPageManagement {
                 console.log(err);
                 this.showSpinner = false;
                 this.customService.showToast('Error in uploading image');
-                
+
             });
     }
 
@@ -253,58 +255,11 @@ export class EditPlannerPageManagement {
 
     selectFile() {
 
-        /**We Want the file path to be native(i.e starting with file://)
-         * so that we can extract the file name and type from the path.
-         * Hence resolve the url when recieved as starting with content:// 
+        /**below method results in storing the selected file uri in 'this.file'
+        * also performs error handling related to file selection
          */
-        this.fileChooser.open()
-            .then(uri => {
-                if (uri.startsWith("content://")) {
-
-                    this.filePath.resolveNativePath(uri)
-                        .then(nativeUri => {
-
-                            this.file = nativeUri;
-                            // console.log(nativeUri);
-                            this.image = null;
-                            this.fileName = this.file.split('/').pop();
-                            this.checkCompatibleFile(this.fileName);
-                            
-                        }, (err: any) => {
-                            /**files path from google drive are not convertable to native path */
-                            let errMsg = err.message + "\nYou might be uploading a file from cloud/Google drive";
-                            this.customService.showToast(errMsg);
-                        });
-                } else {
-
-                    this.file = uri;
-                    this.image = null;
-                    this.fileName = this.file.split('/').pop();
-
-                    this.checkCompatibleFile(this.fileName);
-                    
-                }
-            }, (err: any) => {
-                // console.log('inside 2nd clllll');
-
-                alert('Unable to Choose the file at the moment');
-            })
-            .catch(e => {
-                // console.log('inside catch//////');
-
-                alert(JSON.stringify(e));
-            });
+        this.fileSelectService.chooseFile(this);
     }
-
-
-    checkCompatibleFile(name: string) {
-        let type = name.slice(name.lastIndexOf('.') + 1);
-        if (!(type == "pdf" || type == "jpg" || type == "jpeg" || type == "png" || type == "doc" || type == "docx" || type == "txt")) {
-            this.file = null;
-            this.customService.showToast('Unsupported File Type');
-        }
-    }
-
 
     onFileUnselect() {
 
@@ -336,7 +291,7 @@ export class EditPlannerPageManagement {
             }, (err: any) => {
 
                 // console.log('inside finally submit catch');
-                // alert(JSON.stringify(err.body));
+                alert(JSON.stringify(err.body));
                 this.customService.hideLoader();
                 let errMsg = JSON.parse(err.body).message || 'Some Error Occured';
                 alert(JSON.stringify(errMsg));

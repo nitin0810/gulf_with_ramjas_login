@@ -26,6 +26,7 @@ import { EvaluationService } from '../services/evaluation.service';
 import { AssignmentService } from '../services/assignment.service';
 import { PlannerService } from '../services/planner.service';
 import { AssessmentService } from '../services/assessment.service';
+import { FileSelectService } from '../services/fileSelect.service';
 
 /**import native plugins and 3rd party modules*/
 import { Network } from '@ionic-native/network';
@@ -87,6 +88,7 @@ import { ForgotPasswordModal } from '../custom-components/login/forgot-password/
     AssignmentService,
     PlannerService,
     AssessmentService,
+    FileSelectService,
     { provide: ErrorHandler, useClass: IonicErrorHandler },
     {
       provide: CustomHttpService, useFactory: (backend: XHRBackend, defaultOptions: RequestOptions) => {

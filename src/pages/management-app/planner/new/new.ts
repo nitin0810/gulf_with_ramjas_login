@@ -5,6 +5,7 @@ import { CustomService } from '../../../../services/custom.service';
 import { NewPollPageManagement } from '../../poll/newPoll/newPoll';
 import { PollService } from '../../../../services/poll.service';
 import { PlannerService } from '../../../../services/planner.service';
+import { FileSelectService } from '../../../../services/fileSelect.service';
 
 import { Camera } from '@ionic-native/camera';
 import { FileChooser } from '@ionic-native/file-chooser';
@@ -44,13 +45,14 @@ export class NewPlannerPageManagement extends NewPollPageManagement {
         public customService: CustomService,
         public actionSheetCtrl: ActionSheetController,
         private plannerService: PlannerService,
+        private fileSelectService: FileSelectService,
         private camera: Camera,
         private fileChooser: FileChooser,
         private filePath: FilePath
 
     ) {
         super(viewCtrl, pollService, customService, actionSheetCtrl);
-        this.startDateTime = this.endDateTime = this.minDate=this.getCorrectISOStringDate();
+        this.startDateTime = this.endDateTime = this.minDate = this.getCorrectISOStringDate();
 
     }
 
@@ -64,8 +66,8 @@ export class NewPlannerPageManagement extends NewPollPageManagement {
         /**new Date().toISOString returns incorrrect time( by ignoring the time zone)
          * hence, this method has been made to get the correct isoString time
         */
-        let today:any = new Date();
-        today.setHours(today.getHours()+1);
+        let today: any = new Date();
+        today.setHours(today.getHours() + 1);
         let tzoffset = (new Date()).getTimezoneOffset() * 60000; //offset in milliseconds
         return (new Date(today - tzoffset)).toISOString().slice(0, -5) + "Z";
     }
@@ -188,53 +190,11 @@ export class NewPlannerPageManagement extends NewPollPageManagement {
 
 
     selectFile() {
+        /**below method results in storing the selected file uri in 'this.file'
+         * also performs error handling related to file selection
+          */
+        this.fileSelectService.chooseFile(this);
 
-        /**We Want the file path to be native(i.e starting with file://)
-         * so that we can extract the file name and type from the path.
-         * Hence resolve the url when recieved as starting from content:// 
-         */
-        this.fileChooser.open()
-            .then(uri => {
-                if (uri.startsWith("content://")) {
-
-                    this.filePath.resolveNativePath(uri)
-                        .then(nativeUri => {
-
-                            this.file = nativeUri;
-                            // console.log(nativeUri);
-                            this.image = null;
-                            this.fileName = this.file.split('/').pop();
-                            this.checkCompatibleFile(this.fileName);
-                        }, (err: any) => {
-                            /**files path from google drive are not convertable to native path */
-                            let errMsg = err.message + "\nYou might be uploading a file from cloud/Google drive";
-                            this.customService.showToast(errMsg);
-                        });
-                } else {
-
-                    this.file = uri;
-                    this.image = null;
-                    this.fileName = this.file.split('/').pop();
-                    this.checkCompatibleFile(this.fileName);
-                }
-            }, (err: any) => {
-                // console.log('inside 2nd clllll');
-
-                alert('Unable to Choose the file at the moment');
-            })
-            .catch(e => {
-                // console.log('inside catch//////');
-
-                alert(JSON.stringify(e));
-            });
-    }
-
-    checkCompatibleFile(name: string) {
-        let type = name.slice(name.lastIndexOf('.') + 1);
-        if (!(type == "pdf" || type == "jpg" || type == "jpeg" || type == "png" || type == "doc" || type == "docx" || type == "txt")) {
-            this.file = null;
-            this.customService.showToast('Unsupported File Type');
-        }
     }
 
     onSubmit() {

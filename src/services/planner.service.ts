@@ -20,11 +20,6 @@ export class PlannerService {
         return config.getCameraOptions(dType, sType, eType);
     }
 
-    checkCompatibleFile(name: string) {
-
-        return config.checkCompatibleFile(name);
-    }
-
     submitWithoutFile(formData: any) {
 
         return this.http.post(config.APP_CONSTANTS.serverUrl + `/ma/planner`, formData);
@@ -81,7 +76,7 @@ export class PlannerService {
     }
 
 
-    /**-------------------- methods above this are related with files--------------------- */
+    /**-------------------- methods above this are related to files--------------------- */
 
 
     fetchEventsByMonth(month: any) {
