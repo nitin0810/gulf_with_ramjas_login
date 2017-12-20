@@ -1,0 +1,148 @@
+<!-- <ion-header>
+    <nl-modal-navbar [title]="title" (modalClosed)="dismiss()">
+        <button ion-button clear (click)="showInfo=!showInfo">
+            <ion-icon name="information-circle" class="csWhiteText csFont18em"></ion-icon>
+           
+        </button>
+    </nl-modal-navbar>
+</ion-header>
+
+<ion-content class="csGrayBackground">
+
+    <ion-card *ngIf="circular && showInfo">
+        <ion-card-content>
+
+            <ion-card-title>
+                    Title: {{circular.title}}
+            </ion-card-title>
+
+            <ion-item>
+                <p>Description: {{circular.description}}</p>
+            </ion-item>
+
+            <ion-item>
+                <ion-icon name="clock" item-start></ion-icon>
+                <p>
+                    <b>Created : </b>
+                    <span>{{circular.createdAt | amTimeAgo}}</span>
+                </p>
+            </ion-item>
+
+            <ion-item *ngIf="circular.expiredAt">
+                <ion-icon name="clock" item-start></ion-icon>
+                <p>
+                    <b>Expires: </b>
+                    <span>{{circular.expiredAt | amDateFormat: 'LL'}}</span>
+                </p>
+                <button *ngIf="!isExpired" ion-button clear item-end (click)="editExpiryDate()">EDIT</button>
+            </ion-item>
+
+            <ion-item>
+                <ion-icon name="person" item-start></ion-icon>
+                <p>
+                    <b>Created By: </b>
+                    <span>{{circular.employeName}}</span>
+                </p>
+            </ion-item>
+
+            not required <ion-item>
+                <ion-icon name="checkmark" item-start></ion-icon>
+                <p>
+                    <b>circular Type: </b>
+                    <span>{{circular.optionTypeName}}</span>
+                </p>
+            </ion-item>
+
+            <ion-item>
+                <ion-icon name="people" item-start></ion-icon>
+                <p>
+                    <b>Audience: </b>
+                    <span>{{circular.mainAudienceName}}</span>
+                </p>
+            </ion-item>
+
+            <ion-item *ngIf="circular.audiences">
+                <ion-icon name="people" item-start></ion-icon>
+                <p>
+                    <b>SubAudience: </b>
+                </p>
+                <p *ngFor="let aud of circular.audiences">{{aud}}</p>
+            </ion-item>
+
+            <ion-item *ngIf="circular.departments">
+                <ion-icon name="folder" item-start></ion-icon>
+                <p>
+                    <b>Departments: </b>
+                </p>
+                <p *ngFor="let dep of circular.departments">{{dep}}</p>
+            </ion-item>
+
+            <ion-item *ngIf="circular.programs">
+                <ion-icon name="folder" item-start></ion-icon>
+                <p>
+                    <b>Programs: </b>
+                </p>
+                <p *ngFor="let pgm of circular.programs">{{pgm}}</p>
+            </ion-item>
+
+
+            <ion-item *ngIf="circular.modules">
+                <ion-icon name="folder" item-start></ion-icon>
+                <p>
+                    <b>Modules: </b>
+                </p>
+                <p *ngFor="let md of circular.modules">{{md}}</p>
+            </ion-item>
+
+            <ion-item *ngIf="circular.years">
+                <ion-icon name="folder" item-start></ion-icon>
+                <p>
+                    <b>Years: </b>
+                </p>
+                <p *ngFor="let y of circular.years">{{y}}</p>
+            </ion-item>
+
+            <ion-datetime #dateTime  max="2018" [min]="todayDate()" displayFormat="DD MMM YYYY" [(ngModel)]="newExpiryDate" doneText="Update" (ionChange)="updateExpiryDate()" hidden></ion-datetime>
+        </ion-card-content>
+    </ion-card>
+</ion-content>  -->
+
+<ion-header>
+        <nl-modal-navbar [title]="title">
+        </nl-modal-navbar>
+      </ion-header>
+      <ion-content class="csGrayBackground">
+        <!-- <no-internet></no-internet> -->
+        <img class="csAppImg csOnCardImage csCenter" [src]="baseUrl + circular.employeePicUrl">
+        <ion-card class="csCardInImage">
+          <div class="csBottomShadow">
+            <div text-center>
+              <b>{{circular.employeeName}}</b>
+            </div>
+            <p text-center>
+              {{circular.start | amDateFormat: 'LL'}}
+            </p>
+          </div>
+          <ion-card-content>
+            <div class="csParagraph"><b>{{circular.title}} </b></div>
+            <p class="csParagraph">{{circular.description}}</p>
+          </ion-card-content>
+        </ion-card>
+        <ion-card>
+          <ion-item *ngIf="circular.fileCount > 1">
+            <button ion-button clear full (click)="viewDocuments(circular)">VIEW ALL</button>
+          </ion-item>
+          <!-- <img [src]="baseUrl + circular.fileTimestamp" *ngIf="circular.fileTimestamp" (click)="viewImage(circular.fileTimestamp)"> -->
+          <ion-item *ngFor="let a of circular.files" tappable (click)="openDoc(a)">
+            {{a.fileOriginalName}}
+          </ion-item>
+        </ion-card>
+        <ion-card *ngIf="circular.circularTypeName =='Class' ">
+          <ion-item>
+            <b>Audience: </b> |<span *ngFor="let a of circular.standards">
+            <span> {{a}} |</span>
+            </span>
+          </ion-item>
+        </ion-card>
+      </ion-content>
+      

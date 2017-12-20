@@ -43,6 +43,7 @@ import { CustomNavbarModule } from '../custom-components/navbar/navbar.module';
 import { CustomModalNavbarModule } from '../custom-components/modal-navbar/modal-navbar.module';
 import { LoginPage } from '../custom-components/login/login';
 import { ForgotPasswordModal } from '../custom-components/login/forgot-password/forgot-password';
+import { CircularService } from '../services/circular.service';
 
 
 
@@ -88,6 +89,7 @@ import { ForgotPasswordModal } from '../custom-components/login/forgot-password/
     AssignmentService,
     PlannerService,
     AssessmentService,
+    CircularService,
     FileSelectService,
     { provide: ErrorHandler, useClass: IonicErrorHandler },
     {

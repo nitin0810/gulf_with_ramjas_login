@@ -1,0 +1,131 @@
+<ion-header>
+    <nl-modal-navbar [title]="title" (modalClosed)="dismiss()"></nl-modal-navbar>
+</ion-header>
+
+<ion-content class="csGrayBackground"> 
+    <form #newCircularForm="ngForm" (ngSubmit)="onSubmit()">
+
+            <ion-card>
+                    <ion-item>
+                        <ion-label stacked>
+                            <b>Title</b>
+                        </ion-label>
+                        <ion-textarea [(ngModel)]="circularTitle" placeholder="Enter Title" maxlength=50 required name="circularTitle">
+                        </ion-textarea>
+                        <ion-badge item-end>{{50 - circularTitle?.length}}</ion-badge>
+                    </ion-item>
+                </ion-card>
+        
+        <ion-card>
+            <ion-item>
+                <ion-label stacked>
+                    <b>Description</b>
+                </ion-label>
+                <ion-textarea [(ngModel)]="description" placeholder="Enter Description" maxlength=200 required name="description">
+                </ion-textarea>
+                <ion-badge item-end>{{200 - description?.length}}</ion-badge>
+            </ion-item>
+        </ion-card>
+
+        <ion-card>
+            <ion-item>
+                <ion-label><b>Effective Date</b></ion-label>
+                <ion-datetime max="2018" [min]="todayDate()"  displayFormat="MMM DD YYYY" pickerFormat="DD MMM YYYY" name="expireDate" [(ngModel)]="expireDate" ></ion-datetime>
+            </ion-item>
+        </ion-card>
+
+        <ion-card >
+            <ion-item>
+                <ion-label><b>Poll For</b></ion-label>
+                <ion-select [(ngModel)]="mainAudience" (ionChange)="onAudienceChange()" required name="mainAudience">
+                    <ion-option *ngFor="let audience of audienceList" [value]="audience">{{audience.name}}</ion-option>
+                </ion-select>
+            </ion-item>
+        </ion-card>
+
+        <div *ngIf="departmentList && mainAudience.id == 2">
+            <ion-card>
+                <ion-item>
+                    <ion-label><b>Select Departments</b></ion-label>
+                    <ion-select [(ngModel)]="departmentIds" multiple required name="departments">
+                        <ion-option *ngFor="let dep of departmentList" [value]="dep.id">{{dep.name}}</ion-option>
+                    </ion-select>
+                </ion-item>
+            </ion-card>
+        </div>
+
+        <div *ngIf="mainAudience?.subAudience && (mainAudience.id == 1 || mainAudience.id == 2)">
+            <ion-card>
+                <ion-item>
+                    <ion-label><b>Subcategories</b></ion-label>
+                    <ion-select [(ngModel)]="audienceIds" multiple required name="subCategory">
+                        <ion-option *ngFor="let subCat of mainAudience.subAudience" [value]="subCat.id">{{subCat.name }}</ion-option>
+                    </ion-select>
+                </ion-item>
+            </ion-card>
+        </div>
+
+        <div *ngIf=" programList && mainAudience?.id == 3 ">
+            <ion-card>
+                <ion-item>
+                    <ion-label><b>Select Programs</b></ion-label>
+                    <ion-select [(ngModel)]="programIds" multiple required name="programs">
+                        <ion-option *ngFor="let pgm of programList" [value]="pgm.id">{{pgm.name}}</ion-option>
+                    </ion-select>
+                </ion-item>
+            </ion-card>
+        </div>
+
+        <div *ngIf=" mainAudience?.id == 3 ">
+            <ion-card>
+                <ion-item>
+                    <ion-label><b>Select Years</b></ion-label>
+                    <ion-select [(ngModel)]="yearIds" multiple required name="years">
+                        <ion-option *ngFor="let y of yearList" [value]="y.id">{{y.name}}</ion-option>
+                    </ion-select>
+                </ion-item>
+            </ion-card>
+        </div>
+
+        <div *ngIf=" mainAudience?.id == 4 && yearsListForModule">
+            <ion-card>
+                <ion-item>
+                    <ion-label><b>Select Year</b></ion-label>
+                    <ion-select [(ngModel)]="yearForModule" (ionChange)="onYearForModuleChange()" required name="years">
+                        <ion-option *ngFor="let y of yearsListForModule" [value]="y">{{y.name || y.yearName}}</ion-option>
+                    </ion-select>
+                </ion-item>
+            </ion-card>
+        </div>
+
+        <div *ngIf=" mainAudience?.id == 4 && moduleList">
+            <ion-card>
+                <ion-item>
+                    <ion-label><b>Select Modules</b></ion-label>
+                    <ion-select [(ngModel)]="moduleIds" multiple required name="years">
+                        <ion-option *ngFor="let module of moduleList" [value]="module.moduleId">{{module.moduleName}}</ion-option>
+                    </ion-select>
+                </ion-item>
+            </ion-card>
+        </div>
+
+        <div>
+            <button type="button" ion-button (click)="onUploadBtn()">
+                <span *ngIf="!image">Upload Image</span>
+                <span *ngIf="image">Change Image</span>
+            </button>
+
+            <ion-spinner name="bubbles" *ngIf="showSpinner"></ion-spinner>
+            <!-- <p>FILE:  {{image}}</p> -->
+            <ion-card *ngIf="image">
+                Image Preview
+                <img [src]="image">
+            </ion-card>
+        </div>
+
+        <div padding>
+            <button [disabled]="!newCircularForm.valid" ion-button full type="submit">Submit</button>
+        </div>
+
+    </form>
+</ion-content>
