@@ -8,8 +8,8 @@ import { PlannerService } from '../../../../services/planner.service';
 import { FileSelectService } from '../../../../services/fileSelect.service';
 
 import { Camera } from '@ionic-native/camera';
-import { FileChooser } from '@ionic-native/file-chooser';
-import { FilePath } from '@ionic-native/file-path';
+// import { FileChooser } from '@ionic-native/file-chooser';
+// import { FilePath } from '@ionic-native/file-path';
 
 
 
@@ -47,8 +47,7 @@ export class NewPlannerPageManagement extends NewPollPageManagement {
         private plannerService: PlannerService,
         private fileSelectService: FileSelectService,
         private camera: Camera,
-        private fileChooser: FileChooser,
-        private filePath: FilePath
+      
 
     ) {
         super(viewCtrl, pollService, customService, actionSheetCtrl);
@@ -89,7 +88,7 @@ export class NewPlannerPageManagement extends NewPollPageManagement {
             title: 'Select File Using',
             buttons: [
                 {
-                    text: 'Use Camera',
+                    text: 'Camera',
                     handler: () => {
                         this.fromCamera();
                     }
@@ -171,13 +170,11 @@ export class NewPlannerPageManagement extends NewPollPageManagement {
             // If it's base64:
             // console.log('inside library clbk');
             this.showSpinner = false;
-
             this.image = 'data:image/jpeg;base64,' + imageData;
             this.file = null;
         }, (err) => {
             // console.log('inside library 2nd clbk');
             this.showSpinner = false;
-
         })
             .catch((err) => {
                 // Handle error

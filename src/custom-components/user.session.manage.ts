@@ -102,6 +102,7 @@ export class UserSessionManage {
                 { title: 'Appreciations', component: "AppreciationTabsPageManagement", icon: 'assets/icon/appreciation.png' },
                 { title: 'Polls', icon: 'assets/icon/poll.png' },
                 { title: 'Surveys', icon: 'assets/icon/survey.png' },
+                { title: 'Circular', component: "CircularTabsPageManagement",icon: 'assets/icon/circular.png' },
                 { title: 'Events', component: "MainPlannerPageManagement", icon: 'assets/icon/event.png' },
                 { title: 'Assignment', component: "AssignmentTabsPageManagement", icon: 'assets/icon/rating.png' },
                 { title: 'Assessment', component: "AssessmentTabsPageManagement", icon: 'assets/icon/rating.png' },

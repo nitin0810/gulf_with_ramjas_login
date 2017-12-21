@@ -1,46 +1,18 @@
 <ion-list>
-        <!-- <a *ngFor="let circular of circularList" ion-item (click)="openViewCircular(circular.id)" [style.border-left-color]="circular.mainAudienceColor">
-            <h2>
-                <b>{{circular.title}}</b>
-            </h2>
-            <ion-row>
-                <ion-col col-4 class="no-padding-l csGray5353">
-                    {{circular.description}}
-                </ion-col>               
-            </ion-row>
-            <br>
-            <ion-row>
-                <ion-col col-6 class="no-padding-l csGray5353">
-                    <span *ngIf="areCircularExpired">Expired: </span>
-                    <span *ngIf="!areCircularExpired">Expires: </span>
-                    {{circular.expiredAt | amTimeAgo}}
-                </ion-col>
-                <br>
-                <ion-col col-6 class="no-padding-l" [style.color]="circular.mainAudienceColor">
-                    <ion-icon name="at"></ion-icon>
-                    <span>{{circular.mainAudienceName}}</span>
-                </ion-col>
-            </ion-row>
-        </a> -->
-        <ion-item (click)="onSelectCircular()">
-            <div style="border-left: 3px solid;padding-left: 10px;" [style.border-color]="circular.circularTypeColor">
-                <h2><b>{{circular.title}}</b></h2>
-                <h3>{{circular.description}}</h3>
-                <ion-note>
-                <ion-row>
-                    <ion-col width-50 class="no-padding-l" style="color:#535353;">
-                    <ion-icon name="clock"></ion-icon><span>{{circular.start | amTimeAgo}}</span>
-                    </ion-col>
-                    <ion-col width-50 class="no-padding-l">
-                    <!-- <ion-icon name="at" [style.color]="circular.circularTypeColor"></ion-icon><span [style.color]="circular.circularTypeColor">{{circular.circularTypeName}}</span> -->
-                    </ion-col>
-                </ion-row>
-                </ion-note>
-            </div>
-        </ion-item>
-    </ion-list>
-    
-    <ion-list class="no-comment" *ngIf="circularList?.length==0">
-        <ion-icon name="list-box"></ion-icon>
-        <br>NO RECORD FOUND
-    </ion-list>
+    <button *ngFor="let circular of circularList" ion-item (click)="openViewCircular(circular.id)" [style.border-left-color]="circular.mainAudienceColor">
+        <h2>
+            <b>{{circular.title}}</b>
+        </h2>
+        <p>Effective Date: {{circular.date}}</p>
+        <div>
+            <ion-icon name="at"></ion-icon>
+            <span>{{circular.mainAudienceName}}</span>
+        </div>
+        <p>Created By: {{circular.employeeUsername}}</p>
+    </button>
+</ion-list>
+
+<ion-list class="no-comment" *ngIf="circularList?.length==0">
+    <ion-icon name="list-box"></ion-icon>
+    <br>NO RECORD FOUND
+</ion-list>

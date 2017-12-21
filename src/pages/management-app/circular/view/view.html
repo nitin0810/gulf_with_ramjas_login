@@ -1,15 +1,11 @@
-<!-- <ion-header>
+<ion-header>
     <nl-modal-navbar [title]="title" (modalClosed)="dismiss()">
-        <button ion-button clear (click)="showInfo=!showInfo">
-            <ion-icon name="information-circle" class="csWhiteText csFont18em"></ion-icon>
-           
-        </button>
     </nl-modal-navbar>
 </ion-header>
 
 <ion-content class="csGrayBackground">
 
-    <ion-card *ngIf="circular && showInfo">
+    <ion-card *ngIf="circular">
         <ion-card-content>
 
             <ion-card-title>
@@ -31,10 +27,9 @@
             <ion-item *ngIf="circular.expiredAt">
                 <ion-icon name="clock" item-start></ion-icon>
                 <p>
-                    <b>Expires: </b>
-                    <span>{{circular.expiredAt | amDateFormat: 'LL'}}</span>
+                    <b>Effective Date: </b>
+                    <span>{{circular.date | amDateFormat: 'LL'}}</span>
                 </p>
-                <button *ngIf="!isExpired" ion-button clear item-end (click)="editExpiryDate()">EDIT</button>
             </ion-item>
 
             <ion-item>
@@ -42,14 +37,6 @@
                 <p>
                     <b>Created By: </b>
                     <span>{{circular.employeName}}</span>
-                </p>
-            </ion-item>
-
-            not required <ion-item>
-                <ion-icon name="checkmark" item-start></ion-icon>
-                <p>
-                    <b>circular Type: </b>
-                    <span>{{circular.optionTypeName}}</span>
                 </p>
             </ion-item>
 
@@ -102,47 +89,16 @@
                 <p *ngFor="let y of circular.years">{{y}}</p>
             </ion-item>
 
-            <ion-datetime #dateTime  max="2018" [min]="todayDate()" displayFormat="DD MMM YYYY" [(ngModel)]="newExpiryDate" doneText="Update" (ionChange)="updateExpiryDate()" hidden></ion-datetime>
+            <ion-item *ngIf="circular.fileCount>0">
+
+                <h4>Attachments:</h4>
+                <a style="display:block" *ngFor="let file of circular.files;let i = index" (click)="onFileClick(file,i)">
+                    {{file.fileOriginalName}}
+                </a>
+            </ion-item>
+
         </ion-card-content>
     </ion-card>
-</ion-content>  -->
+</ion-content> 
 
-<ion-header>
-        <nl-modal-navbar [title]="title">
-        </nl-modal-navbar>
-      </ion-header>
-      <ion-content class="csGrayBackground">
-        <!-- <no-internet></no-internet> -->
-        <img class="csAppImg csOnCardImage csCenter" [src]="baseUrl + circular.employeePicUrl">
-        <ion-card class="csCardInImage">
-          <div class="csBottomShadow">
-            <div text-center>
-              <b>{{circular.employeeName}}</b>
-            </div>
-            <p text-center>
-              {{circular.start | amDateFormat: 'LL'}}
-            </p>
-          </div>
-          <ion-card-content>
-            <div class="csParagraph"><b>{{circular.title}} </b></div>
-            <p class="csParagraph">{{circular.description}}</p>
-          </ion-card-content>
-        </ion-card>
-        <ion-card>
-          <ion-item *ngIf="circular.fileCount > 1">
-            <button ion-button clear full (click)="viewDocuments(circular)">VIEW ALL</button>
-          </ion-item>
-          <!-- <img [src]="baseUrl + circular.fileTimestamp" *ngIf="circular.fileTimestamp" (click)="viewImage(circular.fileTimestamp)"> -->
-          <ion-item *ngFor="let a of circular.files" tappable (click)="openDoc(a)">
-            {{a.fileOriginalName}}
-          </ion-item>
-        </ion-card>
-        <ion-card *ngIf="circular.circularTypeName =='Class' ">
-          <ion-item>
-            <b>Audience: </b> |<span *ngFor="let a of circular.standards">
-            <span> {{a}} |</span>
-            </span>
-          </ion-item>
-        </ion-card>
-      </ion-content>
       

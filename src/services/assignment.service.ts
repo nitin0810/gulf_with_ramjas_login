@@ -57,8 +57,8 @@ export class AssignmentService {
         return transfer.upload(data.image || data.file, config.APP_CONSTANTS.serverUrl + `/ma/assignment`, options, false)
             .then((data: any) => {
 
-                // console.log('inside service success');
-                // alert(JSON.stringify(data));
+                console.log('inside service success');
+                alert(JSON.stringify(data));
                 return JSON.parse(data.response);
             });
 

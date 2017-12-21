@@ -91,6 +91,7 @@ export class ViewPlannerPageManagement {
 
     openOtherDocs(file: any) {
         console.log('opening other docs');
+console.log(file.fileUrl);
 
         window.open(file.fileUrl, '_system', 'location=no');
 

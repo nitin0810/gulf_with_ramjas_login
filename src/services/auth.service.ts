@@ -34,7 +34,7 @@ export class AuthService {
 
     verifyCredentials(data) {
 
-        return this.http.post(config.APP_CONSTANTS.loginUrl + `/oauth/token?grant_type=password&username=${data.username}&password=${data.password}`, {});
+        return this.http.post(config.APP_CONSTANTS.serverUrl + `/oauth/token?grant_type=password&username=${data.username}&password=${data.password}`, {});
     }
 
     storeUserData(user) {

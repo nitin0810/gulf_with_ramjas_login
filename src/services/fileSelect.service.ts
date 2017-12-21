@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-
+import { FileChooser } from '@ionic-native/file-chooser';
+import { FilePath } from '@ionic-native/file-path';
 
 /**THIS SERVICE CONTAINS METHODS RELATED TO CHOOSING THE FILE
  * USED AT: 
@@ -9,7 +10,10 @@ import { Injectable } from '@angular/core';
 @Injectable()
 export class FileSelectService {
 
-    constructor() { }
+    constructor(
+        private fileChooser: FileChooser,
+        private filePath: FilePath
+    ) { }
 
     chooseFile(thisRef:any) {
 
@@ -17,11 +21,11 @@ export class FileSelectService {
          * so that we can extract the file name and type from the path.
          * Hence resolve the url when recieved as starting with content:// 
          */
-        thisRef.fileChooser.open()
+        this.fileChooser.open()
             .then(uri => {
                 if (uri.startsWith("content://")) {
 
-                    thisRef.filePath.resolveNativePath(uri)
+                    this.filePath.resolveNativePath(uri)
                         .then(nativeUri => {
 
                             thisRef.file = nativeUri;
@@ -41,7 +45,7 @@ export class FileSelectService {
                     thisRef.image = null;
                     thisRef.fileName = thisRef.file.split('/').pop();
 
-                    thisRef.checkCompatibleFile(thisRef.fileName);
+                    this.checkCompatibleFile(thisRef.fileName,thisRef);
 
                 }
             }, (err: any) => {

@@ -13,8 +13,6 @@ export class ClosedCircularPageComponent extends CurrentCircularPageComponent{
 
     title: string = "Circular";
     expiredRequest: boolean;
-    
-    
 
     constructor(
         public modalCtrl: ModalController,

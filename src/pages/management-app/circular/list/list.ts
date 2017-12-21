@@ -11,7 +11,6 @@ import { IonicPage, ModalController } from 'ionic-angular';
 export class ListCircularPageManagement {
 
     @Input() circularList: any;
-    @Input() areCircularExpired: boolean; // to make the circular editable or not
 
     constructor(
         private modalCtrl: ModalController
@@ -19,7 +18,7 @@ export class ListCircularPageManagement {
 
     openViewCircular(circularId: number) {
 
-        let modal = this.modalCtrl.create("ViewCircularPageManagement", { 'circularId': circularId, 'isExpired': this.areCircularExpired });
+        let modal = this.modalCtrl.create("ViewCircularPageManagement", { 'circularId': circularId});
         modal.present();
     }
 
