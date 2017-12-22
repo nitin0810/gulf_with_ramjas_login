@@ -77,16 +77,16 @@ export class UserSessionManage {
 
             this.sideMenuOptions = [
 
-                { title: 'Home', component: DashboardPage, icon: 'assets/icon/home.png' },
-                { title: 'Complaints', component: "ComplaintPageStudent", icon: 'assets/icon/complaint.png' },
-                { title: 'Suggestions', component: "SuggestionTabsPageStudent", icon: 'assets/icon/suggestion.png' },
-                { title: 'Appreciations', component: "AppreciationTabsPageStudent", icon: 'assets/icon/appreciation.png' },
-                { title: 'Polls', component: "PollStudent", icon: 'assets/icon/poll.png' },
-                { title: 'Surveys', component: "SurveyPageStudent", icon: 'assets/icon/survey.png' },
-                { title: 'Events', component: "MainPlannerPageManagement", icon: 'assets/icon/event.png' },
-                { title: 'Assignment', component: "AssignmentTabsPageStudent", icon: 'assets/icon/rating.png' },
-                { title: 'Assessment', component: "AssessmentTabsPageStudent", icon: 'assets/icon/rating.png' },
-                { title: 'Account', component: "AccountPage", icon: 'assets/icon/profile.png' },
+                { title: 'Home', component: DashboardPage, icon: 'assets/icon/home.jpg' },
+                { title: 'Complaints', component: "ComplaintPageStudent", icon: 'assets/icon/complaint.jpg' },
+                { title: 'Suggestions', component: "SuggestionTabsPageStudent", icon: 'assets/icon/suggestion.jpg' },
+                { title: 'Appreciations', component: "AppreciationTabsPageStudent", icon: 'assets/icon/appreciation.jpg' },
+                { title: 'Polls', component: "PollStudent", icon: 'assets/icon/poll.jpg' },
+                { title: 'Surveys', component: "SurveyPageStudent", icon: 'assets/icon/survey.jpg' },
+                { title: 'Events', component: "MainPlannerPageManagement", icon: 'assets/icon/event.jpg' },
+                { title: 'Assignment', component: "AssignmentTabsPageStudent", icon: 'assets/icon/rating.jpg' },
+                { title: 'Assessment', component: "AssessmentTabsPageStudent", icon: 'assets/icon/rating.jpg' },
+                { title: 'Account', component: "AccountPage", icon: 'assets/icon/profile.jpg' },
 
 
 
@@ -96,17 +96,17 @@ export class UserSessionManage {
 
             this.sideMenuOptions = [
 
-                { title: 'Home', component: DashboardPage, icon: 'assets/icon/home.png' },
-                { title: 'Complaints', component: "ComplaintPageManagement", icon: 'assets/icon/complaint.png' },
-                { title: 'Suggestions', component: "SuggestionTabsPageManagement", icon: 'assets/icon/suggestion.png' },
-                { title: 'Appreciations', component: "AppreciationTabsPageManagement", icon: 'assets/icon/appreciation.png' },
-                { title: 'Polls', icon: 'assets/icon/poll.png' },
-                { title: 'Surveys', icon: 'assets/icon/survey.png' },
-                { title: 'Circular', component: "CircularTabsPageManagement",icon: 'assets/icon/circular.png' },
-                { title: 'Events', component: "MainPlannerPageManagement", icon: 'assets/icon/event.png' },
-                { title: 'Assignment', component: "AssignmentTabsPageManagement", icon: 'assets/icon/rating.png' },
-                { title: 'Assessment', component: "AssessmentTabsPageManagement", icon: 'assets/icon/rating.png' },
-                { title: 'Account', component: "AccountPage", icon: 'assets/icon/profile.png' },
+                { title: 'Home', component: DashboardPage, icon: 'assets/icon/home.jpg' },
+                { title: 'Complaints', component: "ComplaintPageManagement", icon: 'assets/icon/complaint.jpg' },
+                { title: 'Suggestions', component: "SuggestionTabsPageManagement", icon: 'assets/icon/suggestion.jpg' },
+                { title: 'Appreciations', component: "AppreciationTabsPageManagement", icon: 'assets/icon/appreciation.jpg' },
+                { title: 'Polls', icon: 'assets/icon/poll.jpg' },
+                { title: 'Surveys', icon: 'assets/icon/survey.jpg' },
+                { title: 'Circular', component: "CircularTabsPageManagement",icon: 'assets/icon/circular.jpg' },
+                { title: 'Events', component: "MainPlannerPageManagement", icon: 'assets/icon/event.jpg' },
+                { title: 'Assignment', component: "AssignmentTabsPageManagement", icon: 'assets/icon/rating.jpg' },
+                { title: 'Assessment', component: "AssessmentTabsPageManagement", icon: 'assets/icon/rating.jpg' },
+                { title: 'Account', component: "AccountPage", icon: 'assets/icon/profile.jpg' },
                 
             ];
 
@@ -114,7 +114,7 @@ export class UserSessionManage {
             let roles: Array<string> = JSON.parse(localStorage.getItem('roles'));
             for (let x of roles) {
                 if (x == "QUALITYCOORDINATOR") {
-                    this.sideMenuOptions.splice(7, 0, { title: 'Evaluations', component: "EvaluationTabsPageManagement", icon: 'assets/icon/appreciation.png' });
+                    this.sideMenuOptions.splice(7, 0, { title: 'Evaluations', component: "EvaluationTabsPageManagement", icon: 'assets/icon/appreciation.jpg' });
                     break;
                 }
             }

@@ -67,8 +67,8 @@ export class MyApp extends UserSessionManage {
 
         /**insert these two options below the poll option*/
         this.sideMenuOptions.splice(5, 0,
-          { title: 'ForMe', component: "PollForMePageManagement", icon: 'assets/icon/poll.png' },
-          { title: 'ByMe', component: "PollTabsPageManagement", icon: 'assets/icon/poll.png' },
+          { title: 'ForMe', component: "PollForMePageManagement", icon: 'assets/icon/poll.jpg' },
+          { title: 'ByMe', component: "PollTabsPageManagement", icon: 'assets/icon/poll.jpg' },
         );
       } else {
         /**delete these two options below the poll option*/
@@ -90,8 +90,8 @@ export class MyApp extends UserSessionManage {
 
         /**insert these two options below the survey option*/
         this.sideMenuOptions.splice(i, 0,
-          { title: 'ForMe', component: "SurveyForMePageManagement", icon: 'assets/icon/survey.png' },
-          { title: 'ByMe', component: "SurveyTabsPageManagement", icon: 'assets/icon/survey.png' },
+          { title: 'ForMe', component: "SurveyForMePageManagement", icon: 'assets/icon/survey.jpg' },
+          { title: 'ByMe', component: "SurveyTabsPageManagement", icon: 'assets/icon/survey.jpg' },
         );
       } else {
 
