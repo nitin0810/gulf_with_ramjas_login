@@ -1,9 +1,8 @@
 import { Component } from '@angular/core';
-import { IonicPage, Events, ModalController, ActionSheetController } from 'ionic-angular';
+import { IonicPage, Events, ModalController, ActionSheetController, ActionSheet } from 'ionic-angular';
 import { Camera } from '@ionic-native/camera';
 import { CustomService } from '../../services/custom.service';
 import { AuthService } from '../../services/auth.service';
-import { locale } from 'moment';
 
 
 
@@ -75,15 +74,10 @@ export class AccountPage {
 
     onImageClick() {
 
-        let actionSheet = this.actionSheetCtrl.create({
+        let actionSheet: ActionSheet = this.actionSheetCtrl.create({
 
             title: 'Select Option',
             buttons: [
-                {
-                    text: 'Delete Photo',
-                    role: 'destructive',
-                    handler: () => { this.deletePhoto(); }
-                },
                 {
                     text: 'Open Camera',
                     handler: () => { this.openCamera(); }
@@ -95,8 +89,20 @@ export class AccountPage {
                     text: 'Cancel',
                     role: 'cancel',
                     handler: () => { }
-                }]
+                }
+            ]
         });
+
+        if (localStorage.getItem('picUrl') !== "null") {
+            actionSheet.addButton(
+                {
+                    text: 'Delete Photo',
+                    role: 'Destructive',
+                    handler: () => { this.deletePhoto(); }
+                }
+            );
+        }
+
         actionSheet.present();
     }
 
@@ -131,7 +137,7 @@ export class AccountPage {
             .then((imageData) => {
 
                 this.saveImage(imageData);
-            }, (err) => { }) 
+            }, (err) => { })
             .catch((err) => {
                 // Handle error
                 console.log('inside library catch ');
@@ -152,7 +158,7 @@ export class AccountPage {
             .then((imageData) => {
 
                 this.saveImage(imageData);
-            }, (err) => {})
+            }, (err) => { })
             .catch((err) => {
                 // Handle error
                 console.log('inside library catch ');
@@ -169,7 +175,7 @@ export class AccountPage {
             .then((res: any) => {
                 console.log('inside finally  submit then of account');
 
-                alert(JSON.stringify(res));
+                // alert(JSON.stringify(res));
                 let res1 = JSON.parse(res.response);
                 this.userImage = res1.fileUrl;
                 localStorage.setItem('picUrl', res1.fileUrl);

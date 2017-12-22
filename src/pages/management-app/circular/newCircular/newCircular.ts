@@ -7,6 +7,7 @@ import { NewPollPageManagement } from '../../poll/newPoll/newPoll';
 import { PollService } from '../../../../services/poll.service';
 import { CameraOptions, Camera } from '@ionic-native/camera';
 import { FileSelectService } from '../../../../services/fileSelect.service';
+import { Platform } from 'ionic-angular';
 
 
 @IonicPage()
@@ -54,7 +55,8 @@ export class NewCircularComponent extends NewPollPageManagement {
         public customService: CustomService,
         private fileSelectService: FileSelectService,
         public actionSheetCtrl: ActionSheetController,
-        private camera: Camera
+        private camera: Camera,
+        private platform : Platform
     ) {
 
         super(viewCtrl, pollService, customService, actionSheetCtrl);
@@ -87,20 +89,25 @@ export class NewCircularComponent extends NewPollPageManagement {
 
                 },
                 {
-                    text: 'File System (PDF only)',
-                    handler: () => {
-                        this.selectFile();
-                    }
-
-                },
-                {
                     text: 'Cancel',
+                    role:'cancel',
                     handler: () => {
                     }
                 }
             ]
         });
 
+        if (this.platform.is('android')) {
+            actionSheet.addButton(
+                {
+                    text: 'File System(pdf only)',
+                    handler: () => {
+                        this.selectFile();
+                    }
+
+                }
+            );
+        }
         actionSheet.present();
     }
 

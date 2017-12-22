@@ -8,6 +8,7 @@ import { PlannerService } from '../../../../services/planner.service';
 import { FileSelectService } from '../../../../services/fileSelect.service';
 
 import { Camera } from '@ionic-native/camera';
+import { Platform } from 'ionic-angular';
 // import { FileChooser } from '@ionic-native/file-chooser';
 // import { FilePath } from '@ionic-native/file-path';
 
@@ -47,7 +48,7 @@ export class NewPlannerPageManagement extends NewPollPageManagement {
         private plannerService: PlannerService,
         private fileSelectService: FileSelectService,
         private camera: Camera,
-
+        private platform: Platform
 
     ) {
         super(viewCtrl, pollService, customService, actionSheetCtrl);
@@ -101,21 +102,27 @@ export class NewPlannerPageManagement extends NewPollPageManagement {
                     }
 
                 },
-                {
-                    text: 'File System (PDF only)',
-                    handler: () => {
-                        this.selectFile();
-                    }
 
-                },
                 {
                     text: 'Cancel',
+                    role:'cancel',
                     handler: () => {
                     }
                 }
             ]
         });
 
+        if (this.platform.is('android')) {
+            actionSheet.addButton(
+                {
+                    text: 'File System(pdf only)',
+                    handler: () => {
+                        this.selectFile();
+                    }
+
+                }
+            );
+        }
         actionSheet.present();
     }
 

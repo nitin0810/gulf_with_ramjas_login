@@ -8,7 +8,7 @@ import { Camera } from '@ionic-native/camera';
 import { FileChooser } from '@ionic-native/file-chooser';
 import { FilePath } from '@ionic-native/file-path';
 import { FileSelectService } from '../../../../services/fileSelect.service';
-
+import { Platform } from 'ionic-angular';
 
 
 
@@ -45,7 +45,8 @@ export class EditPlannerPageManagement {
         private fileSelectService: FileSelectService,
         private camera: Camera,
         private fileChooser: FileChooser,
-        private filePath: FilePath
+        private filePath: FilePath,
+        private platform:Platform
 
     ) {
 
@@ -172,20 +173,25 @@ export class EditPlannerPageManagement {
 
                 },
                 {
-                    text: 'File System (PDF only)',
-                    handler: () => {
-                        this.selectFile();
-                    }
-
-                },
-                {
                     text: 'Cancel',
+                    role:'cancel',
                     handler: () => {
                     }
                 }
             ]
         });
 
+        if (this.platform.is('android')) {
+            actionSheet.addButton(
+                {
+                    text: 'File System(pdf only)',
+                    handler: () => {
+                        this.selectFile();
+                    }
+
+                }
+            );
+        }
         actionSheet.present();
     }
 

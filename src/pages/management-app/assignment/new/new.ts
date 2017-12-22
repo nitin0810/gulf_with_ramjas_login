@@ -7,6 +7,7 @@ import { Camera } from '@ionic-native/camera';
 import { FileChooser } from '@ionic-native/file-chooser';
 import { FilePath } from '@ionic-native/file-path';
 import { FileSelectService } from '../../../../services/fileSelect.service';
+import { Platform } from 'ionic-angular';
 
 @IonicPage()
 @Component({
@@ -42,7 +43,8 @@ export class NewAssignmentPageManagement {
         private actionSheetCtrl: ActionSheetController,
         private camera: Camera,
         private fileChooser: FileChooser,
-        private filePath: FilePath
+        private filePath: FilePath,
+        private platform: Platform
 
     ) { }
 
@@ -105,22 +107,27 @@ export class NewAssignmentPageManagement {
                     handler: () => {
                         this.fromLibrary();
                     }
-
                 },
+                {
+                    text: 'Cancel',
+                    role:'cancel',
+                    handler: () => {
+                    }
+                }
+            ]
+        });
+
+        if (this.platform.is('android')) {
+            actionSheet.addButton(
                 {
                     text: 'File System(pdf only)',
                     handler: () => {
                         this.selectFile();
                     }
 
-                },
-                {
-                    text: 'Cancel',
-                    handler: () => {
-                    }
                 }
-            ]
-        });
+            );
+        }
 
         actionSheet.present();
     }
