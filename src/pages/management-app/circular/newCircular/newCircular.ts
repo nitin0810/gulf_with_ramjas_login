@@ -5,7 +5,7 @@ import { CustomService } from '../../../../services/custom.service';
 
 import { NewPollPageManagement } from '../../poll/newPoll/newPoll';
 import { PollService } from '../../../../services/poll.service';
-import { CameraOptions, Camera } from '@ionic-native/camera';
+import { Camera } from '@ionic-native/camera';
 import { FileSelectService } from '../../../../services/fileSelect.service';
 import { Platform } from 'ionic-angular';
 

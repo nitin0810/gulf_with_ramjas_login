@@ -4,8 +4,6 @@ import { IonicPage, ViewController, ActionSheetController } from 'ionic-angular'
 import { AssignmentService } from '../../../../services/assignment.service';
 import { CustomService } from '../../../../services/custom.service';
 import { Camera } from '@ionic-native/camera';
-import { FileChooser } from '@ionic-native/file-chooser';
-import { FilePath } from '@ionic-native/file-path';
 import { FileSelectService } from '../../../../services/fileSelect.service';
 import { Platform } from 'ionic-angular';
 
@@ -42,8 +40,6 @@ export class NewAssignmentPageManagement {
         private fileSelectService: FileSelectService,
         private actionSheetCtrl: ActionSheetController,
         private camera: Camera,
-        private fileChooser: FileChooser,
-        private filePath: FilePath,
         private platform: Platform
 
     ) { }

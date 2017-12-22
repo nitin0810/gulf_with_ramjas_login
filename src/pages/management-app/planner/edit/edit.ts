@@ -5,8 +5,6 @@ import { CustomService } from '../../../../services/custom.service';
 import { PlannerService } from '../../../../services/planner.service';
 
 import { Camera } from '@ionic-native/camera';
-import { FileChooser } from '@ionic-native/file-chooser';
-import { FilePath } from '@ionic-native/file-path';
 import { FileSelectService } from '../../../../services/fileSelect.service';
 import { Platform } from 'ionic-angular';
 
@@ -44,8 +42,6 @@ export class EditPlannerPageManagement {
         private plannerService: PlannerService,
         private fileSelectService: FileSelectService,
         private camera: Camera,
-        private fileChooser: FileChooser,
-        private filePath: FilePath,
         private platform:Platform
 
     ) {
