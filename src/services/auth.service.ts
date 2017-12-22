@@ -76,11 +76,8 @@ export class AuthService {
         let userType = localStorage.getItem('isStudent') === "true" ? 'st' : 'ma';
         const transfer: FileTransferObject = this.fileTransfer.create();
 
-        return transfer.upload(image, config.APP_CONSTANTS.serverUrl + `/${userType}/pic`, options, false)
-            .then((data: any) => {
-
-                return JSON.parse(data.response);
-            });
+        return transfer.upload(image, config.APP_CONSTANTS.serverUrl + `/${userType}/pic`, options, false);
+           
 
     }
 

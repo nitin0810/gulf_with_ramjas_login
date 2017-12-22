@@ -131,13 +131,12 @@ export class NewCircularComponent extends NewPollPageManagement {
             // Handle error
             // console.log('inisde camera 2nd clbk');
             this.showSpinner = false;
-
         })
             .catch((err: any) => {
                 // console.log('inside camera catch');
                 console.log(err);
                 this.showSpinner = false;
-                this.customService.showToast('Error in uploading image');
+                this.customService.showToast('Error occured, Try again');
             });
     }
 
@@ -167,8 +166,7 @@ export class NewCircularComponent extends NewPollPageManagement {
                 // console.log('inside library catch ');
                 // console.log(err);
                 this.showSpinner = false;
-                this.customService.showToast('Error in uploading image');
-
+                this.customService.showToast('Error occured, Try again');
             });
     }
 

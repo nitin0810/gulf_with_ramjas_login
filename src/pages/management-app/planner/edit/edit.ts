@@ -140,6 +140,7 @@ export class EditPlannerPageManagement {
                 // alert(JSON.stringify(res));
                 this.customService.hideLoader();
                 this.eventNew.files.splice(index, 1);
+                this.eventNew.fileCount != 0 && (this.eventNew.fileCount--);
                 this.eventEdited = true;
                 this.customService.showToast('File deleted successfuly');
             }, (err: any) => {
@@ -216,8 +217,7 @@ export class EditPlannerPageManagement {
                 // console.log('inside camera catch');
                 console.log(err);
                 this.showSpinner = false;
-                this.customService.showToast('Error in uploading image');
-
+                this.customService.showToast('Error occured, Try again');
             });
     }
 
@@ -241,7 +241,7 @@ export class EditPlannerPageManagement {
         }, (err) => {
             // console.log('inside library 2nd clbk');
             this.showSpinner = false;
-
+            this.customService.showToast('Error occured, Try again');
         })
             .catch((err) => {
                 // Handle error
@@ -280,21 +280,27 @@ export class EditPlannerPageManagement {
         this.plannerService.addFileToEvent(data)
             .then((res: any) => {
 
-                // console.log('inside finally submit then');
+                console.log('inside finally  submit then of edit');
                 // alert(JSON.stringify(res));
-
+                let res1 = JSON.parse(res.response);
                 this.customService.hideLoader();
                 this.customService.showToast('File added successfully');
                 this.file = this.image = null;
-                this.updateEventDataAfterUpload(res[0]); //res is an array of files with only one file in this case
+                this.updateEventDataAfterUpload(res1[0]); //res is an array of files with only one file in this case
                 this.eventEdited = true;
             }, (err: any) => {
 
-                // console.log('inside finally submit catch');
-                alert(JSON.stringify(err.body));
-                this.customService.hideLoader();
-                let errMsg = JSON.parse(err.body).message || 'Some Error Occured';
-                alert(JSON.stringify(errMsg));
+                console.log('inside finally submit catch of edit');
+                // alert(JSON.stringify(err.body));
+
+                try {
+                    let error = JSON.parse(err.body);
+                    let errMsg = (error.message || error.error) ? error.message || error.error : "Some Error Occured,Couldn't Create Circular";
+                    this.customService.showToast(errMsg);
+                } catch (e) {
+                    this.customService.showToast(e.toString() || 'Some unexpected error occured');
+
+                }
             });
     }
 

@@ -47,7 +47,7 @@ export class NewPlannerPageManagement extends NewPollPageManagement {
         private plannerService: PlannerService,
         private fileSelectService: FileSelectService,
         private camera: Camera,
-      
+
 
     ) {
         super(viewCtrl, pollService, customService, actionSheetCtrl);
@@ -152,7 +152,7 @@ export class NewPlannerPageManagement extends NewPollPageManagement {
                 // console.log('inside camera catch');
                 console.log(err);
                 this.showSpinner = false;
-                this.customService.showToast('Error in uploading image');
+                this.customService.showToast('Error occured, Try again');
             });
     }
 
@@ -180,8 +180,7 @@ export class NewPlannerPageManagement extends NewPollPageManagement {
                 // Handle error
                 // console.log('inside library catch ');
                 this.showSpinner = false;
-                this.customService.showToast('Error in uploading image');
-
+                this.customService.showToast('Error occured, Try again');
             });
     }
 
@@ -300,24 +299,26 @@ export class NewPlannerPageManagement extends NewPollPageManagement {
         this.plannerService.submitWithFile(data)
             .then((res: any) => {
 
-                // console.log('inside finally submit then');
-                // alert(JSON.stringify(res));
-
+                console.log('inside finally submit then');
                 this.customService.hideLoader();
+                alert(JSON.stringify(res));
+                let res1 = JSON.parse(res.response);
                 this.customService.showToast('Event created successfully');
-                this.dismiss(res);
-            }, (err: any) => {
-
-                this.customService.hideLoader();
-                let errMsg = JSON.parse(err.body).message || 'Some Error Occured';
-                alert(JSON.stringify(errMsg));
+                this.dismiss(res1);
             })
             .catch((err: any) => {
-                // console.log('inside finally submit catch');
-                // alert(JSON.stringify(err.body));
+                console.log('inside finally submit catch');
                 this.customService.hideLoader();
-                let errMsg = JSON.parse(err.body).message || 'Some Error Occured';
-                alert(JSON.stringify(errMsg));
+                // alert(JSON.stringify(err));
+
+                try {
+                    let error = JSON.parse(err.body);
+                    let errMsg = (error.message || error.error) ? error.message || error.error : "Some Error Occured,Couldn't Create Circular";
+                    this.customService.showToast(errMsg);
+                } catch (e) {
+                    this.customService.showToast(e.toString() || 'Some unexpected error occured');
+
+                }
             });
     }
 

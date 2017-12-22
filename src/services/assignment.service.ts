@@ -41,7 +41,7 @@ export class AssignmentService {
 
     postAssignmentWithFile(data: any) {
 
-        let myFileName: string = this.generateFileName(data.file);
+        let myFileName: string = data.file ? data.fileName : this.generateImageName();
 
         let options: FileUploadOptions = config.fileUploadOptions(myFileName);
         options.params = {
@@ -55,20 +55,14 @@ export class AssignmentService {
 
         const transfer: FileTransferObject = this.fileTransfer.create();
         return transfer.upload(data.image || data.file, config.APP_CONSTANTS.serverUrl + `/ma/assignment`, options, false)
-            .then((data: any) => {
-
-                console.log('inside service success');
-                alert(JSON.stringify(data));
-                return JSON.parse(data.response);
-            });
+          
 
     }
 
-    generateFileName(file: any) {
-        //generate unique filename based on current date-time
+    generateImageName() {
+        //generate unique imagename based on current date-time(upto seconds)
         let date = new Date().toISOString();
-        let fileName = date.substring(0, date.indexOf('.'));
-        return file ? fileName + '.pdf' : fileName + '.jpg';
+        return 'IMG_' + date.substring(0, date.indexOf('.')) + '.jpg';
     }
 
     postAssignment(data: any) {

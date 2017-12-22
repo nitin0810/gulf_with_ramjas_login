@@ -58,7 +58,7 @@ export class CircularService {
         }
 
         const transfer:FileTransferObject  = this.fileTransfer.create();
-        return transfer.upload(data.image || data.file, config.APP_CONSTANTS.serverUrl + `/ma/circular`, options,false)
+        return transfer.upload(data.image || data.file, config.APP_CONSTANTS.serverUrl + `/ma/circular`, options,false);
     }
 
     generateImageName() {

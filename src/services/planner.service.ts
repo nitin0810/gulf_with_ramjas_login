@@ -43,13 +43,8 @@ export class PlannerService {
 
 
         const transfer: FileTransferObject = this.fileTransfer.create();
-        return transfer.upload(data.image || data.file, config.APP_CONSTANTS.serverUrl + `/ma/planner`, options, false)
-            .then((data: any) => {
-
-                // console.log('inside service success');
-                // alert(JSON.stringify(data));
-                return JSON.parse(data.response);
-            });
+        return transfer.upload(data.image || data.file, config.APP_CONSTANTS.serverUrl + `/ma/planner`, options, false);
+         
 
     }
 
@@ -60,13 +55,8 @@ export class PlannerService {
         let options: FileUploadOptions = config.fileUploadOptions(myFileName, undefined, "PUT");
 
         const transfer: FileTransferObject = this.fileTransfer.create();
-        return transfer.upload(data.image || data.file, config.APP_CONSTANTS.serverUrl + `/ma/planner/${data.eventId}/file`, options, false)
-            .then((data: any) => {
-
-                // console.log('inside file add service success');
-                // alert(JSON.stringify(data));
-                return JSON.parse(data.response);
-            });
+        return transfer.upload(data.image || data.file, config.APP_CONSTANTS.serverUrl + `/ma/planner/${data.eventId}/file`, options, false);
+           
     }
 
     generateImageName() {

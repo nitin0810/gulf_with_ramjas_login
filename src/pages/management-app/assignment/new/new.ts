@@ -6,6 +6,7 @@ import { CustomService } from '../../../../services/custom.service';
 import { Camera } from '@ionic-native/camera';
 import { FileChooser } from '@ionic-native/file-chooser';
 import { FilePath } from '@ionic-native/file-path';
+import { FileSelectService } from '../../../../services/fileSelect.service';
 
 @IonicPage()
 @Component({
@@ -37,6 +38,7 @@ export class NewAssignmentPageManagement {
         private viewCtrl: ViewController,
         private assignmentService: AssignmentService,
         private customService: CustomService,
+        private fileSelectService: FileSelectService,
         private actionSheetCtrl: ActionSheetController,
         private camera: Camera,
         private fileChooser: FileChooser,
@@ -148,16 +150,15 @@ export class NewAssignmentPageManagement {
             this.showSpinner = false;
         }, (err: any) => {
 
-            // Handle error
+            /**handle the case when camera opened, but pitcure not taken */
             // console.log('inisde camera 2nd clbk');
             this.showSpinner = false;
-
         })
             .catch((err: any) => {
                 // console.log('inside camera catch');
                 console.log(err);
                 this.showSpinner = false;
-                this.customService.showToast('Error in uploading image');
+                this.customService.showToast('Error occured,Try again');
             });
     }
 
@@ -182,66 +183,21 @@ export class NewAssignmentPageManagement {
         }, (err) => {
             // console.log('inside library 2nd clbk');
             this.showSpinner = false;
-
         })
             .catch((err) => {
                 // Handle error
                 console.log('inside library catch ');
-                this.customService.showToast('Error in uploading image');
                 this.showSpinner = false;
-
+                this.customService.showToast('Error occured, Try again');
             });
     }
 
 
     selectFile() {
-
-        /**We Want the file path to be native(i.e starting with file://)
-         * so that we can extract the file name and type from the path.
-         * Hence resolve the url when recieved as starting from content:// 
-         */
-        this.fileChooser.open()
-            .then(uri => {
-                if (uri.startsWith("content://")) {
-
-                    this.filePath.resolveNativePath(uri)
-                        .then(nativeUri => {
-
-                            this.file = nativeUri;
-                            // console.log(nativeUri);
-                            this.image = null;
-                            this.fileName = this.file.split('/').pop();
-                            this.checkCompatibleFile(this.fileName);
-                        }, (err: any) => {
-                            /**files path from google drive are not convertable to native path */
-                            let errMsg = err.message + "\nYou might be uploading a file from cloud/Google drive";
-                            this.customService.showToast(errMsg);
-                        });
-                } else {
-
-                    this.file = uri;
-                    this.image = null;
-                    this.fileName = this.file.split('/').pop();
-                    this.checkCompatibleFile(this.fileName);
-                }
-            }, (err: any) => {
-                // console.log('inside 2nd clllll');
-
-                alert('Unable to Choose the file at the moment');
-            })
-            .catch(e => {
-                // console.log('inside catch//////');
-
-                alert(JSON.stringify(e));
-            });
-    }
-
-    checkCompatibleFile(name: string) {
-        let type = name.slice(name.lastIndexOf('.') + 1);
-        if (!(type == "pdf" || type == "jpg" || type == "jpeg" || type == "png" || type == "doc" || type == "docx" || type == "txt")) {
-            this.file = null;
-            this.customService.showToast('Unsupported File Type');
-        }
+        /**below method results in storing the selected file uri in 'this.file'
+                 * also performs error handling related to file selection
+                  */
+        this.fileSelectService.chooseFile(this);
     }
 
     onSubmit() {
@@ -299,32 +255,33 @@ export class NewAssignmentPageManagement {
             data.yearId = this.year.yearId || this.year.id;
             data.image = this.image;
             data.file = this.file;
+            data.fileName = this.fileName;
 
             this.customService.showLoader();
 
             this.assignmentService.postAssignmentWithFile(data)
                 .then((res: any) => {
 
-                    // console.log('inside finally submit then');
+                    console.log('inside finally submit then');
                     this.customService.hideLoader();
-                    this.customService.showToast('Assignment submitted successfully');
-                    this.dismiss(res);
-                }, (err: any) => {
-
-                    // alert(JSON.stringify(err.body));
-                    // console.log('inside finally submit catch');
-                    this.customService.hideLoader();
-                    let errMsg = JSON.parse(err.body).message || 'Some Error Occured';
-                    alert(JSON.stringify(errMsg));
+                    // alert(JSON.stringify(res));
+                    let res1 = JSON.parse(res.response);
+                    this.customService.showToast('Assignment created successfully');
+                    this.dismiss(res1);
                 })
                 .catch((err: any) => {
-                    // console.log('inside finally submit catch');
-                    // alert(JSON.stringify(err.body));
+                    console.log('inside finally submit catch');
                     this.customService.hideLoader();
-                    let errMsg = JSON.parse(err.body).message || 'Some Error Occured';
-                    alert(JSON.stringify(errMsg));
-                });
+                    // alert(JSON.stringify(err));
 
+                    try {
+                        let error = JSON.parse(err.body);
+                        let errMsg = (error.message || error.error) ? error.message || error.error : "Some Error Occured,Couldn't Create Circular";
+                        this.customService.showToast(errMsg);
+                    } catch (e) {
+                        this.customService.showToast(e.toString() || 'Some unexpected error occured');
+                    }
+                });
         }
     }
 

@@ -50,13 +50,12 @@ export class FileSelectService {
                 }
             }, (err: any) => {
                 // console.log('inside 2nd clllll');
-
-                alert('Unable to Choose the file at the moment');
+                thisRef.customService.showToast('Error occured, Try again');
             })
             .catch(e => {
                 // console.log('inside catch//////');
 
-                alert(JSON.stringify(e));
+                thisRef.customService.showToast(e.toString() || 'Error occured, Try again');
             });
     }
 

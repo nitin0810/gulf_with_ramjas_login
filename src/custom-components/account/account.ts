@@ -131,13 +131,11 @@ export class AccountPage {
             .then((imageData) => {
 
                 this.saveImage(imageData);
-
-            }, (err) => { })
+            }, (err) => { }) 
             .catch((err) => {
                 // Handle error
                 console.log('inside library catch ');
-                this.customService.showToast('Error in uploading image');
-
+                this.customService.showToast('Error occured, Try again');
             });
     }
 
@@ -154,13 +152,12 @@ export class AccountPage {
             .then((imageData) => {
 
                 this.saveImage(imageData);
-            }, (err) => { })
+            }, (err) => {})
             .catch((err) => {
                 // Handle error
                 console.log('inside library catch ');
-                this.customService.showToast('Error in uploading image');
-
-            });;
+                this.customService.showToast('Error occured, Try again');
+            });
     }
 
 
@@ -170,21 +167,29 @@ export class AccountPage {
         this.customService.showLoader();
         this.authService.uploadPic(image)
             .then((res: any) => {
+                console.log('inside finally  submit then of account');
 
-                // alert(JSON.stringify(res));
-                this.userImage = res.fileUrl;
-                localStorage.setItem('picUrl', res.fileUrl);
-                localStorage.setItem('picOriginalName', res.fileName);
-                this.events.publish("user:image", res.fileUrl);
+                alert(JSON.stringify(res));
+                let res1 = JSON.parse(res.response);
+                this.userImage = res1.fileUrl;
+                localStorage.setItem('picUrl', res1.fileUrl);
+                localStorage.setItem('picOriginalName', res1.fileName);
+                this.events.publish("user:image", res1.fileUrl);
                 this.customService.hideLoader();
                 this.customService.showToast('Picture Updated Successfully');
 
             }, (err) => {
-                alert(JSON.stringify(err));
+                console.log('inside finally submit catch of account');
+                // alert(JSON.stringify(err.body));
 
-                this.customService.hideLoader();
-                let errMsg = JSON.parse(err.body).error_description || JSON.parse(err.body).error || 'Some Error Occured';
-                this.customService.showToast(errMsg);
+                try {
+                    let error = JSON.parse(err.body);
+                    let errMsg = (error.message || error.error) ? error.message || error.error : "Some Error Occured,Couldn't Create Circular";
+                    this.customService.showToast(errMsg);
+                } catch (e) {
+                    this.customService.showToast(e.toString() || 'Some unexpected error occured');
+
+                }
             });
     }
 
