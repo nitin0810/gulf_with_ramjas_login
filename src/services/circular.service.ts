@@ -31,8 +31,9 @@ export class CircularService {
 
     fetchCircularById(id: number) {
 
-        return this.http.get(config.APP_CONSTANTS.serverUrl + `/ma/circular/${id}`);
+        return this.http.get(config.APP_CONSTANTS.serverUrl + `/st/circular/${id}`);
     }
+
     searchManagement(isExpired: boolean, pageNo: number,searchValue:string) {
 
         return this.http.post(config.APP_CONSTANTS.serverUrl + `/ma/circular/${isExpired}/search/page/${pageNo}`, {search:searchValue});

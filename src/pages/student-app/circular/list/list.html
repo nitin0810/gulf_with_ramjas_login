@@ -1,0 +1,37 @@
+<ion-header>
+    <nl-navbar [title]="title"></nl-navbar>
+</ion-header>
+
+<ion-content class="csGrayBackground">
+
+    <ion-refresher (ionRefresh)="doRefresh($event)">
+        <ion-refresher-content></ion-refresher-content>
+    </ion-refresher>
+
+    <ion-list>
+        <button *ngFor="let circular of circularList" ion-item (click)="openViewCircular(circular)" [style.border-left-color]="circular.mainAudienceColor">
+            <h2>
+                <b>{{circular.title}}</b>
+            </h2>
+            <p>
+                {{circular.description}}
+            </p>
+            <p>
+                Created By: {{circular.employeName}}
+            </p>
+            <p *ngIf="circular.fileCount>0">
+                Files Attached: {{circular.fileCount}}
+            </p>
+        </button>
+    </ion-list>
+
+    <div class="no-comment" *ngIf="circularList?.length==0">
+        <ion-icon name="list-box"></ion-icon>
+        <br>NO RECORD FOUND
+    </div>
+
+    <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
+        <ion-infinite-scroll-content></ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+
+</ion-content>

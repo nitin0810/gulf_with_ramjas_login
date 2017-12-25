@@ -1,0 +1,28 @@
+<ion-header>
+    <nl-modal-navbar [title]="title" (modalClosed)="dismiss()"></nl-modal-navbar>
+</ion-header>
+
+<ion-content class="csGrayBackground">
+
+    <ion-card *ngIf="circular">
+        <ion-card-title>
+            {{circular.title}}
+        </ion-card-title>
+        <ion-card-content>
+            <ion-card-header>
+                Effective Date: {{circular.date | amDateFormat: 'LL'}} <br>
+                Created By: {{circular.employeName}}
+            </ion-card-header>
+
+            <p>{{circular.description}}</p>
+            <br>
+            <div *ngIf="circular.fileCount>0">
+                <ul>
+                    <li *ngFor="let file of circular.files;let i=index">
+                        <a (click)="onFileClick(file,i)">{{file.fileOriginalName}}</a>
+                    </li>
+                </ul>
+            </div>
+        </ion-card-content>
+    </ion-card>
+</ion-content>

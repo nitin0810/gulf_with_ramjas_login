@@ -83,12 +83,11 @@ export class UserSessionManage {
                 { title: 'Appreciations', component: "AppreciationTabsPageStudent", icon: 'assets/icon/appreciation.jpg' },
                 { title: 'Polls', component: "PollStudent", icon: 'assets/icon/poll.jpg' },
                 { title: 'Surveys', component: "SurveyPageStudent", icon: 'assets/icon/survey.jpg' },
+                { title: 'Circular', component: "CircularStudentListPage",icon: 'assets/icon/circular.jpg' },
                 { title: 'Events', component: "MainPlannerPageManagement", icon: 'assets/icon/event.jpg' },
                 { title: 'Assignment', component: "AssignmentTabsPageStudent", icon: 'assets/icon/rating.jpg' },
                 { title: 'Assessment', component: "AssessmentTabsPageStudent", icon: 'assets/icon/rating.jpg' },
                 { title: 'Account', component: "AccountPage", icon: 'assets/icon/profile.jpg' },
-
-
 
             ];
 

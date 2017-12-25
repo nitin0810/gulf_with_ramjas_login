@@ -45,13 +45,6 @@ export class CustomService {
         this.toast.present();
     }
 
-    public hideToast() {
-
-        // if (this.toast) {
-        //     this.toast.dismiss().
-        //     catch (()=> { });
-        // }
-    }
     public errMessage() {
 
         let toast = this.toastCtrl.create({

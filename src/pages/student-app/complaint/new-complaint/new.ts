@@ -188,7 +188,6 @@ console.log('reset callled');
 
     dismiss(optionaldata?: any) {
 
-        this.customService.hideToast();
         this.viewCtrl.dismiss({ data: optionaldata });
     }
 

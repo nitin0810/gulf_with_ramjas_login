@@ -167,7 +167,6 @@ export class CommentsPage {
 
         this.disconnectSockJs();
         this.events.publish('complaintStatusChangedInCommentsPage', this.complaint, this.complaintIndex);
-        this.customService.hideToast();
         this.viewCtrl.dismiss();
     }
 
