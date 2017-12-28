@@ -9,9 +9,9 @@ import { IonicPage, ViewController, NavParams, Searchbar } from 'ionic-angular';
 
 })
 
-/**this page is being used at many places where a particular name is to be selected from a , being also used at:
+/**this page is being used at many places where a particular name is to be selected from a List, being also used at:
  * in NewAppreciationPage for both student and management
- * hence according conditions have been applied in html
+ * hence required conditions have been applied in html
  */
 export class FacultySearchPage {
 

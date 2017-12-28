@@ -83,7 +83,7 @@ export class UserSessionManage {
                 { title: 'Appreciations', component: "AppreciationTabsPageStudent", icon: 'assets/icon/appreciation.jpg' },
                 { title: 'Polls', component: "PollStudent", icon: 'assets/icon/poll.jpg' },
                 { title: 'Surveys', component: "SurveyPageStudent", icon: 'assets/icon/survey.jpg' },
-                { title: 'Circular', component: "CircularStudentListPage",icon: 'assets/icon/circular.jpg' },
+                { title: 'Circular', component: "CircularStudentListPage", icon: 'assets/icon/circular.jpg' },
                 { title: 'Events', component: "MainPlannerPageManagement", icon: 'assets/icon/event.jpg' },
                 { title: 'Assignment', component: "AssignmentTabsPageStudent", icon: 'assets/icon/rating.jpg' },
                 { title: 'Assessment', component: "AssessmentTabsPageStudent", icon: 'assets/icon/rating.jpg' },
@@ -101,22 +101,21 @@ export class UserSessionManage {
                 { title: 'Appreciations', component: "AppreciationTabsPageManagement", icon: 'assets/icon/appreciation.jpg' },
                 { title: 'Polls', icon: 'assets/icon/poll.jpg' },
                 { title: 'Surveys', icon: 'assets/icon/survey.jpg' },
-                { title: 'Circular', component: "CircularTabsPageManagement",icon: 'assets/icon/circular.jpg' },
+                { title: 'Circular', component: "CircularTabsPageManagement", icon: 'assets/icon/circular.jpg' },
                 { title: 'Events', component: "MainPlannerPageManagement", icon: 'assets/icon/event.jpg' },
                 { title: 'Assignment', component: "AssignmentTabsPageManagement", icon: 'assets/icon/rating.jpg' },
                 { title: 'Assessment', component: "AssessmentTabsPageManagement", icon: 'assets/icon/rating.jpg' },
+                { title: 'Time Table', component: "TimeTablePageManagement", icon: 'assets/icon/rating.jpg' },
                 { title: 'Account', component: "AccountPage", icon: 'assets/icon/profile.jpg' },
-                
+
             ];
 
             /**insert the evaluation option in case user has a role of quality-coordinater */
             let roles: Array<string> = JSON.parse(localStorage.getItem('roles'));
-            for (let x of roles) {
-                if (x == "QUALITYCOORDINATOR") {
-                    this.sideMenuOptions.splice(7, 0, { title: 'Evaluations', component: "EvaluationTabsPageManagement", icon: 'assets/icon/appreciation.jpg' });
-                    break;
-                }
+            if (roles.indexOf("QUALITYCOORDINATOR") > -1) {
+                this.sideMenuOptions.splice(7, 0, { title: 'Evaluations', component: "EvaluationTabsPageManagement", icon: 'assets/icon/appreciation.jpg' });
             }
+
         }
         /**update the following variables every time a new login is done 
          * it is done to remove a bug, which messes up the order in which side menu options should appear

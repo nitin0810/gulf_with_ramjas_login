@@ -1,0 +1,51 @@
+<ion-header>
+    <nl-modal-navbar [title]="title" (modalClosed)="dismiss()">
+    </nl-modal-navbar>
+</ion-header>
+
+<ion-content class="csGrayBackground">
+    <form *ngIf="empList" #newTimeTableForm="ngForm" (ngSubmit)="onSubmit()">
+
+        <ion-card *ngIf="empList">
+            <button ion-item (click)="onnSelectFaculty()">
+                <ion-label stacked>Select Faculty</ion-label>
+                <ion-input [(ngModel)]="employeeName" required disabled placeholder="Select Faculty " name="faculty"></ion-input>
+            </button>
+        </ion-card>
+
+
+        <ion-card *ngIf="pgmList">
+            <ion-item>
+                <ion-label>
+                    <b>Select Program </b>
+                </ion-label>
+                <ion-select [(ngModel)]="program" (ionChange)="onProgramChange()" required name="program">
+                    <ion-option *ngFor="let pgm of pgmList" [value]="pgm">
+                        {{pgm.programName}}
+                    </ion-option>
+                </ion-select>
+            </ion-item>
+        </ion-card>
+
+        <ion-card *ngIf="moduleAndYearList">
+            <ion-card-title>Select Batch</ion-card-title>
+            <ion-card-content>
+                <ion-list radio-group [(ngModel)]="moduleYearObject" name="moduleAndYear">
+                    <ion-item *ngFor="let m of moduleAndYearList" class="csPaddingLeft50 csPollOptionsBack">
+                        <ion-label>
+                            <p>Year: {{m.yearName}}</p>
+                            <p>Module: {{m.moduleName}}</p>
+                        </ion-label>
+                        
+                        <ion-radio checked="false" [value]="m">
+                            
+                        </ion-radio>
+                    </ion-item>
+                </ion-list>
+            </ion-card-content>
+        </ion-card>
+
+
+
+    </form>
+</ion-content>

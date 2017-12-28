@@ -44,6 +44,7 @@ import { CustomModalNavbarModule } from '../custom-components/modal-navbar/modal
 import { LoginPage } from '../custom-components/login/login';
 import { ForgotPasswordModal } from '../custom-components/login/forgot-password/forgot-password';
 import { CircularService } from '../services/circular.service';
+import { TimeTableService } from '../services/timeTable.service';
 
 
 
@@ -90,6 +91,7 @@ import { CircularService } from '../services/circular.service';
     PlannerService,
     AssessmentService,
     CircularService,
+    TimeTableService,
     FileSelectService,
     { provide: ErrorHandler, useClass: IonicErrorHandler },
     {
