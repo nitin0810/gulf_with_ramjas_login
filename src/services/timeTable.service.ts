@@ -21,59 +21,31 @@ export class TimeTableService {
         public http: CustomHttpService,
     ) { }
 
-   
+    fetchEmployeeandRSDInfo() {
 
-    fetchEmployeeList() {
+        /**collect observables of all http requests */
+        let empObservable = this.http.get(CONFIG.serverUrl + '/ad/timetable/employee');
+        let roomObservable = this.http.get(CONFIG.serverUrl + '/ad/room');
+        let slotObservable = this.http.get(CONFIG.serverUrl + '/ad/slot');
+        let dayObservable = this.http.get(CONFIG.serverUrl + '/ad/day');
 
-        return this.http.get(CONFIG.serverUrl + '/ad/timetable/employeeSummary');
+        return Observable.forkJoin([empObservable, roomObservable, slotObservable, dayObservable]);
     }
 
-   
-    fetchProgramList(eId:number) {
+    fetchProgramList(eId: number) {
 
         return this.http.get(CONFIG.serverUrl + `/ad/timetable/employee/${eId}`);
     }
 
-    fetchModuleAndYearList(pId:number,fId:number) {
+    fetchModuleAndYearList(pId: number, fId: number) {
 
         return this.http.get(CONFIG.serverUrl + `/ad/timetable/program/${pId}/faculty/${fId}`);
     }
 
 
+    submitTimetable(data: any) {
 
-
-    fetchAllRequiredData() {
-
-        /**collect observables of all http requests */
-        let empObservable = this.http.get(CONFIG.serverUrl + '/ad/timetable/employee');
-        let pgmObservable = this.http.get(CONFIG.serverUrl + '/ad/timetable/program');
-        let yearObservable = this.http.get(CONFIG.serverUrl + '/ad/timetable/program/year');
-        let roomObservable = this.http.get(CONFIG.serverUrl + '/ad/room/all');
-        let slotObservable = this.http.get(CONFIG.serverUrl + '/ad/slot');
-
-        return Observable.forkJoin([empObservable, pgmObservable, yearObservable, roomObservable, slotObservable]);
+        return this.http.post(CONFIG.serverUrl + `/ad/timetable`, data);
     }
 
-    isRequiredDataPresent() { return this.allInfoAvailable; }
-
-    storeRequiredData(data: Array<any>) {
-
-        [this.empInfo, this.pgmInfo, this.yearInfo, this.roomInfo, this.slotInfo] = data;
-        // this.empInfo = data[0];
-        // this.pgmInfo = data[1];
-        // this.yearInfo = data[2];
-        // this.roomInfo = data[3];
-        // this.slotInfo = data[4];
-        this.allInfoAvailable = true;
-    }
-
-    getRequiredData() {
-        return [this.empInfo, this.pgmInfo, this.yearInfo, this.roomInfo, this.slotInfo];
-    }
-
-    clearStoredData() {
-
-        this.empInfo = this.pgmInfo = this.yearInfo = this.slotInfo = this.roomInfo = null;
-        this.allInfoAvailable = false;
-    }
 }

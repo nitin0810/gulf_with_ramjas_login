@@ -7,9 +7,9 @@
     <form *ngIf="empList" #newTimeTableForm="ngForm" (ngSubmit)="onSubmit()">
 
         <ion-card *ngIf="empList">
-            <button ion-item (click)="onnSelectFaculty()">
+            <button ion-item type="button" (click)="onnSelectFaculty()">
                 <ion-label stacked>Select Faculty</ion-label>
-                <ion-input [(ngModel)]="employeeName" required disabled placeholder="Select Faculty " name="faculty"></ion-input>
+                <ion-input [(ngModel)]="employeeName" disabled required placeholder="Select Faculty " name="faculty"></ion-input>
             </button>
         </ion-card>
 
@@ -17,7 +17,7 @@
         <ion-card *ngIf="pgmList">
             <ion-item>
                 <ion-label>
-                    <b>Select Program </b>
+                    <b>Select Program</b>
                 </ion-label>
                 <ion-select [(ngModel)]="program" (ionChange)="onProgramChange()" required name="program">
                     <ion-option *ngFor="let pgm of pgmList" [value]="pgm">
@@ -30,21 +30,60 @@
         <ion-card *ngIf="moduleAndYearList">
             <ion-card-title>Select Batch</ion-card-title>
             <ion-card-content>
-                <ion-list radio-group [(ngModel)]="moduleYearObject" name="moduleAndYear">
+                <ion-list radio-group [(ngModel)]="moduleYearObject" required name="moduleAndYear">
                     <ion-item *ngFor="let m of moduleAndYearList" class="csPaddingLeft50 csPollOptionsBack">
                         <ion-label>
-                            <p>Year: {{m.yearName}}</p>
                             <p>Module: {{m.moduleName}}</p>
+                            <p>Year: {{m.yearName}}</p>
+                            <p>Semester: {{m.semester}}</p>
                         </ion-label>
-                        
+
                         <ion-radio checked="false" [value]="m">
-                            
+
                         </ion-radio>
                     </ion-item>
                 </ion-list>
             </ion-card-content>
         </ion-card>
 
+        <ion-card *ngIf="rsdAvailable">
+            <ion-item>
+                <ion-label>
+                    <b>Select Day </b>
+                </ion-label>
+                <ion-select [(ngModel)]="day" required name="day">
+                    <ion-option *ngFor="let d of dayList" [value]="d">
+                        {{d.day}}
+                    </ion-option>
+                </ion-select>
+            </ion-item>
+
+            <ion-item>
+                <ion-label>
+                    <b>Select Slot </b>
+                </ion-label>
+                <ion-select [(ngModel)]="slot" required name="slot">
+                    <ion-option *ngFor="let s of slotList" [value]="s">
+                        {{s.startTime}}-{{s.endTime}}
+                    </ion-option>
+                </ion-select>
+            </ion-item>
+
+            <ion-item>
+                <ion-label>
+                    <b>Select Room </b>
+                </ion-label>
+                <ion-select [(ngModel)]="room" required name="room">
+                    <ion-option *ngFor="let r of roomList" [value]="r">
+                        {{r.number}} ({{r.name}})
+                    </ion-option>
+                </ion-select>
+            </ion-item>
+        </ion-card>
+
+        <div padding>
+            <button ion-button full type="submit" [disabled]="newTimeTableForm.invalid || !employeeName">SUBMIT</button>
+        </div>
 
 
     </form>

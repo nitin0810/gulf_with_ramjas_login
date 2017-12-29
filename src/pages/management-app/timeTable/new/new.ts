@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { IonicPage, ViewController, ModalController } from 'ionic-angular';
+import { IonicPage, ViewController, ModalController, ActionSheetController } from 'ionic-angular';
 import { CustomService } from '../../../../services/custom.service';
 import { TimeTableService } from '../../../../services/timeTable.service';
 
@@ -18,38 +18,47 @@ export class NewTimeTablePageManagement implements OnInit {
     empList: Array<any>;
     pgmList: Array<any>;
     moduleAndYearList: Array<any>;
+
     roomList: Array<any>;
     slotList: Array<any>;
+    dayList: Array<any>;
+    rsdAvailable: boolean = false; /**indicates wheather room, day and slot info is available or not */
 
     /**ngModal variables */
     employee: any;
-    employeeName: string = '';
+    employeeName: string;
     program: any;
-    moduleYearObject:any;
+    moduleYearObject: any;
+    day: any;
+    slot: any;
+    room: any;
 
     constructor(
         private viewCtrl: ViewController,
+        private actionSheetCtrl: ActionSheetController,
         private customService: CustomService,
         private mdlCtrl: ModalController,
         private timeTableService: TimeTableService
     ) { }
 
     ngOnInit() {
-        this.getEmployeeList();
+        this.getEmployeeandRSDList();
     }
 
-    getEmployeeList() {
+    getEmployeeandRSDList() {
 
         this.customService.showLoader();
-        this.timeTableService.fetchEmployeeList()
-            .subscribe((res: any) => {
+        this.timeTableService.fetchEmployeeandRSDInfo()
+            .subscribe((res: Array<any>) => {
 
-                this.empList = res;
+                [this.empList, this.roomList, this.slotList, this.dayList] = res;
+                this.rsdAvailable = true;
                 this.customService.hideLoader();
             }, (err: any) => {
 
                 this.customService.hideLoader();
-                this.customService.showToast(err.msg);
+                this.customService.showToast("Couldn't fetch the required data, Try again");
+                this.dismiss();
             });
 
     }
@@ -67,7 +76,7 @@ export class NewTimeTablePageManagement implements OnInit {
                 }
                 this.employee = selected.selectedSearch;
                 this.employeeName = this.employee.name;
-                this.moduleAndYearList=null;
+                this.program = this.moduleAndYearList = null;
             }
         });
     }
@@ -88,13 +97,23 @@ export class NewTimeTablePageManagement implements OnInit {
 
     }
 
-    onProgramChange(){
-        console.log('pppp change',this.program);
+    onProgramChange() {
+
+        if (!this.program) { return; }/** ignore this method call when program is null*/
+        this.getModuleAndYearList();
+        this.moduleYearObject = null;
+
+    }
+
+    getModuleAndYearList() {
         this.customService.showLoader();
-        this.timeTableService.fetchModuleAndYearList(this.program.programId,this.employee.id)
+        this.timeTableService.fetchModuleAndYearList(this.program.programId, this.employee.id)
             .subscribe((res: any) => {
 
                 this.moduleAndYearList = res;
+                this.moduleAndYearList.forEach((element: any) => {
+                    element.semester = this.giveSemester(element.yearName, element.isEvenSemester);
+                });
                 this.customService.hideLoader();
             }, (err: any) => {
 
@@ -103,8 +122,72 @@ export class NewTimeTablePageManagement implements OnInit {
             });
     }
 
+    giveSemester(year: string, isEven: boolean) {
+
+        switch (year) {
+
+            case "1st": return isEven ? "2nd" : "1st";
+            case "2nd": return isEven ? "4th" : "3rd";
+            case "3rd": return isEven ? "6th" : "5th";
+            case "4th": return isEven ? "8th" : "7th";
+            default: return "N.A.";
+        }
+    }
+
+
     onSubmit() {
 
+        const actionSheet = this.actionSheetCtrl.create({
+
+            title: 'Are you sure to create the Timetable ?',
+            buttons: [
+                {
+                    text: 'Yes',
+                    handler: () => { this.finallySubmit(); }
+                },
+                {
+                    text: 'Cancel',
+                    role: 'cancel',
+                    handler: () => { }
+                }
+            ]
+        });
+        actionSheet.present();
+    }
+
+
+    finallySubmit() {
+
+        let payLoad: any = this.buildPayload();
+        this.submitTimetable(payLoad);
+    }
+
+    buildPayload() {
+
+        return {
+            employeeId: this.employee.id,
+            programId: this.program.programId,
+            yearId: this.moduleYearObject.yearId,
+            moduleId: this.moduleYearObject.moduleId,
+            isEvenSemester:this.moduleYearObject.isEvenSemester,
+            dayId: this.day.id,
+            slotId: this.slot.id,
+            roomId: this.room.id
+        };
+    }
+
+    submitTimetable(payLoad: any) {
+
+        this.customService.showLoader('Submiting..');
+        this.timeTableService.submitTimetable(payLoad)
+            .subscribe((res: any) => {
+                this.customService.hideLoader();
+                this.customService.showToast("Timetable created successfully");
+                this.dismiss();
+            }, (err: any) => {
+                this.customService.hideLoader();
+                this.customService.showToast(err.msg);
+            });
     }
 
     dismiss() {

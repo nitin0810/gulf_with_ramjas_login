@@ -103,7 +103,7 @@ export class CustomHttpService extends Http {
                 body = '';
             }
 
-            let errMsg = body.error || 'Internal server error, Try again later ';
+            let errMsg =body.message ||  body.error || 'Internal server error, Try again later ';
             err.status = error.status;
             err.msg = errMsg;
 
