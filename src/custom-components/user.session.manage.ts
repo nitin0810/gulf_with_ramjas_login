@@ -87,8 +87,9 @@ export class UserSessionManage {
                 { title: 'Events', component: "MainPlannerPageManagement", icon: 'assets/icon/event.jpg' },
                 { title: 'Assignment', component: "AssignmentTabsPageStudent", icon: 'assets/icon/rating.jpg' },
                 { title: 'Assessment', component: "AssessmentTabsPageStudent", icon: 'assets/icon/rating.jpg' },
+                { title: 'Time Table', component: "TimeTablePageStudent", icon: 'assets/icon/rating.jpg' },
                 { title: 'Account', component: "AccountPage", icon: 'assets/icon/profile.jpg' },
-
+                
             ];
 
         } else {

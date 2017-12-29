@@ -25,9 +25,9 @@ export class TimeTablePageManagement {
     loginType:string;
 
     constructor(
-        private modalCtrl: ModalController,
-        private customService: CustomService,
-        private timeTableService: TimeTableService
+        public modalCtrl: ModalController,
+        public customService: CustomService,
+        public timeTableService: TimeTableService
     ) { }
 
     ionViewWillEnter() {

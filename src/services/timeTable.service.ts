@@ -10,13 +10,7 @@ import 'rxjs/add/observable/forkJoin';
 @Injectable()
 export class TimeTableService {
 
-    private empInfo: Array<any>;
-    private pgmInfo: Array<any>;
-    private yearInfo: Array<any>;
-    private roomInfo: Array<any>;
-    private slotInfo: Array<any>;
-    private allInfoAvailable: boolean = false;
-
+    
     constructor(
         public http: CustomHttpService,
     ) { }
@@ -52,7 +46,8 @@ export class TimeTableService {
 
     fetchTimetableByWeek(){
 
-        return this.http.get(CONFIG.serverUrl + `/ma/timetable/week`);
+        let loginType:string= localStorage.getItem('loginType')==="student"?'st':'ma';
+        return this.http.get(CONFIG.serverUrl + `/${loginType}/timetable/week`);
     }
 
 }

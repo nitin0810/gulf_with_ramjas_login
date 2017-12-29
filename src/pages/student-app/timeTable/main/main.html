@@ -1,0 +1,82 @@
+<ion-header>
+        <ion-navbar color="primary">
+            <button ion-button menuToggle>
+                <ion-icon name="menu"></ion-icon>
+            </button>
+            <ion-title>{{title | uppercase}}</ion-title>
+        </ion-navbar>
+    
+        <ion-toolbar no-border-top color="primary">
+            <ion-segment [(ngModel)]="selectedDay" (ionChange)="onDayChange()">
+                <ion-segment-button *ngFor="let day of daysName" [value]="day">
+                    <span class="textWhite">{{ day }}</span>
+                </ion-segment-button>
+            </ion-segment>
+        </ion-toolbar>
+    </ion-header>
+    
+    
+    <ion-content class="background1">
+        <ion-list>
+            <ion-list-header>
+                {{todayDate |  amDateFormat: 'LL'}}
+            </ion-list-header>
+            <ion-list no-lines>
+                <ion-item-sliding *ngFor="let period of selectedDayTimetable">
+                    <button ion-item class="timetable-item" >
+                        <ion-grid no-padding>
+                            <ion-row>
+                                <ion-col col-4 class="border border-right-progress left-col" text-right>
+                                    <!-- <h2 class="textLarge">{{period.startTime}}</h2> -->
+                                    <span class="textGray">{{period.startTime}}-{{period.endTime}}</span>
+                                    <div>
+                                        <span class="colorInProgress textSmall">Room No.: {{period.roomNumber}}</span>
+                                    </div>
+                                </ion-col>
+                                <ion-col col-8 col-8 class="border border-left-progress right-col">
+                                    <h2 class="textLarge">{{period.moduleName}}</h2>
+                                    <span *ngIf="loginType=='management'" class="textGray">
+                                        <ion-icon name="folder"></ion-icon> 
+                                        {{period.programName}}
+                                    </span>
+                                    <span *ngIf="loginType=='student'" class="textGray">
+                                            <ion-icon name="person"></ion-icon> 
+                                            {{period.employeeName}}
+                                        </span>
+                                    <div *ngIf="loginType=='management'">
+                                        <span class="textSmall">
+                                            <b>{{period.yearName}} year</b>
+                                        </span>
+                                    </div>
+                                </ion-col>
+                            </ion-row>
+                        </ion-grid>
+                    </button>
+                    <!-- <ion-item-options side="left">
+                        <button ion-button color="primary" (click)="openAttendancePage(period)">
+                            <ion-icon name="man"></ion-icon>
+                            Attendance
+                        </button>
+                        <button ion-button color="secondary" (click)="openPaperMessagePage()">
+                            <ion-icon name="chatbubbles"></ion-icon>
+                            Message
+                        </button>
+                    </ion-item-options>
+                    <ion-item-options side="right">
+                        <button ion-button color="primary" (click)="openAssignmentPage(period)">
+                            <ion-icon name="school"></ion-icon>
+                            Assignment
+                        </button>
+                        <button ion-button color="primary" (click)="openNotesPage(period)">
+                            <ion-icon name="paper"></ion-icon>
+                            Notes
+                        </button>
+                    </ion-item-options> -->
+                </ion-item-sliding>
+            </ion-list>
+    
+        </ion-list> 
+    
+         
+    </ion-content>
+    

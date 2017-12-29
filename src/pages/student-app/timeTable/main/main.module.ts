@@ -1,16 +1,16 @@
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
 import { MomentModule } from 'angular2-moment';
-import { TimeTablePageManagement } from './main';
+import { TimeTablePageStudent } from './main';
 
 @NgModule({
   
-    declarations: [TimeTablePageManagement],
+    declarations: [TimeTablePageStudent],
    
     imports: [
         MomentModule,
-        IonicPageModule.forChild(TimeTablePageManagement)
+        IonicPageModule.forChild(TimeTablePageStudent)
     ],
     
 })
-export class TimeTableModuleManagement { }  
+export class TimeTableModuleStudent { }  
