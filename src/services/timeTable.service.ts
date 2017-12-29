@@ -48,4 +48,11 @@ export class TimeTableService {
         return this.http.post(CONFIG.serverUrl + `/ad/timetable`, data);
     }
 
+    /**Above requests are related to creating the timetable */
+
+    fetchTimetableByWeek(){
+
+        return this.http.get(CONFIG.serverUrl + `/ma/timetable/week`);
+    }
+
 }

@@ -1,0 +1,44 @@
+page-home {
+
+}
+.border{
+    border: 1px solid lightgray;
+}
+.border-right-progress{
+    border-right-color: color($colors, color16);
+}
+.border-left-progress{
+    border-left-color: color($colors, color16);
+}
+.colorInProgress{
+    color:color($colors, color16);
+}
+.textGray{
+    color:color($colors, color19);
+}
+.textSmall{
+    font-size:10px;
+}
+.textWhite{
+    color:white;
+}
+.textLarge{
+    font-size:20px;
+}
+.border-right-notstarted{
+    border-right-color: color($colors, color1);
+}
+.border-left-notstarted{
+    border-left-color: color($colors, color1);
+}
+.colorNotstarted{
+    color:color($colors, color1);
+}
+.timetable-item{
+}
+.left-col{
+    padding-right: 5px !important;
+}
+.right-col{
+    padding-left:5px !important;
+}

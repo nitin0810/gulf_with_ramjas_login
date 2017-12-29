@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
-// import { MomentModule } from 'angular2-moment';
+import { MomentModule } from 'angular2-moment';
 import { CustomNavbarModule } from '../../../../custom-components/navbar/navbar.module';
 import { TimeTablePageManagement } from './main';
 
@@ -10,6 +10,7 @@ import { TimeTablePageManagement } from './main';
    
     imports: [
         CustomNavbarModule,
+        MomentModule,
         IonicPageModule.forChild(TimeTablePageManagement)
     ],
     
