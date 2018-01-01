@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, ModalController } from 'ionic-angular';
+import { IonicPage, ModalController, ActionSheetController } from 'ionic-angular';
 import { CustomService } from '../../../../services/custom.service';
 import { TimeTableService } from '../../../../services/timeTable.service';
 
@@ -15,7 +15,7 @@ export class TimeTablePageManagement {
     title: string = 'Time table';
 
     /**data required to display the timetable */
-    daysName: Array<string> = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+    daysName: Array<string> = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
     timetableData: any; /** Object whose keys are days and values is the array of periods/slots of timetable*/
 
     /**ngModal variables */
@@ -23,10 +23,12 @@ export class TimeTablePageManagement {
     selectedDay: string;
     selectedDayTimetable: Array<any>;
     // loginType:string;
+    isAdmin: boolean;
 
     constructor(
         public modalCtrl: ModalController,
         public customService: CustomService,
+        public actionSheetCtrl: ActionSheetController,
         public timeTableService: TimeTableService
     ) { }
 
@@ -36,6 +38,7 @@ export class TimeTablePageManagement {
         this.selectedDay = this.todayDate.toDateString().split(' ')[0];
         this.getTimeTable();
         // this.loginType = localStorage.getItem('loginType');
+        this.isAdmin = JSON.parse(localStorage.getItem('roles')).indexOf('ADMIN') > -1;
     }
 
     getTimeTable() {
@@ -76,5 +79,55 @@ export class TimeTablePageManagement {
     createNewTimeTable() {
         const modal = this.modalCtrl.create("NewTimeTablePageManagement");
         modal.present();
+    }
+
+    showoptions() {
+
+        const actionSheet = this.actionSheetCtrl.create({
+            title: 'Select option to Create',
+            buttons: [{
+                text: 'Attendance',
+                handler: () => {              }
+            },
+            {
+                text: 'Assignment',
+                handler: () => {
+
+                }
+            },
+            {
+                text: 'Assessment',
+                handler: () => {
+
+                }
+            },
+            {
+                text: 'Poll',
+                handler: () => {
+
+                }
+            },
+            {
+                text: 'Survey',
+                handler: () => {
+
+                }
+            },
+            {
+                text: 'Circular',
+                handler: () => {
+
+                }
+            },
+            {
+                text: 'Cancel',
+                role:'cancel',
+                handler: () => {
+
+                }
+            }]
+        });
+
+        actionSheet.present();
     }
 }

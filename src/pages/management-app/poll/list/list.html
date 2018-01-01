@@ -10,7 +10,7 @@
                 {{poll.optionTypeName}}
             </ion-col>
             <ion-col col-4 class="no-padding-l">
-                {{poll.studentVoteCount + poll.employeeVoteCount}} Votes
+                {{(poll.studentVoteCount + poll.employeeVoteCount)||0}} Votes
             </ion-col>
         </ion-row>
         <ion-row>

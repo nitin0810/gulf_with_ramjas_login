@@ -58,7 +58,7 @@ export class NewPollPageManagement {
     */
     getMainAudeinceData() {
 
-        if (!localStorage.getItem('pollAudienceList')) {
+        if (!this.pollService.getPollAudienceList()) {
 
             this.customService.showLoader();
             this.pollService.fetchPollAudience()
@@ -67,10 +67,7 @@ export class NewPollPageManagement {
                     this.audienceList = res.audience.slice(0, 4);
                     this.optionTypesPossible = res.optionType;
                     this.optionLimit = res.optionLimit;
-                    localStorage.setItem('pollAudienceList', JSON.stringify(this.audienceList));
-                    localStorage.setItem('pollOptionTypes', JSON.stringify(this.optionTypesPossible));
-                    localStorage.setItem('pollOptionLimit', JSON.stringify(this.optionLimit));
-
+                    this.pollService.savePollAudience(this.audienceList, this.optionTypesPossible, this.optionLimit);
                     this.customService.hideLoader();
 
                 }, (err: any) => {
@@ -79,9 +76,11 @@ export class NewPollPageManagement {
                     this.customService.showToast(err.msg);
                 });
         } else {
-            this.audienceList = JSON.parse(localStorage.getItem('pollAudienceList'));
-            this.optionTypesPossible = JSON.parse(localStorage.getItem('pollOptionTypes'));
-            this.optionLimit = JSON.parse(localStorage.getItem('pollOptionLimit'));
+
+            [this.audienceList, this.optionTypesPossible, this.optionLimit] = this.pollService.getPollAudienceList();
+            // this.audienceList = JSON.parse(localStorage.getItem('pollAudienceList'));
+            // this.optionTypesPossible = JSON.parse(localStorage.getItem('pollOptionTypes'));
+            // this.optionLimit = JSON.parse(localStorage.getItem('pollOptionLimit'));
         }
     }
 
@@ -90,21 +89,22 @@ export class NewPollPageManagement {
     }
 
     onAudienceChange() {
-        // clear the appropriate ngModal variable on main audience change to hide the options related to previous audience
         // console.log("audience change called////");
+        // clear the appropriate ngModal variable on main audience change to hide the options related to previous audience
 
         if (this.mainAudience.id == 1) { this.audienceIds = null; }
         if (this.mainAudience.id == 2) {
 
             this.audienceIds = this.departmentIds = null; // clear the ngModal variable
-            if (!localStorage.getItem('pollDepartmentList')) {
+            if (!this.pollService.getDepartments()) {
 
                 this.customService.showLoader();
                 this.pollService.fetchDepartments()
                     .subscribe((res: any) => {
 
                         this.departmentList = res;
-                        localStorage.setItem('pollDepartmentList', JSON.stringify(res));
+                        this.pollService.saveDepartments(this.departmentList);
+                        // localStorage.setItem('pollDepartmentList', JSON.stringify(res));
                         this.customService.hideLoader();
                     }, (err: any) => {
 
@@ -112,27 +112,28 @@ export class NewPollPageManagement {
                         this.customService.showToast(err.msg);
                     });
             } else {
-
-                this.departmentList = JSON.parse(localStorage.getItem('pollDepartmentList'));
+                this.departmentList = this.pollService.getDepartments();
+                // this.departmentList = JSON.parse(localStorage.getItem('pollDepartmentList'));
             }
 
         } else if (this.mainAudience.id == 3) {
 
             this.programIds = this.yearIds = null;
-            if (!localStorage.getItem('pollProgramList') && !localStorage.getItem('pollYearList')) {
+            if (!this.pollService.getProgramAndYearList()) {
 
                 this.customService.showLoader();
                 this.pollService.fetchPrograms()
                     .subscribe((res: any) => {
 
                         this.programList = res;
-                        localStorage.setItem('pollProgramList', JSON.stringify(res));
-
+                        // localStorage.setItem('pollProgramList', JSON.stringify(res));
                         this.pollService.fetchYears()
                             .subscribe((res: any) => {
 
                                 this.yearList = res;
-                                localStorage.setItem('pollYearList', JSON.stringify(res));
+                                this.pollService.saveProgramaAndYearList(this.programList, this.yearList);
+
+                                // localStorage.setItem('pollYearList', JSON.stringify(res));
                                 this.customService.hideLoader();
                             });
                     }, (err: any) => {
@@ -141,22 +142,25 @@ export class NewPollPageManagement {
                         this.customService.showToast(err.msg);
                     });
             } else {
-                this.programList = JSON.parse(localStorage.getItem('pollProgramList'));
-                this.yearList = JSON.parse(localStorage.getItem('pollYearList'));
+
+                [this.programList, this.yearList] = this.pollService.getProgramAndYearList();
+                // this.programList = JSON.parse(localStorage.getItem('pollProgramList'));
+                // this.yearList = JSON.parse(localStorage.getItem('pollYearList'));
 
 
             }
         } else if (this.mainAudience.id == 4) {
 
             this.moduleIds = this.yearForModule = null;
-            if (!localStorage.getItem('pollModuleYears')) {
+            if (!this.pollService.getYearListForModule()) {
 
                 this.customService.showLoader();
                 this.pollService.fetchYearsForModules()
                     .subscribe((res: any) => {
 
                         this.yearsListForModule = res;
-                        localStorage.setItem('pollModuleYears', JSON.stringify(res));
+                        this.pollService.saveYearListForModule(this.yearsListForModule);
+                        // localStorage.setItem('pollModuleYears', JSON.stringify(res));
                         this.customService.hideLoader();
                     }, (err: any) => {
 
@@ -164,8 +168,8 @@ export class NewPollPageManagement {
                         this.customService.showToast(err.msg);
                     });
             } else {
-
-                this.yearsListForModule = JSON.parse(localStorage.getItem('pollModuleYears'));
+                this.yearsListForModule = this.pollService.getYearListForModule();
+                // this.yearsListForModule = JSON.parse(localStorage.getItem('pollModuleYears'));
             }
 
         }

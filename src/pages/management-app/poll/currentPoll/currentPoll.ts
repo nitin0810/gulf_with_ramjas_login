@@ -33,12 +33,7 @@ export class CurrentPollPageManagement {
         private customService: CustomService
     ) {
         this.fetchPollList();
-        /**Delete the data required to make the new poll, so that updated data can be used in case,
-         * new poll is to be created.
-         * This functionality has no relation with the current polls. Data has been cleared here so that 
-         * same data can be used in case multiple polls to be created
-         */
-        this.clearNewPollData();
+      
     }
 
 
@@ -167,17 +162,5 @@ export class CurrentPollPageManagement {
 
     }
 
-    clearNewPollData() {
-
-        /**following items have been stored in newPoll module */
-        localStorage.removeItem('pollAudienceList');
-        localStorage.removeItem('pollOptionTypes');
-        localStorage.removeItem('pollOptionLimit');
-        localStorage.removeItem('pollDepartmentList');
-        localStorage.removeItem('pollProgramList');
-        localStorage.removeItem('pollYearList');
-        localStorage.removeItem('pollModuleYears');
-
-    }
 
 }

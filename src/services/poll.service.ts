@@ -8,6 +8,14 @@ import { CustomHttpService } from './custom-http.service';
 @Injectable()
 export class PollService {
 
+    private pollAudienceList: Array<any>;
+    private optionTypesPossible: Array<any>;
+    private optionLimit: number;
+    private departments: Array<any>;
+    private programList: Array<any>;
+    private yearList: Array<any>;
+    private yearListForModule: Array<any>;
+
     constructor(
         public http: CustomHttpService,
     ) { }
@@ -30,7 +38,7 @@ export class PollService {
         return this.http.get(CONFIG.serverUrl + `/ma/poll/page/${pageNo}`);
     }
 
-    votePollManagement(pollId: number, pollResponse: Array<number>) { 
+    votePollManagement(pollId: number, pollResponse: Array<number>) {
 
         return this.http.post(CONFIG.serverUrl + `/ma/poll/${pollId}`, pollResponse);
     }
@@ -48,6 +56,7 @@ export class PollService {
 
         return this.http.post(CONFIG.serverUrl + `/ma/poll/${isExpired}/search/page/${pageNo}`, { search: searchValue });
     }
+    /**below urls fetch the data required to create the poll */
     fetchPollAudience() {
 
         return this.http.get(CONFIG.serverUrl + '/ma/poll/save-info');
@@ -80,12 +89,52 @@ export class PollService {
         return this.http.get(CONFIG.serverUrl + `/ma/poll/audience/module/year/${isFaculty}`);
     }
 
+    /**below urls save the data required to create the poll, so that it can be reused when reqired */
+    savePollAudience(list: Array<any>, otp: Array<any>, ol: number) {
+
+        this.pollAudienceList = list;
+        this.optionTypesPossible = otp;
+        this.optionLimit = ol;
+    }
+
+    saveDepartments(dept: Array<any>) {
+        this.departments = dept;
+    }
+
+    saveProgramaAndYearList(pl: Array<any>, yl: Array<any>) {
+
+        this.programList = pl, this.yearList = yl;
+    }
+
+    saveYearListForModule(yl: Array<any>) {
+        this.yearListForModule = yl;
+    }
+
+    /**below urls return the catched data */
+
+    getYearListForModule() {
+        return this.yearListForModule;
+    }
+
+    getDepartments() {
+        return this.departments;
+    }
+
+    getProgramAndYearList() {
+        return this.programList ?[this.programList, this.yearList]:null;
+    }
+
+    getPollAudienceList() :Array<any>{
+        return this.pollAudienceList ? [this.pollAudienceList, this.optionTypesPossible, this.optionLimit] : null;
+    }
+
+
     submitPoll(data) {
 
         return this.http.post(CONFIG.serverUrl + `/ma/poll`, data);
     }
 
-    editExpiryDate(newDate:any,pollId: number){
+    editExpiryDate(newDate: any, pollId: number) {
 
         return this.http.put(CONFIG.serverUrl + `/ma/poll/${pollId}`, newDate);
     }

@@ -23,7 +23,7 @@
         </ion-list-header>
         <ion-list no-lines>
             <ion-item-sliding *ngFor="let period of selectedDayTimetable">
-                <button ion-item class="timetable-item">
+                <button ion-item detail-none class="timetable-item">
                     <ion-grid no-padding>
                         <ion-row>
                             <ion-col col-4 class="border border-right-progress left-col" text-right>
@@ -40,7 +40,7 @@
                                 </span>
                                 <span class="textGray">
                                     {{period.programName}}
-                                </span>  
+                                </span>
                                 <div>
                                     <span class="textSmall">
                                         <b>{{period.yearName}} year</b>
@@ -50,16 +50,13 @@
                         </ion-row>
                     </ion-grid>
                 </button>
-                <!-- <ion-item-options side="left">
-                    <button ion-button color="primary" (click)="openAttendancePage(period)">
-                        <ion-icon name="man"></ion-icon>
-                        Attendance
-                    </button>
-                    <button ion-button color="secondary" (click)="openPaperMessagePage()">
-                        <ion-icon name="chatbubbles"></ion-icon>
-                        Message
+                 <ion-item-options side="right">
+                    <button ion-button color="primary" (click)="showoptions()">
+                        <ion-icon name="add"></ion-icon>
+                       Options
                     </button>
                 </ion-item-options>
+                <!--
                 <ion-item-options side="right">
                     <button ion-button color="primary" (click)="openAssignmentPage(period)">
                         <ion-icon name="school"></ion-icon>
@@ -76,5 +73,11 @@
     </ion-list>
 
     <!-- NEW TIME TABLE BUTTON -->
-    <button ion-button (click)="createNewTimeTable()">CREATE </button>
+    <div *ngIf="isAdmin" padding>
+        <ion-fab right bottom>
+            <button ion-fab (click)="createNewTimeTable()">
+                <ion-icon name="add"></ion-icon>
+            </button>
+        </ion-fab>
+    </div>
 </ion-content>
