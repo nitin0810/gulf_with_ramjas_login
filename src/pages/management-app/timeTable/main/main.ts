@@ -22,7 +22,7 @@ export class TimeTablePageManagement {
     todayDate: Date;
     selectedDay: string;
     selectedDayTimetable: Array<any>;
-    loginType:string;
+    // loginType:string;
 
     constructor(
         public modalCtrl: ModalController,
@@ -35,7 +35,7 @@ export class TimeTablePageManagement {
         this.todayDate = new Date();
         this.selectedDay = this.todayDate.toDateString().split(' ')[0];
         this.getTimeTable();
-        this.loginType = localStorage.getItem('loginType');
+        // this.loginType = localStorage.getItem('loginType');
     }
 
     getTimeTable() {

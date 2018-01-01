@@ -29,6 +29,6 @@ export class TimeTablePageStudent extends TimeTablePageManagement {
         this.todayDate = new Date();
         this.selectedDay = this.todayDate.toDateString().split(' ')[0];
         this.getTimeTable();
-        this.loginType = localStorage.getItem('loginType');
+        // this.loginType = localStorage.getItem('loginType');
     }
 }
