@@ -1,6 +1,6 @@
 
 import { Component } from '@angular/core';
-import { IonicPage, ViewController, ActionSheetController } from 'ionic-angular';
+import { IonicPage, ViewController, ActionSheetController, NavParams } from 'ionic-angular';
 import { AssignmentService } from '../../../../services/assignment.service';
 import { CustomService } from '../../../../services/custom.service';
 import { Camera } from '@ionic-native/camera';
@@ -28,13 +28,23 @@ export class NewAssignmentPageManagement {
     image: any;
     file: any;
     fileName: string;
+
     /**data required to create the assignment */
     yearList: Array<any>;
     modulesObject: any = {};
 
+    /**This page may also be opened from timetable page
+     * In that case moduleId and yearId will be fixed, which will be coming from timetable page
+     * Below object stores that data 
+     */
+    private timetableInfo: any;
+    /**in timetable case, module and year select is to be disabled */
+    myDisabled: boolean = false;
+
 
     constructor(
         private viewCtrl: ViewController,
+        private navParams: NavParams,
         private assignmentService: AssignmentService,
         private customService: CustomService,
         private fileSelectService: FileSelectService,
@@ -45,18 +55,47 @@ export class NewAssignmentPageManagement {
     ) { }
 
     ngOnInit() {
+        this.setTimeTableInfo(this.navParams.get('timeTableInfo'));
+        this.getYears();
 
+    }
+
+    setTimeTableInfo(tt: any) {
+        /**timetableInfo will remian undefined if this page is
+         * opened nomally i.e not from TimeTablePage
+         */
+        this.timetableInfo = tt;
+    }
+
+    getYears() {
         this.customService.showLoader();
         this.assignmentService.fetchYears()
             .subscribe((res: any) => {
 
                 this.yearList = res;
+                this.checkTimetableInfoAndSetData();
                 this.customService.hideLoader();
             }, (err: any) => {
 
                 this.customService.hideLoader();
                 this.customService.showToast(err.msg);
             });
+    }
+
+     /**check timeTableInfo and if available, handle the data accordingly 
+     * 1) restrict the possible yearList and moduleList,
+     * 2) preset the selected year and modules
+    */
+    checkTimetableInfoAndSetData() {
+
+        if (this.timetableInfo) {
+
+            this.year= { yearName: this.timetableInfo.yearName, yearId: this.timetableInfo.yearId };
+            this.yearList = [this.year];
+            this.module= { moduleId: this.timetableInfo.moduleId, moduleName: this.timetableInfo.moduleName };
+            this.modulesObject[this.timetableInfo.yearId] = [this.module];
+            this.myDisabled = true;
+        }
     }
 
     todayDate() {
@@ -106,7 +145,7 @@ export class NewAssignmentPageManagement {
                 },
                 {
                     text: 'Cancel',
-                    role:'cancel',
+                    role: 'cancel',
                     handler: () => {
                     }
                 }

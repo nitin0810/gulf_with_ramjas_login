@@ -24,7 +24,7 @@
                     <ion-label>
                         <b>Select Year </b>
                     </ion-label>
-                    <ion-select [(ngModel)]="selectedYear" (ionChange)="onYearChange()" required name="selectedYear">
+                    <ion-select [disabled]="myDisabled" [(ngModel)]="selectedYear" (ionChange)="onYearChange()" required name="selectedYear">
                         <ion-option *ngFor="let y of years" [value]="y">
                             {{y.name || y.yearName}}
                         </ion-option>
@@ -37,7 +37,7 @@
                     <ion-label>
                         <b>Select Module </b>
                     </ion-label>
-                    <ion-select [(ngModel)]="selectedModule" (ionChange)="onModuleChange()" required name="selectedModule">
+                    <ion-select [disabled]="myDisabled" [(ngModel)]="selectedModule" (ionChange)="onModuleChange()" required name="selectedModule">
                         <ion-option *ngFor="let m of modulesForSelectedYear" [value]="m">
                             {{m.name || m.moduleName}}
                         </ion-option>

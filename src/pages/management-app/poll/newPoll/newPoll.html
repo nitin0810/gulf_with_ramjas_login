@@ -61,7 +61,7 @@
         <ion-card *ngIf="audienceList">
             <ion-item>
                 <ion-label><b>Poll For</b></ion-label>
-                <ion-select [(ngModel)]="mainAudience" (ionChange)="onAudienceChange()" required name="mainAudience">
+                <ion-select [disabled]="amyDisabled" [(ngModel)]="mainAudience" (ionChange)="onAudienceChange()" required name="mainAudience">
                     <ion-option *ngFor="let audience of audienceList" [value]="audience">{{audience.name}}</ion-option>
                 </ion-select>
             </ion-item>
@@ -115,7 +115,7 @@
             <ion-card>
                 <ion-item>
                     <ion-label><b>Select Year</b></ion-label>
-                    <ion-select [(ngModel)]="yearForModule" (ionChange)="onYearForModuleChange()" required name="yearsModule">
+                    <ion-select [disabled]="amyDisabled" [(ngModel)]="yearForModule" (ionChange)="onYearForModuleChange()" required name="yearsModule">
                         <ion-option *ngFor="let y of yearsListForModule" [value]="y" >{{y.name || y.yearName}} </ion-option>
                     </ion-select>
                 </ion-item>
@@ -126,7 +126,7 @@
             <ion-card>
                 <ion-item>
                     <ion-label><b>Select Modules</b></ion-label>
-                    <ion-select [(ngModel)]="moduleIds" multiple required name="years">
+                    <ion-select [disabled]="amyDisabled" [(ngModel)]="moduleIds" multiple required name="years">
                         <ion-option *ngFor="let module of modulesObject[yearForModule.id || yearForModule.yearId]" [value]="module.moduleId || module.id">{{module.moduleName || module.name}}</ion-option>
                     </ion-select>
                 </ion-item>

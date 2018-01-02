@@ -1,7 +1,7 @@
 
 
 import { Component } from '@angular/core';
-import { IonicPage, ViewController, ActionSheetController } from 'ionic-angular';
+import { IonicPage, ViewController, ActionSheetController, NavParams } from 'ionic-angular';
 import { PollService } from '../../../../services/poll.service';
 import { CustomService } from '../../../../services/custom.service';
 // import {} from './';
@@ -41,15 +41,33 @@ export class NewPollPageManagement {
     optionTypeId: number;
 
 
+    /**This page may also be opened from timetable page
+     * In that case moduleId and yearId will be fixed, which will be coming from timetable page
+     * Below object stores that data 
+     */
+    private timetableInfo: any;
+    /**in timetable case, audience,module and year select is to be disabled */
+    amyDisabled: boolean=false;
+
+
     constructor(
         public viewCtrl: ViewController,
+        public navParams: NavParams,
         public pollService: PollService,
         public customService: CustomService,
         public actionSheetCtrl: ActionSheetController
-    ) { }
+    ) {
+    }
+
+    setTimeTableInfo(tt: any) {
+        /**timetableInfo will remian undefined if this new poll/survey,events/circular etc. are
+         * opened nomally i.e not from TimeTablePage
+         */
+        this.timetableInfo = tt;
+    }
 
     ionViewWillEnter() {
-
+        this.setTimeTableInfo(this.navParams.get('timeTableInfo'));
         this.getMainAudeinceData();
     }
 
@@ -68,6 +86,7 @@ export class NewPollPageManagement {
                     this.optionTypesPossible = res.optionType;
                     this.optionLimit = res.optionLimit;
                     this.pollService.savePollAudience(this.audienceList, this.optionTypesPossible, this.optionLimit);
+                    this.checkTimetableInfoAndSetData();
                     this.customService.hideLoader();
 
                 }, (err: any) => {
@@ -81,6 +100,28 @@ export class NewPollPageManagement {
             // this.audienceList = JSON.parse(localStorage.getItem('pollAudienceList'));
             // this.optionTypesPossible = JSON.parse(localStorage.getItem('pollOptionTypes'));
             // this.optionLimit = JSON.parse(localStorage.getItem('pollOptionLimit'));
+            this.checkTimetableInfoAndSetData();
+
+        }
+
+
+    }
+
+    /**check timeTableInfo and if available, handle the data accordingly 
+     * 1) restrict the possible yearList and moduleList,
+     * 2) preset the selected year and modules
+    */
+    checkTimetableInfoAndSetData() {
+
+        if (this.timetableInfo) {
+
+            this.mainAudience = { depth: 1, id: 4, name: 'Module', subAudience: [] };
+            this.audienceList = [this.mainAudience];
+            this.yearForModule = { yearName: this.timetableInfo.yearName, yearId: this.timetableInfo.yearId };
+            this.yearsListForModule = [this.yearForModule];
+            this.moduleIds = [this.timetableInfo.moduleId];
+            this.modulesObject[this.timetableInfo.yearId] = [{ moduleId: this.timetableInfo.moduleId, moduleName: this.timetableInfo.moduleName }];
+            this.amyDisabled = true;
         }
     }
 

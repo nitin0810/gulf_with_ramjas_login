@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, ViewController, ActionSheetController } from 'ionic-angular';
+import { IonicPage, ViewController, ActionSheetController, NavParams } from 'ionic-angular';
 
 import { CustomService } from '../../../../services/custom.service';
 import { NewPollPageManagement } from '../../poll/newPoll/newPoll';
@@ -43,6 +43,7 @@ export class NewPlannerPageManagement extends NewPollPageManagement {
     constructor(
         public viewCtrl: ViewController,
         public pollService: PollService,
+        public navParams:NavParams,
         public customService: CustomService,
         public actionSheetCtrl: ActionSheetController,
         private plannerService: PlannerService,
@@ -51,7 +52,7 @@ export class NewPlannerPageManagement extends NewPollPageManagement {
         private platform: Platform
 
     ) {
-        super(viewCtrl, pollService, customService, actionSheetCtrl);
+        super(viewCtrl,navParams, pollService, customService, actionSheetCtrl);
         this.startDateTime = this.endDateTime = this.minDate = this.getCorrectISOStringDate();
 
     }

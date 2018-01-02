@@ -111,7 +111,7 @@ export class UserSessionManage {
 
             ];
 
-            /**insert the evaluation option in case user has a role of quality-coordinater */
+            /**insert the evaluation option only when user has a role of quality-coordinater */
             let roles: Array<string> = JSON.parse(localStorage.getItem('roles'));
             if (roles.indexOf("QUALITYCOORDINATOR") > -1) {
                 this.sideMenuOptions.splice(7, 0, { title: 'Evaluations', component: "EvaluationTabsPageManagement", icon: 'assets/icon/appreciation.jpg' });

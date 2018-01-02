@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, ViewController, ActionSheetController } from 'ionic-angular';
+import { IonicPage, ViewController, ActionSheetController,NavParams } from 'ionic-angular';
 import { CircularService } from '../../../../services/circular.service';
 import { CustomService } from '../../../../services/custom.service';
 
@@ -51,6 +51,7 @@ export class NewCircularComponent extends NewPollPageManagement {
     constructor(
         public pollService: PollService,
         public viewCtrl: ViewController,
+        public navParams:NavParams,
         private circularService: CircularService,
         public customService: CustomService,
         private fileSelectService: FileSelectService,
@@ -59,12 +60,13 @@ export class NewCircularComponent extends NewPollPageManagement {
         private platform : Platform
     ) {
 
-        super(viewCtrl, pollService, customService, actionSheetCtrl);
+        super(viewCtrl, navParams,pollService, customService, actionSheetCtrl);
 
     }
 
     ionViewWillEnter() {
 
+        this.setTimeTableInfo(this.navParams.get('timeTableInfo'));
         this.getMainAudeinceData();
     }
 

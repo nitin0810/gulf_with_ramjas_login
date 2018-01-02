@@ -81,47 +81,52 @@ export class TimeTablePageManagement {
         modal.present();
     }
 
-    showoptions() {
+    showoptions(period: any) {
 
         const actionSheet = this.actionSheetCtrl.create({
             title: 'Select option to Create',
             buttons: [{
                 text: 'Attendance',
-                handler: () => {              }
+                handler: () => { }
             },
             {
                 text: 'Assignment',
                 handler: () => {
-
+                    const modal = this.modalCtrl.create("NewAssignmentPageManagement", { 'timeTableInfo': period });
+                    modal.present();
                 }
             },
             {
                 text: 'Assessment',
                 handler: () => {
-
+                    const modal = this.modalCtrl.create("NewSummativePageManagement", { 'timeTableInfo': period });
+                    modal.present();
                 }
             },
             {
                 text: 'Poll',
                 handler: () => {
-
+                    const modal = this.modalCtrl.create("NewPollPageManagement", { 'timeTableInfo': period });
+                    modal.present();
                 }
             },
             {
                 text: 'Survey',
                 handler: () => {
-
+                    const modal = this.modalCtrl.create("NewSurveyPageManagement", { 'timeTableInfo': period });
+                    modal.present();
                 }
             },
             {
                 text: 'Circular',
                 handler: () => {
-
+                    const modal = this.modalCtrl.create("NewCircularComponent", { 'timeTableInfo': period });
+                    modal.present();
                 }
             },
             {
                 text: 'Cancel',
-                role:'cancel',
+                role: 'cancel',
                 handler: () => {
 
                 }

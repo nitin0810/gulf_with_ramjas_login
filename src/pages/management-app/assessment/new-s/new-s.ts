@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, ModalController,ViewController,ActionSheetController } from 'ionic-angular';
+import { IonicPage, ModalController, ViewController, ActionSheetController, NavParams } from 'ionic-angular';
 import { CustomService } from '../../../../services/custom.service';
 import { AssessmentService } from '../../../../services/assessment.service';
 
@@ -30,17 +30,51 @@ export class NewSummativePageManagement {
     students: any = {};  // stores studentList(array) for each combination of yearId and moduleId
     assessmentTypes: Array<any> = []; //stores the type of assessment available for formative assesment
 
+
+    /**This page may also be opened from timetable page
+     * In that case moduleId and yearId will be fixed, which will be coming from timetable page
+     * Below object stores that data 
+     */
+    private timetableInfo: any;
+    /**in timetable case, module and year select is to be disabled */
+    myDisabled: boolean = false;
+
+
     constructor(
         private viewCtrl: ViewController,
+        private navParams: NavParams,
         private actionSheetController: ActionSheetController,
         private assessmentService: AssessmentService,
         private customService: CustomService
     ) {
+        this.setTimeTableInfo(this.navParams.get('timeTableInfo'));
+    }
 
+    setTimeTableInfo(tt: any) {
+        /**timetableInfo will remian undefined if this page is
+         * opened nomally i.e not from TimeTablePage
+         */
+        this.timetableInfo = tt;
     }
 
     ionViewWillEnter() {
-        this.fetchYears();
+        this.timetableInfo ? this.checkTimetableInfoAndSetData() : this.fetchYears();
+    }
+
+    /**check timeTableInfo and if available, handle the data accordingly 
+* 1) restrict the possible yearList and moduleList,
+* 2) preset the selected year and modules
+*/
+    checkTimetableInfoAndSetData() {
+
+        this.selectedYear = { yearName: this.timetableInfo.yearName, yearId: this.timetableInfo.yearId };
+        this.years = [this.selectedYear];
+        this.selectedModule = { moduleId: this.timetableInfo.moduleId, moduleName: this.timetableInfo.moduleName };
+        this.modulesForSelectedYear = [this.selectedModule];
+        this.modules[this.timetableInfo.yearId] = this.modulesForSelectedYear;
+        this.myDisabled = true;
+        /**fetch students according to selected year and module */
+        this.fetchStudents();
     }
 
     fetchYears() {

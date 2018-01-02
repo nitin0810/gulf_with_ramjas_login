@@ -17,6 +17,8 @@
 
 
 <ion-content class="background1">
+
+
     <ion-list>
         <ion-list-header>
             {{todayDate | amDateFormat: 'LL'}}
@@ -35,7 +37,6 @@
                             </ion-col>
                             <ion-col col-8 col-8 class="border border-left-progress right-col">
                                 <span>
-                                    <ion-icon name="folder"></ion-icon>
                                     <p class="textLarge">{{period.moduleName}}</p>
                                 </span>
                                 <span class="textGray">
@@ -50,10 +51,10 @@
                         </ion-row>
                     </ion-grid>
                 </button>
-                 <ion-item-options side="right">
-                    <button ion-button color="primary" (click)="showoptions()">
+                <ion-item-options side="right" icon-start>
+                    <button ion-button color="primary" (click)="showoptions(period)">
                         <ion-icon name="add"></ion-icon>
-                       Options
+                        Options
                     </button>
                 </ion-item-options>
                 <!--
@@ -72,12 +73,13 @@
 
     </ion-list>
 
+
     <!-- NEW TIME TABLE BUTTON -->
-    <div *ngIf="isAdmin" padding>
-        <ion-fab right bottom>
+    
+        <ion-fab *ngIf="isAdmin" right bottom>
             <button ion-fab (click)="createNewTimeTable()">
                 <ion-icon name="add"></ion-icon>
             </button>
         </ion-fab>
-    </div>
+
 </ion-content>
