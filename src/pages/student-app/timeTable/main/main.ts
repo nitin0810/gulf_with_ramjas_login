@@ -27,8 +27,8 @@ export class TimeTablePageStudent extends TimeTablePageManagement {
 
     ionViewWillEnter() {
 
-        this.todayDate = new Date();
-        this.selectedDay = this.todayDate.toDateString().split(' ')[0];
+        this.date = new Date();
+        this.selectedDay = this.date.toDateString().split(' ')[0];
         this.getTimeTable();
         // this.loginType = localStorage.getItem('loginType');
     }

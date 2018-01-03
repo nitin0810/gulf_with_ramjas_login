@@ -21,7 +21,7 @@
 
     <ion-list>
         <ion-list-header>
-            {{todayDate | amDateFormat: 'LL'}}
+            {{date | amDateFormat: 'LL'}}
         </ion-list-header>
         <ion-list no-lines>
             <ion-item-sliding *ngFor="let period of selectedDayTimetable">
@@ -70,16 +70,21 @@
                 </ion-item-options> -->
             </ion-item-sliding>
         </ion-list>
+        <ion-list *ngIf="!selectedDayTimetable || selectedDayTimetable.length==0">
+            <ion-item>
+                <h1>NO MODULE ON THIS DAY</h1>
+            </ion-item>
+        </ion-list>
 
     </ion-list>
 
 
     <!-- NEW TIME TABLE BUTTON -->
-    
-        <ion-fab *ngIf="isAdmin" right bottom>
-            <button ion-fab (click)="createNewTimeTable()">
-                <ion-icon name="add"></ion-icon>
-            </button>
-        </ion-fab>
+
+    <ion-fab *ngIf="isAdmin" right bottom>
+        <button ion-fab (click)="createNewTimeTable()">
+            <ion-icon name="add"></ion-icon>
+        </button>
+    </ion-fab>
 
 </ion-content>

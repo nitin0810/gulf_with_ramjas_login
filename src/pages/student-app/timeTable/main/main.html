@@ -18,8 +18,8 @@
 
 <ion-content class="background1">
     <ion-list>
-        <ion-list-header>
-            {{todayDate | amDateFormat: 'LL'}}
+        <ion-list-header>  
+            {{date | amDateFormat: 'LL'}}
         </ion-list-header>
         <ion-list no-lines>
             <ion-item-sliding *ngFor="let period of selectedDayTimetable">

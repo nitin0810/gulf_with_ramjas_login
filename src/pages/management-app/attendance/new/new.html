@@ -1,0 +1,22 @@
+<ion-header>
+    <nl-modal-navbar [title]="title" (modalClosed)="dismiss()"></nl-modal-navbar>
+</ion-header>
+
+<ion-content class="csGrayBackground">
+
+    <ion-card>
+        <ion-label> Module: {{timeTableInfo.moduleName}}</ion-label>
+    </ion-card>
+
+    <ion-card>
+        <ion-label> Year: {{timeTableInfo.yearName}}</ion-label>
+    </ion-card>
+
+    <ion-card>
+        <ion-item>
+            <ion-label>Date </ion-label>
+            <ion-datetime [max]="todayDate()" [(ngModel)]="selectedDate" displayFormat="MMM DD YYYY" pickerFormat="DD MMM YYYY"></ion-datetime>
+        </ion-item>
+    </ion-card>
+
+</ion-content>

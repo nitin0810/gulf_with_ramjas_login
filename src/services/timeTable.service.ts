@@ -10,7 +10,8 @@ import 'rxjs/add/observable/forkJoin';
 @Injectable()
 export class TimeTableService {
 
-    
+    private todayId: number;
+
     constructor(
         public http: CustomHttpService,
     ) { }
@@ -44,10 +45,33 @@ export class TimeTableService {
 
     /**Above requests are related to creating the timetable */
 
-    fetchTimetableByWeek(){
+    fetchTimetableByWeek() {
 
-        let loginType:string= localStorage.getItem('loginType')==="student"?'st':'ma';
+        let loginType: string = localStorage.getItem('loginType') === "student" ? 'st' : 'ma';
         return this.http.get(CONFIG.serverUrl + `/${loginType}/timetable/week`);
+    }
+
+    setTodayId(id: number) {
+        this.todayId = id;
+    }
+
+    returnDateOfSelectedDay(selectedDayId: number) {
+
+        let d = new Date();
+        return new Date(d.getTime() + (selectedDayId-this.todayId) *86400000);
+    }
+
+    returnDayId(dayName: string) {
+        switch (dayName) {
+            case 'Mon': return 1;
+            case 'Tue': return 2;
+            case 'Wed': return 3;
+            case 'Thu': return 4;
+            case 'Fri': return 5;
+            case 'Sat': return 6;
+            case 'Sun': return 7;
+
+        }
     }
 
 }

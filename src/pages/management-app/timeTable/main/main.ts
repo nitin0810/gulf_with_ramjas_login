@@ -19,7 +19,7 @@ export class TimeTablePageManagement {
     timetableData: any; /** Object whose keys are days and values is the array of periods/slots of timetable*/
 
     /**ngModal variables */
-    todayDate: Date;
+    date: Date;
     selectedDay: string;
     selectedDayTimetable: Array<any>;
     // loginType:string;
@@ -34,8 +34,8 @@ export class TimeTablePageManagement {
 
     ionViewWillEnter() {
 
-        this.todayDate = new Date();
-        this.selectedDay = this.todayDate.toDateString().split(' ')[0];
+        this.date = new Date();
+        this.selectedDay = this.date.toDateString().split(' ')[0];
         this.getTimeTable();
         // this.loginType = localStorage.getItem('loginType');
         this.isAdmin = JSON.parse(localStorage.getItem('roles')).indexOf('ADMIN') > -1;
@@ -61,19 +61,27 @@ export class TimeTablePageManagement {
         res.forEach((period: any) => {
 
             let dayName: string = period.dayName.slice(0, 3);
-            this.timetableData[dayName] = this.timetableData[dayName] || [];
-            this.timetableData[dayName].push(period);
+            this.timetableData[dayName] = this.timetableData[dayName] || {};
+            this.timetableData[dayName].dayId = this.timeTableService.returnDayId(dayName);
+            this.timetableData[dayName].data = this.timetableData[dayName].data || [];
+            this.timetableData[dayName].data.push(period);
         });
 
         console.log('timtable data/////', this.timetableData);
-        this.selectedDayTimetable = this.timetableData[this.selectedDay];
-
+        this.selectedDayTimetable = this.timetableData[this.selectedDay].data;
+        this.timeTableService.setTodayId(this.timetableData[this.selectedDay].dayId);
     }
 
     onDayChange() {
         console.log('on day change', this.selectedDay);
 
-        this.selectedDayTimetable = this.timetableData[this.selectedDay]
+        this.selectedDayTimetable = this.timetableData[this.selectedDay] ? this.timetableData[this.selectedDay].data : undefined;
+
+        if (this.timetableData[this.selectedDay]) {
+            this.date = this.timeTableService.returnDateOfSelectedDay(this.timetableData[this.selectedDay].dayId);
+        } else {
+            this.date = this.timeTableService.returnDateOfSelectedDay(this.timeTableService.returnDayId(this.selectedDay));
+        }
     }
 
     createNewTimeTable() {
@@ -87,52 +95,52 @@ export class TimeTablePageManagement {
             title: 'Select option to Create',
             buttons: [{
                 text: 'Attendance',
-                handler: () => { }
+                handler: () => {
+                    this.openModal("NewAttendancePageManagement", period);
+                }
             },
             {
                 text: 'Assignment',
                 handler: () => {
-                    const modal = this.modalCtrl.create("NewAssignmentPageManagement", { 'timeTableInfo': period });
-                    modal.present();
+                    this.openModal("NewAssignmentPageManagement", period);
                 }
             },
             {
                 text: 'Assessment',
                 handler: () => {
-                    const modal = this.modalCtrl.create("NewSummativePageManagement", { 'timeTableInfo': period });
-                    modal.present();
+                    this.openModal("NewSummativePageManagement", period);
                 }
             },
             {
                 text: 'Poll',
                 handler: () => {
-                    const modal = this.modalCtrl.create("NewPollPageManagement", { 'timeTableInfo': period });
-                    modal.present();
+                    this.openModal("NewPollPageManagement", period);
                 }
             },
             {
                 text: 'Survey',
                 handler: () => {
-                    const modal = this.modalCtrl.create("NewSurveyPageManagement", { 'timeTableInfo': period });
-                    modal.present();
+                    this.openModal("NewSurveyPageManagement", period);
                 }
             },
             {
                 text: 'Circular',
                 handler: () => {
-                    const modal = this.modalCtrl.create("NewCircularComponent", { 'timeTableInfo': period });
-                    modal.present();
+                    this.openModal("NewCircularComponent", period);
                 }
             },
             {
                 text: 'Cancel',
                 role: 'cancel',
-                handler: () => {
-
-                }
+                handler: () => { }
             }]
         });
 
         actionSheet.present();
+    }
+
+    openModal(model: string, period: any) {
+        const modal = this.modalCtrl.create(model, { 'timeTableInfo': period });
+        modal.present();
     }
 }
