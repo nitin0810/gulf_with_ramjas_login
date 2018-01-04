@@ -45,6 +45,7 @@ import { LoginPage } from '../custom-components/login/login';
 import { ForgotPasswordModal } from '../custom-components/login/forgot-password/forgot-password';
 import { CircularService } from '../services/circular.service';
 import { TimeTableService } from '../services/timeTable.service';
+import { AttendanceService } from '../services/attendance.service';
 
 
 
@@ -92,6 +93,7 @@ import { TimeTableService } from '../services/timeTable.service';
     AssessmentService,
     CircularService,
     TimeTableService,
+    AttendanceService,
     FileSelectService,
     { provide: ErrorHandler, useClass: IonicErrorHandler },
     {

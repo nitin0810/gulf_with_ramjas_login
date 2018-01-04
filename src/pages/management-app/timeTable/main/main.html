@@ -70,7 +70,7 @@
                 </ion-item-options> -->
             </ion-item-sliding>
         </ion-list>
-        <ion-list *ngIf="!selectedDayTimetable || selectedDayTimetable.length==0">
+        <ion-list *ngIf="selectedDayTimetable && selectedDayTimetable.length==0">
             <ion-item>
                 <h1>NO MODULE ON THIS DAY</h1>
             </ion-item>
