@@ -40,7 +40,6 @@ export class CustomService {
             duration: 3000,
             position: 'bottom'
         });
-        console.log('toast', this.loading);
 
         this.toast.present();
     }

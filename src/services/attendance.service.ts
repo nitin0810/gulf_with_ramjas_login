@@ -8,16 +8,27 @@ import { CustomHttpService } from './custom-http.service';
 export class AttendanceService {
 
     constructor(
-        private http:CustomHttpService
-    ){ }
+        private http: CustomHttpService
+    ) { }
 
-    fetchStudents(pId:number,yId:number){
-        
+    /**for marking attendance of all the students */
+    fetchStudents(pId: number, yId: number) {
+
         return this.http.get(CONFIG.serverUrl + `/ma/attendance/students/${pId}/${yId}`);
     }
 
-    postAttendance(data:any){
+    postAttendance(data: any) {
 
-        return this.http.post(CONFIG.serverUrl + `/ma/attendance`,data);
+        return this.http.post(CONFIG.serverUrl + `/ma/attendance`, data);
+    }
+
+    fetchAttendance(data:any){
+
+        return this.http.post(CONFIG.serverUrl + `/ma/attendance/day`, data);
+    }
+
+    editAttendance(data:any,id:number){
+
+        return this.http.put(CONFIG.serverUrl + `/ma/attendance/${id}`, data);
     }
 }

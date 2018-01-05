@@ -15,7 +15,7 @@ export class TimeTablePageManagement {
     title: string = 'Time table';
 
     /**data required to display the timetable */
-    daysName: Array<string> = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+    daysName: Array<string> = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'];
     timetableData: any; /** Object whose keys are days and values is the array of periods/slots of timetable*/
 
     /**ngModal variables */
@@ -73,7 +73,6 @@ export class TimeTablePageManagement {
     }
 
     onDayChange() {
-        console.log('on day change', this.selectedDay);
 
         this.selectedDayTimetable = this.timetableData[this.selectedDay] ? this.timetableData[this.selectedDay].data : undefined;
 
@@ -96,7 +95,12 @@ export class TimeTablePageManagement {
             buttons: [{
                 text: 'Attendance',
                 handler: () => {
-                    this.openModal("NewAttendancePageManagement", period);
+                    actionSheet.dismiss()
+                        .then(() => {
+                            this.openAttendanceActionSheet(period);
+                        }, (err) => { });
+
+                    return false;
                 }
             },
             {
@@ -137,6 +141,27 @@ export class TimeTablePageManagement {
         });
 
         actionSheet.present();
+
+    }
+
+    openAttendanceActionSheet(period: any) {
+        const actionSheet2 = this.actionSheetCtrl.create({
+            title: 'Attendance',
+            buttons: [{
+                text: 'New',
+                handler: () => { this.openModal("NewAttendancePageManagement", period); }
+            },
+            {
+                text: 'Edit',
+                handler: () => { this.openModal("EditAttendancePageManagement", period); }
+            },
+            {
+                text: 'Cancel',
+                role: 'cancel',
+                handler: () => {  }
+            }]
+        });
+        actionSheet2.present();
     }
 
     openModal(model: string, period: any) {

@@ -24,6 +24,7 @@ export class TimeTableService {
         let slotObservable = this.http.get(CONFIG.serverUrl + '/ad/slot');
         let dayObservable = this.http.get(CONFIG.serverUrl + '/ad/day');
 
+        /**simultaneously send all requests*/
         return Observable.forkJoin([empObservable, roomObservable, slotObservable, dayObservable]);
     }
 
