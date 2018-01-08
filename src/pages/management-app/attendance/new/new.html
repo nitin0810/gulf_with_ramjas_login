@@ -19,6 +19,13 @@
             </ion-item>
         </ion-card>
 
+        <ion-card *ngIf="studentsList?.length!=0">
+            <ion-item>
+                <ion-label>Mark All Unselected as Present </ion-label>
+                <ion-checkbox (ionChange)="setStudentsAttendanceAsPresent($event)"></ion-checkbox>
+            </ion-item>
+        </ion-card>
+
         <ion-card>
             <div *ngFor="let student of studentsList;let i=index">
                 <ion-label> {{student.name}} </ion-label>

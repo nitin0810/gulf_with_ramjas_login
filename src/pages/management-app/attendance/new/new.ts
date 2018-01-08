@@ -18,6 +18,8 @@ export class NewAttendancePageManagement {
     selectedDate: string;
     studentsList: Array<any>;
 
+    markAllPresent: boolean = false;
+
     constructor(
         private viewCtrl: ViewController,
         private navParams: NavParams,
@@ -40,7 +42,7 @@ export class NewAttendancePageManagement {
             .subscribe((res: any) => {
 
                 this.studentsList = res;
-                this.setStudentsDefaultAttendance(res);
+                this.setStudentsAttendanceAsPresent(res);
                 this.customService.hideLoader();
             }, (err: any) => {
 
@@ -49,8 +51,13 @@ export class NewAttendancePageManagement {
             });
     }
 
-    setStudentsDefaultAttendance(students: Array<any>) {
-        students.forEach((s: any) => s.attendance = "P");
+    setStudentsAttendanceAsPresent(ev: any) {
+        if (ev.checked) {
+            this.studentsList.forEach((s: any) => s.attendance = s.attendance || "P");
+        } else {
+            this.studentsList.forEach((s: any) => s.attendance = s.attendance === "P" ? null : s.attendance);
+        }
+
     }
 
 
@@ -70,7 +77,7 @@ export class NewAttendancePageManagement {
                 handler: () => { }
             }]
         });
-actionSheet.present();
+        actionSheet.present();
     }
 
     submitFinally() {
@@ -98,14 +105,14 @@ actionSheet.present();
     postAttendance(payLoad: any) {
         this.customService.showLoader();
         this.attendanceService.postAttendance(payLoad)
-        .subscribe((res:any)=>{
-            this.customService.hideLoader();
-            this.customService.showToast('Attendance submitted successfully');
-        },(err:any)=>{
-            this.customService.hideLoader();
-            console.log(err);
-            
-        });
+            .subscribe((res: any) => {
+                this.customService.hideLoader();
+                this.customService.showToast('Attendance submitted successfully');
+            }, (err: any) => {
+                this.customService.hideLoader();
+                console.log(err);
+
+            });
     }
 
     dismiss() {
