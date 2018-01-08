@@ -12,7 +12,7 @@ import { TimeTableService } from '../../../../services/timeTable.service';
 
 export class NewTimeTablePageManagement implements OnInit {
 
-    title: string = 'New Attendance';
+    title: string = 'New Timetable';
 
     /**data required to create the timetable */
     empList: Array<any>;

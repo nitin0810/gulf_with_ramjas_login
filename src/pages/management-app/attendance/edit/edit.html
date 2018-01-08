@@ -20,7 +20,7 @@
                 </ion-item>
             </ion-card>
 
-            <div *ngIf="attendanceListTemp?.length!=0">
+            <div *ngIf="attendanceList?.length!=0">
                 <ion-label>Select student to edit the attendance</ion-label>
                 <ion-searchbar placeholder="Enter Name" [(ngModel)]="searchInput" (ionInput)="onSearchInput($event)" (ionClear)="onSearchClear($event)"></ion-searchbar>
             </div>
@@ -31,13 +31,13 @@
                 </button>
             </ion-list>
 
-            <ion-list *ngIf="attendanceListTemp && attendanceListTemp.length==0">
+            <ion-list *ngIf="attendanceList && attendanceList.length==0">
                 <ion-item text-wrap>
                     <ion-label>ATTENDANCE HASN'T BEEN UPLOADED YET FOR THIS DATE</ion-label>
                 </ion-item>
             </ion-list>
-
         </ion-slide>
+        
         <ion-slide>
             <div *ngIf="selectedStudent">
                 <button style="margin-right: 20em" ion-button clear (click)="goToList()">
