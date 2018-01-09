@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, ViewController, ModalController, ActionSheetController, NavParams } from 'ionic-angular';
+import { IonicPage, ViewController, ModalController, ActionSheetController, NavParams, AlertController } from 'ionic-angular';
 import { CustomService } from '../../../../services/custom.service';
 import { AttendanceService } from '../../../../services/attendance.service';
 
@@ -23,6 +23,7 @@ export class NewAttendancePageManagement {
     constructor(
         private viewCtrl: ViewController,
         private navParams: NavParams,
+        private alertCtrl: AlertController,
         private actionSheetCtrl: ActionSheetController,
         private customService: CustomService,
         private attendanceService: AttendanceService
@@ -42,7 +43,6 @@ export class NewAttendancePageManagement {
             .subscribe((res: any) => {
 
                 this.studentsList = res;
-                this.setStudentsAttendanceAsPresent(res);
                 this.customService.hideLoader();
             }, (err: any) => {
 
@@ -110,9 +110,42 @@ export class NewAttendancePageManagement {
                 this.customService.showToast('Attendance submitted successfully');
             }, (err: any) => {
                 this.customService.hideLoader();
-                console.log(err);
-
+                err.status == 0 ? this.saveAttendanceOffline(payLoad) : this.customService.showToast(err.msg);
             });
+    }
+
+    saveAttendanceOffline(data: any) {
+
+        const alert = this.alertCtrl.create({
+            title: 'No Internet',
+            subTitle: 'Save Attendance ?',
+            message: 'We will try again to upload the attendance when you are connected to internet.',
+            buttons: [
+                {
+                    text: "Don't Save",
+                    role: 'cancel',
+                    handler: () => { }
+                },
+                {
+                    text: 'Save',
+                    handler: () => {
+
+                        let savedAttd: Array<any> = JSON.parse(localStorage.getItem('savedAttendances')) || [];
+                        savedAttd.push({
+                            uploadData: data, // refers to saved attendance
+                            metaData: this.timeTableInfo,// contains other info such as pgm name, module name, year etc.
+                            isUploaded: false,
+                            comment:''
+                        });
+
+                        localStorage.setItem('savedAttendances', JSON.stringify(savedAttd));
+                        this.customService.showToast('Attendance saved successfully');
+                    }
+                }
+            ]
+        });
+
+        alert.present();
     }
 
     dismiss() {

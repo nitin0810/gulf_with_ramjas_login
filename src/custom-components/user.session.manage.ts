@@ -26,7 +26,7 @@ export class UserSessionManage {
 
         this.handleEvents();
         this.networkService.checkNetworkStatus();
-        this.hasLoggedIn();
+        this.isLoggedIn();
     }
 
     public handleEvents() {
@@ -39,9 +39,9 @@ export class UserSessionManage {
         this.events.subscribe('user:logout', () => {
             this.logout();
         });
-        this.events.subscribe("offline", () => {
-            this.offline();
-        });
+        // this.events.subscribe("offline", () => {
+             // this.offline();
+        // });
         this.events.subscribe("online", () => {
             this.online();
         });
@@ -50,7 +50,7 @@ export class UserSessionManage {
         });
     }
 
-    public hasLoggedIn() {
+    public isLoggedIn() {
 
         if (this.authService.isLoggedIn()) {
             this.getUserInfo();
@@ -137,11 +137,11 @@ export class UserSessionManage {
         this.appCtrl.getRootNav().setRoot(LoginPage);
     }
 
-    public offline() {
+    // public offline() {
 
-        this.menu.close();
-        this.appCtrl.getRootNav().setRoot(NoInternet);
-    }
+    //     this.menu.close();
+    //     this.appCtrl.getRootNav().setRoot(NoInternet);
+    // }
 
     public online() {
         if (this.authService.isLoggedIn()) {

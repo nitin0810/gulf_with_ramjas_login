@@ -15,11 +15,11 @@
         <ion-card>
             <ion-item>
                 <ion-label>Date </ion-label>
-                <ion-datetime [max]="selectedDate" [(ngModel)]="selectedDate" displayFormat="MMM DD YYYY" pickerFormat="DD MMM YYYY" name="date"></ion-datetime>
+                <ion-datetime  [(ngModel)]="selectedDate" displayFormat="MMM DD YYYY" pickerFormat="DD MMM YYYY" name="date"></ion-datetime>
             </ion-item>
         </ion-card>
 
-        <ion-card *ngIf="studentsList?.length!=0">
+        <ion-card *ngIf="studentsList && studentsList.length!=0">
             <ion-item>
                 <ion-label>Mark All Unselected as Present </ion-label>
                 <ion-checkbox (ionChange)="setStudentsAttendanceAsPresent($event)"></ion-checkbox>

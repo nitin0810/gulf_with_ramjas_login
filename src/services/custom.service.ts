@@ -8,8 +8,7 @@ import {
 
 export class CustomService {
 
-    public txt: String;
-    public loading: any;
+    loading: any;
     toast: any;
 
     constructor(
@@ -29,17 +28,22 @@ export class CustomService {
 
     public hideLoader() {
 
-        this.loading.dismiss();
+        this.loading && this.loading.dismiss();
 
     }
 
-    public showToast(msg) {
+    public showToast(msg, pos?: string, closeBtn?: boolean) {
 
         this.toast = this.toastCtrl.create({
             message: msg,
-            duration: 3000,
-            position: 'bottom'
+            duration: closeBtn ? null : 3000,
+            position: pos || 'bottom',
+            showCloseButton: closeBtn,
+            closeButtonText: "OK"
+            // cssClass: 'redBg'
         });
+
+        this.toast
 
         this.toast.present();
     }
