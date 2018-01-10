@@ -18,7 +18,7 @@
 
 <ion-content class="background1">
     <ion-list>
-        <ion-list-header>  
+        <ion-list-header>
             {{date | amDateFormat: 'LL'}}
         </ion-list-header>
         <ion-list no-lines>
@@ -44,29 +44,13 @@
                         </ion-row>
                     </ion-grid>
                 </button>
-                <!-- <ion-item-options side="left">
-                        <button ion-button color="primary" (click)="openAttendancePage(period)">
-                            <ion-icon name="man"></ion-icon>
-                            Attendance
-                        </button>
-                        <button ion-button color="secondary" (click)="openPaperMessagePage()">
-                            <ion-icon name="chatbubbles"></ion-icon>
-                            Message
-                        </button>
-                    </ion-item-options>
-                    <ion-item-options side="right">
-                        <button ion-button color="primary" (click)="openAssignmentPage(period)">
-                            <ion-icon name="school"></ion-icon>
-                            Assignment
-                        </button>
-                        <button ion-button color="primary" (click)="openNotesPage(period)">
-                            <ion-icon name="paper"></ion-icon>
-                            Notes
-                        </button>
-                    </ion-item-options> -->
             </ion-item-sliding>
         </ion-list>
-
+        <ion-list *ngIf="timetableData && (!selectedDayTimetable || selectedDayTimetable?.length==0)">
+            <ion-item>
+                <h1>NO MODULE ON THIS DAY</h1>
+            </ion-item>
+        </ion-list>
     </ion-list>
 
 

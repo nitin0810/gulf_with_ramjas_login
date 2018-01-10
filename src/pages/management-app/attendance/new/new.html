@@ -29,7 +29,7 @@
         <ion-card>
             <div *ngFor="let student of studentsList;let i=index">
                 <ion-label> {{student.name}} </ion-label>
-                <ion-list radio-group [(ngModel)]="student.attendance" name="attendance{{i}}">
+                <ion-list radio-group [(ngModel)]="student.attendance" required name="attendance{{i}}">
                     <ion-item>
                         <ion-label>P</ion-label>
                         <ion-radio value="P"></ion-radio>
@@ -47,6 +47,6 @@
             </div>
         </ion-card>
 
-        <button ion-button full type="submit">SUBMIT</button>
+        <button ion-button full type="submit" [disabled]="newAttendanceForm.invalid">SUBMIT</button>
     </form>
 </ion-content>

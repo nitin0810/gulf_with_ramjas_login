@@ -58,8 +58,7 @@ export class TimeTableService {
 
     returnDateOfSelectedDay(selectedDayId: number) {
 
-        let d = new Date();
-        return new Date(d.getTime() + (selectedDayId-this.todayId) *86400000);
+        return new Date((new Date()).getTime() + (selectedDayId-this.todayId) *86400000);
     }
 
     returnDayId(dayName: string) {

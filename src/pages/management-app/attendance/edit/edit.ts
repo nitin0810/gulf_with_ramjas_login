@@ -57,11 +57,13 @@ export class EditAttendancePageManagement {
         this.attendanceService.fetchAttendance(this.getInfoRequiredForAttendance())
             .subscribe((res: any) => {
 
-                this.totalStudents = res[0].TotalStudent;
-                this.presentStudents = res[0].Present;
+                this.totalStudents = (res[0] && res[0][0]) ? res[0][0].TotalStudent : null;
+                this.presentStudents = (res[0] && res[0][0]) ? res[0][0].Present : null;
                 this.attendanceList = res[1];
                 this.attendanceListTemp = this.attendanceList;
                 this.customService.hideLoader();
+
+
             }, (err: any) => {
 
                 this.customService.hideLoader();
@@ -111,7 +113,7 @@ export class EditAttendancePageManagement {
         this.slides.slideNext();
     }
 
-    goToList(){this.slides.slidePrev();}
+    goToList() { this.slides.slidePrev(); }
 
     onEditBtn() {
         if (this.editedAttendance == this.selectedStudent.attendance) {
@@ -151,8 +153,16 @@ export class EditAttendancePageManagement {
     }
 
     updateAttendanceList(res: any) {
-
+        this.updatePresentStudents(res);
         this.selectedStudent.attendance = res.attendance;
+    }
+
+    updatePresentStudents(res: any) {
+
+        if (this.selectedStudent.attendance == 'P' && res.attendance == 'A') { this.presentStudents--; }
+        else if (this.selectedStudent.attendance == 'P' && res.attendance == 'L') { this.presentStudents--; }
+        else if (this.selectedStudent.attendance == 'A' && res.attendance == 'P') { this.presentStudents++; }
+        else if (this.selectedStudent.attendance == 'L' && res.attendance == 'P') { this.presentStudents++; }
     }
 
     dismiss() {

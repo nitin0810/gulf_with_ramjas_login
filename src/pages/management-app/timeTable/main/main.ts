@@ -68,14 +68,19 @@ export class TimeTablePageManagement {
         });
 
         console.log('timtable data/////', this.timetableData);
-        this.selectedDayTimetable = this.timetableData[this.selectedDay].data;
-        this.timeTableService.setTodayId(this.timetableData[this.selectedDay].dayId);
+        /**check if timetable has any modules on selectedDay(i.e today), then only dislplay that timetable data */
+        if (this.timetableData[this.selectedDay]) {
+            this.selectedDayTimetable = this.timetableData[this.selectedDay].data;
+        }
+        this.timeTableService.setTodayId(this.timeTableService.returnDayId(this.selectedDay));
     }
 
     onDayChange() {
 
+        /**update the timetable  */
         this.selectedDayTimetable = this.timetableData[this.selectedDay] ? this.timetableData[this.selectedDay].data : undefined;
 
+        /**update the displayed date */
         if (this.timetableData[this.selectedDay]) {
             this.date = this.timeTableService.returnDateOfSelectedDay(this.timetableData[this.selectedDay].dayId);
         } else {
@@ -158,7 +163,7 @@ export class TimeTablePageManagement {
             {
                 text: 'Cancel',
                 role: 'cancel',
-                handler: () => {  }
+                handler: () => { }
             }]
         });
         actionSheet2.present();

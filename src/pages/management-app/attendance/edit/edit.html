@@ -19,15 +19,19 @@
                     <ion-datetime [max]="todayDate()" [(ngModel)]="date" (ionChange)="onDateChange()" displayFormat="MMM DD YYYY" pickerFormat="DD MMM YYYY"></ion-datetime>
                 </ion-item>
             </ion-card>
+            <div *ngIf="totalStudents">
+                <h6 >Total Students: {{totalStudents}}</h6>
+                <h6 >Present Students: {{presentStudents}}</h6>
+            </div>
 
-            <div *ngIf="attendanceList?.length!=0">
+            <div *ngIf="attendanceList && attendanceList.length!=0">
                 <ion-label>Select student to edit the attendance</ion-label>
                 <ion-searchbar placeholder="Enter Name" [(ngModel)]="searchInput" (ionInput)="onSearchInput($event)" (ionClear)="onSearchClear($event)"></ion-searchbar>
             </div>
 
             <ion-list>
                 <button ion-item *ngFor="let at of attendanceListTemp" (click)="onStudentSelect(at)">
-                    <p>{{at.studentName}} ({{at.studentId}})</p>
+                    <p>{{at.studentName}} ({{at.studentId}})<span item-right>{{at.attendance}}</span></p>
                 </button>
             </ion-list>
 
