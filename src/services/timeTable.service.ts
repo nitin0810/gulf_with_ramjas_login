@@ -5,12 +5,16 @@ import { APP_CONSTANTS as CONFIG } from '../services/app.constants';
 import { CustomHttpService } from './custom-http.service';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/forkJoin';
+import 'rxjs/add/operator/mergeMap';
+
+
 
 
 @Injectable()
 export class TimeTableService {
 
     private todayId: number;
+    private days: Array<any>;
 
     constructor(
         public http: CustomHttpService,
@@ -46,10 +50,29 @@ export class TimeTableService {
 
     /**Above requests are related to creating the timetable */
 
-    fetchTimetableByWeek() {
+
+    /**fetches the list of days to display in timetable view  */
+    fetchDaysAndTimeTable() {
+
+        return this.http.get(CONFIG.serverUrl + '/ad/day')
+            // .map((res: any) => res.json())
+            .flatMap((res: any) => {
+                this.storeDays(res);
+                return this.fetchTimetableByWeek();
+            });
+    }
+
+    storeDays(days: Array<any>) {
+
+        this.days = days.map((day:any)=>{return day.day.slice(0,3)});
+    }
+
+    getDays() { return this.days; }
+
+    private fetchTimetableByWeek() {
 
         let loginType: string = localStorage.getItem('loginType') === "student" ? 'st' : 'ma';
-        return this.http.get(CONFIG.serverUrl + `/${loginType}/timetable/week`);
+        return this.http.get(CONFIG.serverUrl + `/${loginType}/timetable`);
     }
 
     setTodayId(id: number) {
@@ -58,11 +81,12 @@ export class TimeTableService {
 
     returnDateOfSelectedDay(selectedDayId: number) {
 
-        return new Date((new Date()).getTime() + (selectedDayId-this.todayId) *86400000);
+        return new Date((new Date()).getTime() + (selectedDayId - this.todayId) * 86400000);
     }
 
     returnDayId(dayName: string) {
         switch (dayName) {
+
             case 'Mon': return 1;
             case 'Tue': return 2;
             case 'Wed': return 3;
@@ -70,7 +94,6 @@ export class TimeTableService {
             case 'Fri': return 5;
             case 'Sat': return 6;
             case 'Sun': return 7;
-
         }
     }
 

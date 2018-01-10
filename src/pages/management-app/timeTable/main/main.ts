@@ -15,7 +15,7 @@ export class TimeTablePageManagement {
     title: string = 'Time table';
 
     /**data required to display the timetable */
-    daysName: Array<string> = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'];
+    daysName: Array<string>;
     timetableData: any; /** Object whose keys are days and values is the array of periods/slots of timetable*/
 
     /**ngModal variables */
@@ -36,17 +36,16 @@ export class TimeTablePageManagement {
 
         this.date = new Date();
         this.selectedDay = this.date.toDateString().split(' ')[0];
-        this.getTimeTable();
-        // this.loginType = localStorage.getItem('loginType');
         this.isAdmin = JSON.parse(localStorage.getItem('roles')).indexOf('ADMIN') > -1;
+        this.getDaysAndTimeTable();
     }
 
-    getTimeTable() {
-
+    getDaysAndTimeTable() {
         this.customService.showLoader();
-        this.timeTableService.fetchTimetableByWeek()
+        this.timeTableService.fetchDaysAndTimeTable()
             .subscribe((res: any) => {
 
+                this.daysName = this.timeTableService.getDays();
                 this.setTimetableData(res);
                 this.customService.hideLoader();
             }, (err: any) => {
@@ -54,6 +53,20 @@ export class TimeTablePageManagement {
                 this.customService.showToast(err.msg);
             });
     }
+
+    // getTimeTable() {
+
+    //     this.customService.showLoader();
+    //     this.timeTableService.fetchTimetableByWeek()
+    //         .subscribe((res: any) => {
+
+    //             this.setTimetableData(res);
+    //             this.customService.hideLoader();
+    //         }, (err: any) => {
+    //             this.customService.hideLoader();
+    //             this.customService.showToast(err.msg);
+    //         });
+    // }
 
     setTimetableData(res: Array<any>) {
 

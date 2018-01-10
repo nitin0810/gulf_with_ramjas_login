@@ -7,10 +7,10 @@
     </ion-navbar>
 
     <ion-toolbar no-border-top color="primary">
-        <ion-segment [(ngModel)]="selectedDay" (ionChange)="onDayChange()">
+        <ion-segment *ngIf="daysName" [(ngModel)]="selectedDay" (ionChange)="onDayChange()">
             <ion-segment-button *ngFor="let day of daysName" [value]="day">
-                <span class="textWhite">{{ day }}</span>
-            </ion-segment-button>
+                <span class="textWhite">{{ day}}</span>
+            </ion-segment-button>   
         </ion-segment>
     </ion-toolbar>
 </ion-header>
