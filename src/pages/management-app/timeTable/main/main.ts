@@ -106,6 +106,15 @@ export class TimeTablePageManagement {
         modal.present();
     }
 
+    openEditPage(period: any) {
+        const modal = this.modalCtrl.create("TimeTableEditPageManagement", { 'timeTableInfo': period });
+        modal.present();
+    }
+
+    openViewPage(period: any) {
+        const modal = this.modalCtrl.create("TimeTableViewPage", { 'timeTableInfo': period });
+        modal.present();
+    }
     showoptions(period: any) {
 
         const actionSheet = this.actionSheetCtrl.create({

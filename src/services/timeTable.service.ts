@@ -8,8 +8,6 @@ import 'rxjs/add/observable/forkJoin';
 import 'rxjs/add/operator/mergeMap';
 
 
-
-
 @Injectable()
 export class TimeTableService {
 
@@ -48,36 +46,58 @@ export class TimeTableService {
         return this.http.post(CONFIG.serverUrl + `/ad/timetable`, data);
     }
 
+
     /**Above requests are related to creating the timetable */
+
+    /**--------------------------------------------------------------------------------------------- */
+
+    fetchFacultyAndDaysAndSlots(pId: number, yId: number, isEven: boolean) {
+
+        let slotObservable = this.http.get(CONFIG.serverUrl + '/ad/slot');
+        let dayObservable = this.http.get(CONFIG.serverUrl + '/ad/day');
+        let facultyObservable = this.http.get(CONFIG.serverUrl + `/ad/timetable/faculty/${pId}/${yId}/${isEven}`);
+        /**simultaneously send all requests*/
+        return Observable.forkJoin([slotObservable, dayObservable, facultyObservable]);
+    }
+
+    editTimetable(data: any, tId: number) {
+
+        return this.http.put(CONFIG.serverUrl + `/ad/timetable/${tId}`, data);
+    }
+
+    /**Above requests are related to edit the timetable  */
+
+    /**--------------------------------------------------------------------------------------------- */
 
 
     /**fetches the list of days to display in timetable view  */
     fetchDaysAndTimeTable() {
 
-        return this.http.get(CONFIG.serverUrl + '/ad/day')
-            // .map((res: any) => res.json())
+        let loginType: string = localStorage.getItem('loginType') === "student" ? 'st' : JSON.parse(localStorage.getItem('roles')).indexOf('ADMIN') > -1 ? 'ad' : 'ma';
+
+        return this.http.get(CONFIG.serverUrl + `/${loginType}/day`)
             .flatMap((res: any) => {
                 this.storeDays(res);
-                return this.fetchTimetableByWeek();
+                return this.fetchTimetableByWeek(loginType);
             });
     }
 
+    private fetchTimetableByWeek(loginType: string) {
+
+        return this.http.get(CONFIG.serverUrl + `/${loginType}/timetable`);
+    }
+
+
     storeDays(days: Array<any>) {
 
-        this.days = days.map((day:any)=>{return day.day.slice(0,3)});
+        this.days = days.map((day: any) => day.day.slice(0, 3) );
     }
 
     getDays() { return this.days; }
 
-    private fetchTimetableByWeek() {
 
-        let loginType: string = localStorage.getItem('loginType') === "student" ? 'st' : 'ma';
-        return this.http.get(CONFIG.serverUrl + `/${loginType}/timetable`);
-    }
-
-    setTodayId(id: number) {
-        this.todayId = id;
-    }
+    setTodayId(id: number) { this.todayId = id; }
+    
 
     returnDateOfSelectedDay(selectedDayId: number) {
 
@@ -85,8 +105,8 @@ export class TimeTableService {
     }
 
     returnDayId(dayName: string) {
-        switch (dayName) {
 
+        switch (dayName) {
             case 'Mon': return 1;
             case 'Tue': return 2;
             case 'Wed': return 3;

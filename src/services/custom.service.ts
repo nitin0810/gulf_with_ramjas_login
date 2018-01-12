@@ -28,7 +28,7 @@ export class CustomService {
 
     public hideLoader() {
 
-        this.loading && this.loading.dismiss();
+        return this.loading.dismiss();
 
     }
 
@@ -42,8 +42,6 @@ export class CustomService {
             closeButtonText: "OK"
             // cssClass: 'redBg'
         });
-
-        this.toast
 
         this.toast.present();
     }

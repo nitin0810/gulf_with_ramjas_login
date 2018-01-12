@@ -45,10 +45,10 @@ export class CustomHttpService extends Http {
             options.headers.set('Authorization', `${getToken()}`);
             options.headers.set('account', localStorage.getItem('loginType'));
         } else {
-            
-                url.headers.set('Authorization', `${getToken()}`);
-                url.headers.set('account', localStorage.getItem('loginType'));
-           
+
+            url.headers.set('Authorization', `${getToken()}`);
+            url.headers.set('account', localStorage.getItem('loginType'));
+
 
         }
         return super.request(url, options);
@@ -75,7 +75,7 @@ export class CustomHttpService extends Http {
             .catch(this.handleError);
     }
 
-    
+
     extractData(res: Response) {
         /**
         * res.json() raises exception if body is not a valid json or body is not present in response
@@ -103,10 +103,12 @@ export class CustomHttpService extends Http {
                 body = '';
             }
 
-            let errMsg =body.message ||  body.error || 'Internal server error, Try again later ';
+
+
+            let errMsg = body.message || body.error || 'Internal server error, Try again later ';
             err.status = error.status;
             err.msg = errMsg;
-
+            (body && body !== '') && (err.body = body);
             if (error.status === 0) {
                 err.status = 0;
                 err.msg = 'No Internet, Check Your connection Or Try again';

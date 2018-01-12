@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { IonicPage, ViewController, ModalController, ActionSheetController } from 'ionic-angular';
+import { IonicPage, ViewController, ModalController, ActionSheetController, AlertController } from 'ionic-angular';
 import { CustomService } from '../../../../services/custom.service';
 import { TimeTableService } from '../../../../services/timeTable.service';
 
@@ -36,6 +36,7 @@ export class NewTimeTablePageManagement implements OnInit {
     constructor(
         private viewCtrl: ViewController,
         private actionSheetCtrl: ActionSheetController,
+        private alertCtrl: AlertController,
         private customService: CustomService,
         private mdlCtrl: ModalController,
         private timeTableService: TimeTableService
@@ -63,7 +64,7 @@ export class NewTimeTablePageManagement implements OnInit {
 
     }
 
-    onnSelectFaculty() {
+    onSelectFaculty() {
 
         let searchPage = this.mdlCtrl.create("FacultySearchPage", { 'searchList': this.empList, 'title': 'Faculty' });
         searchPage.present();
@@ -169,7 +170,7 @@ export class NewTimeTablePageManagement implements OnInit {
             programId: this.program.programId,
             yearId: this.moduleYearObject.yearId,
             moduleId: this.moduleYearObject.moduleId,
-            isEvenSemester:this.moduleYearObject.isEvenSemester,
+            isEvenSemester: this.moduleYearObject.isEvenSemester,
             dayId: this.day.id,
             slotId: this.slot.id,
             roomId: this.room.id
@@ -185,9 +186,73 @@ export class NewTimeTablePageManagement implements OnInit {
                 this.customService.showToast("Timetable created successfully");
                 this.dismiss();
             }, (err: any) => {
-                this.customService.hideLoader();
-                this.customService.showToast(err.msg);
+                this.customService.hideLoader()
+                    .then(() => {
+
+                        /**when entered module at entered slot is being taught by someone else
+                        * then error has body containing the details of that employee
+                         */
+                        if (err.body) {
+                            this.showAlert(err.body);
+                        } else {
+                            this.customService.showToast(err.msg, null, true);
+                        }
+                    });
             });
+    }
+
+    showAlert(body: any) {
+        let msg: string;
+        if (body.active) {
+            msg = `
+                  Some other faculty already teaches at the selected slot.
+                  Do you want to edit this timetable ? 
+                   `;
+        } else {
+            msg = `
+                Some other faculty (currently not active) already teaches at the selected slot.
+                Do you want to activate or edit this timetable ?
+             `;
+        }
+        const alert = this.alertCtrl.create({
+            title: 'Duplicate Entry',
+            message: msg,
+            buttons: [{
+                text: 'Cancel',
+                role: 'cancel',
+                handler: () => { }
+            }]
+        });
+        if (body.active) {
+
+
+            alert.addButton({
+                text: 'Edit',
+                handler: () => { this.openEditPage(body) }
+            });
+        } else {
+
+            alert.addButton({
+                text: 'Activate',
+                handler: () => { this.openEditPage(body) }
+            });
+        }
+        alert.present();
+
+    }
+
+    openEditPage(body: any) {
+        /**add necessary data which is required by edit page */
+        body.programId = this.program.programId;
+        body.programName = this.program.programName;
+        body.yearId = this.moduleYearObject.yearId;
+        body.yearName = this.moduleYearObject.yearName;
+        body.slot = this.slot;
+        body.day = this.day;
+        body.isEvenSemester = this.moduleYearObject.isEvenSemester;
+        body.fromNewPage = true; // to differentiate it from normal edit (when editing is done from main timetable page) 
+        const modal = this.mdlCtrl.create("TimeTableEditPageManagement", { 'timeTableInfo': body });
+        modal.present();
     }
 
     dismiss() {

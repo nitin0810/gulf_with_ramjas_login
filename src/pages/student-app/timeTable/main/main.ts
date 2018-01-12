@@ -32,4 +32,6 @@ export class TimeTablePageStudent extends TimeTablePageManagement {
         this.getDaysAndTimeTable();
         // this.loginType = localStorage.getItem('loginType');
     }
+
+
 }

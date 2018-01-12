@@ -23,7 +23,7 @@
         </ion-list-header>
         <ion-list no-lines>
             <ion-item-sliding *ngFor="let period of selectedDayTimetable">
-                <button ion-item class="timetable-item">
+                <button ion-item class="timetable-item" (click)="openViewPage(period)">
                     <ion-grid no-padding>
                         <ion-row>
                             <ion-col col-4 class="border border-right-progress left-col" text-right>

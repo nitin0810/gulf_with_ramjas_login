@@ -7,7 +7,7 @@
     <form *ngIf="empList" #newTimeTableForm="ngForm" (ngSubmit)="onSubmit()">
 
         <ion-card *ngIf="empList">
-            <button ion-item type="button" (click)="onnSelectFaculty()">
+            <button ion-item type="button" (click)="onSelectFaculty()">
                 <ion-label stacked>Select Faculty</ion-label>
                 <ion-input [(ngModel)]="employeeName" disabled required placeholder="Select Faculty " name="faculty"></ion-input>
             </button>
