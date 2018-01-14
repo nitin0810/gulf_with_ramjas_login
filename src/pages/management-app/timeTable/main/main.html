@@ -24,28 +24,28 @@
             {{date | amDateFormat: 'LL'}}
         </ion-list-header>
 
-        <div *ngIf="isAdmin"  class="scroll-btn" >
-            <button [class.filterSelected]="filters['e']" style.color="black" ion-button icon-end outline (click)="onEmployeeFilter()">
+        <div *ngIf="isAdmin" class="scroll-btn">
+            <button [class.filterSelected]="filters['e']" ion-button icon-end outline (click)="onEmployeeFilter()">
                 Employee
                 <ion-icon name="arrow-down"> </ion-icon>
             </button>
-            <button ion-button icon-end outline (click)="onDepartmentFilter()">
+            <button [class.filterSelected]="filters['d']" ion-button icon-end outline (click)="onDepartmentFilter()">
                 Department
                 <ion-icon name="arrow-down"> </ion-icon>
             </button>
-            <button ion-button icon-end outline (click)="onProgramsFilter()">
+            <button [class.filterSelected]="filters['p']" ion-button icon-end outline (click)="onProgramsFilter()">
                 Programs
                 <ion-icon name="arrow-down"> </ion-icon>
             </button>
-            <button ion-button icon-end outline (click)="onYearsFilter()">
-                    Years
-                    <ion-icon name="arrow-down"> </ion-icon>
-                </button>
-            <button ion-button icon-end outline (click)="onSlotsFilter()">
+            <button [class.filterSelected]="filters['y']" ion-button icon-end outline (click)="onYearsFilter()">
+                Years
+                <ion-icon name="arrow-down"> </ion-icon>
+            </button>
+            <button [class.filterSelected]="filters['s']" ion-button icon-end outline (click)="onSlotsFilter()">
                 Slots
                 <ion-icon name="arrow-down"> </ion-icon>
             </button>
-        
+
         </div>
 
         <ion-list no-lines>

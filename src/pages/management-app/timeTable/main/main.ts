@@ -218,59 +218,104 @@ export class TimeTablePageManagement {
 
         const alert = this.alertCtrl.create({
             title: 'Choose Employee',
-            buttons: [{
-                text: 'Cancel',
-                role: 'cancel'
-            },
-            {
-                text: 'Clear',
-                handler: () => {
-                    let currentStatus: any = this.filters['e'];
-                    this.filters['e'] = null;
-                    currentStatus && this.filterAgain();
-                }
-            },
-
-            {
-                text: 'Apply',
-                handler: (eId: number) => {
-                    // console.log('filtered array:', this.timeTableService.filterTimetable(eId));
-                    this.filters['e'] = eId;
-                    this.filters['e'] && this.filterAgain();
-
-                }
-            }
-
-            ]
         });
 
-        this.addAlertInputs(this.timeTableService.getDataForFiltering('e'), alert, this.filters['e']);
-        alert.present();
+        this.completeAlertConfiguration('e', alert);
     }
 
-    /**add radio inputs to select the appropriate option */
-    addAlertInputs(list: Array<any>, alert: Alert, selectedInput: number) {
+
+    onDepartmentFilter() {
+
+        if (!this.isRequiredDataAvailable('d')) { return; }
+
+        const alert = this.alertCtrl.create({
+            title: 'Choose Department',
+        });
+
+        this.completeAlertConfiguration('d', alert);
+    }
+
+    onProgramsFilter() {
+
+        if (!this.isRequiredDataAvailable('p')) { return; }
+
+        const alert = this.alertCtrl.create({
+            title: 'Choose Program',
+        });
+
+        this.completeAlertConfiguration('p', alert);
+    }
+    onYearsFilter() {
+
+        if (!this.isRequiredDataAvailable('y')) { return; }
+
+        const alert = this.alertCtrl.create({
+            title: 'Choose Year',
+        });
+
+        this.completeAlertConfiguration('y', alert);
+    }
+
+    onSlotsFilter() {
+
+        if (!this.isRequiredDataAvailable('s')) { return; }
+
+        const alert = this.alertCtrl.create({
+            title: 'Choose Slot',
+        });
+
+        this.completeAlertConfiguration('s', alert);
+    }
+
+
+
+    /**General method : configures the alert controller by adding appropriate buttons 
+     * and input radio buttons depending on the type of filter selected
+     */
+    completeAlertConfiguration(filter: string, alert: Alert) {
+
+        alert.addButton({
+            text: 'Cancel',
+            role: 'cancel'
+        });
+
+        alert.addButton({
+            text: 'Clear',
+            handler: () => {
+
+                let currentStatus: any = this.filters[filter];
+                this.filters[filter] = null;
+                currentStatus && this.filterAgain(); // perform filtering only if there was a filter applied 
+            }
+        });
+
+        alert.addButton({
+            text: 'Apply',
+            handler: (id: number) => {
+                /** do nothing if selection is unchanged*/
+                if (this.filters[filter] == id) { return; }
+
+                this.filters[filter] = id;
+                this.filters[filter] && this.filterAgain();
+
+            }
+        });
+        let list = this.timeTableService.getDataForFiltering(filter),
+            selectedInputId = this.filters[filter];
 
         list.forEach(option => {
             alert.addInput({
                 type: 'radio',
-                checked: selectedInput == option.id,
+                checked: selectedInputId == option.id,
                 label: option.name || `${option.startTime} - ${option.endTime}`,
                 value: option.id,
             });
         });
 
-
+        alert.present();
     }
-    
 
 
-
-    onDepartmentFilter() { }
-
-    onProgramsFilter() { }
-    onYearsFilter() { }
-    onSlotsFilter() { }
 
     isRequiredDataAvailable(filter: string) {
 
@@ -283,7 +328,7 @@ export class TimeTablePageManagement {
 
     filterAgain() {
         console.log('filter agaiin clalled//////');
-        
+
         this.setTimetableDataInObjectForm(this.timeTableService.filterTimetable(this.filters['e'], this.filters['d'], this.filters['p'], this.filters['y'], this.filters['s']));
 
     }
