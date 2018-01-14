@@ -23,6 +23,31 @@
         <ion-list-header>
             {{date | amDateFormat: 'LL'}}
         </ion-list-header>
+
+        <div *ngIf="isAdmin"  class="scroll-btn" >
+            <button [class.filterSelected]="filters['e']" style.color="black" ion-button icon-end outline (click)="onEmployeeFilter()">
+                Employee
+                <ion-icon name="arrow-down"> </ion-icon>
+            </button>
+            <button ion-button icon-end outline (click)="onDepartmentFilter()">
+                Department
+                <ion-icon name="arrow-down"> </ion-icon>
+            </button>
+            <button ion-button icon-end outline (click)="onProgramsFilter()">
+                Programs
+                <ion-icon name="arrow-down"> </ion-icon>
+            </button>
+            <button ion-button icon-end outline (click)="onYearsFilter()">
+                    Years
+                    <ion-icon name="arrow-down"> </ion-icon>
+                </button>
+            <button ion-button icon-end outline (click)="onSlotsFilter()">
+                Slots
+                <ion-icon name="arrow-down"> </ion-icon>
+            </button>
+        
+        </div>
+
         <ion-list no-lines>
             <ion-item-sliding *ngFor="let period of selectedDayTimetable">
                 <button ion-item detail-none class="timetable-item" (click)="openViewPage(period)">
@@ -36,17 +61,20 @@
                                 </div>
                             </ion-col>
                             <ion-col col-8 col-8 class="border border-left-progress right-col">
-                                <span>
-                                    <p class="textLarge">{{period.moduleName}}</p>
-                                </span>
                                 <span class="textGray">
                                     {{period.programName}}
+                                </span>
+                                <span>
+                                    <p class="textLarge">{{period.moduleName}}</p>
                                 </span>
                                 <div>
                                     <span class="textSmall">
                                         <b>{{period.yearName}} year</b>
                                     </span>
                                 </div>
+                                <span *ngIf="isAdmin" class="textSmall">
+                                    <b>{{period.employeeName}}</b>
+                                </span>
                             </ion-col>
                         </ion-row>
                     </ion-grid>
@@ -60,7 +88,7 @@
                         More
                     </button>
                 </ion-item-options>
-                
+
             </ion-item-sliding>
 
         </ion-list>

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, ModalController,ActionSheetController } from 'ionic-angular';
+import { IonicPage, ModalController,ActionSheetController, AlertController } from 'ionic-angular';
 import { CustomService } from '../../../../services/custom.service';
 import { TimeTableService } from '../../../../services/timeTable.service';
 import { TimeTablePageManagement } from '../../../management-app/timeTable/main/main';
@@ -20,9 +20,10 @@ export class TimeTablePageStudent extends TimeTablePageManagement {
         public modalCtrl: ModalController,
         public customService: CustomService,
         public actionSheetCtrl: ActionSheetController,
+        public alertCtrl: AlertController,
         public timeTableService: TimeTableService
     ) {
-        super(modalCtrl, customService, actionSheetCtrl,timeTableService);
+        super(modalCtrl, customService, actionSheetCtrl,alertCtrl,timeTableService);
     }
 
     ionViewWillEnter() {

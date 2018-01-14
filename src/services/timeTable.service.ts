@@ -13,6 +13,8 @@ export class TimeTableService {
 
     private todayId: number;
     private days: Array<any>;
+    private timeTableArray: Array<any>; //from server
+    private dataForFiltering: any = {};
 
     constructor(
         public http: CustomHttpService,
@@ -21,14 +23,39 @@ export class TimeTableService {
     fetchEmployeeandRSDInfo() {
 
         /**collect observables of all http requests */
-        let empObservable = this.http.get(CONFIG.serverUrl + '/ad/timetable/employee');
-        let roomObservable = this.http.get(CONFIG.serverUrl + '/ad/room');
-        let slotObservable = this.http.get(CONFIG.serverUrl + '/ad/slot');
-        let dayObservable = this.http.get(CONFIG.serverUrl + '/ad/day');
+        let empObservable = this.fetchEmployees(),
+            slotObservable = this.fetchSlots(),
+            roomObservable = this.http.get(CONFIG.serverUrl + '/ad/room'),
+            dayObservable = this.http.get(CONFIG.serverUrl + '/ad/day');
 
         /**simultaneously send all requests*/
         return Observable.forkJoin([empObservable, roomObservable, slotObservable, dayObservable]);
     }
+
+    fetchEmployees() {
+        return this.http.get(CONFIG.serverUrl + '/ad/timetable/employee');
+    }
+
+    fetchPrograms() {
+        return this.http.get(CONFIG.serverUrl + '/ad/program');
+    }
+
+    // fetchModules() {
+    //     return this.http.get(CONFIG.serverUrl + '/ad/timetable/module');
+    // }
+
+    fetchDepartments() {
+        return this.http.get(CONFIG.serverUrl + '/ad/department');
+    }
+
+    fetchYears() {
+        return this.http.get(CONFIG.serverUrl + '/ad/year');
+    }
+
+    fetchSlots() {
+        return this.http.get(CONFIG.serverUrl + '/ad/slot');
+    }
+
 
     fetchProgramList(eId: number) {
 
@@ -53,9 +80,9 @@ export class TimeTableService {
 
     fetchFacultyAndDaysAndSlots(pId: number, yId: number, isEven: boolean) {
 
-        let slotObservable = this.http.get(CONFIG.serverUrl + '/ad/slot');
-        let dayObservable = this.http.get(CONFIG.serverUrl + '/ad/day');
-        let facultyObservable = this.http.get(CONFIG.serverUrl + `/ad/timetable/faculty/${pId}/${yId}/${isEven}`);
+        let slotObservable = this.http.get(CONFIG.serverUrl + '/ad/slot'),
+            dayObservable = this.http.get(CONFIG.serverUrl + '/ad/day'),
+            facultyObservable = this.http.get(CONFIG.serverUrl + `/ad/timetable/faculty/${pId}/${yId}/${isEven}`);
         /**simultaneously send all requests*/
         return Observable.forkJoin([slotObservable, dayObservable, facultyObservable]);
     }
@@ -87,17 +114,59 @@ export class TimeTableService {
         return this.http.get(CONFIG.serverUrl + `/${loginType}/timetable`);
     }
 
+    fetchDataRequiredForFilters() {
+
+        this.fetchEmployees()
+            .subscribe((res: any) => {
+                this.dataForFiltering['e'] = res;
+            }, (err: any) => { });
+
+        this.fetchPrograms()
+            .subscribe((res: any) => {
+                this.dataForFiltering['p'] = res;
+            }, (err: any) => { });
+
+        // this.fetchModules()
+        //     .subscribe((res: any) => {
+        //         this.dataForFiltering['p'] = res;
+        //     }, (err: any) => { });
+
+        this.fetchDepartments()
+            .subscribe((res: any) => {
+                this.dataForFiltering['d'] = res;
+            }, (err: any) => { });
+
+        this.fetchYears()
+            .subscribe((res: any) => {
+                this.dataForFiltering['y'] = res;
+            }, (err: any) => { });
+
+        this.fetchSlots()
+            .subscribe((res: any) => {
+                this.dataForFiltering['s'] = res;
+            }, (err: any) => { });
+
+    }
+
+    getDataForFiltering(type: string) {
+
+        return this.dataForFiltering[type]; 
+    }
+
+
+    storeTimetableArray(tt: Array<any>) { this.timeTableArray = tt; }
+
 
     storeDays(days: Array<any>) {
 
-        this.days = days.map((day: any) => day.day.slice(0, 3) );
+        this.days = days.map((day: any) => day.day.slice(0, 3));
     }
 
     getDays() { return this.days; }
 
 
     setTodayId(id: number) { this.todayId = id; }
-    
+
 
     returnDateOfSelectedDay(selectedDayId: number) {
 
@@ -115,6 +184,64 @@ export class TimeTableService {
             case 'Sat': return 6;
             case 'Sun': return 7;
         }
+    }
+
+    /**below code is related to data filtering */
+
+    filterByEmployee(data: Array<any>, empId: number) {
+
+        return data.filter(period => period.employeeId == empId);
+    }
+
+    filterByDepartment(data: Array<any>, depId: number) {
+
+        return data.filter(period => period.departmentName == depId);
+    }
+
+    filterByProgram(data: Array<any>, pgmId: number) {
+
+        return data.filter(period => period.programId == pgmId);
+    }
+
+    // filterByModules(data: Array<any>, mId: number) {
+
+    //     return data.filter(period => period.moduleId == mId);
+    // }
+
+    filterByYears(data: Array<any>, yId: number) {
+
+        return data.filter(period => period.yearId == yId);
+    }
+
+    filterBySlots(data: Array<any>, sId: number) {
+
+        return data.filter(period => period.slotId == sId);
+    }
+
+    filterTimetable(e?: number, d?: number, p?: number, y?: number, s?: number) {
+
+        let ftt: Array<any> = this.timeTableArray; //initalize filtered timetable array 
+
+        if (e) {
+            ftt = this.filterByEmployee(ftt, e);
+        }
+        if (d) {
+            ftt = this.filterByDepartment(ftt, d);
+        }
+        if (p) {
+            ftt = this.filterByProgram(ftt, p);
+        }
+        // if (m) {
+        //     ftt = this.filterByModules(ftt, m);
+        // }
+        if (y) {
+            ftt = this.filterByYears(ftt, y);
+        }
+        if (s) {
+            ftt = this.filterBySlots(ftt, s);
+        }
+
+        return ftt;
     }
 
 }
