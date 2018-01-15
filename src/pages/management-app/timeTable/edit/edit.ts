@@ -40,12 +40,12 @@ export class TimeTableEditPageManagement implements OnInit {
         if (this.timeTableInfo.fromNewPage) {
             this.setAndDisableSlotAndDay();
         } else {
-            this.editedFaculty = this.setInitailFaculty(this.timeTableInfo);
+            this.editedFaculty = this.setInitialFaculty(this.timeTableInfo);
             this.editedFacultyName = this.editedFaculty.facultyName;
         }
     }
 
-    setInitailFaculty(tt: any) {
+    setInitialFaculty(tt: any) {
         return {
             facultyId: tt.employeeId,
             facultyName: tt.employeeName,
@@ -55,7 +55,7 @@ export class TimeTableEditPageManagement implements OnInit {
     }
 
     setAndDisableSlotAndDay() {
-        this.editedFaculty = this.setInitailFaculty(this.timeTableInfo);
+        this.editedFaculty = this.setInitialFaculty(this.timeTableInfo);
         this.editedFacultyName = this.editedFaculty.facultyName;
         this.editedDay = this.timeTableInfo.day;
         this.days = [this.editedDay];
@@ -65,15 +65,34 @@ export class TimeTableEditPageManagement implements OnInit {
     }
 
     ngOnInit() {
-        this.getFacultyList();
+        if(this.timeTableInfo.fromNewPage){
+
+            this.getFacultyList();
+        }else{
+            this.getFacultyDaysSlots();
+        }
     }
 
     getFacultyList() {
         this.customService.showLoader();
+        this.timeTableService.fetchFacultyByProgramAndYear(this.timeTableInfo.programId, this.timeTableInfo.yearId, this.timeTableInfo.isEvenSemester)
+            .subscribe((res: any) => {
+
+                this.facultyList = res;
+                this.customService.hideLoader();
+            }, (err: any) => {
+
+                this.customService.hideLoader();
+                this.customService.showToast(err.msg);
+            });
+    }
+
+    getFacultyDaysSlots() {
+        this.customService.showLoader();
         this.timeTableService.fetchFacultyAndDaysAndSlots(this.timeTableInfo.programId, this.timeTableInfo.yearId, this.timeTableInfo.isEvenSemester)
             .subscribe((res: any) => {
 
-                [this.slots, this.days,this.facultyList] = res;
+                [this.slots, this.days, this.facultyList] = res;
                 this.customService.hideLoader();
             }, (err: any) => {
 
@@ -93,7 +112,7 @@ export class TimeTableEditPageManagement implements OnInit {
             }
         });
     }
- 
+
 
     onSubmit() {
 

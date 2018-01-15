@@ -40,10 +40,6 @@ export class TimeTableService {
         return this.http.get(CONFIG.serverUrl + '/ad/program');
     }
 
-    // fetchModules() {
-    //     return this.http.get(CONFIG.serverUrl + '/ad/timetable/module');
-    // }
-
     fetchDepartments() {
         return this.http.get(CONFIG.serverUrl + '/ad/department');
     }
@@ -82,9 +78,13 @@ export class TimeTableService {
 
         let slotObservable = this.http.get(CONFIG.serverUrl + '/ad/slot'),
             dayObservable = this.http.get(CONFIG.serverUrl + '/ad/day'),
-            facultyObservable = this.http.get(CONFIG.serverUrl + `/ad/timetable/faculty/${pId}/${yId}/${isEven}`);
+            facultyObservable = this.fetchFacultyByProgramAndYear(pId, yId, isEven);
         /**simultaneously send all requests*/
         return Observable.forkJoin([slotObservable, dayObservable, facultyObservable]);
+    }
+
+    fetchFacultyByProgramAndYear(pId: number, yId: number, isEven: boolean) {
+        return this.http.get(CONFIG.serverUrl + `/ad/timetable/faculty/${pId}/${yId}/${isEven}`);
     }
 
     editTimetable(data: any, tId: number) {
@@ -126,11 +126,6 @@ export class TimeTableService {
                 this.dataForFiltering['p'] = res;
             }, (err: any) => { });
 
-        // this.fetchModules()
-        //     .subscribe((res: any) => {
-        //         this.dataForFiltering['p'] = res;
-        //     }, (err: any) => { });
-
         this.fetchDepartments()
             .subscribe((res: any) => {
                 this.dataForFiltering['d'] = res;
@@ -150,16 +145,21 @@ export class TimeTableService {
 
     getDataForFiltering(type: string) {
 
-        return this.dataForFiltering[type]; 
+        return this.dataForFiltering[type];
     }
 
 
     storeTimetableArray(tt: Array<any>) { this.timeTableArray = tt; }
 
+    deleteTimetableEntry(id: number) {
+
+        let index = this.timeTableArray.findIndex(period => period.id == id);
+        if (index > -1) { this.timeTableArray.splice(index, 1); }
+    }
 
     storeDays(days: Array<any>) {
 
-        this.days = days.map((day: any) => day.day.slice(0, 3));
+        this.days = days.map(day => day.day.slice(0, 3));
     }
 
     getDays() { return this.days; }
@@ -186,6 +186,12 @@ export class TimeTableService {
         }
     }
 
+    /**for deleting the timetable */
+    deleteTimetable(tId: number) {
+
+        return this.http.delete(CONFIG.serverUrl + `/ad/timetable/${tId}`);
+    }
+
     /**below code is related to data filtering */
 
     filterByEmployee(data: Array<any>, empId: number) {
@@ -195,18 +201,13 @@ export class TimeTableService {
 
     filterByDepartment(data: Array<any>, depId: number) {
 
-        return data.filter(period => period.departmentName == depId);
+        return data.filter(period => period.departmentId == depId);
     }
 
     filterByProgram(data: Array<any>, pgmId: number) {
 
         return data.filter(period => period.programId == pgmId);
     }
-
-    // filterByModules(data: Array<any>, mId: number) {
-
-    //     return data.filter(period => period.moduleId == mId);
-    // }
 
     filterByYears(data: Array<any>, yId: number) {
 
@@ -231,9 +232,6 @@ export class TimeTableService {
         if (p) {
             ftt = this.filterByProgram(ftt, p);
         }
-        // if (m) {
-        //     ftt = this.filterByModules(ftt, m);
-        // }
         if (y) {
             ftt = this.filterByYears(ftt, y);
         }
