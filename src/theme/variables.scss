@@ -21,8 +21,8 @@
 // Primary color for whatsApp color: #13665c
 
 $colors: (
-  primary:    #00BCD4,
-  secondary:  #32db64,
+  primary:    #9362F6,
+  secondary:  #fff,
   danger:     #f53d3d,
   light:      #fff,
 white
@@ -30,7 +30,7 @@ white
   cool:       #607D8B,
   fab:        #3e9e3e,
   header:     #387ef5,
-  color1:     #00bcd4,
+  // color1:     #00bcd4,
   colorLight: #80deea,
   transparent: rgba(0, 0, 0, 0),
   csStripColor:#797d80,
@@ -43,10 +43,10 @@ white
   facebook:   #3a589b,
   twitter:    #55acef,
   google:     #dc4e42,
-  color2:        #673AB7,
-  color3:        #03A9F4,
-  color4:        #4CAF50,
-  color5:        #FFEB3B,
+  // color2:        #673AB7,
+  // color3:        #03A9F4,
+  // color4:        #4CAF50,
+  // color5:        #FFEB3B,
   color6:        #FF5722,
   color7:        #607D8B,
   color8:        #E91E63,
@@ -63,10 +63,18 @@ white
   color19:        #9E9E9E,
 
 
+  color1: #9362F6,
+  color2: #F9DD6A,
+  color3: #9BDFEC,
+  color4: #BEA1FC,
+  color5: #F894BC
+
+
+
 );
 
 $color0 :       #fd4544;
-$color1 :       #00BCD4;
+$color1 :       #9362F6;
 $csPink:        #f6c2d8;
 $csDarkPink:    #d35a7b;
 $colorLight:    #00acc1;
@@ -143,4 +151,13 @@ $ionicons-font-path: "../assets/fonts";
 
 @function csBackgroundImage($image){
     @return url('../assets/images/'+$image);
+}
+
+
+ion-header{
+  box-shadow: 0 0px 35px color($colors,primary);
+}
+
+ion-searchbar{
+  background:color($colors,primary) !important;
 }

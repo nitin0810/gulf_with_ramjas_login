@@ -8,12 +8,12 @@
     color: $csGreen;
   }
   
-  .csKeyBackground{
-    @extend .setBottom;
-    background-repeat: no-repeat;
-    bottom:0px;
-    background-image: csBackgroundSvg('key.svg');
-  }
+  // .csKeyBackground{
+  //   @extend .setBottom;
+  //   background-repeat: no-repeat;
+  //   bottom:0px;
+  //   background-image: csBackgroundSvg('key.svg');
+  // }
   
   .toolbar-title-ios , .toolbar-title-md , .toolbar-title-wp, .bar-button-default-wp, .bar-button-default-md, .bar-button-default-ios{
     color: white;
