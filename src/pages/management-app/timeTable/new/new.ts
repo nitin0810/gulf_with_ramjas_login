@@ -209,12 +209,12 @@ export class NewTimeTablePageManagement implements OnInit {
         let msg: string;
         if (body.active) {
             msg = `
-                  Some other faculty already teaches at the selected slot.
+                  ${body.employeeName} already teaches module ${body.moduleName} at the selected slot.
                   Do you want to edit this timetable ? 
                    `;
         } else {
             msg = `
-                Some other faculty (currently not active) already teaches at the selected slot.
+                ${body.employeeName} (currently not active) already teaches module ${body.moduleName} at the selected slot.
                 Do you want to Activate/Edit this timetable ?
              `;
         }
@@ -278,6 +278,7 @@ export class NewTimeTablePageManagement implements OnInit {
             .subscribe((res: any) => {
                 this.customService.hideLoader();
                 this.customService.showToast('Activated successfully');
+                this.dismiss(res);
             }, (err: any) => {
                 this.customService.hideLoader();
                 this.customService.showToast(err.msg);
@@ -294,11 +295,14 @@ export class NewTimeTablePageManagement implements OnInit {
         body.day = this.day;
         body.isEvenSemester = this.moduleYearObject.isEvenSemester;
         body.fromNewPage = true; // to differentiate it from normal edit (when editing is done from main timetable page) 
+
         const modal = this.mdlCtrl.create("TimeTableEditPageManagement", { 'timeTableInfo': body });
         modal.present();
     }
 
     dismiss(res?: any) {
+        console.log('inside new dismiss', res);
+        res && this.timeTableService.updateTimetable(res);
         this.viewCtrl.dismiss(res);
     }
 }

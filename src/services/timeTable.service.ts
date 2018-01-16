@@ -92,6 +92,19 @@ export class TimeTableService {
         return this.http.put(CONFIG.serverUrl + `/ad/timetable/${tId}`, data);
     }
 
+    /**if period is updated(id parameter is present), replace that old period info with new info
+     * else(new period is added)
+    */
+    updateTimetable(newInfo: any, id?: number) {
+        
+        if (id) {
+            let index = this.timeTableArray.findIndex(period => period.id == id);
+            if (index > -1) { this.timeTableArray.splice(index, 1, newInfo); }
+        } else {
+            this.timeTableArray.push(newInfo);
+        }
+    }
+
     /**Above requests are related to edit the timetable  */
 
     /**--------------------------------------------------------------------------------------------- */

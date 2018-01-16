@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { IonicPage, ViewController, NavParams, ModalController, ActionSheetController } from 'ionic-angular';
+import { Component, OnInit, transition } from '@angular/core';
+import { IonicPage, ViewController, NavParams, ModalController, ActionSheetController, NavController } from 'ionic-angular';
 import { CustomService } from '../../../../services/custom.service';
 import { TimeTableService } from '../../../../services/timeTable.service';
 
@@ -24,14 +24,15 @@ export class TimeTableEditPageManagement implements OnInit {
     /**ngModal variables */
     editedFaculty: any;
     editedFacultyName: string;
-    editedDay: any;
-    editedSlot: any;
+    editedDay: { id: number, day: string };
+    editedSlot: { id: number, startTime: string, endTime: string, active: boolean };
     disableSlotDay: boolean = false;
 
     constructor(
         public modalCtrl: ModalController,
         public customService: CustomService,
         private viewCtrl: ViewController,
+        private navCtrl: NavController,
         private navParams: NavParams,
         public actionSheetCtrl: ActionSheetController,
         public timeTableService: TimeTableService
@@ -42,6 +43,9 @@ export class TimeTableEditPageManagement implements OnInit {
         } else {
             this.editedFaculty = this.setInitialFaculty(this.timeTableInfo);
             this.editedFacultyName = this.editedFaculty.facultyName;
+            console.log(this.timeTableInfo);
+
+
         }
     }
 
@@ -55,6 +59,7 @@ export class TimeTableEditPageManagement implements OnInit {
     }
 
     setAndDisableSlotAndDay() {
+        /**day and slots are in object form here having id and name as keys */
         this.editedFaculty = this.setInitialFaculty(this.timeTableInfo);
         this.editedFacultyName = this.editedFaculty.facultyName;
         this.editedDay = this.timeTableInfo.day;
@@ -65,10 +70,10 @@ export class TimeTableEditPageManagement implements OnInit {
     }
 
     ngOnInit() {
-        if(this.timeTableInfo.fromNewPage){
+        if (this.timeTableInfo.fromNewPage) {
 
             this.getFacultyList();
-        }else{
+        } else {
             this.getFacultyDaysSlots();
         }
     }
@@ -93,6 +98,8 @@ export class TimeTableEditPageManagement implements OnInit {
             .subscribe((res: any) => {
 
                 [this.slots, this.days, this.facultyList] = res;
+                // this.editedDay = { id: this.timeTableInfo.dayId, day: this.timeTableInfo.dayName };
+                // this.editedSlot = { id: this.timeTableInfo.slotId, startTime: this.timeTableInfo.startTime, endTime: this.timeTableInfo.endTime, active: true };
                 this.customService.hideLoader();
             }, (err: any) => {
 
@@ -143,12 +150,16 @@ export class TimeTableEditPageManagement implements OnInit {
 
     buildPayload() {
 
-        return {
-            employeeId: this.editedFaculty.facultyId,
-            moduleId: this.editedFaculty.moduleId,
-            slotId: this.editedSlot.id,
-            dayId: this.editedDay.id,
-        };
+        let a: any = {};
+        a.employeeId = this.editedFaculty.facultyId;
+        a.moduleId = this.editedFaculty.moduleId;
+
+        /**send slot and day only in case of normal edit */
+        if (!this.timeTableInfo.fromNewPage) {
+            a.slotId = this.editedSlot.id;
+            a.dayId = this.editedDay.id;
+        }
+        return a;
     }
 
     submitTimetable(payLoad: any) {
@@ -158,7 +169,7 @@ export class TimeTableEditPageManagement implements OnInit {
             .subscribe((res: any) => {
                 this.customService.hideLoader();
                 this.customService.showToast('Timetable updated successfully');
-                this.dismiss();
+                this.dismiss(res);
             }, (err: any) => {
 
                 this.customService.hideLoader();
@@ -166,7 +177,33 @@ export class TimeTableEditPageManagement implements OnInit {
             });
     }
 
-    dismiss() {
-        this.viewCtrl.dismiss();
+    dismiss(res?: any) {
+        /**res: updated/new data of edited timetable */
+
+        /**Normal close */
+        if (!res) {
+            this.viewCtrl.dismiss();
+            return;
+        }
+
+        /**when timetable info doesn't exist currently at client side */
+        if (this.timeTableInfo.fromNewPage) {
+            this.timeTableService.updateTimetable(res);
+
+            /**We want to go to main TT page directly, hence first dismiss the 
+             * NewTT modal(present below the current i.e. EditTt modal in the stack) along with
+             * 'res' in order to update the TT on main page
+             */
+
+            let newModal: ViewController = this.navCtrl.first(); // returns the NewTT modal page
+            newModal.dismiss(res)
+                .then(() => {
+                    this.viewCtrl.dismiss();
+                });
+
+        } else {
+            this.timeTableService.updateTimetable(res, this.timeTableInfo.id);
+            this.viewCtrl.dismiss(res);
+        }
     }
 }

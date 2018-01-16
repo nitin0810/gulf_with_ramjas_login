@@ -115,30 +115,55 @@ export class TimeTablePageManagement {
         const modal = this.modalCtrl.create("NewTimeTablePageManagement");
         modal.present();
         modal.onDidDismiss((newEntry: any) => {
-            console.log(newEntry);
+            console.log("inside new on ddid dismiss", newEntry);
 
             if (newEntry) {
-                let dayName = newEntry.dayName.slice(0, 3);
-                this.timetableData[dayName] = this.timetableData[dayName] || [];
-                this.timetableData[dayName].dayId = this.timetableData[dayName].dayId || this.timeTableService.returnDayId(dayName);
-                this.timetableData[dayName].data = this.timetableData[dayName].data || [];
-                this.timetableData[dayName].data.push(newEntry);
+                this.addTimetableEntry(newEntry);
             }
         });
     }
 
-    openEditPage(period: any) {
+    openEditPage(period: any, index: number) {
         const modal = this.modalCtrl.create("TimeTableEditPageManagement", { 'timeTableInfo': period });
         modal.present();
+        modal.onDidDismiss((newEntry: any) => {
+            console.log(newEntry);
+
+            if (newEntry) {
+                /**remove previous entry*/
+                this.selectedDayTimetable.splice(index, 1);
+                this.addTimetableEntry(newEntry);
+            }
+        });
     }
 
-    onDelete(period: any,index:number) {
+    /**add new entry to timetable object*/
+    addTimetableEntry(newEntry: any) {
+        /**check if any filters are applied and add the new entry only 
+         * when it satisfies the applied filters 
+         */
+        if (this.filters['e'] && this.filters['e'] != newEntry.employeeId) { return;}
+        if (this.filters['d'] && this.filters['d'] != newEntry.departmentId) { return;}
+        if (this.filters['p'] && this.filters['p'] != newEntry.programId) { return;}
+        if (this.filters['y'] && this.filters['y'] != newEntry.yearId) { return;}
+        if (this.filters['s'] && this.filters['s'] != newEntry.slotId) { return;}
+
+        let dayName = newEntry.dayName.slice(0, 3);
+        this.timetableData[dayName] = this.timetableData[dayName] || [];
+        this.timetableData[dayName].dayId = this.timetableData[dayName].dayId || this.timeTableService.returnDayId(dayName);
+        this.timetableData[dayName].data = this.timetableData[dayName].data || [];
+        this.timetableData[dayName].data.push(newEntry);
+    }
+
+
+
+    onDelete(period: any, index: number) {
         const actionSheet = this.actionSheetCtrl.create({
             title: 'Are you sure to delete this timetable entry ?',
             buttons: [
                 {
                     text: 'Delete',
-                    handler: () => { this.sendDeleteRequest(period,index); }
+                    handler: () => { this.sendDeleteRequest(period, index); }
                 },
                 {
                     text: 'Cancel',
@@ -156,7 +181,7 @@ export class TimeTablePageManagement {
         this.timeTableService.deleteTimetable(period.id)
             .subscribe((res: any) => {
                 this.customService.hideLoader();
-                this.removeFromTimeTableData(index,period);
+                this.removeFromTimeTableData(index, period);
             }, (err: any) => {
 
                 this.customService.hideLoader();
@@ -164,7 +189,7 @@ export class TimeTablePageManagement {
             });
     }
 
-    removeFromTimeTableData(index: number,period:any) {
+    removeFromTimeTableData(index: number, period: any) {
 
         /**remove from the timetable object */
         this.timetableData[this.selectedDay].data.splice(index, 1);
