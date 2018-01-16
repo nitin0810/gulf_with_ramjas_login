@@ -49,7 +49,7 @@
         </div>
 
         <ion-list no-lines>
-            <ion-item-sliding *ngFor="let period of selectedDayTimetable">
+            <ion-item-sliding *ngFor="let period of selectedDayTimetable;let i=index">
                 <button ion-item detail-none class="timetable-item" (click)="openViewPage(period)">
                     <ion-grid no-padding>
                         <ion-row>
@@ -81,7 +81,10 @@
                 </button>
 
                 <ion-item-options side="right">
-                    <button ion-button color="danger" (click)="openEditPage(period)">
+                    <button ion-button color="danger" (click)="onDelete(period,i)">
+                        Delete
+                    </button>
+                    <button ion-button color="secondary" (click)="openEditPage(period,i)">
                         Edit
                     </button>
                     <button ion-button color="primary" (click)="showoptions(period)">
@@ -94,7 +97,7 @@
         </ion-list>
         <ion-list *ngIf="timetableData && (!selectedDayTimetable || selectedDayTimetable?.length==0)">
             <ion-item>
-                <h1>NO MODULE ON THIS DAY</h1>
+                <h1>No Lecture Available</h1>
             </ion-item>
         </ion-list>
 

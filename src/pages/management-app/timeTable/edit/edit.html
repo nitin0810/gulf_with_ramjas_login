@@ -28,7 +28,7 @@
                 <ion-label>
                     <b>Select Day </b>
                 </ion-label>
-                <ion-select [(ngModel)]="editedDay" [disabled]="disableSlotDay" required name="day">
+                <ion-select [disabled]="disableSlotDay"  [(ngModel)]="editedDay" required name="day">
                     <ion-option *ngFor="let d of days" [value]="d">
                         {{d.day}}
                     </ion-option>

@@ -184,34 +184,38 @@ export class NewTimeTablePageManagement implements OnInit {
             .subscribe((res: any) => {
                 this.customService.hideLoader();
                 this.customService.showToast("Timetable created successfully");
-                this.dismiss();
+                this.dismiss(res);
             }, (err: any) => {
                 this.customService.hideLoader()
                     .then(() => {
 
                         /**when entered module at entered slot is being taught by someone else
-                        * then error has body containing the details of that employee
+                        * then error body doesn't has an error key
                          */
-                        if (err.body) {
-                            this.showAlert(err.body);
-                        } else {
+                        console.log('printing error.body', err.body);
+
+                        if (err.body.error) {
                             this.customService.showToast(err.msg, null, true);
+                        } else {
+                            this.showAlert(err.body);
                         }
                     });
             });
     }
 
     showAlert(body: any) {
+
+
         let msg: string;
         if (body.active) {
             msg = `
-                  Some other faculty already teaches at the selected slot.
+                  ${body.employeeName} already teaches module ${body.moduleName} at the selected slot.
                   Do you want to edit this timetable ? 
                    `;
         } else {
             msg = `
-                Some other faculty (currently not active) already teaches at the selected slot.
-                Do you want to activate or edit this timetable ?
+                ${body.employeeName} (currently not active) already teaches module ${body.moduleName} at the selected slot.
+                Do you want to Activate/Edit this timetable ?
              `;
         }
         const alert = this.alertCtrl.create({
@@ -223,22 +227,62 @@ export class NewTimeTablePageManagement implements OnInit {
                 handler: () => { }
             }]
         });
-        if (body.active) {
 
-
-            alert.addButton({
-                text: 'Edit',
-                handler: () => { this.openEditPage(body) }
-            });
-        } else {
-
+        if (!body.active) {
             alert.addButton({
                 text: 'Activate',
-                handler: () => { this.openEditPage(body) }
+                handler: () => {
+                    alert.dismiss()
+                        .then(() => {
+                            this.onActivate(body);
+                        });
+                    return false;
+                }
             });
         }
-        alert.present();
 
+        alert.addButton({
+            text: 'Edit',
+            handler: () => { this.openEditPage(body); }
+        });
+
+        alert.present();
+    }
+
+    onActivate(body: any) {
+
+        const actionSheet = this.actionSheetCtrl.create({
+
+            title: 'Are you sure to activate this Timetable ?',
+            buttons: [
+                {
+                    text: 'Activate',
+                    handler: () => {
+                        this.sendActivateRequest(body.id);
+                    }
+                },
+                {
+                    text: 'Cancel',
+                    role: 'cancel',
+                    handler: () => { }
+                }
+            ]
+        });
+        actionSheet.present();
+    }
+
+    sendActivateRequest(tId: number) {
+
+        this.customService.showLoader();
+        this.timeTableService.editTimetable({}, tId)
+            .subscribe((res: any) => {
+                this.customService.hideLoader();
+                this.customService.showToast('Activated successfully');
+                this.dismiss(res);
+            }, (err: any) => {
+                this.customService.hideLoader();
+                this.customService.showToast(err.msg);
+            });
     }
 
     openEditPage(body: any) {
@@ -251,11 +295,14 @@ export class NewTimeTablePageManagement implements OnInit {
         body.day = this.day;
         body.isEvenSemester = this.moduleYearObject.isEvenSemester;
         body.fromNewPage = true; // to differentiate it from normal edit (when editing is done from main timetable page) 
+
         const modal = this.mdlCtrl.create("TimeTableEditPageManagement", { 'timeTableInfo': body });
         modal.present();
     }
 
-    dismiss() {
-        this.viewCtrl.dismiss();
+    dismiss(res?: any) {
+        console.log('inside new dismiss', res);
+        res && this.timeTableService.updateTimetable(res);
+        this.viewCtrl.dismiss(res);
     }
 }
