@@ -9,7 +9,7 @@ import { MenuController} from 'ionic-angular';
         <ion-header>
              <nl-navbar [title]="title"></nl-navbar>
         </ion-header>
-         <ion-content class="csGrayBackground">
+         <ion-content >
             <ion-list class="no-comment">
                 <ion-icon name="cloud"></ion-icon>
                 <br>NO INTERNET CONNECTION

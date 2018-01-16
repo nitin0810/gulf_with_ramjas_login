@@ -7,7 +7,7 @@ import { IonicPage, Tabs } from 'ionic-angular';
 @Component({
     selector: 'survey',
     template: `
-        <ion-tabs   class="csGrayBackground" color="primary" tabsLayout='icon-start'>
+        <ion-tabs    color="primary" tabsLayout='icon-start'>
         <ion-tab tabTitle="CURRENT" tabIcon="mic" [root]="current"></ion-tab>
         <ion-tab tabTitle="CLOSED" tabIcon="mic-off"  [root]="closed"></ion-tab>
         </ion-tabs>

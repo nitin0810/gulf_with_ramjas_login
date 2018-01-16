@@ -4,7 +4,7 @@ import { IonicPage, Tabs } from 'ionic-angular';
 @IonicPage()
 @Component({
   template: `
-    <ion-tabs #myTabs2 class="csGrayBackground" color="primary" tabsLayout='icon-start'>
+    <ion-tabs #myTabs2  color="primary" tabsLayout='icon-start'>
     <ion-tab tabTitle="FOR ME" tabIcon="person" [root]="SuggestionForMe"></ion-tab>
     <ion-tab tabTitle="BY ME" tabIcon="person-add"  [root]="SuggestionByMe"></ion-tab>
     </ion-tabs>
