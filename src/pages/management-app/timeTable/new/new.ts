@@ -89,6 +89,7 @@ export class NewTimeTablePageManagement implements OnInit {
             .subscribe((res: any) => {
 
                 this.pgmList = res;
+                this.pgmList && this.pgmList.length == 0 && this.customService.showToast('No programs found with this faculty');
                 this.customService.hideLoader();
             }, (err: any) => {
 
@@ -115,6 +116,7 @@ export class NewTimeTablePageManagement implements OnInit {
                 this.moduleAndYearList.forEach((element: any) => {
                     element.semester = this.giveSemester(element.yearName, element.isEvenSemester);
                 });
+                this.moduleAndYearList && this.moduleAndYearList.length == 0 && this.customService.showToast('No modules found in this program');
                 this.customService.hideLoader();
             }, (err: any) => {
 
@@ -184,7 +186,8 @@ export class NewTimeTablePageManagement implements OnInit {
             .subscribe((res: any) => {
                 this.customService.hideLoader();
                 this.customService.showToast("Timetable created successfully");
-                this.dismiss(res);
+                this.updateTimeTableArray(res);
+                this.openViewPageAfterNew(res);
             }, (err: any) => {
                 this.customService.hideLoader()
                     .then(() => {
@@ -300,9 +303,20 @@ export class NewTimeTablePageManagement implements OnInit {
         modal.present();
     }
 
-    dismiss(res?: any) {
-        console.log('inside new dismiss', res);
+    openViewPageAfterNew(res: any) {
+
+        const modal = this.mdlCtrl.create("TimeTableViewPage", { 'timeTableInfo': res });
+        modal.present();
+    }
+
+    updateTimeTableArray(res: any) {
+
         res && this.timeTableService.updateTimetable(res);
+    }
+
+    dismiss(res?: any) {
+
+       this.updateTimeTableArray(res);
         this.viewCtrl.dismiss(res);
     }
 }

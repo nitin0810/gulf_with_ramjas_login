@@ -103,6 +103,7 @@ export class TimeTableService {
         } else {
             this.timeTableArray.push(newInfo);
         }
+        // console.log('inside update tt:',this.timeTableArray);
     }
 
     /**Above requests are related to edit the timetable  */

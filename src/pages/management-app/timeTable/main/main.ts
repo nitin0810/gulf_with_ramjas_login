@@ -115,11 +115,12 @@ export class TimeTablePageManagement {
         const modal = this.modalCtrl.create("NewTimeTablePageManagement");
         modal.present();
         modal.onDidDismiss((newEntry: any) => {
-            console.log("inside new on ddid dismiss", newEntry);
 
+            // console.log("inside new on did dismiss", newEntry);
             if (newEntry) {
                 this.addTimetableEntry(newEntry);
             }
+
         });
     }
 
@@ -127,13 +128,13 @@ export class TimeTablePageManagement {
         const modal = this.modalCtrl.create("TimeTableEditPageManagement", { 'timeTableInfo': period });
         modal.present();
         modal.onDidDismiss((newEntry: any) => {
-            console.log(newEntry);
-
+          
             if (newEntry) {
                 /**remove previous entry*/
                 this.selectedDayTimetable.splice(index, 1);
                 this.addTimetableEntry(newEntry);
             }
+            
         });
     }
 
@@ -181,6 +182,7 @@ export class TimeTablePageManagement {
         this.timeTableService.deleteTimetable(period.id)
             .subscribe((res: any) => {
                 this.customService.hideLoader();
+                this.customService.showToast('Timetable deleted successfully');
                 this.removeFromTimeTableData(index, period);
             }, (err: any) => {
 
