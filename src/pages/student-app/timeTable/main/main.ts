@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { IonicPage, ModalController,ActionSheetController, AlertController } from 'ionic-angular';
+import { Component, OnDestroy } from '@angular/core';
+import { IonicPage, ModalController, ActionSheetController, AlertController } from 'ionic-angular';
 import { CustomService } from '../../../../services/custom.service';
 import { TimeTableService } from '../../../../services/timeTable.service';
 import { TimeTablePageManagement } from '../../../management-app/timeTable/main/main';
@@ -11,11 +11,11 @@ import { TimeTablePageManagement } from '../../../management-app/timeTable/main/
     styles: [` `]
 })
 
-export class TimeTablePageStudent extends TimeTablePageManagement {
+export class TimeTablePageStudent extends TimeTablePageManagement implements OnDestroy {
 
     title: string = 'Time table';
 
-    
+
     constructor(
         public modalCtrl: ModalController,
         public customService: CustomService,
@@ -23,7 +23,7 @@ export class TimeTablePageStudent extends TimeTablePageManagement {
         public alertCtrl: AlertController,
         public timeTableService: TimeTableService
     ) {
-        super(modalCtrl, customService, actionSheetCtrl,alertCtrl,timeTableService);
+        super(modalCtrl, customService, actionSheetCtrl, alertCtrl, timeTableService);
     }
 
     ionViewWillEnter() {
@@ -32,7 +32,13 @@ export class TimeTablePageStudent extends TimeTablePageManagement {
         this.selectedDay = this.date.toDateString().split(' ')[0];
         this.isAdmin = false;
         this.getDaysAndTimeTable();
-    
+
+    }
+
+    ngOnDestroy() {
+        console.log('std on destriy called');
+        this.timeTableService.clearServiceData();
+
     }
 
 }

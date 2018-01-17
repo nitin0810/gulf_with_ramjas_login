@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { IonicPage, ModalController, ActionSheetController, AlertController, Alert } from 'ionic-angular';
 import { CustomService } from '../../../../services/custom.service';
 import { TimeTableService } from '../../../../services/timeTable.service';
@@ -19,7 +19,7 @@ import { TimeTableService } from '../../../../services/timeTable.service';
      `]
 })
 
-export class TimeTablePageManagement {
+export class TimeTablePageManagement implements OnDestroy{
 
     title: string = 'Time table';
 
@@ -430,6 +430,13 @@ export class TimeTablePageManagement {
         console.log('filter agaiin clalled//////');
 
         this.setTimetableDataInObjectForm(this.timeTableService.filterTimetable(this.filters['e'], this.filters['d'], this.filters['p'], this.filters['y'], this.filters['s']));
+
+    }
+
+
+    ngOnDestroy() {
+        console.log('admin on destriy called');
+        this.timeTableService.clearServiceData();
 
     }
 }
