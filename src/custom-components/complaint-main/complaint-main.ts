@@ -18,6 +18,12 @@ export class ComplaintMainPage {
     @Input() complaintList: Array<any>;
     @Input() searchInput: string;
 
+    Satisfied = 'md-thumbs-up';
+    Reopen = 'md-refresh';
+    Inprogress = 'md-code-download';
+    Closed = 'md-remove-circle';
+    Assigned = 'md-checkmark';
+
     isEmptyList: boolean = false;
     currentPage: number = 1;
     currentPageWithSearch: number = 1;
