@@ -213,12 +213,12 @@ export class NewTimeTablePageManagement implements OnInit {
         if (body.active) {
             msg = `
                   ${body.employeeName} already teaches module ${body.moduleName} at the selected slot.
-                  Do you want to edit this timetable ? 
+                  Do you want to edit this existing timetable ? 
                    `;
         } else {
             msg = `
                 ${body.employeeName} (currently not active) already teaches module ${body.moduleName} at the selected slot.
-                Do you want to Activate/Edit this timetable ?
+                Do you want to Activate/Edit this existing timetable ?
              `;
         }
         const alert = this.alertCtrl.create({

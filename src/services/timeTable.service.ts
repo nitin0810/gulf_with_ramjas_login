@@ -96,7 +96,7 @@ export class TimeTableService {
      * else(new period is added)
     */
     updateTimetable(newInfo: any, id?: number) {
-        
+
         if (id) {
             let index = this.timeTableArray.findIndex(period => period.id == id);
             if (index > -1) { this.timeTableArray.splice(index, 1, newInfo); }
@@ -254,6 +254,15 @@ export class TimeTableService {
         }
 
         return ftt;
+    }
+    
+    /**clear all data stored in service when user leaves the Timetable main page */
+    clearServiceData() {
+
+        this.timeTableArray = null;
+        this.todayId = null;
+        this.days = null;
+        this.dataForFiltering = {};
     }
 
 }

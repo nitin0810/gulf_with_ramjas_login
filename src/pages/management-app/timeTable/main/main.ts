@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { IonicPage, ModalController, ActionSheetController, AlertController, Alert } from 'ionic-angular';
 import { CustomService } from '../../../../services/custom.service';
 import { TimeTableService } from '../../../../services/timeTable.service';
@@ -19,7 +19,7 @@ import { TimeTableService } from '../../../../services/timeTable.service';
      `]
 })
 
-export class TimeTablePageManagement {
+export class TimeTablePageManagement implements OnDestroy{
 
     title: string = 'Time table';
 
@@ -62,7 +62,8 @@ export class TimeTablePageManagement {
                 this.timeTableService.storeTimetableArray(res);
                 this.setInitalTimetableData(res);
                 this.customService.hideLoader();
-                this.timeTableService.fetchDataRequiredForFilters();
+                /**fetch data required for filtering only in case of admin  */
+                this.isAdmin && this.timeTableService.fetchDataRequiredForFilters();
             }, (err: any) => {
                 this.customService.hideLoader();
                 this.customService.showToast(err.msg);
@@ -88,7 +89,6 @@ export class TimeTablePageManagement {
             this.timetableData[dayName].data.push(period);
         });
 
-
         /**check if timetable has any modules on selectedDay(i.e today), then only dislplay that timetable data */
         if (this.timetableData[this.selectedDay]) {
             this.selectedDayTimetable = this.timetableData[this.selectedDay].data;
@@ -100,7 +100,7 @@ export class TimeTablePageManagement {
 
     onDayChange() {
 
-        /**update the timetable  */
+        /**update the timetable      */
         this.selectedDayTimetable = this.timetableData[this.selectedDay] ? this.timetableData[this.selectedDay].data : undefined;
 
         /**update the displayed date */
@@ -128,13 +128,13 @@ export class TimeTablePageManagement {
         const modal = this.modalCtrl.create("TimeTableEditPageManagement", { 'timeTableInfo': period });
         modal.present();
         modal.onDidDismiss((newEntry: any) => {
-          
+
             if (newEntry) {
                 /**remove previous entry*/
                 this.selectedDayTimetable.splice(index, 1);
                 this.addTimetableEntry(newEntry);
             }
-            
+
         });
     }
 
@@ -143,11 +143,11 @@ export class TimeTablePageManagement {
         /**check if any filters are applied and add the new entry only 
          * when it satisfies the applied filters 
          */
-        if (this.filters['e'] && this.filters['e'] != newEntry.employeeId) { return;}
-        if (this.filters['d'] && this.filters['d'] != newEntry.departmentId) { return;}
-        if (this.filters['p'] && this.filters['p'] != newEntry.programId) { return;}
-        if (this.filters['y'] && this.filters['y'] != newEntry.yearId) { return;}
-        if (this.filters['s'] && this.filters['s'] != newEntry.slotId) { return;}
+        if (this.filters['e'] && this.filters['e'] != newEntry.employeeId) { return; }
+        if (this.filters['d'] && this.filters['d'] != newEntry.departmentId) { return; }
+        if (this.filters['p'] && this.filters['p'] != newEntry.programId) { return; }
+        if (this.filters['y'] && this.filters['y'] != newEntry.yearId) { return; }
+        if (this.filters['s'] && this.filters['s'] != newEntry.slotId) { return; }
 
         let dayName = newEntry.dayName.slice(0, 3);
         this.timetableData[dayName] = this.timetableData[dayName] || [];
@@ -164,6 +164,7 @@ export class TimeTablePageManagement {
             buttons: [
                 {
                     text: 'Delete',
+                    role: 'destructive',
                     handler: () => { this.sendDeleteRequest(period, index); }
                 },
                 {
@@ -199,9 +200,33 @@ export class TimeTablePageManagement {
         this.timeTableService.deleteTimetableEntry(period.id);
     }
 
-    openViewPage(period: any) {
+    openViewPage(period: any, index: number) {
         const modal = this.modalCtrl.create("TimeTableViewPage", { 'timeTableInfo': period });
         modal.present();
+        modal.onDidDismiss((dataFromView: any) => {
+
+            /**dataFromView is only availbale when TT is deleted from view page
+             * Not availble in edit case as the timetableInfo object is updated 
+             * in the view page itself
+             * Hence, no need to do anything in main TT page as that updation is reflected automatically here
+             */
+            if (dataFromView) {
+                if (dataFromView['operation'] == "del") {
+                    /**remove from the timetable object */
+                    this.timetableData[this.selectedDay].data.splice(index, 1);
+                }
+                else if (dataFromView['operation'] == "edit") {
+                    if (dataFromView['dayChanged']) {
+
+                        this.selectedDayTimetable.splice(index, 1);
+                        delete dataFromView['dayChanged'];
+                        this.addTimetableEntry(dataFromView);
+                    }
+                }
+                dataFromView['operation'] && delete dataFromView['operation'];
+
+            }
+        });
     }
 
     showoptions(period: any) {
@@ -405,6 +430,13 @@ export class TimeTablePageManagement {
         console.log('filter agaiin clalled//////');
 
         this.setTimetableDataInObjectForm(this.timeTableService.filterTimetable(this.filters['e'], this.filters['d'], this.filters['p'], this.filters['y'], this.filters['s']));
+
+    }
+
+
+    ngOnDestroy() {
+        console.log('admin on destriy called');
+        this.timeTableService.clearServiceData();
 
     }
 }
