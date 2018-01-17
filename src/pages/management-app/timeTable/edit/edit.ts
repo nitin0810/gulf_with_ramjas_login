@@ -92,14 +92,16 @@ export class TimeTableEditPageManagement implements OnInit {
             });
     }
 
+
     getFacultyDaysSlots() {
         this.customService.showLoader();
         this.timeTableService.fetchFacultyAndDaysAndSlots(this.timeTableInfo.programId, this.timeTableInfo.yearId, this.timeTableInfo.isEvenSemester)
             .subscribe((res: any) => {
 
                 [this.slots, this.days, this.facultyList] = res;
-                // this.editedDay = { id: this.timeTableInfo.dayId, day: this.timeTableInfo.dayName };
-                // this.editedSlot = { id: this.timeTableInfo.slotId, startTime: this.timeTableInfo.startTime, endTime: this.timeTableInfo.endTime, active: true };
+                /**Prefill the slot and day fieds */
+                this.editedDay = this.days.find(d => d.id == this.timeTableInfo.dayId);
+                this.editedSlot = this.slots.find(s => s.id == this.timeTableInfo.slotId);
                 this.customService.hideLoader();
             }, (err: any) => {
 

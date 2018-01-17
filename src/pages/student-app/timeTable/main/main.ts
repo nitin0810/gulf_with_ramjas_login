@@ -30,9 +30,9 @@ export class TimeTablePageStudent extends TimeTablePageManagement {
 
         this.date = new Date();
         this.selectedDay = this.date.toDateString().split(' ')[0];
+        this.isAdmin = false;
         this.getDaysAndTimeTable();
-        // this.loginType = localStorage.getItem('loginType');
+    
     }
-
 
 }
