@@ -5,8 +5,7 @@ import { IonicPage, ActionSheetController } from 'ionic-angular';
 @IonicPage()
 @Component({
     selector: 'sort-filter',
-    template: `
-   <ion-footer>         
+    template: `   
     <ion-grid no-padding>
         <ion-row>
             <ion-col no-padding>
@@ -24,11 +23,13 @@ import { IonicPage, ActionSheetController } from 'ionic-angular';
             </ion-col>  
         </ion-row>
     </ion-grid>
-    <ion-footer>
             `,
     styles: [`
         button{
             margin: 0rem 0rem !important;
+        }
+        ion-grid{
+            position:fixed;
         }
     `]
 
