@@ -46,6 +46,7 @@ import { ForgotPasswordModal } from '../custom-components/login/forgot-password/
 import { CircularService } from '../services/circular.service';
 import { TimeTableService } from '../services/timeTable.service';
 import { AttendanceService } from '../services/attendance.service';
+import { NoResultsComponent } from '../custom-components/no-results/no-results.component';
 
 
 
@@ -59,6 +60,7 @@ import { AttendanceService } from '../services/attendance.service';
     ReactiveFormsModule,
     MomentModule,
     ionicGalleryModal.GalleryModalModule,
+    NoResultsComponent,
     IonicModule.forRoot(MyApp)
   ],
   declarations: [

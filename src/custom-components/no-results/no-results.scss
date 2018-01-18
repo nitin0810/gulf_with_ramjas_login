@@ -1,0 +1,19 @@
+.no_records{
+    margin-top:10%;
+    transition:0.3s ease-in;
+    img{
+        @extend .csCenter;
+        // @extend .rubberBand;
+        // @extend .animated;
+        animation-delay: 0.2s;
+        width:50%;
+    }
+    div{
+        text-align:center;
+        color:#999999;
+        font-size:1.1em;
+    }
+    div:after{
+        content:'No Record Found';
+    }
+}
