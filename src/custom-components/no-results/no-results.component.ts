@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { IonicPage } from 'ionic-angular';
 
-@IonicPage()
+// @IonicPage()
 @Component({
     selector: 'no-results',
     template: `
