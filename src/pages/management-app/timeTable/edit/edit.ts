@@ -99,7 +99,7 @@ export class TimeTableEditPageManagement implements OnInit {
             .subscribe((res: any) => {
 
                 [this.slots, this.days, this.facultyList] = res;
-                /**Prefill the slot and day fieds */
+                /**Prefill the slot and day fields */
                 this.editedDay = this.days.find(d => d.id == this.timeTableInfo.dayId);
                 this.editedSlot = this.slots.find(s => s.id == this.timeTableInfo.slotId);
                 this.customService.hideLoader();

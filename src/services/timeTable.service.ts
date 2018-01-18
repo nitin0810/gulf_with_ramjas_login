@@ -162,6 +162,15 @@ export class TimeTableService {
         return this.dataForFiltering[type];
     }
 
+       
+    /**clear all data stored in service when user leaves the Timetable main page */
+    clearServiceData() {
+
+        this.timeTableArray = null;
+        this.todayId = null;
+        this.days = null;
+        this.dataForFiltering = {};
+    }
 
     storeTimetableArray(tt: Array<any>) { this.timeTableArray = tt; }
 
@@ -255,14 +264,5 @@ export class TimeTableService {
 
         return ftt;
     }
-    
-    /**clear all data stored in service when user leaves the Timetable main page */
-    clearServiceData() {
-
-        this.timeTableArray = null;
-        this.todayId = null;
-        this.days = null;
-        this.dataForFiltering = {};
-    }
-
+ 
 }
