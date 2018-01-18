@@ -1,24 +1,18 @@
 <ion-header>
     <nl-navbar [title]="title">
     </nl-navbar>
-    <ion-searchbar [(ngModel)]="searchInput" (ionInput)="onSearchInput($event)" [debounce]="debounceDuration" (ionClear)="onSearchClear($event)"></ion-searchbar>
+    <ion-searchbar [ngClass]="{'hide-header':showHelpers,'show-header':hideHelpers}" [(ngModel)]="searchInput" (ionInput)="onSearchInput($event)" [debounce]="debounceDuration" (ionClear)="onSearchClear($event)"></ion-searchbar>
+</ion-header>
 
-    <sort-filter [sortSelected]="complaintMainPage.isSortApplied" [filterSelected]="complaintMainPage.isFilterApplied" (onSelect)="onSortFilterSelect($event)"></sort-filter>
-
-</ion-header>  
-
-<ion-content >
+<ion-content>
     <ion-refresher (ionRefresh)="doRefresh($event)">
         <ion-refresher-content></ion-refresher-content>
     </ion-refresher>
-  
     <ion-fab right bottom>
-        <button ion-fab color="danger" (click)="openNewComplaintModal()"><ion-icon name="add"></ion-icon></button>
+        <button ion-fab color="danger" (click)="openNewComplaintModal()">
+            <ion-icon name="add"></ion-icon>
+        </button>
     </ion-fab>
-    
     <complaint-main [complaintList]="complaintList" [searchInput]="searchInput"></complaint-main>
-
-    
-    
-
 </ion-content>
+<sort-filter [ngClass]="{'hide-footer':showHelpers,'show-footer':hideHelpers}" [sortSelected]="complaintMainPage.isSortApplied" [filterSelected]="complaintMainPage.isFilterApplied" (onSelect)="onSortFilterSelect($event)"></sort-filter>

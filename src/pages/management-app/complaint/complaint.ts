@@ -17,6 +17,7 @@ export class ComplaintPageManagement {
 
     @ViewChild(ComplaintMainPage) complaintMainPage: ComplaintMainPage;
 
+    //variables for scroll
     start = 0;
     threshold = 100;
     slideHeaderPrevious = 0;

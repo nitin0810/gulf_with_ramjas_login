@@ -7,7 +7,7 @@
     <ion-item style="margin-bottom:10px;" no-lines no-padding no-padding-right [style.background]="complaint.statusColor || 'green'" *ngIf="complaint" text-center>
         <div flex>
             <div>
-                <h1><ion-icon name="chatbubbles"></ion-icon></h1>Comment: <b>{{complaint.commentCount || 0}}</b>
+                <h1><ion-icon name="cloud-upload"></ion-icon></h1>Status: <b>{{complaint.statusName}}</b>
             </div>
             <div>
                 <img *ngIf="complaint.studentPicUrl" class="csAvatarImage" [src]="baseUrl + complaint.studentPicUrl" width="100px" height="100px">
@@ -21,7 +21,11 @@
         <div date>{{complaint.createdAt | amDateFormat:'LL'}}
             <span *ngIf="complaint.closedOn"> - {{complaint.closedOn | amDateFormat:'LL'}} </span>
         </div>
-        
+        <div>
+          <ion-title>
+            {{complaint.againstCategoryName}}
+          </ion-title>
+        </div>
         <div flex buttons *ngIf="!isStudent">
           <button (click)="openCommentPage()" ion-button round  icon-left outline color="secondary" [style.border-color]="complaint.statusColor || 'green' " [style.color]="complaint.statusColor || 'green' ">
               <ion-icon name="chatbubbles"></ion-icon>
@@ -50,13 +54,6 @@
         <br>
         <span class="csParagraph">{{complaint.rca}}</span>
       </ion-item>
-
-    <ion-item *ngIf="complaint.againstCategoryName">
-        <ion-icon name="ios-analytics" [style.color]="complaint.statusColor" item-start></ion-icon>
-        <span class="csFont12" [style.color]="complaint.statusColor">Category</span>
-        <br>
-        <span class="csParagraph">{{complaint.againstCategoryName}}</span>
-    </ion-item>
 
     <ion-item *ngIf="complaint.againstEmployeeName">
       <ion-icon name="contact" [style.color]="complaint.statusColor" item-start></ion-icon>

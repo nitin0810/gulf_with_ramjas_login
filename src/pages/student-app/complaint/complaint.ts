@@ -1,6 +1,6 @@
 
 
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, ElementRef } from '@angular/core';
 import { IonicPage, ModalController, Events } from 'ionic-angular';
 import { ComplaintMainPage } from '../../../custom-components/complaint-main/complaint-main';
 import { ComplaintService } from '../../../services/complaint.service';
@@ -14,6 +14,15 @@ import { ComplaintService } from '../../../services/complaint.service';
 })
 
 export class ComplaintPageStudent {
+
+    //variables for scroll
+    start = 0;
+    threshold = 100;
+    slideHeaderPrevious = 0;
+    ionScroll:any;
+    showHelpers:boolean;
+    hideHelpers:boolean;
+    headercontent:any;
 
     title: string = "Complaints";
     complaintList: Array<any>;
@@ -36,7 +45,8 @@ export class ComplaintPageStudent {
     // debounceDuration: number = 400;
 
     constructor(
-       private complaintService :ComplaintService 
+       private complaintService :ComplaintService,
+       public myElement: ElementRef, 
     ) {
         this.complaintService.compOrSugg = "complaint";
         
@@ -45,6 +55,26 @@ export class ComplaintPageStudent {
         // this.complaintService.compOrSugg = "complaint";
         // this.getComplaints(1);
 
+    }
+
+    ngOnInit() {
+        // Ionic scroll element
+        this.ionScroll = this.myElement.nativeElement.getElementsByClassName('scroll-content')[0];
+        // On scroll function
+        this.ionScroll.addEventListener('scroll', () => {
+            if (this.ionScroll.scrollTop - this.start > this.threshold) {
+                this.showHelpers = true;
+                this.hideHelpers = false;
+            } else {
+                this.showHelpers = false;
+                this.hideHelpers = true;
+            }
+            if (this.slideHeaderPrevious >= this.ionScroll.scrollTop - this.start) {
+                this.showHelpers = false;
+                this.hideHelpers = true;
+            }
+            this.slideHeaderPrevious = this.ionScroll.scrollTop - this.start;
+        });
     }
 
     // registerStatusChange() {
