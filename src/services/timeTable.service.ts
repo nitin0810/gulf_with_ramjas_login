@@ -96,14 +96,14 @@ export class TimeTableService {
      * else(new period is added)
     */
     updateTimetable(newInfo: any, id?: number) {
-
         if (id) {
             let index = this.timeTableArray.findIndex(period => period.id == id);
+            console.log('INDEX FOUND', index);
+
             if (index > -1) { this.timeTableArray.splice(index, 1, newInfo); }
         } else {
             this.timeTableArray.push(newInfo);
         }
-        // console.log('inside update tt:',this.timeTableArray);
     }
 
     /**Above requests are related to edit the timetable  */
@@ -162,7 +162,7 @@ export class TimeTableService {
         return this.dataForFiltering[type];
     }
 
-       
+
     /**clear all data stored in service when user leaves the Timetable main page */
     clearServiceData() {
 
@@ -264,5 +264,5 @@ export class TimeTableService {
 
         return ftt;
     }
- 
+
 }

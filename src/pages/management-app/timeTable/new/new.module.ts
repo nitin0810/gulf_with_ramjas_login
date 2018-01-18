@@ -12,6 +12,7 @@ import { CustomModalNavbarModule } from '../../../../custom-components/modal-nav
         CustomModalNavbarModule,
         IonicPageModule.forChild(NewTimeTablePageManagement)
     ],
+
     
 })
 export class NewTimeTableModuleManagement { }  
