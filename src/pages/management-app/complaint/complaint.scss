@@ -4,7 +4,7 @@ complaint{
   ion-searchbar{
     position:fixed;
     top: 50px;
-    z-index: 2;
+    z-index: -1;
   }
   .nav-up{
     top: -60px;
@@ -18,7 +18,7 @@ complaint{
     transition: top 0.5s ease-in-out;
     }
     .show-header{
-    top: 64px;
+    top: 75px;
     transition: top 0.5s ease-in-out;
     }
     .scroll-content{
@@ -31,6 +31,7 @@ sort-filter{
   height: 45px;
   z-index: 1;
   transition: bottom 0.6s ease-in-out;
+
 }
 .hide-footer{
   bottom:-45px;

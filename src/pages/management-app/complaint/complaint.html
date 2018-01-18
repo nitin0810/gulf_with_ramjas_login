@@ -1,9 +1,9 @@
-<ion-searchbar [ngClass]="{'hide-header':showHelpers,'show-header':hideHelpers}" [(ngModel)]="searchInput" (ionInput)="onSearchInput($event)"
-[debounce]="debounceDuration" (ionClear)="onSearchClear($event)"></ion-searchbar>
+
 <ion-header>
     <nl-navbar [title]="title">
     </nl-navbar>
-
+    <ion-searchbar [ngClass]="{'hide-header':showHelpers,'show-header':hideHelpers}" [(ngModel)]="searchInput" (ionInput)="onSearchInput($event)"
+    [debounce]="debounceDuration" (ionClear)="onSearchClear($event)"></ion-searchbar>
 </ion-header>
 
 <ion-content>
