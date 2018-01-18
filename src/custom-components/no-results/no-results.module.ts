@@ -8,4 +8,4 @@ import { NoResultsComponent } from './no-results.component';
   imports: [IonicPageModule.forChild(NoResultsComponent)],
   exports: [NoResultsComponent]
 })
-export class CustomNavbarModule { }
+export class NoResultsModule { }
