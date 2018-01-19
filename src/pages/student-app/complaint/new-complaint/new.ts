@@ -11,7 +11,10 @@ import { CustomService } from '../../../../services/custom.service';
 @Component({
     selector: 'new-compaint',
     templateUrl: './new.html',
-    styles: [` `]
+    styles: [`
+    ion-label[stacked]{
+        font-size:1.4rem;
+    } `]
 })
 
 export class NewComplaintPage {
