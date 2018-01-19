@@ -6,7 +6,7 @@
     </nl-modal-navbar>
 </ion-header>
 
-<ion-content >
+<ion-content>
 
     <ion-card *ngIf="surveyFromList && showInfo">
         <ion-card-header>
@@ -58,15 +58,15 @@
 
         <ion-card *ngFor="let q of survey; let i = index">
             <ion-card-header>
-                {{q.question}}
-                <p class="csParagraph smallGrayText">{{q.optionTypeName}}</p>
+                <h2>{{q.question}}</h2>
+                <small>{{q.optionTypeName}}</small>
             </ion-card-header>
-            <ion-card-content>
+         
 
                 <div class="csPollOptionsBack">
                     <div *ngIf="q.optionTypeId== 2">
                         <ion-list>
-                            <ion-item *ngFor="let option of q.options, let j=index" class="csPaddingLeft50 csqOptionsBack">
+                            <ion-item *ngFor="let option of q.options, let j=index" class="csPaddingLeft50 csqOptionsBack csTransparent" no-lines>
                                 <ion-label>{{option.name}}</ion-label>
                                 <ion-checkbox checked="false" [(ngModel)]="q.selectedOptions[j]" (click)="changeVoteBtnStatus()" item-end color="primary">
                                 </ion-checkbox>
@@ -84,12 +84,10 @@
                         </ion-list>
                     </div>
                 </div>
-
-            </ion-card-content>
         </ion-card>
 
         <div padding>
-            <button [disabled]="isSubmitBtnDisabled" ion-button full type="button" (click)="onSubmit()">Vote</button>
+            <button [disabled]="isSubmitBtnDisabled" color="color5" ion-button full type="button" (click)="onSubmit()">Vote</button>
         </div>
 
     </ion-list>

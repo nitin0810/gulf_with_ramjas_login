@@ -1,0 +1,11 @@
+survey-vote{
+    ion-card{
+        box-shadow:0 0 22px lightgray !important;
+    }
+    ion-card-header{
+        background:color($colors, color5);
+        color:color($colors, secondary) !important;
+        box-shadow: 0 0 20px color($colors, color5);
+    }
+
+}
