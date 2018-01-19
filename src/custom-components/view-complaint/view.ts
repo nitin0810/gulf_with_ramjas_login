@@ -12,7 +12,7 @@ import { AuthService } from '../../services/auth.service';
 @Component({
     selector: 'view-compaint',
     templateUrl: './view.html',
-    styles: [` `]
+    styles: [``]
 })
 
 export class ViewComplaintPage extends ComplaintSuggestionOptionsBaseClass {

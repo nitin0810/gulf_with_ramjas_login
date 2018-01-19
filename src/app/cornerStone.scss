@@ -4,45 +4,45 @@ Website: http://cornerstone.pk
 Date:    21/12/2016
 =================================> */
 
-.csBackground {
-    background: csBackgroundSvg('gBoard.svg');
-}
-.setBottom {
-    position: absolute;
-    bottom: 5px;
-}
+// .csBackground {
+//     background: csBackgroundSvg('gBoard.svg');
+// }
+// .setBottom {
+//     position: absolute;
+//     bottom: 5px;
+// }
 .csCenter {
     display: block;
     margin-left: auto;
     margin-right: auto;
 }
-.csBackground {
-    background-size: cover;
-    position: fixed;
-    background-repeat: no-repeat;
-}
-.csFull {
-    width: 100% !important;
-}
-.csFillBackground {
-    @extend .csFull;
-    height: 100%;
-    background-size: cover;
-}
-.csWhiteText {
-    color: white;
-}
-.csGrayText{
-    color:gray;
-}
-.csMainBackground {
-    @extend .csFillBackground;
-    @extend .csWhiteText;
-    background-image: csBackgroundSvg('gBoard.svg');
-}
-.csBackgroundGray {
-    background: $csBackgroundColor;
-}
+// .csBackground {
+//     background-size: cover;
+//     position: fixed;
+//     background-repeat: no-repeat;
+// }
+// .csFull {
+//     width: 100% !important;
+// }
+// .csFillBackground {
+//     @extend .csFull;
+//     height: 100%;
+//     background-size: cover;
+// }
+// .csWhiteText {
+//     color: white;
+// }
+// .csGrayText{
+//     color:gray;
+// }
+// .csMainBackground {
+//     @extend .csFillBackground;
+//     @extend .csWhiteText;
+//     background-image: csBackgroundSvg('gBoard.svg');
+// }
+// .csBackgroundGray {
+//     background: $csBackgroundColor;
+// }
 .csCircle {
     border-radius: 100%;
     border: 3px solid #fff;
@@ -88,10 +88,10 @@ ion-toolbar {
 .csWidth {
     width: 90%;
 }
-.csLoginScreen {
-    @extend .csBackground;
-    background-image: csBackgroundSvg('parent.svg');
-}
+// .csLoginScreen {
+//     @extend .csBackground;
+//     background-image: csBackgroundSvg('parent.svg');
+// }
 .csTransparent {
     background-color: rgba(255, 255, 255, 0) !important;
 }

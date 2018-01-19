@@ -5,19 +5,18 @@ import { IonicPage, ActionSheetController } from 'ionic-angular';
 @IonicPage()
 @Component({
     selector: 'sort-filter',
-    template: `
-            
-    <ion-grid>
+    template: `   
+    <ion-grid no-padding>
         <ion-row>
-            <ion-col >
-                <button ion-button (click)="onSort()" [style.background-color]="sortSelected ? 'grey': ''" icon-start block outline>
+            <ion-col no-padding>
+                <button full ion-button (click)="onSort()" [style.background-color]="sortSelected ? 'grey': ''" icon-start>
                     <ion-icon name="arrow-round-down"></ion-icon><ion-icon name="arrow-round-up"></ion-icon>
                 Sort By
                 </button>
             </ion-col>
 
-            <ion-col>
-                    <button ion-button (click)="onFilter()" [style.background-color]="filterSelected ? 'grey': ''" icon-start block outline>
+            <ion-col no-padding>
+                    <button full ion-button (click)="onFilter()" [style.background-color]="filterSelected ? 'grey': ''" icon-start>
                         <ion-icon name="funnel"></ion-icon>
                     Filter By
                     </button>
@@ -25,7 +24,15 @@ import { IonicPage, ActionSheetController } from 'ionic-angular';
         </ion-row>
     </ion-grid>
             `,
-    styles: [``]
+    styles: [`
+        button{
+            margin: 0rem 0rem !important;
+            height:45px;
+        }
+        ion-grid{
+            position:fixed;
+        }
+    `]
 
 
 })

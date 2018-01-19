@@ -2,7 +2,7 @@
     <nl-modal-navbar [title]="title" (modalClosed)="dismiss()"></nl-modal-navbar>
 </ion-header>
 
-<ion-content class="csGrayBackground">
+<ion-content >
     <ion-searchbar #searchbar [(ngModel)]="searchInput" (ionInput)="onSearchInput($event)" (ionClear)="onSearchClear($event)"></ion-searchbar>
 
     <ion-card>

@@ -7,7 +7,7 @@ import { IonicPage } from 'ionic-angular';
 @Component({
     selector: 'evaluation',
     template: `
-        <ion-tabs   class="csGrayBackground" color="primary" tabsLayout='icon-start'>
+        <ion-tabs    color="primary" tabsLayout='icon-start'>
         <ion-tab tabTitle="MODULE" tabIcon="book" [root]="module"></ion-tab>
         <ion-tab tabTitle="LECTURER" tabIcon="person"  [root]="lecturer"></ion-tab>
         </ion-tabs>

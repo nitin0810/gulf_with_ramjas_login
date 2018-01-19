@@ -1,146 +1,83 @@
 <ion-header>
-    <nl-modal-navbar [title]="title" (modalClosed)="dismiss()"></nl-modal-navbar>
+  <nl-modal-navbar [title]="title" (modalClosed)="dismiss()"></nl-modal-navbar>
 </ion-header>
 
 
-<ion-content class="csGrayBackground view-complaint ">
-    <ion-item *ngIf="complaint" [style.background-color]="complaint.statusColor || 'green'">
-
-        <div class="csStatus">
-            <span [style.color]="'white'" class="csBold">
-                <ion-icon name="at"></ion-icon>
-                {{complaint.statusName}}
-            </span>
-        </div>
-
-        <ion-row>
-            <ion-col text-center width-33 class="csPaddingWhite">
-                <span class="csFont24">{{complaint.commentCount || 0}}</span>
-                <br>Comments
-            </ion-col>
-            <!--
-            <ion-col>
-                <div style="padding-top:5px">
-                    <img name="contact" class="csAvatarImage csCenter" [src]="baseUrl + complaint.studentPicUrl">
-                </div>
-            </ion-col>
-        -->
-            <ion-col width-33 text-center class="csPaddingWhite">
-                <span class="csRight">
-                    <span class="csFont24">
-                        <ion-icon name="md-male"></ion-icon>
-                    </span>
-                    <br> {{complaint.againstCategoryName}}
-                </span>
-            </ion-col>
-        </ion-row>
-
-        <div text-center class="csWhiteText">
-
-            <div>{{complaint.createdAt | amDateFormat:'LL'}}
-                <span *ngIf="complaint.closedOn"> - {{complaint.closedOn | amDateFormat:'LL'}} </span>
+<ion-content class="view-complaint">
+    <ion-item style="margin-bottom:10px;" no-lines no-padding no-padding-right [style.background]="complaint.statusColor || 'green'" *ngIf="complaint" text-center>
+        <div flex>
+            <div>
+                <h1><ion-icon name="cloud-upload"></ion-icon></h1>Status: <b>{{complaint.statusName}}</b>
+            </div>
+            <div>
+                <img *ngIf="complaint.studentPicUrl" class="csAvatarImage" [src]="baseUrl + complaint.studentPicUrl" width="100px" height="100px">
+                <img *ngIf="!complaint.studentPicUrl" class="csAvatarImage" src="assets/images/student.png" width="100px" height="100px">
+            </div>
+            <div>
+                <h1><ion-icon name="pulse"></ion-icon></h1>Priority:<b>{{ complaint.priority }}</b>
             </div>
         </div>
-
-
-        <div *ngIf="isStudent">
-            <ion-row class="csViewCompBtnContainer">
-
-                <ion-col width-33>
-                    <button class="csFiveLeft" full (click)="openCommentPage()" class="csVieCompBtn" [style.border-color]="complaint.statusColor || 'green' "
-                        ion-button small round>
-                        <ion-icon name="md-chatbubbles" [style.color]="complaint.statusColor || 'green' "></ion-icon>
-                        <span class="csVWSmallText csCenter csFiveLeft" [style.color]="complaint.statusColor || 'green' " class="csVWSmallText">Comment</span>
-                    </button>
-                </ion-col>
-
-                <ion-col width-33 *ngIf="complaint.statusId === 4">
-                    <button ion-button full small round (click)="reOpenComplaint()" class="csVieCompBtn" [style.border-color]="complaint.statusColor || 'green' ">
-                        <ion-icon name="ios-thumbs-down" [style.color]="complaint.statusColor || 'green' "></ion-icon>
-                        <span class="csCenter csFiveLeft csVWSmallText" [style.color]="complaint.statusColor || 'green' ">Reopen</span>
-                    </button>
-                </ion-col>
-
-                <ion-col width-33 *ngIf="complaint.statusId != 6 && complaint.statusId != 4">
-                    <button ion-button full small round (click)="closeComplaint()" class="csVieCompBtn" [style.border-color]="complaint.statusColor || 'green' ">
-                        <ion-icon name="ios-thumbs-down" [style.color]="complaint.statusColor || 'green' "></ion-icon>
-                        <span class="csCenter csFiveLeft csVWSmallText" [style.color]="complaint.statusColor || 'green' ">Close</span>
-                    </button>
-                </ion-col>
-
-                <ion-col width-33 *ngIf="complaint.statusId === 4">
-                    <button full (click)="satisfyComplaint()" class="csVieCompBtn" [style.border-color]="complaint.statusColor || 'green' " ion-button
-                        small round>
-                        <ion-icon name="ios-thumbs-up" [style.color]="complaint.statusColor || 'green' "></ion-icon>
-                        <div class="bold csCenter csFiveLeft" [style.color]="complaint.statusColor || 'green' " class="csVWSmallText">Satisfied</div>
-                    </button>
-                </ion-col>
-            </ion-row>
+        <ion-title>Student Name</ion-title>
+        <div date>{{complaint.createdAt | amDateFormat:'LL'}}
+            <span *ngIf="complaint.closedOn"> - {{complaint.closedOn | amDateFormat:'LL'}} </span>
         </div>
-
-        <div *ngIf="!isStudent">
-            <ion-row class="csViewCompBtnContainer">
-
-                <ion-col width-33>
-                    <button class="csFiveLeft" full (click)="openCommentPage()" class="csVieCompBtn" [style.border-color]="complaint.statusColor || 'green' "
-                        ion-button small round>
-                        <ion-icon name="md-chatbubbles" [style.color]="complaint.statusColor || 'green' "></ion-icon>
-                        <span class="csVWSmallText csCenter csFiveLeft" [style.color]="complaint.statusColor || 'green' " class="csVWSmallText">Comment</span>
-                    </button>
-                </ion-col>
-
-                <ion-col width-33 *ngIf="complaint.statusId != 6 && complaint.statusId != 4">
-                    <button ion-button full small round (click)="editComplaint()" class="csVieCompBtn" [style.border-color]="complaint.statusColor || 'green' ">
-                        <ion-icon name="ios-thumbs-down" [style.color]="complaint.statusColor || 'green' "></ion-icon>
-                        <span class="csCenter csFiveLeft csVWSmallText" [style.color]="complaint.statusColor || 'green' ">Edit</span>
-                    </button>
-                </ion-col>
-
-                <ion-col width-33 *ngIf="complaint.statusId != 6 && complaint.statusId != 4">
-                    <button ion-button full small round (click)="openClosePage()" class="csVieCompBtn" [style.border-color]="complaint.statusColor || 'green' ">
-                        <ion-icon name="ios-thumbs-down" [style.color]="complaint.statusColor || 'green' "></ion-icon>
-                        <span class="csCenter csFiveLeft csVWSmallText" [style.color]="complaint.statusColor || 'green' ">Close</span>
-                    </button>
-                </ion-col>
-
-            </ion-row>
+        <div>
+          <ion-title>
+            {{complaint.againstCategoryName}}
+          </ion-title>
         </div>
-
+        <div flex buttons *ngIf="!isStudent">
+          <button (click)="openCommentPage()" ion-button round  icon-left outline color="secondary" [style.border-color]="complaint.statusColor || 'green' " [style.color]="complaint.statusColor || 'green' ">
+              <ion-icon name="chatbubbles"></ion-icon>
+            Comment
+          </button>
+          <button (click)="editComplaint()" *ngIf="complaint.statusId != 6 && complaint.statusId != 4" ion-button  round icon-left outline color="secondary" [style.border-color]="complaint.statusColor || 'green' " [style.color]="complaint.statusColor || 'green' ">
+              <ion-icon name="md-create"></ion-icon>
+              Edit
+            </button>
+            <button (click)="openClosePage()" *ngIf="complaint.statusId != 6 && complaint.statusId != 4" ion-button round icon-left outline color="secondary" [style.border-color]="complaint.statusColor || 'green' " [style.color]="complaint.statusColor || 'green' ">
+                <ion-icon name="md-remove-circle"></ion-icon>
+              Close
+            </button>
+        </div>
     </ion-item>
 
-    <ion-list *ngIf="complaint">
-        <ion-item>
-            <b>{{complaint.title}}</b>
-            <p class="csParagraph">{{complaint.description}}</p>
-        </ion-item>
+  <ion-list *ngIf="complaint">
+    <ion-item>
+      <b>{{complaint.title}}</b>
+      <p class="csParagraph">{{complaint.description}}</p>
+    </ion-item>
 
-        <ion-item *ngIf="complaint.rca">
-            <ion-icon name="thumbs-up" [style.color]="complaint.statusColor" item-start></ion-icon>
-            <span class="csFont12" [style.color]="complaint.statusColor">RCA</span>
-            <br>
-            <span class="csParagraph">{{complaint.rca}}</span>
-        </ion-item>
+    <ion-item *ngIf="complaint.rca">
+        <ion-icon name="thumbs-up" [style.color]="complaint.statusColor" item-start></ion-icon>
+        <span class="csFont12" [style.color]="complaint.statusColor">RCA</span>
+        <br>
+        <span class="csParagraph">{{complaint.rca}}</span>
+      </ion-item>
 
-        <ion-item *ngIf="complaint.againstEmployeeName">
-            <ion-icon name="contact" [style.color]="complaint.statusColor" item-start></ion-icon>
-            <span class="csFont12" [style.color]="complaint.statusColor">Against</span>
-            <br> {{complaint.againstEmployeeName}}
-        </ion-item>
-        <ion-item *ngIf="complaint.assignedEmployeeName">
-            <ion-icon name="construct" [style.color]="complaint.statusColor" item-start></ion-icon>
-            <span class="csFont12" [style.color]="complaint.statusColor">Assigned to</span>
-            <br> {{complaint.assignedEmployeeName}}
-        </ion-item>
-        <ion-item *ngIf="complaint.anonymous">
-            <ion-icon name="bug" [style.color]="complaint.statusColor" item-start></ion-icon>
-            <span class="csFont12">
-                <b>Anonymous {{complaintService.compOrSugg | titlecase}}</b>
-            </span>
-        </ion-item>
-        <ion-item *ngIf="complaint.priority">
-            <ion-icon name="alert" [style.color]="complaint.statusColor" item-start></ion-icon>
-            <span class="csFont12" [style.color]="complaint.statusColor">Priority</span>
-            <br> {{complaint.priority}}
-        </ion-item>
-    </ion-list>
+    <ion-item *ngIf="complaint.againstEmployeeName">
+      <ion-icon name="contact" [style.color]="complaint.statusColor" item-start></ion-icon>
+      <span class="csFont12" [style.color]="complaint.statusColor">Against</span>
+      <br> {{complaint.againstEmployeeName}}
+    </ion-item>
+
+    <ion-item *ngIf="complaint.assignedEmployeeName">
+      <ion-icon name="construct" [style.color]="complaint.statusColor" item-start></ion-icon>
+      <span class="csFont12" [style.color]="complaint.statusColor">Assigned to</span>
+      <br> {{complaint.assignedEmployeeName}}
+    </ion-item>
+
+    <ion-item *ngIf="complaint.anonymous">
+      <ion-icon name="bug" [style.color]="complaint.statusColor" item-start></ion-icon>
+      <span class="csFont12">
+        <b>Anonymous {{complaintService.compOrSugg | titlecase}}</b>
+      </span>
+    </ion-item>
+    <ion-item *ngIf="complaint.status">
+        <ion-icon name="cloud-upload" [style.color]="complaint.statusColor" item-start></ion-icon>
+        <span class="csFont12" [style.color]="complaint.statusColor">Status</span>
+        <br> {{complaint.status}}
+    </ion-item>
+    
+  </ion-list>
 </ion-content>

@@ -1,28 +1,22 @@
-
 <ion-menu [content]="content">
-
-    <ion-header class="csProfileHeader" tappable (tap)="openPage()" menuClose>
-        <div class="csAccBgImg csHeight160">
-            <div class="csCenter csProfileHeader">
-                <div class="csAccBgImg">
-                    <br><img [src]="userImage !='null' ? userImage: defaultUserImage" class="csAccImg csCenter">
-                    <div class="csAccName" text-center>{{userName | titlecase}}</div>
-                </div>
-            </div>
+  <ion-header class="csProfileHeader" tappable (tap)="openPage()" menuClose>
+    <div class="csAccBgImg csHeight160">
+      <div class="csCenter csProfileHeader">
+        <div class="csAccBgImg">
+          <br>
+          <img [src]="userImage !='null' ? userImage: defaultUserImage" class="csAccImg csCenter">
+          <div class="csAccName" text-center>{{userName | titlecase}}</div>
         </div>
-    </ion-header>
-
-    <ion-content>
-        <ion-list>
-            <button  ion-item  *ngFor="let option of sideMenuOptions" (click)="openPage(option)">
-         <img [src]="option.icon" item-start class="csWidth30">
-         {{option.title}}
-       </button>
-        </ion-list>
-    </ion-content>
+      </div>
+    </div>
+  </ion-header>
+  <ion-content>
+    <ion-list>
+      <button ion-item *ngFor="let option of sideMenuOptions" (click)="openPage(option)">
+        <img [src]="option.icon" item-start class="csWidth30"> {{option.title}}
+      </button>
+    </ion-list>
+  </ion-content>
 </ion-menu>
-
-
-
-
 <ion-nav [root]="rootPage" #content swipeBackEnabled="false"></ion-nav>
+
