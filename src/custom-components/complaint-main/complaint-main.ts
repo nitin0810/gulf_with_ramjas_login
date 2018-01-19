@@ -18,11 +18,16 @@ export class ComplaintMainPage {
     @Input() complaintList: Array<any>;
     @Input() searchInput: string;
 
-    Satisfied = 'md-thumbs-up';
-    Reopen = 'md-refresh';
-    Inprogress = 'md-code-download';
-    Closed = 'md-remove-circle';
-    Assigned = 'md-checkmark';
+    statusIcons: any = {
+        Satisfied : 'md-thumbs-up',
+        Reopen :'md-refresh',
+        InProgress :'md-code-download',
+        Closed : 'md-remove-circle',
+        Assigned : 'md-checkmark'
+        // New status to be added
+    }
+
+   
 
     isEmptyList: boolean = false;
     currentPage: number = 1;
@@ -142,7 +147,6 @@ export class ComplaintMainPage {
             .subscribe((res: any) => {
 
                 this.complaintList = res;
-
                 this.isEmptyList = this.complaintList.length == 0;
                 refresher ? refresher.complete() : this.customService.hideLoader();
 
