@@ -2,7 +2,7 @@
     <nl-modal-navbar [title]="title" (modalClosed)="dismiss()"></nl-modal-navbar>
 </ion-header>
 
-<ion-content >
+<ion-content class="csPlainGray">
 
     <div *ngIf="categories">
 
@@ -19,7 +19,7 @@
             <div *ngIf="selectedCategory?.subCategory && selectedCategory.subCategory.length > 0">
                 <ion-card>
                     <ion-item>
-                        <ion-icon name="options" item-start></ion-icon>
+                        <ion-icon name="options" item-start color="primary"></ion-icon>
                         <ion-label>SubCategory</ion-label>
                         <ion-select [(ngModel)]="selectedSubCategory" (ionChange)="resetSubCategories2()" required name="subCategory">
                             <ion-option *ngFor="let subCat of selectedCategory.subCategory" [value]="subCat">{{subCat.name || subCat.facultyName}}</ion-option>
@@ -31,7 +31,7 @@
             <div *ngIf="selectedSubCategory?.subCategory && selectedSubCategory.subCategory.length > 0">
                 <ion-card>
                     <ion-item>
-                        <ion-icon name="options" item-start></ion-icon>
+                        <ion-icon name="options" item-start color="primary"></ion-icon>
                         <ion-label>SubCategory</ion-label>
                         <ion-select [(ngModel)]="selectedSubCategory2" required name="subCategory2">
                             <ion-option *ngFor="let subCat of selectedSubCategory.subCategory" [value]="subCat">{{subCat.name || subCat.facultyName}}</ion-option>

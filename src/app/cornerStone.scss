@@ -245,9 +245,10 @@ button{
     margin-left:5px;
 }
 .select-icon{
+    position: absolute !important;
     right: 10px;
     position: fixed;
-    top: 17px;
+    top: 15px;
 }
 .select-text{
     margin-right: 15px;
