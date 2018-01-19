@@ -2,9 +2,9 @@
     <nl-navbar [title]="title"></nl-navbar>
 </ion-header>
 
-<ion-content >
+<ion-content class="csPlainGray">
 
-    <ion-card>
+    <!-- <ion-card>
         <img [src]="userImage" (click)="onImageClick()" style="height:50%;width:50%;margin:auto">
         <h2 style="text-align:center">
             {{name | titlecase}}
@@ -24,13 +24,70 @@
             </ion-card>
         </ion-list>
 
-    </ion-card>
+    </ion-card> -->
+    <ion-card class="csProfileCard ">
+            <div class="csCenter csProfileHeader">
+              <div class="csAccBgImg">
+                <br>
+                <img [src]="userImage" (click)="onImageClick()" class="csAccImg csCenter">
+                <!-- <ion-spinner *ngIf="showLoader"></ion-spinner> -->
+                <div class="csAccName" text-center>{{name | titlecase}}<br>
+                  <span class="csWhiteText" text-center *ngIf="nickName">({{nickName | titlecase}})</span>
+                </div>
+              </div>
+            </div>
+            <ion-list>
+              <ion-card class="csProfileCardDetails" *ngFor="let detail of moreDetails ">
+                <ion-item class="csPlainGray">
+                  <ion-avatar item-left>
+                    <ion-icon class="csProfileIcon" [name]="detail.icon"></ion-icon>
+                  </ion-avatar>
+                  <span class="csProfileTitle">{{detail.name}}</span>
+                  <h2>{{detail.value}}</h2>
+                  <button ion-button clear item-end color="primary" (click)="onPwdChange()" *ngIf="detail.name==='Password'">
+                        <ion-icon name="create" class="csEditButton"></ion-icon>
+                </button>
+                </ion-item>
+              </ion-card>
 
-    <div padding>
-        <button ion-button full (click)="onLogOut()">
-            <ion-icon name="power"></ion-icon>
-            LOGOUT
-        </button>
-    </div>
+              <!-- <ion-card class="csProfileCardDetails">
+                <ion-item>
+                  <ion-avatar item-left>
+                    <ion-icon class="csProfileIcon" name="unlock"></ion-icon>
+                  </ion-avatar>
+                  <span class="csProfileTitle">Password</span>
+                  <h2>*********</h2>
+                  <button ion-button clear item-right color="$csGreen" (click)="openModal()">
+                    <ion-icon name="create" class="csFontColor1" class="csEditButton"></ion-icon>
+                  </button>
+                </ion-item>
+              </ion-card>
+              <ion-card class="csProfileCardDetails" *ngIf="emailID">
+                <ion-item>
+                  <ion-avatar item-left>
+                    <ion-icon class="csProfileIcon" name="unlock"></ion-icon>
+                  </ion-avatar>
+                  <span class="csProfileTitle">E-mail ID</span>
+                  <h2>{{emailID}}</h2>
+                </ion-item>
+              </ion-card>
+              <ion-card class="csProfileCardDetails" *ngIf="contactNo">
+                <ion-item>
+                  <ion-avatar item-left>
+                    <ion-icon class="csProfileIcon" name="unlock"></ion-icon>
+                  </ion-avatar>
+                  <span class="csProfileTitle">Mobile No.</span>
+                  <h2>{{contactNo}}</h2>
+                </ion-item>
+              </ion-card> -->
+            </ion-list>
+
+          </ion-card>
+          <div padding>
+                <button ion-button icon-left color="primary" full type="button" (click)="onLogOut()">
+                  <ion-icon name="power"></ion-icon>
+                  <b>Logout</b>
+                </button>
+              </div>
 
 </ion-content>
