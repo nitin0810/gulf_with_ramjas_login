@@ -19,7 +19,7 @@ import { TimeTableService } from '../../../../services/timeTable.service';
      `]
 })
 
-export class TimeTablePageManagement implements OnDestroy{
+export class TimeTablePageManagement implements OnDestroy {
 
     title: string = 'Time table';
 
@@ -130,8 +130,24 @@ export class TimeTablePageManagement implements OnDestroy{
         modal.onDidDismiss((newEntry: any) => {
 
             if (newEntry) {
-                /**remove previous entry*/
-                this.selectedDayTimetable.splice(index, 1);
+
+                /**when edit page is opened from item-sliding-options(i.e normal edit) ,
+                 * then only we have to use the index to delete tne previous entry
+                 * In case we come to main page directly from edit page(opened from edit page)
+                 * then we have 'fromDoubleEditPage' key in response and also 'oldId' key 
+                 * which stores the TT Id of old timetable which needs to be deleted from view */
+
+                if (!newEntry['fromDoubleEditPage']) {
+                    this.selectedDayTimetable.splice(index, 1);
+
+                } else if (newEntry['oldId']) {
+
+                    let dayName = newEntry.dayName.slice(0, 3);
+                    if (this.timetableData[dayName] && this.timetableData[dayName].data) {
+                        let oldIdPeriod = this.timetableData[dayName].data.findIndex(p => p.id == newEntry['oldId']);
+                        oldIdPeriod > -1 && this.timetableData[dayName].data.splice(oldIdPeriod, 1);
+                    }
+                }
                 this.addTimetableEntry(newEntry);
             }
 
