@@ -23,8 +23,8 @@ export class ComplaintMainPage {
         Reopen :'md-refresh',
         InProgress :'md-code-download',
         Closed : 'md-remove-circle',
-        Assigned : 'md-checkmark'
-        // New status to be added
+        Assigned : 'md-checkmark',
+        New : 'add-circle'
     }
 
    
