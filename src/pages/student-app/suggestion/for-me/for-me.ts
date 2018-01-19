@@ -3,7 +3,10 @@ import {IonicPage} from 'ionic-angular';
 
 @IonicPage()
 @Component({
-  templateUrl: './for-me.html' 
+  templateUrl: './for-me.html' ,
+  styles:[`
+
+  `]
    
 })
 
