@@ -1,29 +1,26 @@
 <ion-list class="complaint-list">
-
-    <a ion-item *ngFor="let survey of surveyList; let i =index" (click)="openModal(survey, i)" [style.border-left-color]="survey.mainAudienceColor">
-
-        <h2>
-            <b>{{survey.title}}</b>
-        </h2>
-        <h3>{{survey.description}}</h3>
-        <!-- <p>{{survey.studentVoteCount + survey.employeeVoteCount}} Votes</p> -->
-        <ion-row>
-            <ion-col col-6 class="no-padding-l csGray5353" no-padding>
-                    <ion-icon name="md-clock"></ion-icon>
-                <span *ngIf="areSurveysExpired">Expired: </span>
-                <span *ngIf="!areSurveysExpired">Expires: </span>
-                <span>{{survey.expiredAt | amTimeAgo}}</span>
-            </ion-col>
-            <ion-col col-6 class="no-padding-l csGray5353" [style.color]="survey.mainAudienceColor" no-padding>
-                <ion-icon name="at"></ion-icon>
-                <span>{{survey.mainAudienceName }}</span>
-            </ion-col>
-        </ion-row>
-
-    </a>
+  <a ion-item *ngFor="let survey of surveyList; let i =index" (click)="openModal(survey, i)" [style.border-left-color]="survey.mainAudienceColor">
+    <h2>
+      <b>{{survey.title}}</b>
+    </h2>
+    <h3>{{survey.description}}</h3>
+    <!-- <p>{{survey.studentVoteCount + survey.employeeVoteCount}} Votes</p> -->
+    <ion-row>
+      <ion-col col-6 class="no-padding-l csGray5353" no-padding>
+        <ion-icon name="md-clock"></ion-icon>
+        <span *ngIf="areSurveysExpired">Expired: </span>
+        <span *ngIf="!areSurveysExpired">Expires: </span>
+        <span>{{survey.expiredAt | amTimeAgo}}</span>
+      </ion-col>
+      <ion-col col-6 class="no-padding-l csGray5353 text-right" [style.color]="survey.mainAudienceColor" no-padding>
+        <ion-icon name="at"></ion-icon>
+        <span>{{survey.mainAudienceName }}</span>
+      </ion-col>
+    </ion-row>
+  </a>
 </ion-list>
 
 <div class="no-comment" *ngIf="surveyList?.length==0">
-    <ion-icon name="list-box"></ion-icon>
-    <br>NO RECORD FOUND
+  <ion-icon name="list-box"></ion-icon>
+  <br>NO RECORD FOUND
 </div>
