@@ -74,11 +74,9 @@
 
 
     <ion-card *ngFor="let q of evaluation?.questions">
-
-        <ion-card-content>
-            <ion-card-title>
-                Ques: {{q.question}}
-            </ion-card-title>
+            <ion-card-header>
+                    <h2>{{q.question}}</h2>
+            </ion-card-header>
             <ion-list>
                 <ion-item *ngFor="let option of q.options">
                     <ion-row>
@@ -92,7 +90,6 @@
                     <progress-bar [progress]="option.percent"></progress-bar>
                 </ion-item>
             </ion-list>
-        </ion-card-content>
 
     </ion-card>
 </ion-content>

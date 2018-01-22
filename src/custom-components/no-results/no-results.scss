@@ -1,3 +1,29 @@
+@keyframes fadeInDown {
+    from {
+      opacity: 0;
+      transform: translate3d(0, -100%, 0);
+    }
+  
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+  
+  .fadeInDown {
+    animation-name: fadeInDown;
+  }
+
+  .animated {
+    animation-duration: 1s;
+    animation-fill-mode: both;
+  }
+
+  .animated-fast{
+    animation-duration: 0.4s;
+    animation-fill-mode: both;
+  }
+
 .no_records{
     margin-top:10%;
     transition:0.3s ease-in;

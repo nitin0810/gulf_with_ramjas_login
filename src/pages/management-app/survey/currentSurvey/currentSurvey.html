@@ -8,15 +8,13 @@
         <ion-refresher-content></ion-refresher-content>
     </ion-refresher>
 
-
     <ion-fab right bottom>
-        <button ion-fab color="danger" (click)="openNewPollModal()">
+        <button ion-fab color="primary" (click)="openNewPollModal()">
             <ion-icon name="add"></ion-icon>
         </button>
     </ion-fab>
 
     <survey-list [surveyList]="surveyList" [areSurveysExpired]="areSurveysExpired"></survey-list>
-
 
     <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
         <ion-infinite-scroll-content></ion-infinite-scroll-content>

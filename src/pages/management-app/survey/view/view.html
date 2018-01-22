@@ -1,36 +1,36 @@
 <ion-header>
-    <nl-modal-navbar [title]="title" (modalClosed)="dismiss()">
-        <button ion-button clear (click)="showInfo=!showInfo">
-            <ion-icon name="information-circle" class="csWhiteText csFont18em"></ion-icon>
-
-        </button>
-    </nl-modal-navbar>
+    <nl-modal-navbar [title]="title" (modalClosed)="dismiss()"></nl-modal-navbar>
 </ion-header>
 
 <ion-content >
+        <ion-fab bottom right>
+                <button ion-fab (click)="showInfo=!showInfo">
+                  <ion-icon name="add" name="information-circle"></ion-icon>
+                </button>
+              </ion-fab>
+    <ion-card *ngIf="survey && showInfo" class="info fadeInDown animated-fast">
 
-    <ion-card *ngIf="survey && showInfo">
         <ion-card-header>
-            {{survey.title}}
-            <br> {{survey.description}}
+            <h2>{{survey.title}}</h2>
+            <small>{{survey.description}}</small>
         </ion-card-header>
 
-        <ion-card-content>
+        <ion-card-content no-padding>
 
-            <ion-item>
-                <ion-icon name="clock" item-start></ion-icon>
-                <p>
-                    <b>Created : </b>
+            <ion-item class="csTransparent">
+                <ion-icon name="clock" item-start color="primary"></ion-icon>
+                    <small>Created </small>
+                    <br>
                     <span>{{survey.createdAt | amTimeAgo}}</span>
-                </p>
             </ion-item>
 
-            <ion-item *ngIf="survey.expiredAt">
-                <ion-icon name="clock" item-start></ion-icon>
-                <p>
-                    <b>Expires: </b>
+            <ion-item *ngIf="survey.expiredAt" class="csTransparent">
+                <ion-icon name="clock" item-start color="primary"></ion-icon>
+            
+                    <small>Expires</small>
+                    <br>
                     <span>{{survey.expiredAt | amDateFormat: 'LL'}}</span>
-                </p>
+              
                 <button *ngIf="!isExpired" ion-button clear item-end (click)="editExpiryDate()">EDIT</button>
             </ion-item>
 
@@ -44,52 +44,43 @@
 
 
             <ion-item>
-                <ion-icon name="people" item-start></ion-icon>
-                <p>
-                    <b>Audience: </b>
+                <ion-icon name="people" item-start color="primary"></ion-icon>
+               
+                    <small>Audience </small>
+                    <br>
                     <span>{{survey.mainAudienceName}}</span>
-                </p>
+             
             </ion-item>
 
             <ion-item *ngIf="survey.audiences">
-                <ion-icon name="people" item-start></ion-icon>
-                <p>
-                    <b>SubAudience: </b>
-                </p>
-                <p *ngFor="let aud of survey.audiences">{{aud}}</p>
+                <ion-icon name="people" item-start color="primary"></ion-icon>
+                <small>SubAudience </small>
+                <div *ngFor="let aud of survey.audiences">{{aud}}</div>
             </ion-item>
 
             <ion-item *ngIf="survey.departments">
-                <ion-icon name="folder" item-start></ion-icon>
-                <p>
-                    <b>Departments: </b>
-                </p>
-                <p *ngFor="let dep of survey.departments">{{dep}}</p>
+                <ion-icon name="folder" item-start color="primary"></ion-icon>
+                <small>Departments</small>
+                <div *ngFor="let dep of survey.departments">{{dep}}</div>
             </ion-item>
 
             <ion-item *ngIf="survey.programs">
-                <ion-icon name="folder" item-start></ion-icon>
-                <p>
-                    <b>Programs: </b>
-                </p>
-                <p *ngFor="let pgm of survey.programs">{{pgm}}</p>
+                <ion-icon name="folder" item-start color="primary"></ion-icon>
+                <small>Programs</small>
+                <div> *ngFor="let pgm of survey.programs">{{pgm}}</div>
             </ion-item>
 
 
             <ion-item *ngIf="survey.modules">
-                <ion-icon name="folder" item-start></ion-icon>
-                <p>
-                    <b>Modules: </b>
-                </p>
-                <p *ngFor="let md of survey.modules">{{md}}</p>
+                <ion-icon name="folder" item-start color="primary"></ion-icon>
+                    <small>Modules </small>
+                <div *ngFor="let md of survey.modules">{{md}}</div>
             </ion-item>
 
             <ion-item *ngIf="survey.years">
-                <ion-icon name="folder" item-start></ion-icon>
-                <p>
-                    <b>Years: </b>
-                </p>
-                <p *ngFor="let y of survey.years">{{y}}</p>
+                <ion-icon name="folder" item-start color="primary"></ion-icon>
+                    <small>Years</small>
+                <div *ngFor="let y of survey.years">{{y}}</div>
             </ion-item>
 
             <ion-datetime #dateTime max="2018" [min]="todayDate()" displayFormat="DD MMM YYYY" [(ngModel)]="newExpiryDate" doneText="Update"
@@ -101,25 +92,25 @@
 
     <ion-card *ngFor="let q of survey?.questions">
 
-        <ion-card-content>
-            <ion-card-title>
-                Ques: {{q.question}}<br>
-            </ion-card-title>
-            <p>{{q.optionTypeName}}</p>
+
+            <ion-card-header>
+                <h2>{{q.question}}</h2>
+                <small>{{q.optionTypeName}}</small>
+            </ion-card-header>
             <ion-list>
                 <ion-item *ngFor="let option of q.options">
-                    <ion-row>
-                        <ion-col col-6>
-                            <p>{{option.name}}</p>
-                        </ion-col>
-                        <ion-col col-6>
-                            <p>{{option.percent}}%</p>
-                        </ion-col>
-                    </ion-row>
-                    <progress-bar [progress]="option.percent"></progress-bar>
+   
+                            <p left>{{option.name}}</p>
+  
+                            
+                    <div result>
+                            <progress-bar [progress]="option.percent"></progress-bar>
+                            <div>{{option.percent}}%</div>
+                        </div>
+                    
                 </ion-item>
             </ion-list>
-        </ion-card-content>
+  
 
     </ion-card>
 </ion-content>

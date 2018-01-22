@@ -1,94 +1,93 @@
 <ion-header>
-    <nl-modal-navbar [title]="title" (modalClosed)="dismiss()">
-        <button ion-button clear (click)="showInfo=!showInfo">
-            <ion-icon name="information-circle" class="csWhiteText csFont18em"></ion-icon>
-        </button>
-    </nl-modal-navbar>
+  <nl-modal-navbar [title]="title" (modalClosed)="dismiss()"></nl-modal-navbar>
 </ion-header>
 
 <ion-content>
+  <ion-fab bottom right>
+    <button ion-fab (click)="showInfo=!showInfo">
+      <ion-icon name="add" name="information-circle"></ion-icon>
+    </button>
+  </ion-fab>
+  <ion-card *ngIf="surveyFromList && showInfo" class="info fadeInDown animated-fast">
+    <ion-card-header>
+      <h2>{{surveyFromList.title}}</h2>
+      <small>{{surveyFromList.description}}</small>
+    </ion-card-header>
 
-    <ion-card *ngIf="surveyFromList && showInfo">
-        <ion-card-header>
-            {{surveyFromList.title}}
-            <br> {{surveyFromList.description}}
-        </ion-card-header>
+    <ion-card-content no-padding>
 
-        <ion-card-content>
+      <ion-item class="csTransparent">
+        <ion-icon name="clock" item-start color="primary"></ion-icon>
+        <p>
+          <b>Created : </b>
+          <span>{{surveyFromList.createdAt | amTimeAgo}}</span>
+        </p>
+      </ion-item>
 
-            <ion-item>
-                <ion-icon name="clock" item-start></ion-icon>
-                <p>
-                    <b>Created : </b>
-                    <span>{{surveyFromList.createdAt | amTimeAgo}}</span>
-                </p>
+      <ion-item *ngIf="surveyFromList.expiredAt"  class="csTransparent">
+        <ion-icon name="clock" item-start color="primary"></ion-icon>
+        <p>
+          <b>Expires: </b>
+          <span>{{surveyFromList.expiredAt | amDateFormat: 'LL'}}</span>
+        </p>
+      </ion-item>
+
+      <ion-item *ngIf="surveyFromList.lecturer"  class="csTransparent">
+        <ion-icon name="person" item-start></ion-icon>
+        <p>
+          <b>Lecturer: </b>
+        </p>
+        <span>{{surveyFromList.lecturer}}</span>
+      </ion-item>
+
+      <ion-item *ngIf="surveyFromList.module">
+        <ion-icon name="folder" item-start></ion-icon>
+        <p>
+          <b>Module: </b>
+        </p>
+        <span *ngFor="let md of surveyFromList.module">{{md}}</span>
+      </ion-item>
+
+    </ion-card-content>
+  </ion-card>
+
+
+
+
+  <ion-list *ngIf="survey">
+
+    <ion-card *ngFor="let q of survey; let i = index">
+      <ion-card-header>
+        <h2>{{q.question}}</h2>
+        <small>{{q.optionTypeName}}</small>
+      </ion-card-header>
+
+      <div class="csPollOptionsBack">
+        <div *ngIf="q.optionTypeId== 2">
+          <ion-list>
+            <ion-item *ngFor="let option of q.options, let j=index" class="csPaddingLeft50 csqOptionsBack csTransparent" no-lines>
+              <ion-label>{{option.name}}</ion-label>
+              <ion-checkbox checked="false" [(ngModel)]="q.selectedOptions[j]" (click)="changeVoteBtnStatus()" item-end color="primary">
+              </ion-checkbox>
             </ion-item>
-
-            <ion-item *ngIf="surveyFromList.expiredAt">
-                <ion-icon name="clock" item-start></ion-icon>
-                <p>
-                    <b>Expires: </b>
-                    <span>{{surveyFromList.expiredAt | amDateFormat: 'LL'}}</span>
-                </p>
-            </ion-item>
-
-            <ion-item *ngIf="surveyFromList.lecturer">
-                <ion-icon name="person" item-start></ion-icon>
-                <p>
-                    <b>Lecturer: </b>
-                </p>
-                <span >{{surveyFromList.lecturer}}</span>
-            </ion-item>
-
-            <ion-item *ngIf="surveyFromList.module">
-                <ion-icon name="folder" item-start></ion-icon>
-                <p>
-                    <b>Module: </b>
-                </p>
-                <span *ngFor="let md of surveyFromList.module">{{md}}</span>
-            </ion-item>
-
-        </ion-card-content>
-    </ion-card>
-
-
-
-
-    <ion-list *ngIf="survey">
-
-        <ion-card *ngFor="let q of survey; let i = index">
-            <ion-card-header>
-                <h2>{{q.question}}</h2>
-                <small>{{q.optionTypeName}}</small>
-            </ion-card-header>
-         
-
-                <div class="csPollOptionsBack">
-                    <div *ngIf="q.optionTypeId== 2">
-                        <ion-list>
-                            <ion-item *ngFor="let option of q.options, let j=index" class="csPaddingLeft50 csqOptionsBack csTransparent" no-lines>
-                                <ion-label>{{option.name}}</ion-label>
-                                <ion-checkbox checked="false" [(ngModel)]="q.selectedOptions[j]" (click)="changeVoteBtnStatus()" item-end color="primary">
-                                </ion-checkbox>
-                            </ion-item>
-                        </ion-list>
-                    </div>
-
-                    <div *ngIf="q.optionTypeId == 1">
-                        <ion-list radio-group [(ngModel)]="q.selectedOptions">
-                            <ion-item *ngFor="let option of q.options" class="csPaddingLeft50 csPollOptionsBack">
-                                <ion-label>{{option.name}}</ion-label>
-                                <ion-radio checked="false" [value]="[option.id]" (click)="changeVoteBtnStatus()">
-                                </ion-radio>
-                            </ion-item>
-                        </ion-list>
-                    </div>
-                </div>
-        </ion-card>
-
-        <div padding>
-            <button [disabled]="isSubmitBtnDisabled" color="color5" ion-button full type="button" (click)="onSubmit()">Vote</button>
+          </ion-list>
         </div>
 
-    </ion-list>
+        <div *ngIf="q.optionTypeId == 1">
+          <ion-list radio-group [(ngModel)]="q.selectedOptions">
+            <ion-item *ngFor="let option of q.options" class="csPaddingLeft50 csPollOptionsBack">
+              <ion-label>{{option.name}}</ion-label>
+              <ion-radio checked="false" [value]="[option.id]" (click)="changeVoteBtnStatus()">
+              </ion-radio>
+            </ion-item>
+          </ion-list>
+        </div>
+      </div>
+    </ion-card>
+
+    <div padding>
+      <button [disabled]="isSubmitBtnDisabled" color="color5" ion-button full type="button" (click)="onSubmit()">Vote</button>
+    </div>
+
+  </ion-list>
 </ion-content>

@@ -1,4 +1,4 @@
-survey-vote{
+survey-vote,view-evaluation,view-poll,view-survey{
     ion-card{
         box-shadow:0 0 22px lightgray !important;
     }
@@ -6,6 +6,34 @@ survey-vote{
         background:color($colors, color5);
         color:color($colors, secondary) !important;
         box-shadow: 0 0 20px color($colors, color5);
+        h2{
+            white-space: pre-line;
+            color: color($colors,secondary) !important;
+            font-weight:bold;
+        }
     }
-
+    .info{
+        ion-card-header{
+            background:color($colors, primary);
+            box-shadow: 0 0 20px color($colors, primary);
+        }
+    }
+    ion-card-content{
+        small{
+            color:color($colors,primary);
+            font-weight:bold;
+        }
+    }
+    p[left]{
+        white-space:pre-line;
+    }
+    div[result]{
+        display:flex;
+        progress-bar{
+            width: 90%;
+        }
+        progress-bar + div{
+            padding-top:5px;
+        }
+    }
 }
