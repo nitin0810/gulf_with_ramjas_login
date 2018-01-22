@@ -2,7 +2,7 @@
     <nl-modal-navbar [title]="title" (modalClosed)="dismiss()"></nl-modal-navbar>
 </ion-header>
 
-<ion-content >
+<ion-content class="csPlainGray">
 
     <form #newSurveyForm="ngForm" (ngSubmit)="onSubmit()">
 
@@ -10,58 +10,47 @@
             <ion-item>
                 <ion-label stacked>
                     <b>Title</b>
+                    <ion-badge  class="csRight">{{200 - title?.length}}</ion-badge>
                 </ion-label>
-                <ion-textarea [(ngModel)]="surveyTitle" placeholder="Enter Title" maxlength=200 required name="title">
-                </ion-textarea>
-                <ion-badge item-end>{{200 - title?.length}}</ion-badge>
+                <ion-textarea [(ngModel)]="surveyTitle" placeholder="Add Title" maxlength=200 required name="title"></ion-textarea>
+                
             </ion-item>
-        </ion-card>
-
-        <ion-card>
             <ion-item>
                 <ion-label stacked>
                     <b>Description</b>
+                    <ion-badge class="csRight">{{2500 - description?.length}}</ion-badge>
                 </ion-label>
-                <ion-textarea rows=3 [(ngModel)]="description" placeholder="Enter Description" maxlength=2500 required name="description">
-                </ion-textarea>
-                <ion-badge item-end>{{2500 - description?.length}}</ion-badge>
+                <ion-textarea rows=3 [(ngModel)]="description" placeholder="Add Description" maxlength=2500 required name="description"></ion-textarea>
             </ion-item>
         </ion-card>
 
 
-        <form #questionSubForm="ngForm">
-            <ion-list>
 
+        <form #questionSubForm="ngForm">
                 <ion-card *ngFor="let q of questions; let i = index">
+            <ion-list>
+                
                     <ion-item>
                         <ion-label stacked>
                             <b>Question {{i+1}}</b>
+                            <ion-badge  class="csRight">{{200 - q.question?.length}}</ion-badge>
                         </ion-label>
-                        <ion-textarea [(ngModel)]="q.question" placeholder="Enter Question" maxlength=200 required name="question{{i}}">
-                        </ion-textarea>
-                        <button *ngIf="i>1" ion-button icon-only item-end (click)="removeQuestion(i)">
+                        <ion-textarea [(ngModel)]="q.question" placeholder="Enter Question" maxlength=200 required name="question{{i}}"></ion-textarea>
+                        <button *ngIf="i>1" ion-button round small icon-only item-end (click)="removeQuestion(i)">
                             <ion-icon name="close"></ion-icon>
                         </button>
-                        <ion-badge item-end>{{200 - q.question?.length}}</ion-badge>
                     </ion-item>
-
-                    <ion-card>
-                        <ion-item>
-                            <ion-label>
-                                <b>Select Option Type</b>
-                            </ion-label>
-                            <ion-select [(ngModel)]="q.optionTypeId" required name="optionType{{i}}">
-                                <ion-option *ngFor="let optionType of optionTypesPossible" [value]="optionType.id">
-                                    {{optionType.name}}
-                                </ion-option>
-                            </ion-select>
-                        </ion-item>
-                    </ion-card>
-
-                    <ion-card>
-                        <ion-list>
+                    <ion-item>
+                        <ion-label stacked>
+                            <b>Select Option Type</b>
+                        </ion-label>
+                        <ion-select [(ngModel)]="q.optionTypeId" required name="optionType{{i}}">
+                            <ion-option *ngFor="let optionType of optionTypesPossible" [value]="optionType.id">
+                                {{optionType.name}}
+                            </ion-option>
+                        </ion-select>
+                    </ion-item>
                             <ion-item *ngFor="let option of q.subOptions;let j = index">
-
                                 <ion-label stacked>
                                     <b>Option {{j+1}}</b>
                                 </ion-label>
@@ -72,17 +61,11 @@
                                 </button>
                             </ion-item>
 
-                        </ion-list>
                         <button type="button" *ngIf="q.subOptions.length<=optionLimit - 1" ion-button clear icon-left (click)="onAddOptionBtnSurvey(i)">
                             <ion-icon name="add"></ion-icon> Add Option
                         </button>
-                    </ion-card>
-
-
-                </ion-card>
-
-
             </ion-list>
+        </ion-card>
             <button type="button" *ngIf="questions.length<6" [disabled]="!questionSubForm.valid" ion-button clear icon-left (click)="onAddQuestion()">
                 <ion-icon name="add"></ion-icon> Add Question
             </button>
