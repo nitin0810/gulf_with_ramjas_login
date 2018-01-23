@@ -16,7 +16,7 @@ import { CustomService } from '../../../../services/custom.service';
       }
       div[subHeader]{
         position: fixed;
-        z-index: 0;
+        z-index: 1;
         transition: top 0.5s ease;
         width: 100%;
         top: 72px;

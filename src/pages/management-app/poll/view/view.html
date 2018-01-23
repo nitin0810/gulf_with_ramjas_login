@@ -1,128 +1,101 @@
 <ion-header>
-    <nl-modal-navbar [title]="title" (modalClosed)="dismiss()">
-        <button ion-button clear (click)="showInfo=!showInfo">
-            <ion-icon name="information-circle" class="csWhiteText csFont18em"></ion-icon>
-           
-        </button>
-    </nl-modal-navbar>
+  <nl-modal-navbar [title]="title" (modalClosed)="dismiss()"></nl-modal-navbar>
 </ion-header>
 
-<ion-content >
+<ion-content>
+  <ion-fab bottom right>
+    <button ion-fab (click)="showInfo=!showInfo">
+      <ion-icon name="people" name="information-circle"></ion-icon>
+    </button>
+  </ion-fab>
+  <ion-card *ngIf="poll && showInfo" class="info fadeInDown animated-fast">
+    <ion-card-content no-padding>
+      <ion-item>
+        <ion-icon name="md-checkmark" item-start color="primary"></ion-icon>
+        <small>Count</small>
+        <h2>{{poll.totalVote || 0}}</h2>
+      </ion-item>
 
-    <ion-card *ngIf="poll && showInfo">
-        <ion-card-content>
-            <ion-item>
-                <ion-icon name="checkmark" item-start></ion-icon>
-                <p>
-                    <b>Count: </b>
-                    <span>{{poll.totalVote || 0}}</span>
-                </p>
-            </ion-item>
+      <ion-item>
+        <ion-icon name="clock" item-start color="primary"></ion-icon>
+        <small>Created</small>
+        <h2>{{poll.createdAt | amTimeAgo}}</h2>
+      </ion-item>
 
-            <ion-item>
-                <ion-icon name="clock" item-start></ion-icon>
-                <p>
-                    <b>Created : </b>
-                    <span>{{poll.createdAt | amTimeAgo}}</span>
-                </p>
-            </ion-item>
+      <ion-item *ngIf="poll.expiredAt">
+        <ion-icon name="clock" item-start color="primary"></ion-icon>
+        <small>Expires</small>
+        <h2>{{poll.expiredAt | amDateFormat: 'LL'}}</h2>
+        <button *ngIf="!isExpired" ion-button clear item-end (click)="editExpiryDate()">EDIT</button>
+      </ion-item>
 
-            <ion-item *ngIf="poll.expiredAt">
-                <ion-icon name="clock" item-start></ion-icon>
-                <p>
-                    <b>Expires: </b>
-                    <span>{{poll.expiredAt | amDateFormat: 'LL'}}</span>
-                </p>
-                <button *ngIf="!isExpired" ion-button clear item-end (click)="editExpiryDate()">EDIT</button>
-            </ion-item>
+      <ion-item>
+        <ion-icon name="person-add" item-start color="primary"></ion-icon>
+        <small>Created By</small>
+        <h2>{{poll.employeName}}</h2>
+      </ion-item>
 
-            <ion-item>
-                <ion-icon name="person" item-start></ion-icon>
-                <p>
-                    <b>Created By: </b>
-                    <span>{{poll.employeName}}</span>
-                </p>
-            </ion-item>
+      <ion-item>
+        <ion-icon name="md-contract" item-start color="primary"></ion-icon>
+        <small>Poll Type</small>
+        <h2>{{poll.optionTypeName}}</h2>
+      </ion-item>
 
-            <ion-item>
-                <ion-icon name="checkmark" item-start></ion-icon>
-                <p>
-                    <b>Poll Type: </b>
-                    <span>{{poll.optionTypeName}}</span>
-                </p>
-            </ion-item>
+      <ion-item>
+        <ion-icon name="people" item-start color="primary"></ion-icon>
+        <small>Audience</small>
+        <h2>{{poll.mainAudienceName}}</h2>
+      </ion-item>
 
-            <ion-item>
-                <ion-icon name="people" item-start></ion-icon>
-                <p>
-                    <b>Audience: </b>
-                    <span>{{poll.mainAudienceName}}</span>
-                </p>
-            </ion-item>
+      <ion-item *ngIf="poll.audiences">
+        <ion-icon name="people" item-start color="primary"></ion-icon>
+        <small>SubAudience</small>
+        <h2 *ngFor="let aud of poll.audiences">{{aud}}</h2>
+      </ion-item>
 
-            <ion-item *ngIf="poll.audiences">
-                <ion-icon name="people" item-start></ion-icon>
-                <p>
-                    <b>SubAudience: </b>
-                </p>
-                <p *ngFor="let aud of poll.audiences">{{aud}}</p>
-            </ion-item>
+      <ion-item *ngIf="poll.departments">
+        <ion-icon name="folder" item-start color="primary"></ion-icon>
+        <small>Departments </small>
+        <h2 *ngFor="let dep of poll.departments">{{dep}}</h2>
+      </ion-item>
 
-            <ion-item *ngIf="poll.departments">
-                <ion-icon name="folder" item-start></ion-icon>
-                <p>
-                    <b>Departments: </b>
-                </p>
-                <p *ngFor="let dep of poll.departments">{{dep}}</p>
-            </ion-item>
-
-            <ion-item *ngIf="poll.programs">
-                <ion-icon name="folder" item-start></ion-icon>
-                <p>
-                    <b>Programs: </b>
-                </p>
-                <p *ngFor="let pgm of poll.programs">{{pgm}}</p>
-            </ion-item>
+      <ion-item *ngIf="poll.programs">
+        <ion-icon name="folder" item-start color="primary"></ion-icon>
+        <small>Programs </small>
+        <h2 *ngFor="let pgm of poll.programs">{{pgm}}</h2>
+      </ion-item>
 
 
-            <ion-item *ngIf="poll.modules">
-                <ion-icon name="folder" item-start></ion-icon>
-                <p>
-                    <b>Modules: </b>
-                </p>
-                <p *ngFor="let md of poll.modules">{{md}}</p>
-            </ion-item>
+      <ion-item *ngIf="poll.modules">
+        <ion-icon name="folder" item-start color="primary"></ion-icon>
+        <small>Modules </small>
+        <h2 *ngFor="let md of poll.modules">{{md}}</h2>
+      </ion-item>
 
-            <ion-item *ngIf="poll.years">
-                <ion-icon name="folder" item-start></ion-icon>
-                <p>
-                    <b>Years: </b>
-                </p>
-                <p *ngFor="let y of poll.years">{{y}}</p>
-            </ion-item>
+      <ion-item *ngIf="poll.years">
+        <ion-icon name="school" item-start color="primary"></ion-icon>
+        <small>Years</small>
+        <h2 *ngFor="let y of poll.years">{{y}}</h2>
+      </ion-item>
 
-            <ion-datetime #dateTime  max="2018" [min]="todayDate()" displayFormat="DD MMM YYYY" [(ngModel)]="newExpiryDate" doneText="Update" (ionChange)="updateExpiryDate()" hidden></ion-datetime>
-        </ion-card-content>
-    </ion-card>
+      <ion-datetime #dateTime max="2018" [min]="todayDate()" displayFormat="DD MMM YYYY" [(ngModel)]="newExpiryDate" doneText="Update"
+        (ionChange)="updateExpiryDate()" hidden></ion-datetime>
+    </ion-card-content>
+  </ion-card>
 
-    <ion-card *ngIf="poll">
+  <ion-card *ngIf="poll">
+    <ion-card-header>
+      <h2>{{poll.question}}</h2>
+    </ion-card-header>
+    <ion-list>
+      <ion-item *ngFor="let option of poll.options">
+        <p>{{option.name}}</p>
+        <div result>
+          <progress-bar [progress]="option.percent"></progress-bar>
+          <div>{{option.percent}}%</div>
+        </div>
+      </ion-item>
+    </ion-list>
 
-            <ion-card-header>
-                <h2>{{poll.question}}</h2>
-            </ion-card-header>
-            <ion-list>
-                <ion-item *ngFor="let option of poll.options">
-                    <ion-row>
-                        <ion-col col-6>
-                            <p>{{option.name}}</p>
-                        </ion-col>
-                        <ion-col col-6>
-                            <p>{{option.percent}}%</p>
-                        </ion-col>
-                    </ion-row>
-                    <progress-bar [progress]="option.percent"></progress-bar>
-                </ion-item>
-            </ion-list>
-
-    </ion-card>
+  </ion-card>
 </ion-content>
