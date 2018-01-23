@@ -1,6 +1,5 @@
 <ion-header>
-    <nl-navbar [title]="title">
-    </nl-navbar>    
+    <nl-navbar [title]="title"></nl-navbar>    
 </ion-header>
 <div subHeader [ngClass]="{'hide-filter':showHelpers,'show-filter':hideHelpers}" >
     <sort-filter [sortSelected]="complaintMainPage.isSortApplied" [filterSelected]="complaintMainPage.isFilterApplied" (onSelect)="onSortFilterSelect($event)"></sort-filter>
@@ -13,5 +12,4 @@
     </ion-refresher>
     <ion-item blank></ion-item>
     <complaint-main [complaintList]="complaintList" [searchInput]="searchInput"></complaint-main>
-
 </ion-content>

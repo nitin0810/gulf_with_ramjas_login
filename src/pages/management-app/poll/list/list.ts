@@ -7,7 +7,9 @@ import { IonicPage, ModalController } from 'ionic-angular';
 @Component({
     selector: 'poll-list',
     templateUrl: './list.html',
-    styles: [` `]
+    styles: [` ion-list{
+        padding-top: 64px !important;
+      }`]
 })
 
 export class ListPollPageManagement {

@@ -1,6 +1,6 @@
 
 
-import { Component} from '@angular/core';
+import { Component,ElementRef} from '@angular/core';
 import { IonicPage, ModalController } from 'ionic-angular';
 
 import { PollService } from '../../../../services/poll.service';
@@ -10,10 +10,39 @@ import { CustomService } from '../../../../services/custom.service';
 @Component({
     selector: 'currentPoll',
     templateUrl: './currentPoll.html',
-    styles: [` `]
+    styles: [` 
+    ion-searchbar{
+        top: 0px;
+      }
+      div[subHeader]{
+        position: fixed;
+        z-index: 2;
+        transition: top 0.5s ease;
+        width: 100%;
+        top: 72px;
+      }
+      .hide-filter{
+        top: -50px !important;
+        }
+        .show-filter{
+          top: 72px;
+        }
+        ion-item[blank]{
+          height: 84px;
+        }
+    `]
 })
 
 export class CurrentPollPageManagement {
+
+      //variables for scroll
+    start = 0;
+    threshold = 100;
+    slideHeaderPrevious = 0;
+    ionScroll:any;
+    showHelpers:boolean;
+    hideHelpers:boolean;
+    headercontent:any;
 
     title: string = "Poll (By Me)";
     /**properties bound to list template */
@@ -30,10 +59,31 @@ export class CurrentPollPageManagement {
     constructor(
         private modalCtrl: ModalController,
         private pollService: PollService,
-        private customService: CustomService
+        private customService: CustomService,
+        public myElement: ElementRef,
     ) {
         this.fetchPollList();
       
+    }
+
+    ngOnInit() {
+        // Ionic scroll element
+        this.ionScroll = this.myElement.nativeElement.getElementsByClassName('scroll-content')[0];
+        // On scroll function
+        this.ionScroll.addEventListener('scroll', () => {
+            if (this.ionScroll.scrollTop - this.start > this.threshold) {
+                this.showHelpers = true;
+                this.hideHelpers = false;
+            } else {
+                this.showHelpers = false;
+                this.hideHelpers = true;
+            }
+            if (this.slideHeaderPrevious >= this.ionScroll.scrollTop - this.start) {
+                this.showHelpers = false;
+                this.hideHelpers = true;
+            }
+            this.slideHeaderPrevious = this.ionScroll.scrollTop - this.start;
+        });
     }
 
 

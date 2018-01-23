@@ -1,15 +1,10 @@
 <ion-header>
     <nl-navbar [title]="title"></nl-navbar>
 </ion-header>
-
 <ion-content >
-
     <ion-refresher (ionRefresh)="doRefresh($event)">
         <ion-refresher-content></ion-refresher-content>
     </ion-refresher>
-
-
-
 
     <ion-card *ngFor="let poll of pollList; let i =index" class="csAppCard">
         <ion-item class="csAppContent">

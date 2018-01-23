@@ -1,33 +1,34 @@
-
-
 <ion-list>
-    <a *ngFor="let poll of pollList" ion-item (click)="openViewPoll(poll.id)" [style.border-left-color]="poll.mainAudienceColor">
+  <a *ngFor="let poll of pollList" ion-item (click)="openViewPoll(poll.id)" [style.border-left-color]="poll.mainAudienceColor">
+    <h2>
+      <b>{{poll.question}}</b>
+    </h2>
+    <ion-row>
+      <ion-col col-4 class="no-padding-l csGray5353">
+        <h2>{{poll.optionTypeName}}</h2>
+      </ion-col>
+      <ion-col col-4 class="no-padding-l text-right">
+        <h2> {{(poll.studentVoteCount + poll.employeeVoteCount)||0}} Votes</h2>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col col-6 class="no-padding-l csGray5353" no-padding>
         <h2>
-            <b>{{poll.question}}</b>
+          <ion-icon name="clock"></ion-icon>
+          <span *ngIf="arePollExpired">Expired:</span>
+          <span *ngIf="!arePollExpired">Expires</span>
+          {{poll.expiredAt | amTimeAgo}}
         </h2>
-        <ion-row>
-            <ion-col col-4 class="no-padding-l csGray5353">
-                {{poll.optionTypeName}}
-            </ion-col>
-            <ion-col col-4 class="no-padding-l">
-                {{(poll.studentVoteCount + poll.employeeVoteCount)||0}} Votes
-            </ion-col>
-        </ion-row>
-        <ion-row>
-            <ion-col col-6 class="no-padding-l csGray5353">
-                <span *ngIf="arePollExpired">Expired: </span>
-                <span *ngIf="!arePollExpired">Expires: </span>
-                {{poll.expiredAt | amTimeAgo}}
-            </ion-col>
-            <ion-col col-6 class="no-padding-l" [style.color]="poll.mainAudienceColor">
-                <ion-icon name="at"></ion-icon>
-                <span>{{poll.mainAudienceName}}</span>
-            </ion-col>
-        </ion-row>
-    </a>
+      </ion-col>
+      <ion-col col-6 class="no-padding-l" [style.color]="poll.mainAudienceColor" no-padding>
+        <h2>
+          <ion-icon name="at"></ion-icon> {{poll.mainAudienceName}}</h2>
+      </ion-col>
+    </ion-row>
+  </a>
 </ion-list>
 
 <ion-list class="no-comment" *ngIf="pollList?.length==0">
-    <ion-icon name="list-box"></ion-icon>
-    <br>NO RECORD FOUND
+  <ion-icon name="list-box"></ion-icon>
+  <br>NO RECORD FOUND
 </ion-list>
