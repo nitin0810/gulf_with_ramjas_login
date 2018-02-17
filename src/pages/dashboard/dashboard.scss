@@ -1,3 +1,37 @@
 page-home {
+  
 
+}
+.csChart-block {
+  .header {
+    font-size: 2rem;
+    padding-bottom: 0px;
+  }
+  le {
+    text-align: center;
+    border: 1px groove #4caf50;
+    margin-bottom: 1px;
+    h4 {
+      padding-left: 25px;
+    }
+  }
+  .chart {
+    height: 300px;
+    width: 100%;
+    margin-top: 30px;
+  }
+  .middle {
+    position: absolute;
+    margin-left: 45%;
+    margin-top: 30%;
+  }
+  border-radius:25px;
+  .csTitle {
+    box-shadow: 0px 3px 20px $color1;
+    width: 70%;
+    font-size: 17px;
+    position: relative;
+    margin-bottom: -23px !important;
+    z-index: 10;
+  }
 }

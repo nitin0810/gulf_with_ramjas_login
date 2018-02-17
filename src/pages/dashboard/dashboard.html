@@ -3,7 +3,35 @@
 </ion-header>
 
 <ion-content padding>
-  <p>
-    DASHBOARD......
-  </p>
+  <ion-card class="csChart-block" *ngIf="complaintByStatus">
+    <ion-badge class="csCenter csTitle">Complaint By Status</ion-badge>
+    <div class="chart" GoogleChart id="EWNS_complaint" [chartData]="complaintByStatus" [chartOptions]="complaintByStatusChartOptions"
+      chartType="PieChart" (onSelected)="onSelected($event)">
+      <ion-spinner class="middle"></ion-spinner>
+    </div>
+  </ion-card>
+
+  <ion-card *ngIf="suggestionByStatus" class="csChart-block">
+    <ion-badge class="csCenter csTitle">Suggestion By Status</ion-badge>
+    <div class="chart" GoogleChart id="EWNS_suggestion" [chartData]="suggestionByStatus" [chartOptions]="suggestionByStatusChartOptions"
+      chartType="PieChart" (onSelected)="onSelected($event)">
+      <ion-spinner class="middle"></ion-spinner>
+    </div>
+  </ion-card>
+
+  <ion-card *ngIf="complaintByCategory" class="csChart-block">
+    <ion-badge class="csCenter csTitle">Complaint By Category</ion-badge>
+    <div class="chart" GoogleChart id="EWNS_complaint_category" [chartData]="complaintByCategory" [chartOptions]="complaintByCategotyChartOptions"
+      chartType="PieChart" (onSelected)="onSelected($event)">
+      <ion-spinner class="middle"></ion-spinner>
+    </div>
+  </ion-card>
+
+  <ion-card *ngIf="suggestionByCategory" class="csChart-block">
+    <ion-badge class="csCenter csTitle">Suggestion By Category</ion-badge>
+    <div class="chart" GoogleChart id="EWNS_suggestion_category" [chartData]="suggestionByCategory" [chartOptions]="suggestionByCategotyChartOptions"
+      chartType="PieChart" (onSelected)="onSelected($event)">
+      <ion-spinner class="middle"></ion-spinner>
+    </div>
+  </ion-card>
 </ion-content>
