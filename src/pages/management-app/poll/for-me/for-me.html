@@ -1,64 +1,62 @@
 <ion-header>
-    <nl-navbar [title]="title"></nl-navbar>
+  <nl-navbar [title]="title"></nl-navbar>
 </ion-header>
-<ion-content >
-    <ion-refresher (ionRefresh)="doRefresh($event)">
-        <ion-refresher-content></ion-refresher-content>
-    </ion-refresher>
+<ion-content class="csPlainGray">
+  <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
 
-    <ion-card *ngFor="let poll of pollList; let i =index" class="csAppCard">
-        <ion-item class="csAppContent">
-            <div class="csMarginT20">
-                <b class="csParagraph">{{poll.question}}</b>
-            </div>
-            <div>
-                <span class="csParagraph smallGrayText" *ngIf="poll.optionTypeId == 1">Select Single</span>
-                <span class="csParagraph smallGrayText" *ngIf="poll.optionTypeId == 2">Select Multiple</span>
-            </div>
-        </ion-item>
+  <ion-card *ngFor="let poll of pollList; let i =index" class="csAppCard">
+    <ion-item class="csAppContent">
+        <b class="csParagraph">{{poll.question}}</b>
+      <ion-badge class="csRight">
+        <span class="csParagraph smallGrayText" *ngIf="poll.optionTypeId == 1">Select Single</span>
+        <span class="csParagraph smallGrayText" *ngIf="poll.optionTypeId == 2">Select Multiple</span>
+      </ion-badge>
+    </ion-item>
 
-        <div class="csPollOptionsBack">
-            <div *ngIf="poll.optionTypeId== 2">
-                <ion-list>
-                    <ion-item *ngFor="let option of poll.options, let j=index" class="csPaddingLeft50 csPollOptionsBack">
-                        <ion-label>{{option.name}}</ion-label>
-                        <ion-checkbox checked="false" [(ngModel)]="poll.selectedOptions[j]" (click)="changeVoteBtnStatus(poll)" item-end color="primary">
-                        </ion-checkbox>
-                    </ion-item>
-                </ion-list>
-            </div>
+    <div class="csPollOptionsBack">
+      <div *ngIf="poll.optionTypeId== 2">
+        <ion-list>
+          <ion-item *ngFor="let option of poll.options, let j=index" class="csPaddingLeft50 csPollOptionsBack">
+            <ion-label>{{option.name}}</ion-label>
+            <ion-checkbox checked="false" [(ngModel)]="poll.selectedOptions[j]" (click)="changeVoteBtnStatus(poll)" item-end color="primary">
+            </ion-checkbox>
+          </ion-item>
+        </ion-list>
+      </div>
 
-            <div *ngIf="poll.optionTypeId == 1">
-                <ion-list radio-group [(ngModel)]="poll.selectedOptions">
-                    <ion-item *ngFor="let option of poll.options" class="csPaddingLeft50 csPollOptionsBack">
-                        <ion-label>{{option.name}}</ion-label>
-                        <ion-radio checked="false" [value]="[option.id]" (click)="changeVoteBtnStatus(poll)">
-                        </ion-radio>
-                    </ion-item>
-                </ion-list>
-            </div>
-        </div>
-
-        <ion-item>
-            <div text-center>
-                <p>Created : {{poll.createdAt | amTimeAgo}}</p>
-                <p *ngIf="poll.expiredAt">Expires : {{poll.expiredAt | amTimeAgo}}</p>
-            </div>
-        </ion-item>
-
-        <div padding>
-            <button [disabled]="!poll.isVoteBtnEnabled" ion-button full (click)="onVote(poll,i)">Vote!</button>
-        </div>
-
-    </ion-card>
-
-    <div class="no-comment" *ngIf="pollList?.length==0">
-        <ion-icon name="list-box"></ion-icon>
-        <br>NO RECORD FOUND
+      <div *ngIf="poll.optionTypeId == 1">
+        <ion-list radio-group [(ngModel)]="poll.selectedOptions">
+          <ion-item *ngFor="let option of poll.options" class="csPaddingLeft50 csPollOptionsBack">
+            <ion-label>{{option.name}}</ion-label>
+            <ion-radio checked="false" [value]="[option.id]" (click)="changeVoteBtnStatus(poll)">
+            </ion-radio>
+          </ion-item>
+        </ion-list>
+      </div>
     </div>
 
-    <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
-        <ion-infinite-scroll-content></ion-infinite-scroll-content>
-    </ion-infinite-scroll>
+    <ion-item no-padding-bottom>
+      <div text-right>
+        <p>Created : {{poll.createdAt | amTimeAgo}}</p>
+        <p *ngIf="poll.expiredAt">Expires : {{poll.expiredAt | amTimeAgo}}</p>
+      </div>
+    </ion-item>
+
+    <div padding>
+      <button [disabled]="!poll.isVoteBtnEnabled" ion-button full (click)="onVote(poll,i)">Vote!</button>
+    </div>
+
+  </ion-card>
+
+  <div class="no-comment" *ngIf="pollList?.length==0">
+    <ion-icon name="list-box"></ion-icon>
+    <br>NO RECORD FOUND
+  </div>
+
+  <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
+    <ion-infinite-scroll-content></ion-infinite-scroll-content>
+  </ion-infinite-scroll>
 
 </ion-content>

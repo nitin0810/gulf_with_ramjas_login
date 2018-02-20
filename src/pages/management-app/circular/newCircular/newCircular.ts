@@ -13,7 +13,10 @@ import { Platform } from 'ionic-angular';
 @IonicPage()
 @Component({
     selector: 'new-circular',
-    templateUrl: 'newCircular.html'
+    templateUrl: 'newCircular.html',
+    styles: [`
+
+    `]
 })
 export class NewCircularComponent extends NewPollPageManagement {
 

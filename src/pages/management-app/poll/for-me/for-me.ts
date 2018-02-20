@@ -9,7 +9,11 @@ import { PollService } from '../../../../services/poll.service';
 @Component({
     selector: 'for-me',
     templateUrl: './for-me.html',
-    styles: [` `]
+    styles: [`
+    ion-badge{
+        margin:5px;    
+    }
+    `]
 })
 
 export class PollForMePageManagement {

@@ -2,28 +2,24 @@
     <nl-modal-navbar [title]="title" (modalClosed)="dismiss()"></nl-modal-navbar>
 </ion-header>
 
-<ion-content > 
+<ion-content class="csPlainGray">
     <form #newCircularForm="ngForm" (ngSubmit)="onSubmit()">
-
             <ion-card>
                     <ion-item>
                         <ion-label stacked>
-                            <b>Title</b>
+                            <b>Title</b><ion-badge class="csRight">{{50 - circularTitle?.length}}</ion-badge>
                         </ion-label>
                         <ion-textarea [(ngModel)]="circularTitle" placeholder="Enter Title" maxlength=50 required name="circularTitle">
                         </ion-textarea>
-                        <ion-badge item-end>{{50 - circularTitle?.length}}</ion-badge>
                     </ion-item>
                 </ion-card>
-        
         <ion-card>
             <ion-item>
                 <ion-label stacked>
-                    <b>Description</b>
+                    <b>Description</b><ion-badge class="csRight">{{2500 - description?.length}}</ion-badge>
                 </ion-label>
                 <ion-textarea [(ngModel)]="description" placeholder="Enter Description" maxlength=200 required name="description">
                 </ion-textarea>
-                <ion-badge item-end>{{2500 - description?.length}}</ion-badge>
             </ion-item>
         </ion-card>
 
@@ -33,7 +29,6 @@
                 <ion-datetime max="2018" [min]="todayDate()"  displayFormat="MMM DD YYYY" pickerFormat="DD MMM YYYY" name="expireDate" [(ngModel)]="effectiveDate" ></ion-datetime>
             </ion-item>
         </ion-card>
-
         <ion-card >
             <ion-item>
                 <ion-label><b>Circular For</b></ion-label>
@@ -110,7 +105,8 @@
         </div>
 
         <div>
-            <button type="button" ion-button clear (click)="onUploadBtn()">Upload File (Optional)</button>
+            <ion-icon name="cloud-upload" class="large-icon"></ion-icon>
+            <button type="button" class="csCenter" ion-button (click)="onUploadBtn()">Upload File</button>
             <button type="button" ion-button clear (click)="onFileUnselect()" *ngIf="image || file">unselect File </button>
     
             <ion-spinner name="bubbles" *ngIf="showSpinner"></ion-spinner>
