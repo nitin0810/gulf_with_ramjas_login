@@ -1,57 +1,47 @@
 <ion-header>
-
-    <ion-navbar color="primary">
-        <ion-toolbar>
-            <button ion-button menuToggle>
-                <ion-icon name="menu"></ion-icon>
-            </button>
-            <ion-title>
-                <span>{{viewTitle | uppercase}}</span>
-            </ion-title>
-            <ion-buttons end>
-                <button ion-button icon-only clear (click)="onTimeLineBtn()">
-                    <ion-icon name="clock"></ion-icon>
-                </button>
-            </ion-buttons>
-
-        </ion-toolbar>
-    </ion-navbar>
-
+  <ion-navbar color="primary">
+    <ion-toolbar>
+      <button ion-button menuToggle>
+        <ion-icon name="menu"></ion-icon>
+      </button>
+      <ion-title>
+        <span>{{viewTitle | uppercase}}</span>
+      </ion-title>
+      <ion-buttons end>
+        <button ion-button icon-only clear (click)="onTimeLineBtn()">
+          <ion-icon name="clock"></ion-icon>
+        </button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-navbar>
 </ion-header>
 
-<ion-content >
-
-    <ng-template #template>
-        <ion-item *ngIf="currentDateSelected?.events.length==0 && !showSpinner">
-            <ion-icon item-start name="calendar"></ion-icon>
-            <br>No Event
-        </ion-item>
-        <ion-spinner name="bubbles" *ngIf="showSpinner"></ion-spinner>
-
-        <ion-list>
-
-            <button ion-item *ngFor="let event of currentDateSelected?.events; let i = index" (click)="onEventItemSelect(event,i)">
-                <div [style.border-left-color]="event.mainAudienceColor">
-                    <h2>{{event.title}}</h2>
-                    <span>{{event.startTime | amLocale:'en' | amDateFormat:'h:mm A'}}</span>
-                    <span> - {{ event.endTime | amLocale:'en' | amDateFormat:'h:mm A'}}</span>
-                    <span *ngIf="event.noOfDays > 1 ">( {{ event.noOfDays}} days event )</span>
-                    <!-- <span [style.text-color]="event.mainAudienceColor">@{{event.mainAudienceName }}</span> -->
-                </div>
-            </button>
-        </ion-list>
-    </ng-template>
-
-
-    <calendar [eventSource]="eventSource" [calendarMode]="calendar.mode" [currentDate]="calendar.currentDate" queryMode="remote"
-        (onCurrentDateChanged)="onCurrentDateChanged($event)" (onRangeChanged)="reloadSource($event)" (onEventSelected)="onEventSelected($event)"
-        (onTitleChanged)="onViewTitleChanged($event)" (onTimeSelected)="onTimeSelected($event)" [monthviewEventDetailTemplate]="template"
-        step="30">
-    </calendar>
-
-
-    <div padding *ngIf="!isStudent">
-        <button ion-button full (click)="openNewEventModal()">ADD NEW EVENT</button>
-    </div>
-
+<ion-content>
+  <ng-template #template>
+        <div class="no_records" *ngIf="currentDateSelected?.events.length==0 && !showSpinner">
+                <img src="assets/images/empty.png">
+                <div></div>
+        </div>
+        <!-- NOTE: Need to replace above div with <no-results> selector in NoResultsComponent component  -->
+    <ion-spinner name="bubbles" *ngIf="showSpinner"></ion-spinner>
+    <ion-list class="eventsList">
+      <button ion-item *ngFor="let event of currentDateSelected?.events; let i = index" (click)="onEventItemSelect(event,i)">
+        <div [style.border-left-color]="event.mainAudienceColor">
+          <h2><b>{{event.title}}</b></h2>
+          <h4>{{event.startTime | amLocale:'en' | amDateFormat:'h:mm A'}}
+          <span> - {{ event.endTime | amLocale:'en' | amDateFormat:'h:mm A'}}</span>
+          <span *ngIf="event.noOfDays > 1 ">({{ event.noOfDays}} days event)</span></h4>
+          <!-- <span [style.text-color]="event.mainAudienceColor">@{{event.mainAudienceName }}</span> -->
+        </div>
+      </button>
+    </ion-list>
+  </ng-template>
+  <calendar [eventSource]="eventSource" [calendarMode]="calendar.mode" [currentDate]="calendar.currentDate" queryMode="remote"
+    (onCurrentDateChanged)="onCurrentDateChanged($event)" (onRangeChanged)="reloadSource($event)" (onEventSelected)="onEventSelected($event)"
+    (onTitleChanged)="onViewTitleChanged($event)" (onTimeSelected)="onTimeSelected($event)" [monthviewEventDetailTemplate]="template"
+    step="30">
+  </calendar>
+  <div padding *ngIf="!isStudent">
+    <button ion-button full (click)="openNewEventModal()">ADD NEW EVENT</button>
+  </div>
 </ion-content>

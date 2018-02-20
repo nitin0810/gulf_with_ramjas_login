@@ -1,0 +1,68 @@
+calendar{
+    .swiper-slide td{
+        font-size: 15px !important;
+        border: 0px !important;
+    }
+    thead{
+        background:color($colors,primary);
+        color:white;
+    }
+    .monthview-primary-with-event,.monthview-selected{
+        background: transparent !important;
+        color:white!important;
+        position: relative;
+    }
+    .monthview-primary-with-event::before{
+        transition:0.5s;
+        z-index: -1;
+        content: '';
+        height:30px;
+        width:30px;
+        background:color($colors,color6);
+        border-radius: 50%;
+        position: absolute;
+        top:50%;
+        left:50%;
+        transform: translate(-50%,-50%);
+    }
+    .monthview-current{
+        color:white !important;
+    }
+    .monthview-current::before{
+        transition:0.5s;
+        z-index: -1;
+        content: '';
+        height:30px;
+        width:30px;
+        border-radius: 50%;
+        position: absolute;
+        top:50%;
+        left:50%;
+        transform: translate(-50%,-50%);
+        background:color($colors,color3) !important;
+    }
+    .monthview-selected{
+        color:white !important;
+        transition:0.5s;
+    }
+    .monthview-selected::before{
+        transition:0.5s;
+        z-index: -1;
+        content: '';
+        height:30px;
+        width:30px;
+        border-radius: 50%;
+        position: absolute;
+        top:50%;
+        left:50%;
+        transform: translate(-50%,-50%);
+        background:color($colors,color1) !important;
+        box-shadow: 0px 6px 17px lighten(color($colors,color1),10);
+    }
+}
+.eventsList{
+    button[ion-item]{
+        background: #e6e6e6 !important;
+        border-bottom: 2px solid white;
+    }
+}
