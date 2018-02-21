@@ -1,0 +1,49 @@
+
+view-planner{
+    .event-header{
+        height:100px;
+        background:url(/assets/images/event.png);
+        background-size: cover;
+        position: relative;
+        img{
+            position: absolute;
+            left:50%;
+            transform: translate(-50%);
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            bottom: -50px;
+            border: 3px solid white;
+        }
+    }
+    .timing{
+        display:flex;
+        justify-content: space-between;
+        padding: 5px 10px;
+        font-size: 11px;
+        
+    }
+    .intro{
+        text-align:center;
+        margin-top:25px;
+        h4{
+            margin:0px;
+        }
+        ion-badge{
+            margin:5px;
+        }
+    }
+    .details, .attachments{
+        small,ion-card-header{
+            color:color($colors,primary);
+        }
+        ion-icon{
+            color:color($colors,primary);
+        }
+        // h4{
+        //     white-space: pre-line;
+        // }
+    }
+    .attachments{
+    }
+}

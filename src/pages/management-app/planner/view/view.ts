@@ -6,6 +6,7 @@ import { PlannerService } from '../../../../services/planner.service';
 import { GalleryModal } from 'ionic-gallery-modal';
 
 
+
 @IonicPage()
 @Component({
     selector: 'view-planner',
@@ -26,7 +27,7 @@ export class ViewPlannerPageManagement {
         private modalCtrl: ModalController,
         private actionSheetCtrl: ActionSheetController,
         private plannerService: PlannerService,
-        private customService: CustomService
+        private customService: CustomService,
     ) {
         this.eventId = this.navParams.get('eventId');
     }
