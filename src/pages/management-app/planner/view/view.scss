@@ -2,7 +2,8 @@
 view-planner{
     .event-header{
         height:100px;
-        background:url(/assets/images/event.png);
+        background:url(/assets/images/event.jpg);
+        // background:color($colors,primary);
         background-size: cover;
         position: relative;
         img{

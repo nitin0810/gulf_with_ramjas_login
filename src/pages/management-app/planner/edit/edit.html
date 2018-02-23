@@ -1,84 +1,97 @@
 <ion-header>
-    <nl-modal-navbar [title]="title" (modalClosed)="dismiss()"></nl-modal-navbar>
+  <nl-modal-navbar [title]="title" (modalClosed)="dismiss()"></nl-modal-navbar>
 </ion-header>
 
-<ion-content >
-
-
-
-
-    <ion-card>
+<ion-content class="csPlainGray">
+<ion-card>
+    <ion-list lines>
         <ion-item>
-            <ion-label stacked>Title</ion-label>
+            <ion-label stacked>
+                Title
+                <ion-badge class="csRight">
+                    <span>{{50 - eventNew.title?.length}}</span>
+                </ion-badge>
+            </ion-label>
             <ion-textarea [(ngModel)]="eventNew.title" maxlength="50" placeholder="Enter Title"></ion-textarea>
         </ion-item>
-        <ion-badge class="csFiftyLimit">
-            <span>{{50 - eventNew.title?.length}}</span>
-        </ion-badge>
-    </ion-card>
 
-    <ion-card>
         <ion-item>
-            <ion-label stacked>Description</ion-label>
+            <ion-label stacked>
+                Description
+                <ion-badge class="csRight">
+                    <span>{{2500 - eventNew.description?.length}}</span>
+                </ion-badge>
+            </ion-label>
+
             <ion-textarea [(ngModel)]="eventNew.description" rows="3" maxlength="2500" placeholder="Enter Description"></ion-textarea>
         </ion-item>
-        <ion-badge class="csFiftyLimit">
-            <span>{{2500 - eventNew.description?.length}}</span>
-        </ion-badge>
-    </ion-card>
+    </ion-list>
+</ion-card>
 
-    <ion-card>
-        <ion-item>
-            <ion-label>Event Start</ion-label>
-            <ion-datetime displayFormat="MMM DD, YYYY HH:mm" [(ngModel)]="eventNew.start" (ionChange)="onEndDateChange()" [min]="minDate"
-                max="2019"></ion-datetime>
+  <ion-card>
+    <ion-item>
+      <ion-label>Event Start</ion-label>
+      <ion-datetime displayFormat="MMM DD, YYYY HH:mm" [(ngModel)]="eventNew.start" (ionChange)="onEndDateChange()" [min]="minDate"
+        max="2019"></ion-datetime>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Event End</ion-label>
+      <ion-datetime displayFormat="MMM DD, YYYY HH:mm" [(ngModel)]="eventNew.end" (ionChange)="onEndDateChange()" [min]="minDate"
+        max="2019"></ion-datetime>
+    </ion-item>
+  </ion-card>
+
+  <ion-card>
+    <ion-item>
+      <ion-label stacked>
+          Location (Optional)
+          <ion-badge class="csRight">
+                <span>{{100 - eventNew.location?.length}}</span>
+              </ion-badge>
+        </ion-label>
+      <ion-textarea [(ngModel)]="eventNew.location" maxlength="100" placeholder="Enter Location"></ion-textarea>
+    </ion-item>
+  </ion-card>
+
+  <ion-card *ngIf="eventNew.fileCount>0" class="attachments">
+        <ion-card-header>
+          Attachments
+        </ion-card-header>
+        <ion-item *ngFor="let file of eventNew.files;let i = index">
+            <ion-icon color="primary" item-right name="trash" (click)="onDeleteFile(file,i)"></ion-icon>
+          <button ion-button icon-left block color="primary" small  (click)="onFileClick(file,i)">
+            <ion-icon name="attach" style="color:white"></ion-icon>
+            <span>{{file.fileOriginalName}}</span>
+          </button>
         </ion-item>
+      </ion-card>
+  
+  <div *ngIf="eventNew.fileCount>0">
+    <h4>Attachments:</h4>
+    <ion-list>
+      <ion-item text-wrap *ngFor="let file of eventNew.files;let i = index">
+        {{file.fileOriginalName}}
+        <button ion-button clear (click)="onDeleteFile(file,i)">Delete</button>
+      </ion-item>
+    </ion-list>
+  </div>
 
-        <ion-item>
-            <ion-label>Event End</ion-label>
-            <ion-datetime displayFormat="MMM DD, YYYY HH:mm" [(ngModel)]="eventNew.end" (ionChange)="onEndDateChange()" [min]="minDate"
-                max="2019"></ion-datetime>
-        </ion-item>
-    </ion-card>
+<div>
+    <ion-icon name="cloud-upload" class="large-icon"></ion-icon>
+    <button type="button" class="csCenter" ion-button (click)="onAddFile()">Add File</button>
+    <button type="button" class="csCenter" ion-button (click)="onUploadFile()" *ngIf="image || file">Upload</button>
+</div>
+  <ion-spinner name="bubbles" color="primary" class="csCenter" *ngIf="showSpinner"></ion-spinner>
+  <ion-card *ngIf="image">
+    <img [src]="image" alt="Image File">
+  </ion-card>
+<!-- 
+  <h2 *ngIf="file && fileName">
+    Attached File: {{fileName}}
+  </h2> -->
 
-    <ion-card>
-        <ion-item>
-            <ion-label stacked>Location (Optional)</ion-label>
-            <ion-textarea [(ngModel)]="eventNew.location" maxlength="100" placeholder="Enter Location"></ion-textarea>
-        </ion-item>
-        <ion-badge class="csFiftyLimit">
-            <span>{{100 - eventNew.location?.length}}</span>
-        </ion-badge>
-    </ion-card>
-
-    <div *ngIf="eventNew.fileCount>0">
-
-        <h4>Attachments:</h4>
-        <ion-list>
-            <ion-item text-wrap *ngFor="let file of eventNew.files;let i = index">
-                {{file.fileOriginalName}}
-                <button ion-button clear (click)="onDeleteFile(file,i)">Delete</button>
-            </ion-item>
-        </ion-list>
-
-    </div>
-
-    <button type="button" col-3 ion-button clear (click)="onAddFile()">Add File</button>
-    <button type="button" col-3 ion-button clear (click)="onFileUnselect()" *ngIf="image || file">Unselect</button>
-    <button type="button" col-3 ion-button clear (click)="onUploadFile()" *ngIf="image || file">Upload</button>
-    
-    <ion-spinner name="bubbles" *ngIf="showSpinner"></ion-spinner>
-
-    <ion-card *ngIf="image">
-        Image Preview
-
-        <img [src]="image" alt="Image File">
-    </ion-card>
-
-    <h2 *ngIf="file && fileName">
-        Attached File: {{fileName}}
-    </h2>
-
-    <button ion-button full [disabled]="!isEndGreaterThanStart" (click)="onEditBtn()">EDIT</button>
-
+  <div padding>
+        <button margin-top ion-button full [disabled]="!isEndGreaterThanStart" (click)="onEditBtn()">Save</button>
+  </div>
 </ion-content>

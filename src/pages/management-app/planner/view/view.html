@@ -1,218 +1,116 @@
 <ion-header>
-    <nl-modal-navbar [title]="title" (modalClosed)="dismiss()"></nl-modal-navbar>
+  <nl-modal-navbar [title]="title" (modalClosed)="dismiss()"></nl-modal-navbar>
 </ion-header>
 
 <ion-content class="csPlainGray">
+  <div *ngIf="event">
 
-    <div *ngIf="event">
-            <div class="event-header">
-                    <img *ngIf="event.employeePicUrl" [src]="event.employeePicUrl">
-                    <img *ngIf="!event.employeePicUrl" src="assets/images/user.png">
-            </div>
-            <div class="timing">
-                <div start>
-                    {{event.startTime | amLocale:'en' | amDateFormat:'MMM Do, h:mm A'}}
-                </div>
-                <div end>
-                    {{event.endTime | amLocale:'en' | amDateFormat:'MMM Do, h:mm A'}}
-                </div>
-            </div>
-            <div class="intro">
-                <h4>{{event.employeName}}</h4>
-                {{ event.title }}
-                <br>
-                <ion-badge [style.background-color]="event.mainAudienceColor">{{ event.createdAt | amLocale:'en' | amDateFormat:'MMM Do, h:mm A' }}</ion-badge>
-                <p no-margin>
-                    {{ event.description }}
-                </p>
-            </div>
-            <ion-card class="details">
-                <ion-list>
-                    <ion-item>
-                        <ion-icon name="people" item-left [style.color]="event.mainAudienceColor"></ion-icon>
-                        <small>
-                            Audience
-                        </small>
-                        <h4>{{event.mainAudienceName}}</h4>
-                    </ion-item>
-                        <ion-item *ngIf="event.location">
-                                <ion-icon name="navigate" item-left [style.color]="event.mainAudienceColor"></ion-icon>
-                                <small>
-                                    Location
-                                </small>
-                                <h4>
-                                    {{event.location}}
-                                </h4>
-                        </ion-item>
-                        <ion-item *ngIf="event.programs && event.programs.length!=0">
-                                <ion-icon name="code" item-left [style.color]="event.mainAudienceColor"></ion-icon>
-                                <small>
-                                    Programs
-                                </small>
-                                <h4 *ngFor="let program of event.programs">
-                                    {{ program }}
-                                </h4>
-                        </ion-item>    
-                        <ion-item *ngIf="event.departments && event.departments.length!=0">
-                                <ion-icon name="barcode" item-left [style.color]="event.mainAudienceColor"></ion-icon>
-                                <small>
-                                        Departments
-                                </small>
-                                <h4 *ngFor="let department of event.departments">
-                                    {{ department }}
-                                </h4>
-                        </ion-item> 
-                        <ion-item *ngIf="event.modules && event.modules.length!=0">
-                                <ion-icon name="apps" item-left [style.color]="event.mainAudienceColor"></ion-icon>
-                                <small>
-                                    Modules
-                                </small>
-                                <h4 *ngFor="let module of event.modules">
-                                    {{ module }}
-                                </h4>
-                        </ion-item>   
-                        <ion-item  *ngIf="event.audiences && event.audiences.length!=0">
-                                <ion-icon name="people" item-left [style.color]="event.mainAudienceColor"></ion-icon>
-                                <small>
-                                    Modules
-                                </small>
-                                <h4 *ngFor="let audience of event.audiences">
-                                    {{ audience }}
-                                </h4>
-                        </ion-item>  
-                </ion-list>
-            </ion-card>
-
-            <ion-card *ngIf="event.fileCount>0" class="attachments">
-                <ion-card-header>
-                    Attachments
-                </ion-card-header>
-                <ion-card-content>
-                        <button ion-button icon-left block color="primary" small *ngFor="let file of event.files;let i = index" (click)="onFileClick(file,i)">
-                                <ion-icon name="attach" style="color:white"></ion-icon>
-                                <span>{{file.fileOriginalName}}</span>
-                        </button>
-                </ion-card-content>
-
-            </ion-card>
-
-            <ion-fab right bottom>
-                    <button ion-fab color="primary"><ion-icon name="options"></ion-icon></button>
-                    <ion-fab-list side="top">
-                      <button ion-fab color="color4" (click)="onDeleteBtn()"><ion-icon name="trash"></ion-icon></button>
-                      <button ion-fab color="color4" (click)="onEditBtn()"><ion-icon name="create"></ion-icon></button>
-                    </ion-fab-list>
-            </ion-fab>
-
-
-
-
-
-
-        <!-- <ion-card>
-            <ion-card-header>
-                {{event.title}}
-            </ion-card-header>
-            <ion-card-content>
-                {{event.description}}
-            </ion-card-content>
-        </ion-card> -->
-
-        <!-- <ion-card>
-            <ion-item>
-                <ion-icon item-start name="clock"></ion-icon>
-
-                <p>
-                    <b>Start: </b>{{event.startTime | amLocale:'en' | amDateFormat:'MMM Do, h:mm A'}}</p>
-                <p>
-                    <b>End: </b>{{event.endTime | amLocale:'en' | amDateFormat:'MMM Do, h:mm A'}}</p>
-
-            </ion-item>
-        </ion-card> -->
-
-        <!-- <ion-card>
-            <ion-item>
-                <ion-icon item-start name="person"></ion-icon>
-                <ion-label>
-                    <b>Created By: </b>{{event.employeName}}</ion-label>
-            </ion-item>
-        </ion-card> -->
-
-        <!-- <ion-card *ngIf="event.location">
-            <ion-item>
-                <ion-icon item-start name="home"></ion-icon>
-                <ion-label>
-                    <b>Location: </b>{{event.location}}</ion-label>
-            </ion-item>
-        </ion-card> -->
-
-
-        <!-- <ion-card *ngIf="event.programs && event.programs.length!=0">
-            <ion-item>
-                <ion-icon item-start name="people"></ion-icon>
-                <p>
-                    <b>Programs : </b>
-                </p>
-                <p *ngFor="let audience of event.programs">
-                    {{audience}}
-                </p>
-            </ion-item>
-        </ion-card> -->
-
-        <!-- <ion-card *ngIf="event.departments && event.departments.length!=0">
-            <ion-item>
-                <ion-icon item-start name="people"></ion-icon>
-                <p>
-                    <b>Departments : </b>
-                </p>
-                <p *ngFor="let audience of event.departments">
-                    {{audience}}
-                </p>
-            </ion-item>
-        </ion-card> -->
-<!-- 
-        <ion-card *ngIf="event.modules && event.modules.length!=0">
-            <ion-item>
-                <ion-icon item-start name="people"></ion-icon>
-                <p>
-                    <b>Modules : </b>
-                </p>
-                <p *ngFor="let audience of event.modules">
-                    {{audience}}
-                </p>
-            </ion-item>
-        </ion-card> -->
-
-        <!-- <ion-card *ngIf="event.audiences && event.audiences.length!=0">
-            <ion-item>
-                <ion-icon item-start name="people"></ion-icon>
-                <p>
-                    <b>Audience : </b>
-                </p>
-                <p *ngFor="let audience of event.audiences">
-                    {{audience}}
-                </p>
-            </ion-item>
-        </ion-card> -->
-
-        <!-- <div *ngIf="event.fileCount>0">
-
-            <h4>Attachments:</h4>
-            <a style="display:block" *ngFor="let file of event.files;let i = index" (click)="onFileClick(file,i)">
-                {{file.fileOriginalName}}
-            </a>
-        </div> -->
+    <div class="event-header">
+      <img *ngIf="event.employeePicUrl" [src]="event.employeePicUrl">
+      <img *ngIf="!event.employeePicUrl" src="assets/images/user.png" style="border:0px">
     </div>
 
-</ion-content>
+    <div class="timing">
+      <div start>
+        {{event.startTime | amLocale:'en' | amDateFormat:'MMM Do, h:mm A'}}
+      </div>
+      <div end>
+        {{event.endTime | amLocale:'en' | amDateFormat:'MMM Do, h:mm A'}}
+      </div>
+    </div>
 
-<!-- <ion-footer>
-    <button ion-button icon-start col-5 (click)="onEditBtn()">
-        <ion-icon name="create"></ion-icon>
-        Edit
-    </button>
-    <button ion-button icon-start col-5 (click)="onDeleteBtn()">
-        <ion-icon name="trash"></ion-icon>
-        Delete
-    </button>
-</ion-footer> -->
+    <div class="intro">
+      <h4>{{event.employeName}}</h4>
+      {{ event.title }}
+      <br>
+      <ion-badge [style.background-color]="event.mainAudienceColor">{{ event.createdAt | amLocale:'en' | amDateFormat:'MMM Do, h:mm A' }}</ion-badge>
+      <p no-margin>
+        {{ event.description }}
+      </p>
+    </div>
+
+    <ion-card class="details">
+      <ion-list>
+        <ion-item>
+          <ion-icon name="people" item-left [style.color]="event.mainAudienceColor"></ion-icon>
+          <small>
+            Audience
+          </small>
+          <h4>{{event.mainAudienceName}}</h4>
+        </ion-item>
+        <ion-item *ngIf="event.location">
+          <ion-icon name="navigate" item-left [style.color]="event.mainAudienceColor"></ion-icon>
+          <small>
+            Location
+          </small>
+          <h4>
+            {{event.location}}
+          </h4>
+        </ion-item>
+        <ion-item *ngIf="event.programs && event.programs.length!=0">
+          <ion-icon name="code" item-left [style.color]="event.mainAudienceColor"></ion-icon>
+          <small>
+            Programs
+          </small>
+          <h4 *ngFor="let program of event.programs">
+            {{ program }}
+          </h4>
+        </ion-item>
+        <ion-item *ngIf="event.departments && event.departments.length!=0">
+          <ion-icon name="barcode" item-left [style.color]="event.mainAudienceColor"></ion-icon>
+          <small>
+            Departments
+          </small>
+          <h4 *ngFor="let department of event.departments">
+            {{ department }}
+          </h4>
+        </ion-item>
+        <ion-item *ngIf="event.modules && event.modules.length!=0">
+          <ion-icon name="apps" item-left [style.color]="event.mainAudienceColor"></ion-icon>
+          <small>
+            Modules
+          </small>
+          <h4 *ngFor="let module of event.modules">
+            {{ module }}
+          </h4>
+        </ion-item>
+        <ion-item *ngIf="event.audiences && event.audiences.length!=0">
+          <ion-icon name="people" item-left [style.color]="event.mainAudienceColor"></ion-icon>
+          <small>
+            Modules
+          </small>
+          <h4 *ngFor="let audience of event.audiences">
+            {{ audience }}
+          </h4>
+        </ion-item>
+      </ion-list>
+    </ion-card>
+
+    <ion-card *ngIf="event.fileCount>0" class="attachments">
+      <ion-card-header>
+        Attachments
+      </ion-card-header>
+      <ion-card-content>
+        <button ion-button icon-left block color="primary" small *ngFor="let file of event.files;let i = index" (click)="onFileClick(file,i)">
+          <ion-icon name="attach" style="color:white"></ion-icon>
+          <span>{{file.fileOriginalName}}</span>
+        </button>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-fab right bottom>
+      <button ion-fab color="primary">
+        <ion-icon name="options"></ion-icon>
+      </button>
+      <ion-fab-list side="top">
+        <button ion-fab color="color4" (click)="onDeleteBtn()">
+          <ion-icon name="trash"></ion-icon>
+        </button>
+        <button ion-fab color="color4" (click)="onEditBtn()">
+          <ion-icon name="create"></ion-icon>
+        </button>
+      </ion-fab-list>
+    </ion-fab>
+    
+  </div>
+</ion-content>

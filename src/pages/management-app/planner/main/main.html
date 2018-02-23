@@ -23,7 +23,7 @@
                 <div></div>
         </div>
         <!-- NOTE: Need to replace above div with <no-results> selector in NoResultsComponent component  -->
-    <ion-spinner name="bubbles" *ngIf="showSpinner"></ion-spinner>
+    <ion-spinner name="bubbles" class="csCenter" *ngIf="showSpinner"></ion-spinner>
     <ion-list class="eventsList">
       <button ion-item *ngFor="let event of currentDateSelected?.events; let i = index" (click)="onEventItemSelect(event,i)">
         <div [style.border-left-color]="event.mainAudienceColor">
@@ -41,7 +41,9 @@
     (onTitleChanged)="onViewTitleChanged($event)" (onTimeSelected)="onTimeSelected($event)" [monthviewEventDetailTemplate]="template"
     step="30">
   </calendar>
-  <div padding *ngIf="!isStudent">
-    <button ion-button full (click)="openNewEventModal()">ADD NEW EVENT</button>
-  </div>
+  <ion-fab right bottom *ngIf="!isStudent">
+      <button ion-fab color="primary" (click)="openNewEventModal()">
+        <ion-icon name="add"></ion-icon>
+      </button>
+    </ion-fab>
 </ion-content>
