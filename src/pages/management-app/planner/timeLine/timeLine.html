@@ -1,25 +1,24 @@
 <ion-header>
-    <nl-modal-navbar [title]="title" (modalClosed)="dismiss()"></nl-modal-navbar>
+  <nl-modal-navbar [title]="title" (modalClosed)="dismiss()"></nl-modal-navbar>
 </ion-header>
 
-<ion-content >
+<ion-content>
 
-    <ion-refresher (ionRefresh)="doRefresh($event)">
-        <ion-refresher-content></ion-refresher-content>
-    </ion-refresher>
+  <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
 
-    <ion-list>
-        <button ion-item *ngFor="let event of eventList; let i=index" [style.border-left-color]="event.mainAudienceColor" (click)="onEventClick(event.id,i)">
-            <h2>{{event.title}}</h2>
+  <ul class="timeline">
+    <li *ngFor="let event of eventList; let i=index" [style.border-left-color]="event.mainAudienceColor" (click)="onEventClick(event.id,i)">
+      <b>{{event.title}}</b>
+      <p no-margin>
+        Start: {{event.start | amLocale:'en' | amDateFormat:'MMM Do, h:mm A' }}
+        <br> End: {{event.end | amLocale:'en' | amDateFormat:'MMM Do, h:mm A' }}
+      </p>
+    </li>
+  </ul>
 
-            <p>Start: {{event.start | amLocale:'en' | amDateFormat:'MMM Do, h:mm A' }}</p>
-            <p>End: {{event.end | amLocale:'en' | amDateFormat:'MMM Do, h:mm A' }}</p>
-
-
-        </button>
-    </ion-list>
-
-    <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
-        <ion-infinite-scroll-content></ion-infinite-scroll-content>
-    </ion-infinite-scroll>
+  <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
+    <ion-infinite-scroll-content></ion-infinite-scroll-content>
+  </ion-infinite-scroll>
 </ion-content>
