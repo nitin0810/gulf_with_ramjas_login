@@ -10,7 +10,7 @@ import { MomentModule } from 'angular2-moment';
 
 /**import classes that are eagerly loaded(not lazy loaded)*/
 import { MyApp } from './app.component';
-import { DashboardPage } from '../pages/dashboard/dashboard';
+// import { DashboardPage } from '../pages/dashboard/dashboard';
 import { NoInternet } from '../custom-components/noInternet.component';
 
 /**import services*/
@@ -46,6 +46,7 @@ import { ForgotPasswordModal } from '../custom-components/login/forgot-password/
 import { CircularService } from '../services/circular.service';
 import { TimeTableService } from '../services/timeTable.service';
 import { AttendanceService } from '../services/attendance.service';
+import { DashboardService } from '../services/dashboard.service';
 
 
 
@@ -66,7 +67,7 @@ import { AttendanceService } from '../services/attendance.service';
     LoginPage,
     ForgotPasswordModal,
     NoInternet,
-    DashboardPage,
+    // DashboardPage,
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -74,7 +75,7 @@ import { AttendanceService } from '../services/attendance.service';
     LoginPage,
     ForgotPasswordModal,
     NoInternet,
-    DashboardPage,
+    // DashboardPage,
   ],
   providers: [
     StatusBar,
@@ -93,6 +94,7 @@ import { AttendanceService } from '../services/attendance.service';
     AssessmentService,
     CircularService,
     TimeTableService,
+    DashboardService,
     AttendanceService,
     FileSelectService,
     { provide: ErrorHandler, useClass: IonicErrorHandler },
