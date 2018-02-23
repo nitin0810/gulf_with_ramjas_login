@@ -1,20 +1,32 @@
-page-home {
+time-table {
+    .filter{
+        overflow-x:scroll;
+        .button-flex{
+            display: inline-flex;
+            overflow-x: scroll;
+            min-width: 100%;
+            justify-content: center;
+            ion-badge{
+                margin:5px;
+            }
+        }
+    }
 
 }
 .border{
     border: 1px solid lightgray;
 }
 .border-right-progress{
-    border-right-color: color($colors, color16);
+    border-right-color: color($colors, color5);
 }
 .border-left-progress{
-    border-left-color: color($colors, color16);
+    border-left-color: color($colors, color5);
 }
 .colorInProgress{
-    color:color($colors, color16);
+    color:color($colors, color5);
 }
 .textGray{
-    color:color($colors, color19);
+    color:color($colors, color1);
 }
 .textSmall{
     font-size:10px;

@@ -6,7 +6,6 @@
     <ion-refresher (ionRefresh)="doRefresh($event)">
         <ion-refresher-content></ion-refresher-content>
     </ion-refresher>
-
     <ion-list>
         <button ion-item *ngFor="let assess of assessmentList" (click)="openSingleAssessment(assess.id)">
             <h4>

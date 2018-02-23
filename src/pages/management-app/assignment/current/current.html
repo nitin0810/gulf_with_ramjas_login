@@ -3,7 +3,6 @@
 </ion-header>
 
 <ion-content >
-
     <ion-refresher (ionRefresh)="doRefresh($event)">
         <ion-refresher-content></ion-refresher-content>
     </ion-refresher>
@@ -17,7 +16,8 @@
     <ion-list>
         <ion-card *ngFor="let assign  of assignmentList">
             <ion-item text-wrap>
-                <h2>{{assign.moduleName}}</h2>
+                <ion-label>{{assign.moduleName}}</ion-label>
+                <ion-badge>{{assign.yearName}} Year</ion-badge>
                 <p>{{assign.description}}</p>
                 <p>
                     <b>Year:</b> {{assign.yearName}}</p>

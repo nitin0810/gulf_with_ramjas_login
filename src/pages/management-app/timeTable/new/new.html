@@ -3,7 +3,7 @@
     </nl-modal-navbar>
 </ion-header>
 
-<ion-content >
+<ion-content class="csPlainGray">
     <form *ngIf="empList" #newTimeTableForm="ngForm" (ngSubmit)="onSubmit()">
 
         <ion-card *ngIf="empList">
@@ -11,26 +11,26 @@
                 <ion-label stacked>Select Faculty</ion-label>
                 <ion-input [(ngModel)]="employeeName" disabled required placeholder="Select Faculty " name="faculty"></ion-input>
             </button>
+            <ion-item *ngIf="pgmList">
+                    <ion-label>
+                        Select Program
+                    </ion-label>
+                    <ion-select [(ngModel)]="program" (ionChange)="onProgramChange()" required name="program">
+                        <ion-option *ngFor="let pgm of pgmList" [value]="pgm">
+                            {{pgm.programName}}
+                        </ion-option>
+                    </ion-select>
+                </ion-item>
         </ion-card>
 
 
-        <ion-card *ngIf="pgmList">
-            <ion-item>
-                <ion-label>
-                    <b>Select Program</b>
-                </ion-label>
-                <ion-select [(ngModel)]="program" (ionChange)="onProgramChange()" required name="program">
-                    <ion-option *ngFor="let pgm of pgmList" [value]="pgm">
-                        {{pgm.programName}}
-                    </ion-option>
-                </ion-select>
-            </ion-item>
+        <ion-card >
+
         </ion-card>
 
-        <ion-card *ngIf="moduleAndYearList">
-            <ion-card-title>Select Batch</ion-card-title>
-            <ion-card-content>
-                <ion-list radio-group [(ngModel)]="moduleYearObject" required name="moduleAndYear">
+        <ion-card *ngIf="moduleAndYearList" padding>
+            Select Batch
+                <ion-list no-lines radio-group [(ngModel)]="moduleYearObject" required name="moduleAndYear">
                     <ion-item *ngFor="let m of moduleAndYearList" class="csPaddingLeft50 csPollOptionsBack">
                         <ion-label>
                             <p>Module: {{m.moduleName}}</p>
@@ -43,13 +43,12 @@
                         </ion-radio>
                     </ion-item>
                 </ion-list>
-            </ion-card-content>
         </ion-card>
 
         <ion-card *ngIf="rsdAvailable">
             <ion-item>
                 <ion-label>
-                    <b>Select Day </b>
+                    Select Day 
                 </ion-label>
                 <ion-select [(ngModel)]="day" required name="day">
                     <ion-option *ngFor="let d of dayList" [value]="d">
@@ -60,7 +59,7 @@
 
             <ion-item>
                 <ion-label>
-                    <b>Select Slot </b>
+                    Select Slot 
                 </ion-label>
                 <ion-select [(ngModel)]="slot" required name="slot">
                     <ion-option *ngFor="let s of slotList" [value]="s">
@@ -71,7 +70,7 @@
 
             <ion-item>
                 <ion-label>
-                    <b>Select Room </b>
+                    Select Room 
                 </ion-label>
                 <ion-select [(ngModel)]="room" required name="room">
                     <ion-option *ngFor="let r of roomList" [value]="r">

@@ -20,37 +20,31 @@
 
 
     <ion-list *ngIf="daysName">
-        <ion-list-header>
-            {{date | amDateFormat: 'LL'}}
-        </ion-list-header>
-
-        <div *ngIf="isAdmin" class="scroll-btn">
-            <button [class.filterSelected]="filters['e']" ion-button icon-end outline (click)="onEmployeeFilter()">
-                Employee
-                <ion-icon name="arrow-down"> </ion-icon>
-            </button>
-            <button [class.filterSelected]="filters['d']" ion-button icon-end outline (click)="onDepartmentFilter()">
-                Department
-                <ion-icon name="arrow-down"> </ion-icon>
-            </button>
-            <button [class.filterSelected]="filters['p']" ion-button icon-end outline (click)="onProgramsFilter()">
-                Programs
-                <ion-icon name="arrow-down"> </ion-icon>
-            </button>
-            <button [class.filterSelected]="filters['y']" ion-button icon-end outline (click)="onYearsFilter()">
-                Years
-                <ion-icon name="arrow-down"> </ion-icon>
-            </button>
-            <button [class.filterSelected]="filters['s']" ion-button icon-end outline (click)="onSlotsFilter()">
-                Slots
-                <ion-icon name="arrow-down"> </ion-icon>
-            </button>
-
+        <div class="filter">
+                <div class="button-flex" *ngIf="isAdmin">
+                        <ion-badge [class.filterSelected]="filters['e']" (click)="onEmployeeFilter()">
+                            Employee
+                        </ion-badge>
+                        <ion-badge [class.filterSelected]="filters['d']" (click)="onDepartmentFilter()">
+                            Department
+                        </ion-badge>
+                        <ion-badge [class.filterSelected]="filters['p']" (click)="onProgramsFilter()">
+                            Programs
+                        </ion-badge>
+                        <ion-badge [class.filterSelected]="filters['y']" (click)="onYearsFilter()">
+                            Years
+                        </ion-badge>
+                        <ion-badge [class.filterSelected]="filters['s']" (click)="onSlotsFilter()">
+                            Slots
+                        </ion-badge>
+                    </div>
         </div>
-
+        <ion-list-header>
+                {{date | amDateFormat: 'LL'}}
+            </ion-list-header>
         <ion-list no-lines>
             <ion-item-sliding *ngFor="let period of selectedDayTimetable;let i=index">
-                <button ion-item detail-none class="timetable-item" (click)="openViewPage(period,i)">
+                <button ion-item no-lines detail-none class="timetable-item" (click)="openViewPage(period,i)">
                     <ion-grid no-padding>
                         <ion-row>
                             <ion-col col-4 class="border border-right-progress left-col" text-right>
