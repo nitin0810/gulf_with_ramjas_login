@@ -2,84 +2,75 @@
     <nl-modal-navbar [title]="title" (modalClosed)="dismiss()"></nl-modal-navbar>
 </ion-header>
 
-<ion-content >
+<ion-content class="csPlainGray">
 
+    <ion-card padding *ngIf="assessment">
+        <b>{{assessment.title}}</b>
+        <p>
+            {{assessment.departmentName}}
+        </p>
+    </ion-card>
     <ion-card *ngIf="assessment">
-        <ion-card-content>
             <ion-item>
-                <ion-icon name="person" item-start></ion-icon>
-                <p>
+                <ion-icon name="person" color="primary" item-start></ion-icon>
+               
                     <b>Student: </b>
                     <span>{{assessment.studentName}}</span>
-                </p>
+         
             </ion-item>
 
             <ion-item>
-                <ion-icon name="folder" item-start></ion-icon>
-                <p>
+                <ion-icon name="apps" color="primary" item-start></ion-icon>
+         
                     <b>Module : </b>
                     <span>{{assessment.moduleName}}</span>
-                </p>
+            
             </ion-item>
 
             <ion-item>
-                <ion-icon name="folder" item-start></ion-icon>
-                <p>
+                <ion-icon name="school" color="primary" item-start></ion-icon>
+
                     <b>Year: </b>
                     <span>{{assessment.yearName}}</span>
-                </p>
+        
             </ion-item>
 
             <ion-item>
-                <ion-icon name="folder" item-start></ion-icon>
-                <p>
+                <ion-icon name="analytics" color="primary" item-start></ion-icon>
+          
                     <b>Program: </b>
                     <span>{{assessment.programName}}</span>
-                </p>
+          
             </ion-item>
-
             <ion-item>
-                <ion-icon name="folder" item-start></ion-icon>
-                <p>
-                    <b>Department: </b>
-                    <span>{{assessment.departmentName}}</span>
-                </p>
-            </ion-item>
-
-            <ion-item>
-                <p>
-                    <b>Assessment Title: </b>
-                    <span>{{assessment.title}}</span>
-                </p>
-            </ion-item>
-
-            <ion-item>
-                <p>
+                    <ion-icon name="pricetag" color="primary" item-start></ion-icon>
+              
                     <b>Assessment Type: </b>
                     <span>{{assessment.assesmentTypeName}}</span>
-                </p>
+            
             </ion-item>
 
             <ion-item>
-                <p>
+
+                    <ion-icon name="podium" color="primary" item-start></ion-icon>
+                
                     <b>Weighting: </b>
                     <span>{{assessment.weighting}}</span>
-                </p>
+             
             </ion-item>
+    </ion-card>
 
-            <ion-item text-wrap>
-                <p>
-                    <b>Feedback: </b>
-                </p>
-                <ion-list>
-                    <ion-item *ngFor="let f of assessment.feedbacks">
-                        <p>Title: {{f.title}}</p>
-                        <p>Description: {{f.description}}</p>
+    <ion-card *ngIf="assessment">
+        <ion-card-header>Feedback</ion-card-header>
+        <ion-list>
+                <ion-item *ngFor="let f of assessment.feedbacks">
+                        <b>
+                            {{f.title}}
+                        </b>
+                        <p>
+                            {{f.description}}
+                        </p>
                     </ion-item>
-                </ion-list>
-            </ion-item>
-
-
-        </ion-card-content>
+        </ion-list>
     </ion-card>
 </ion-content>

@@ -472,3 +472,7 @@ button{
 .text-right{
     text-align: right !important;
 }
+
+ion-card{
+    box-shadow: 0 5px 32px lighten(color($colors,primary),25) !important;
+}

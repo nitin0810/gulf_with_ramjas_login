@@ -2,20 +2,22 @@
         <nl-modal-navbar [title]="title" (modalClosed)="dismiss()"></nl-modal-navbar>
     </ion-header>
     
-    <ion-content >
+    <ion-content class="csPlainGray">
     
         <form *ngIf="years" #newAssessmentForm="ngForm" (ngSubmit)="onSubmit()">
-    
-            <h2 text-center>SUMMATIVE ASSESSMENT</h2>
+    <ion-list-header>
+            SUMMATIVE ASSESSMENT
+    </ion-list-header>
     
             <ion-card>
                 <ion-item>
                     <ion-label stacked>
                         <b>Title</b>
+                        <ion-badge class="csRight">{{200 - assessmentTitle?.length}}</ion-badge>
                     </ion-label>
                     <ion-textarea [(ngModel)]="assessmentTitle" placeholder="Enter Title" maxlength=200 required name="assessmentTitle">
                     </ion-textarea>
-                    <ion-badge item-end>{{200 - assessmentTitle?.length}}</ion-badge>
+                    
                 </ion-item>
             </ion-card>
     
@@ -82,35 +84,35 @@
             </ion-card>
     
             <ion-card *ngIf="selectedAssessmentType">
-                <ion-card-header>
-                    Feedback
-                    <button type="button" align-right ion-button clear (click)="onAddEntry()">Add Entry</button>
-                </ion-card-header>
-                <ion-card-content>
-    
-                    <ion-list>
-                        <ion-card *ngFor="let f of feedbackEntries;let i =index">
-                            <button *ngIf="i>0" type="button" style="float:right" ion-button icon-only (click)="onDeleteEntry(i)">
-                                <ion-icon name="close-circle"></ion-icon>
-                            </button>
-                            <ion-item>
-                                <ion-label stacked>
-                                    <b>Title (max 100)</b>
-                                </ion-label>
-                                <ion-textarea [(ngModel)]="f.title" maxlength="100" placeholder="Enter Title" required name="fTitle{{i}}">
-                                </ion-textarea>
-                            </ion-item>
-                            <ion-item>
-                                <ion-label stacked>
-                                    <b>Description (max 500)</b>
-                                </ion-label>
-                                <ion-textarea rows="3" [(ngModel)]="f.description" maxlength="500" placeholder="Enter Description" required name="fDescription{{i}}">
-                                </ion-textarea>
-                            </ion-item>
-                        </ion-card>
-                    </ion-list>
-                </ion-card-content>
-            </ion-card>
+                    <ion-item>
+                        Feedback
+                        <button type="button" ion-button icon-only item-right clear (click)="onAddEntry()">
+                            <ion-icon name="add"></ion-icon>
+                        </button>
+                    </ion-item>
+                    <ion-card-content no-padding>
+        
+                        <ion-list *ngFor="let f of feedbackEntries;let i =index">
+                                <ion-item>
+                                        <ion-label stacked>
+                                            <b>Title (max 100)</b>
+                                            <button ion-button small round clear *ngIf="i>0" type="button" style="float:right" icon-only (click)="onDeleteEntry(i)">
+                                                    <ion-icon name="trash"></ion-icon>
+                                            </button>
+                                        </ion-label>
+                                        <ion-textarea [(ngModel)]="f.title" maxlength="100" placeholder="Enter Title" required name="fTitle{{i}}" >
+                                        </ion-textarea>
+                                    </ion-item>
+                                    <ion-item>
+                                        <ion-label stacked>
+                                            <b>Description (max 500)</b>
+                                        </ion-label>
+                                        <ion-textarea rows="3" [(ngModel)]="f.description" maxlength="500" placeholder="Enter Description" required name="fDescription{{i}}">
+                                        </ion-textarea>
+                                    </ion-item>
+                        </ion-list>
+                    </ion-card-content>
+                </ion-card>
     
     
             <div padding>

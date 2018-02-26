@@ -2,7 +2,7 @@
   <nl-navbar [title]="title"></nl-navbar>
 </ion-header>
 
-<ion-content padding>
+<ion-content>
   <ion-card class="csChart-block" *ngIf="complaintByStatus">
     <ion-badge class="csCenter csTitle">Complaint By Status</ion-badge>
     <div class="chart" GoogleChart id="EWNS_complaint" [chartData]="complaintByStatus" [chartOptions]="complaintByStatusChartOptions"
