@@ -1,76 +1,76 @@
 <ion-header>
-    <nl-modal-navbar [title]="title" (modalClosed)="dismiss()"></nl-modal-navbar>
+  <nl-modal-navbar [title]="title" (modalClosed)="dismiss()"></nl-modal-navbar>
 </ion-header>
 
-<ion-content >
-    <form #newAssignmentForm="ngForm" (ngSubmit)="onSubmit()">
+<ion-content class="csPlainGray">
+  <form #newAssignmentForm="ngForm" (ngSubmit)="onSubmit()">
 
-        <ion-card>
-            <ion-item>
-                <ion-label stacked>
-                    <b>Description</b>
-                </ion-label>
-                <ion-textarea rows="5" [(ngModel)]="description" placeholder="Enter Description" maxlength=2500 required name="description">
-                </ion-textarea>
-                <ion-badge item-end>{{2500 - description?.length}}</ion-badge>
-            </ion-item>
-        </ion-card>
+    <ion-card>
+      <ion-item>
+        <ion-label stacked>
+          <b>Description</b>
+          <ion-badge class="csRight">{{2500 - description?.length}}</ion-badge>
+        </ion-label>
+        <ion-textarea rows="5" [(ngModel)]="description" placeholder="Enter Description" maxlength=2500 required name="description">
+        </ion-textarea>
+      </ion-item>
+    </ion-card>
 
+    <ion-card *ngIf="yearList">
+      <ion-item>
+        <ion-label>
+          <b>Select Year</b>
+        </ion-label>
+        <ion-select [disabled]="myDisabled" [(ngModel)]="year" (ionChange)="onYearChange()" required name="year">
+          <ion-option *ngFor="let y of yearList" [value]="y">{{y.name || y.yearName}} </ion-option>
+        </ion-select>
+      </ion-item>
+    </ion-card>
 
+    <ion-card *ngIf="year && modulesObject">
+      <ion-item>
+        <ion-label>
+          <b>Select Modules</b>
+        </ion-label>
+        <ion-select [disabled]="myDisabled" [(ngModel)]="module" required name="module">
+          <ion-option *ngFor="let module of modulesObject[year.id || year.yearId]" [value]="module">{{module.moduleName || module.name}}</ion-option>
+        </ion-select>
+      </ion-item>
+    </ion-card>
 
-        <ion-card *ngIf="yearList">
-            <ion-item>
-                <ion-label>
-                    <b>Select Year</b>
-                </ion-label>
-                <ion-select [disabled]="myDisabled" [(ngModel)]="year" (ionChange)="onYearChange()" required name="year">
-                    <ion-option *ngFor="let y of yearList" [value]="y">{{y.name || y.yearName}} </ion-option>
-                </ion-select>
-            </ion-item>
-        </ion-card>
+    <ion-card>
+      <ion-item>
+        <ion-label>
+          <b>Due Date</b>
+        </ion-label>
+        <ion-datetime max="2019" [min]="todayDate()" displayFormat="MMM DD YYYY" pickerFormat="DD MMM YYYY" name="expireDate" [(ngModel)]="dueDate"></ion-datetime>
+      </ion-item>
+    </ion-card>
 
+    <div>
+      <ion-icon name="cloud-upload" class="large-icon"></ion-icon>
+      <button type="button" class="csCenter" ion-button (click)="onUploadBtn()">
+        <span *ngIf="!image">Add File (Optional)</span>
+        <span *ngIf="image">Change File</span>
+      </button>
+      <button type="button" ion-button clear (click)="onFileUnselect()" *ngIf="image || file">Remove File </button>
 
-        <ion-card *ngIf="year && modulesObject">
-            <ion-item>
-                <ion-label>
-                    <b>Select Modules</b>
-                </ion-label>
-                <ion-select [disabled]="myDisabled" [(ngModel)]="module" required name="module">
-                    <ion-option *ngFor="let module of modulesObject[year.id || year.yearId]" [value]="module">{{module.moduleName || module.name}}</ion-option>
-                </ion-select>
-            </ion-item>
-        </ion-card>
+      <ion-spinner name="bubbles" *ngIf="showSpinner"></ion-spinner>
 
-        <ion-card>
-            <ion-item>
-                <ion-label>
-                    <b>Due Date</b>
-                </ion-label>
-                <ion-datetime max="2019" [min]="todayDate()" displayFormat="MMM DD YYYY" pickerFormat="DD MMM YYYY" name="expireDate" [(ngModel)]="dueDate"></ion-datetime>
-            </ion-item>
-        </ion-card>
+      <ion-card *ngIf="image">
+        Image Preview
+        <img [src]="image" alt="Image File">
+      </ion-card>
 
-        <button type="button" ion-button (click)="onUploadBtn()">
-            <span *ngIf="!image">Add File (Optional)</span>
-            <span *ngIf="image">Change File</span>
-        </button>
-        <button type="button" ion-button clear (click)="onFileUnselect()" *ngIf="image || file">Remove File </button>
-        
+      <h2 *ngIf="file && fileName">
+        Attached File: {{fileName}}
+      </h2>
+    </div>
 
-        <ion-spinner name="bubbles" *ngIf="showSpinner"></ion-spinner>
-
-        <ion-card *ngIf="image">
-            Image Preview
-            <img [src]="image" alt="Image File">
-        </ion-card>
-        <h2 *ngIf="file && fileName">
-            Attached File: {{fileName}}
-        </h2>
-
-        <div padding>
-            <button [disabled]="!newAssignmentForm.valid" ion-button full type="submit">Submit</button>
-        </div>
-    </form>
+    <div padding>
+      <button [disabled]="!newAssignmentForm.valid" ion-button full type="submit">Submit</button>
+    </div>
+  </form>
 
 
 </ion-content>

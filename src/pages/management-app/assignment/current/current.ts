@@ -45,6 +45,8 @@ export class CurrentAssignmentPageManagement {
             .subscribe((res: any) => {
 
                 this.assignmentList = res;
+                console.log(this.assignmentList);
+                
                 if (refresher) {
 
                     refresher.complete();

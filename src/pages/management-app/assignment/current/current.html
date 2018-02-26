@@ -2,32 +2,25 @@
     <nl-navbar [title]="title"></nl-navbar>
 </ion-header>
 
-<ion-content >
+<ion-content class="csPlainGray">
     <ion-refresher (ionRefresh)="doRefresh($event)">
         <ion-refresher-content></ion-refresher-content>
     </ion-refresher>
 
     <ion-fab right bottom>
-        <button ion-fab color="danger" (click)="openNewAssignmentModal()">
+        <button ion-fab color="primary" (click)="openNewAssignmentModal()">
             <ion-icon name="add"></ion-icon>
         </button>
     </ion-fab>
 
     <ion-list>
-        <ion-card *ngFor="let assign  of assignmentList">
-            <ion-item text-wrap>
-                <ion-label>{{assign.moduleName}}</ion-label>
-                <ion-badge>{{assign.yearName}} Year</ion-badge>
-                <p>{{assign.description}}</p>
-                <p>
-                    <b>Year:</b> {{assign.yearName}}</p>
-                <p>
-                    <b>Created Date: </b> {{assign.createdAt | amDateFormat: 'LL'}}</p>
-                <p>
-                    <b>Due Date: </b> {{assign.dueDate | amDateFormat: 'LL'}}</p>
-                <button *ngIf="assign.fileCount>0" ion-button clear (click)="openDocuments(assign)" >View Attached Documents</button>
-
-            </ion-item>
+        <ion-card *ngFor="let assign of assignmentList" padding>
+            <h2>
+                <b>{{ assign.moduleName }} </b>
+                <ion-badge class="csRight">{{ assign.yearName }} Year</ion-badge>
+            </h2>
+            <h4>{{ assign.createdAt | amDateFormat: 'LL' }} <span *ngIf="assign.dueDate">- {{ assign.dueDate | amDateFormat: 'LL' }}</span></h4>
+            <p>{{ assign.description }}</p>
         </ion-card>
     </ion-list>
 
