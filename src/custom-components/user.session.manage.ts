@@ -84,9 +84,9 @@ export class UserSessionManage {
                 { title: 'Surveys', component: "SurveyPageStudent", icon: 'assets/icon/survey.jpg' },
                 { title: 'Circular', component: "CircularStudentListPage", icon: 'assets/icon/circular.jpg' },
                 { title: 'Events', component: "MainPlannerPageManagement", icon: 'assets/icon/event.jpg' },
-                { title: 'Assignment', component: "AssignmentTabsPageStudent", icon: 'assets/icon/rating.jpg' },
-                { title: 'Assessment', component: "AssessmentTabsPageStudent", icon: 'assets/icon/rating.jpg' },
-                { title: 'Time Table', component: "TimeTablePageStudent", icon: 'assets/icon/rating.jpg' },
+                { title: 'Assignment', component: "AssignmentTabsPageStudent", icon: 'assets/icon/assignment.png' },
+                { title: 'Assessment', component: "AssessmentTabsPageStudent", icon: 'assets/icon/assessment.png' },
+                { title: 'Time Table', component: "TimeTablePageStudent", icon: 'assets/icon/timetable.png' },
                 { title: 'Account', component: "AccountPage", icon: 'assets/icon/profile.jpg' },
                 
             ];
@@ -103,9 +103,9 @@ export class UserSessionManage {
                 { title: 'Surveys', icon: 'assets/icon/survey.jpg' },
                 { title: 'Circular', component: "CircularTabsPageManagement", icon: 'assets/icon/circular.jpg' },
                 { title: 'Events', component: "MainPlannerPageManagement", icon: 'assets/icon/event.jpg' },
-                { title: 'Assignment', component: "AssignmentTabsPageManagement", icon: 'assets/icon/rating.jpg' },
-                { title: 'Assessment', component: "AssessmentTabsPageManagement", icon: 'assets/icon/rating.jpg' },
-                { title: 'Time Table', component: "TimeTablePageManagement", icon: 'assets/icon/rating.jpg' },
+                { title: 'Assignment', component: "AssignmentTabsPageManagement", icon: 'assets/icon/assignment.png' },
+                { title: 'Assessment', component: "AssessmentTabsPageManagement", icon: 'assets/icon/assessment.png' },
+                { title: 'Time Table', component: "TimeTablePageManagement", icon: 'assets/icon/timetable.png' },
                 { title: 'Account', component: "AccountPage", icon: 'assets/icon/profile.jpg' },
 
             ];
