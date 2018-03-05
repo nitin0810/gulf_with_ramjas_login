@@ -3,10 +3,10 @@
   <div style="overflow:hidden">
     <ion-segment [(ngModel)]="loginType" color="primary">
       <ion-segment-button value="student">
-        <p>Student Login</p>
+        Student Login
       </ion-segment-button>
       <ion-segment-button value="management">
-        <p>Management Login</p>
+        Management Login
       </ion-segment-button>
     </ion-segment>
   </div>
@@ -26,7 +26,7 @@
       </ion-item>
     </ion-list>
     <button ion-button full type="submit" [disabled]="!loginForm.valid">Login</button>
-    <button type="button" small ion-button clear (click)="openFrgtPswdModal()">Forgot Password?</button>
+    <button type="button" full ion-button clear (click)="openFrgtPswdModal()">Forgot Password?</button>
   </form>
 </ion-content>
 

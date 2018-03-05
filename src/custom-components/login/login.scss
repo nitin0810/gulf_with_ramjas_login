@@ -27,4 +27,8 @@
     @extend .csCenter;
   }
   
-  
+  login-page{
+    ion-segment-button{
+      border-radius: 0px !important;
+    }
+  }

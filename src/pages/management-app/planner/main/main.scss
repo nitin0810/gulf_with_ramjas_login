@@ -1,4 +1,21 @@
 calendar{
+    .monthview-current{ //this one is for events of disabled month
+        background:none !important;
+        position: relative;
+    }
+    .monthview-current::before{
+        transition:0.5s;
+        z-index: -1;
+        content: '';
+        height:30px;
+        width:30px;
+        border-radius: 50%;
+        position: absolute;
+        top:50%;
+        left:50%;
+        transform: translate(-50%,-50%);
+        background:lightgray !important;
+    }
     .swiper-slide td{
         font-size: 15px !important;
         border: 0px !important;
