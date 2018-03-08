@@ -54,7 +54,14 @@ export class UserSessionManage {
         if (this.authService.isLoggedIn()) {
             this.getUserInfo();
             this.decideSideMenuContent();
-            this.rootPage = "DashboardPage";
+            if(localStorage.getItem('isStudent') === "true"){
+
+            this.rootPage = "TimeTablePageStudent";
+            }
+            else{
+                this.rootPage = "TimeTablePageManagement";
+ 
+            }
         } else {
             this.rootPage = LoginPage;
         }
@@ -64,7 +71,13 @@ export class UserSessionManage {
         this.enableMenu(true);
         this.menu.close();
         this.decideSideMenuContent();
-        this.appCtrl.getRootNav().setRoot("DashboardPage");
+        if(localStorage.getItem('isStudent') === "true"){
+
+            this.appCtrl.getRootNav().setRoot("TimeTablePageStudent");
+        }else{
+            this.appCtrl.getRootNav().setRoot("TimeTablePageManagement");
+
+        }
         this.imageUpdate();
     }
 
@@ -76,7 +89,7 @@ export class UserSessionManage {
 
             this.sideMenuOptions = [
 
-                { title: 'Home', component: "DashboardPage", icon: 'assets/icon/home.png' },
+                // { title: 'Home', component: "DashboardPage", icon: 'assets/icon/home.png' },
                 { title: 'Complaints', component: "ComplaintPageStudent", icon: 'assets/icon/complaint.jpg' },
                 { title: 'Suggestions', component: "SuggestionTabsPageStudent", icon: 'assets/icon/suggestion.jpg' },
                 { title: 'Appreciations', component: "AppreciationTabsPageStudent", icon: 'assets/icon/appreciation.jpg' },
@@ -95,7 +108,7 @@ export class UserSessionManage {
 
             this.sideMenuOptions = [
 
-                { title: 'Home', component: "DashboardPage", icon: 'assets/icon/home.png' },
+                // { title: 'Home', component: "DashboardPage", icon: 'assets/icon/home.png' },
                 { title: 'Complaints', component: "ComplaintPageManagement", icon: 'assets/icon/complaint.jpg' },
                 { title: 'Suggestions', component: "SuggestionTabsPageManagement", icon: 'assets/icon/suggestion.jpg' },
                 { title: 'Appreciations', component: "AppreciationTabsPageManagement", icon: 'assets/icon/appreciation.jpg' },

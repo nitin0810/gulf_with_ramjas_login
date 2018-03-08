@@ -13,7 +13,7 @@ import { TimeTablePageManagement } from '../../../management-app/timeTable/main/
 
 export class TimeTablePageStudent extends TimeTablePageManagement implements OnDestroy {
 
-    title: string = 'Time table';
+    title: string = 'Dashboard';
 
 
     constructor(

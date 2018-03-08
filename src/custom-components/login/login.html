@@ -1,36 +1,61 @@
-<ion-content class="csLoginScreen">
-  <img class="csCenter" class="csLogo" src="assets/images/logo.png">
-  <div style="overflow:hidden">
-    <ion-segment [(ngModel)]="loginType" color="primary">
-      <ion-segment-button value="student">
-        Student Login
-      </ion-segment-button>
-      <ion-segment-button value="management">
-        Management Login
-      </ion-segment-button>
-    </ion-segment>
-  </div>
 
-  <form [formGroup]="loginForm" (ngSubmit)="login()" novalidate>
-    <ion-list class="letter-space">
+
+<!-- AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA -->
+
+
+<ion-content padding class="background-image">
+    <img class="center-block" src="http://www.ramjascollege.edu/images/logo.png" margin-top>
+    <div text-center margin-top>
+      <h1 class="textWhite">Login</h1>
+    </div>
+<!-- 
+    <ion-list margin-top>
+         
       <ion-item>
-        <ion-icon name="call" color="primary" item-start></ion-icon>
-        <ion-label stacked>Username</ion-label>
-        <ion-input type="text" formControlName="username" class="csFontColor1 csBold"></ion-input>
+        <ion-icon name="person" item-left color="color2"></ion-icon>
+        <ion-input type="text" [(ngModel)]="name" placeholder="Username"></ion-input>
       </ion-item>
       <ion-item>
-        <ion-icon name="md-unlock" color="primary" item-start></ion-icon>
-        <ion-label stacked>Password</ion-label>
-        <ion-input [type]="pswdInputType" formControlName="password" class="csFontColor1 csBold" #password></ion-input>
-        <ion-icon tappable name="{{icon}}" color="primary" item-end (click)="showPassword(password)"></ion-icon>
+        <ion-icon name="lock" item-left color="color1"></ion-icon>
+        <ion-input type="password" placeholder="Password"></ion-input>
       </ion-item>
-    </ion-list>
-    <button ion-button full type="submit" [disabled]="!loginForm.valid">Login</button>
-    <button type="button" full ion-button clear (click)="openFrgtPswdModal()">Forgot Password?</button>
-  </form>
-</ion-content>
 
-<ion-footer text-center>
-  Powered by
-  <b> NxtLife Technologies</b>
-</ion-footer>
+
+      
+    </ion-list> -->
+<!-- NITIN -->
+
+<div style="overflow:hidden">
+  <ion-segment [(ngModel)]="loginType" color="primary">
+    <ion-segment-button value="student">
+      Student 
+    </ion-segment-button>
+    <ion-segment-button value="management">
+      Management 
+    </ion-segment-button>
+  </ion-segment>
+</div>
+
+<form [formGroup]="loginForm" (ngSubmit)="login()" novalidate>
+  <ion-list margin-top>
+
+      <ion-item>
+          <ion-icon name="person" item-left color="color2"></ion-icon>
+          <ion-input type="text" formControlName="username" placeholder="Username"></ion-input>
+      </ion-item>
+
+      <ion-item>
+          <ion-icon name="lock" item-left color="color1"></ion-icon>
+          <ion-input type="password" formControlName="password" placeholder="Password"></ion-input>
+      </ion-item>
+
+  </ion-list>
+
+  <button ion-button full type="submit" [disabled]="!loginForm.valid">Login</button>
+
+</form>
+
+  
+  </ion-content>
+
+

@@ -17,7 +17,7 @@ import { AuthService } from '../../services/auth.service';
 
 export class LoginPage implements OnInit {
 
-    loginType:string = "student";
+    loginType:string = "management";
 
     loginForm: FormGroup;
     icon: String = "eye";
@@ -36,8 +36,8 @@ export class LoginPage implements OnInit {
 
         this.menu.swipeEnable(false);
         this.loginForm = this.formBuilder.group({
-            username: ['ajay', Validators.required],
-            password: ['abc123', Validators.required]
+            username: ['', Validators.required],
+            password: ['', Validators.required]
         });
     }
 

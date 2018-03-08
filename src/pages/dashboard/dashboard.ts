@@ -241,5 +241,9 @@ export class DashboardPage implements OnInit {
       });
   }
 
+  onSelected(){
+    // just added to remove error
+  }
+
 
 }

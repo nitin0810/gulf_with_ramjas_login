@@ -25,8 +25,8 @@ export class TimeTableService {
         /**collect observables of all http requests */
         let empObservable = this.fetchEmployees(),
             slotObservable = this.fetchSlots(),
-            roomObservable = this.http.get(CONFIG.serverUrl + '/ad/room'),
-            dayObservable = this.http.get(CONFIG.serverUrl + '/ad/day');
+            roomObservable = this.http.get(CONFIG.serverUrl + '/ma/room'),
+            dayObservable = this.http.get(CONFIG.serverUrl + '/ma/day');
 
         /**simultaneously send all requests*/
         return Observable.forkJoin([empObservable, roomObservable, slotObservable, dayObservable]);
@@ -55,18 +55,18 @@ export class TimeTableService {
 
     fetchProgramList(eId: number) {
 
-        return this.http.get(CONFIG.serverUrl + `/ad/timetable/employee/${eId}`);
+        return this.http.get(CONFIG.serverUrl + `/ma/timetable/employee/${eId}`);
     }
 
     fetchModuleAndYearList(pId: number, fId: number) {
 
-        return this.http.get(CONFIG.serverUrl + `/ad/timetable/program/${pId}/faculty/${fId}`);
+        return this.http.get(CONFIG.serverUrl + `/ma/timetable/program/${pId}/faculty/${fId}`);
     }
 
 
     submitTimetable(data: any) {
 
-        return this.http.post(CONFIG.serverUrl + `/ad/timetable`, data);
+        return this.http.post(CONFIG.serverUrl + `/ma/timetable`, data);
     }
 
 
@@ -76,20 +76,20 @@ export class TimeTableService {
 
     fetchFacultyAndDaysAndSlots(pId: number, yId: number, isEven: boolean) {
 
-        let slotObservable = this.http.get(CONFIG.serverUrl + '/ad/slot'),
-            dayObservable = this.http.get(CONFIG.serverUrl + '/ad/day'),
+        let slotObservable = this.http.get(CONFIG.serverUrl + '/ma/slot'),
+            dayObservable = this.http.get(CONFIG.serverUrl + '/ma/day'),
             facultyObservable = this.fetchFacultyByProgramAndYear(pId, yId, isEven);
         /**simultaneously send all requests*/
         return Observable.forkJoin([slotObservable, dayObservable, facultyObservable]);
     }
 
     fetchFacultyByProgramAndYear(pId: number, yId: number, isEven: boolean) {
-        return this.http.get(CONFIG.serverUrl + `/ad/timetable/faculty/${pId}/${yId}/${isEven}`);
+        return this.http.get(CONFIG.serverUrl + `/ma/timetable/faculty/${pId}/${yId}/${isEven}`);
     }
 
     editTimetable(data: any, tId: number) {
 
-        return this.http.put(CONFIG.serverUrl + `/ad/timetable/${tId}`, data);
+        return this.http.put(CONFIG.serverUrl + `/ma/timetable/${tId}`, data);
     }
 
     /**if period is updated(id parameter is present), replace that old period info with new info
@@ -116,7 +116,7 @@ export class TimeTableService {
 
         let loginType: string = localStorage.getItem('loginType') === "student" ? 'st' : JSON.parse(localStorage.getItem('roles')).indexOf('ADMIN') > -1 ? 'ad' : 'ma';
 
-        return this.http.get(CONFIG.serverUrl + `/${loginType}/day`)
+        return this.http.get(CONFIG.serverUrl + `/${loginType}/day`)  
             .flatMap((res: any) => {
                 this.storeDays(res);
                 return this.fetchTimetableByWeek(loginType);
@@ -130,30 +130,42 @@ export class TimeTableService {
 
     fetchDataRequiredForFilters() {
 
-        this.fetchEmployees()
-            .subscribe((res: any) => {
-                this.dataForFiltering['e'] = res;
-            }, (err: any) => { });
+        // this.fetchEmployees()
+        //     .subscribe((res: any) => {
+        //         this.dataForFiltering['e'] = res;
+        //     }, (err: any) => { });
 
-        this.fetchPrograms()
-            .subscribe((res: any) => {
-                this.dataForFiltering['p'] = res;
-            }, (err: any) => { });
+        // this.fetchPrograms()
+        //     .subscribe((res: any) => {
+        //         this.dataForFiltering['p'] = res;
+        //     }, (err: any) => { });
 
-        this.fetchDepartments()
-            .subscribe((res: any) => {
-                this.dataForFiltering['d'] = res;
-            }, (err: any) => { });
+        // this.fetchDepartments()
+        //     .subscribe((res: any) => {
+        //         this.dataForFiltering['d'] = res;
+        //     }, (err: any) => { });
 
-        this.fetchYears()
-            .subscribe((res: any) => {
-                this.dataForFiltering['y'] = res;
-            }, (err: any) => { });
+        // this.fetchYears()
+        //     .subscribe((res: any) => {
+        //         this.dataForFiltering['y'] = res;
+        //     }, (err: any) => { });
 
-        this.fetchSlots()
-            .subscribe((res: any) => {
-                this.dataForFiltering['s'] = res;
-            }, (err: any) => { });
+        // this.fetchSlots()
+        //     .subscribe((res: any) => {
+        //         this.dataForFiltering['s'] = res;
+        //     }, (err: any) => { });
+
+       this.http.get(CONFIG.serverUrl+ '/ad/timetable/filter/info')
+       .subscribe((res:any)=>{
+           this.dataForFiltering['e']=res.employees;
+           this.dataForFiltering['p']=res.programs;
+           this.dataForFiltering['d']=res.departments;
+           this.dataForFiltering['y']=res.years;
+           this.dataForFiltering['s']=res.slots;
+           
+           
+           
+       });     
 
     }
 
@@ -212,7 +224,7 @@ export class TimeTableService {
     /**for deleting the timetable */
     deleteTimetable(tId: number) {
 
-        return this.http.delete(CONFIG.serverUrl + `/ad/timetable/${tId}`);
+        return this.http.delete(CONFIG.serverUrl + `/ma/timetable/${tId}`);
     }
 
     /**below code is related to data filtering */
