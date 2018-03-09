@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { IonicPage, ModalController, ViewController, ActionSheetController, NavParams } from 'ionic-angular';
 import { CustomService } from '../../../../services/custom.service';
 import { AssessmentService } from '../../../../services/assessment.service';
@@ -9,7 +9,7 @@ import { AssessmentService } from '../../../../services/assessment.service';
 
 })
 
-export class NewSummativePageManagement {
+export class NewSummativePageManagement implements OnInit{
 
     title: string = "New Assessment";
 
@@ -44,6 +44,7 @@ export class NewSummativePageManagement {
         private viewCtrl: ViewController,
         private navParams: NavParams,
         private actionSheetController: ActionSheetController,
+        private modalController: ModalController,
         private assessmentService: AssessmentService,
         private customService: CustomService
     ) {
@@ -57,7 +58,7 @@ export class NewSummativePageManagement {
         this.timetableInfo = tt;
     }
 
-    ionViewWillEnter() {
+    ngOnInit() {
         this.timetableInfo ? this.checkTimetableInfoAndSetData() : this.fetchYears();
     }
 
@@ -78,6 +79,7 @@ export class NewSummativePageManagement {
     }
 
     fetchYears() {
+console.log('fetching years');
 
         this.customService.showLoader();
         this.assessmentService.fetchYears()
@@ -119,11 +121,28 @@ export class NewSummativePageManagement {
         }
     }
 
+    openSearchStudentPage() {
+        const modal = this.modalController
+            .create('FacultySearchPage', { 'searchList': this.studentsForSelectedYearModule, 'title': 'Student' });
+        modal.present();
+        modal.onDidDismiss((selectedStud) => {
+            console.log(selectedStud);
+            if(selectedStud){
+            this.selectedStudent = selectedStud.selectedSearch;
+            this.onStudentSelection();
+            }
+        });
+    }
+
     onStudentSelection() {
+        console.log(this.assessmentTypes);
+        
         if (this.assessmentTypes.length == 0) {
             this.fetchAssessmentTypes(); //only called first time 
         }
-    }
+    }   
+
+
 
     fetchModules() {
 

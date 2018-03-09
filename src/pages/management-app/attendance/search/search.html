@@ -1,0 +1,41 @@
+<ion-header>
+    <nl-modal-navbar [title]="title" (modalClosed)="dismiss()"></nl-modal-navbar>
+</ion-header>
+
+<ion-content>
+    <ion-searchbar #searchbar [(ngModel)]="searchInput" placeholder="Search Student" (ionInput)="onSearchInput($event)" (ionClear)="onSearchClear($event)"></ion-searchbar>
+
+<div style="height:490px;overflow:auto">
+
+
+
+    <ion-card>
+        <div *ngFor="let search of searchTempList">
+
+            <ion-label> {{search.name}} </ion-label>
+            <ion-list radio-group [(ngModel)]="search.attendance">
+                <ion-row>
+
+                    <ion-col>
+                        <span>P</span>
+                        <ion-radio value="P">P</ion-radio>
+                    </ion-col>
+                    <ion-col>
+                        <span>A</span>
+                        <ion-radio value="A"></ion-radio>
+                    </ion-col>
+                    <ion-col>
+                        <span>L</span>
+                        <ion-radio value="L"></ion-radio>
+                    </ion-col>
+                </ion-row>
+            </ion-list>
+        </div>
+    </ion-card>
+
+    <p *ngIf="noMatch">No Match Found</p>
+    <p *ngIf="searchList.length == 0">No Data Available</p>
+</div>
+
+<button ion-button full (click)="onSaveAndBack()">Save</button>
+</ion-content>

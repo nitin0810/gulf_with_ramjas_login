@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { IonicPage, ViewController, ModalController, ActionSheetController, NavParams, AlertController } from 'ionic-angular';
 import { CustomService } from '../../../../services/custom.service';
 import { AttendanceService } from '../../../../services/attendance.service';
@@ -9,7 +9,7 @@ import { AttendanceService } from '../../../../services/attendance.service';
 
 })
 
-export class NewAttendancePageManagement {
+export class NewAttendancePageManagement implements OnInit{
 
     title: string = "New Attendance";
 
@@ -24,6 +24,7 @@ export class NewAttendancePageManagement {
         private viewCtrl: ViewController,
         private navParams: NavParams,
         private alertCtrl: AlertController,
+        private modalController:ModalController,
         private actionSheetCtrl: ActionSheetController,
         private customService: CustomService,
         private attendanceService: AttendanceService
@@ -32,7 +33,7 @@ export class NewAttendancePageManagement {
         this.selectedDate = this.todayDate();
     }
 
-    ionViewWillEnter() {
+    ngOnInit() {
         this.getStudentsList();
     }
 
@@ -150,5 +151,15 @@ export class NewAttendancePageManagement {
 
     dismiss() {
         this.viewCtrl.dismiss();
+    }
+
+    openStudentAttendanceSearch(){
+        const modal =this.modalController.create('SearchAttendancePageManagement',{'searchList':this.studentsList});
+    modal.present();
+    modal.onDidDismiss((editedStudentList:any)=>{
+        if(editedStudentList){
+            this.studentsList = editedStudentList
+        }
+    });
     }
 }

@@ -1,125 +1,121 @@
 <ion-header>
-        <nl-modal-navbar [title]="title" (modalClosed)="dismiss()"></nl-modal-navbar>
-    </ion-header>
-    
-    <ion-content class="csPlainGray">
-    
-        <form *ngIf="years" #newAssessmentForm="ngForm" (ngSubmit)="onSubmit()">
-    <ion-list-header>
-            SUMMATIVE ASSESSMENT
-    </ion-list-header>
-    
-            <ion-card>
-                <ion-item>
-                    <ion-label stacked>
-                        <b>Title</b>
-                        <ion-badge class="csRight">{{200 - assessmentTitle?.length}}</ion-badge>
-                    </ion-label>
-                    <ion-textarea [(ngModel)]="assessmentTitle" placeholder="Enter Title" maxlength=200 required name="assessmentTitle">
-                    </ion-textarea>
-                    
-                </ion-item>
-            </ion-card>
-    
-            <ion-card>
-                <ion-item>
-                    <ion-label>
-                        <b>Select Year </b>
-                    </ion-label>
-                    <ion-select [disabled]="myDisabled" [(ngModel)]="selectedYear" (ionChange)="onYearChange()" required name="selectedYear">
-                        <ion-option *ngFor="let y of years" [value]="y">
-                            {{y.name || y.yearName}}
-                        </ion-option>
-                    </ion-select>
-                </ion-item>
-            </ion-card>
-    
-            <ion-card *ngIf="modulesForSelectedYear">
-                <ion-item>
-                    <ion-label>
-                        <b>Select Module </b>
-                    </ion-label>
-                    <ion-select [disabled]="myDisabled" [(ngModel)]="selectedModule" (ionChange)="onModuleChange()" required name="selectedModule">
-                        <ion-option *ngFor="let m of modulesForSelectedYear" [value]="m">
-                            {{m.name || m.moduleName}}
-                        </ion-option>
-                    </ion-select>
-                </ion-item>
-            </ion-card>
-    
-            <ion-card *ngIf="studentsForSelectedYearModule">
-                <ion-item>
-                    <ion-label>
-                        <b>Select Student </b>
-                    </ion-label>
-                    <ion-select [(ngModel)]="selectedStudent" (ionChange)="onStudentSelection()" required name="selectedStudent">
-                        <ion-option *ngFor="let s of studentsForSelectedYearModule" [value]="s">
-                            {{s.name || s.studentName}}
-                        </ion-option>
-                    </ion-select>
-                </ion-item>
-            </ion-card>
-    
-            <ion-card *ngIf="assessmentTypes && selectedStudent">
-                <ion-item>
-                    <ion-label>
-                        <b>Select Assessment Type </b>
-                    </ion-label>
-                    <ion-select [(ngModel)]="selectedAssessmentType" required name="selectedAssessmentType">
-                        <ion-option *ngFor="let assess of assessmentTypes" [value]="assess">
-                            {{assess.type}}
-                        </ion-option>
-                    </ion-select>
-                </ion-item>
-            </ion-card>
-    
-            <ion-card *ngIf="selectedAssessmentType">
-                <ion-item>
-                    <ion-label stacked>
-                        <b>Weighting (max 100)</b>
-                    </ion-label>
-                    <ion-textarea [(ngModel)]="weighting" placeholder="Enter Weighting" (keyup)="checkMarks($event.target.value)" required name="weighting">
-                    </ion-textarea>
-                </ion-item>
-            </ion-card>
-    
-            <ion-card *ngIf="selectedAssessmentType">
-                    <ion-item>
-                        Feedback
-                        <button type="button" ion-button icon-only item-right clear (click)="onAddEntry()">
-                            <ion-icon name="add"></ion-icon>
+    <nl-modal-navbar [title]="title" (modalClosed)="dismiss()"></nl-modal-navbar>
+</ion-header>
+
+<ion-content>
+
+    <form *ngIf="years" #newAssessmentForm="ngForm" (ngSubmit)="onSubmit()">
+
+        <h2 text-center>SUMMATIVE ASSESSMENT</h2>
+
+        <ion-card>
+            <ion-item>
+                <ion-label stacked>
+                    <b>Title</b>
+                </ion-label>
+                <ion-textarea [(ngModel)]="assessmentTitle" placeholder="Enter Title" maxlength=200 required name="assessmentTitle">
+                </ion-textarea>
+                <ion-badge item-end>{{200 - assessmentTitle?.length}}</ion-badge>
+            </ion-item>
+        </ion-card>
+
+        <ion-card>
+            <ion-item>
+                <ion-label>
+                    <b>Select Year </b>
+                </ion-label>
+                <ion-select [disabled]="myDisabled" [(ngModel)]="selectedYear" (ionChange)="onYearChange()" required name="selectedYear">
+                    <ion-option *ngFor="let y of years" [value]="y">
+                        {{y.name || y.yearName}}
+                    </ion-option>
+                </ion-select>
+            </ion-item>
+        </ion-card>
+
+        <ion-card *ngIf="modulesForSelectedYear">
+            <ion-item>
+                <ion-label>
+                    <b>Select Module </b>
+                </ion-label>
+                <ion-select [disabled]="myDisabled" [(ngModel)]="selectedModule" (ionChange)="onModuleChange()" required name="selectedModule">
+                    <ion-option *ngFor="let m of modulesForSelectedYear" [value]="m">
+                        {{m.name || m.moduleName}}
+                    </ion-option>
+                </ion-select>
+            </ion-item>
+        </ion-card>
+
+        <ion-card *ngIf="studentsForSelectedYearModule">
+            <ion-item (tap)="openSearchStudentPage()">
+                <ion-label>
+                    <b>Select Student</b>
+                </ion-label>
+                <span item-end>
+                    {{selectedStudent?.name}}
+                </span>
+            </ion-item>
+        </ion-card>
+
+        <ion-card *ngIf="assessmentTypes && selectedStudent">
+            <ion-item>
+                <ion-label>
+                    <b>Select Assessment Type </b>
+                </ion-label>
+                <ion-select [(ngModel)]="selectedAssessmentType" required name="selectedAssessmentType">
+                    <ion-option *ngFor="let assess of assessmentTypes" [value]="assess">
+                        {{assess.type}}
+                    </ion-option>
+                </ion-select>
+            </ion-item>
+        </ion-card>
+
+        <ion-card *ngIf="selectedAssessmentType">
+            <ion-item>
+                <ion-label stacked>
+                    <b>Weighting (max 100)</b>
+                </ion-label>
+                <ion-textarea [(ngModel)]="weighting" placeholder="Enter Weighting" (keyup)="checkMarks($event.target.value)" required name="weighting">
+                </ion-textarea>
+            </ion-item>
+        </ion-card>
+
+        <ion-card *ngIf="selectedAssessmentType">
+            <ion-card-header>
+                Feedback
+                <button type="button" align-right ion-button clear (click)="onAddEntry()">Add Entry</button>
+            </ion-card-header>
+            <ion-card-content>
+
+                <ion-list>
+                    <ion-card *ngFor="let f of feedbackEntries;let i =index">
+                        <button *ngIf="i>0" type="button" style="float:right" ion-button icon-only (click)="onDeleteEntry(i)">
+                            <ion-icon name="close-circle"></ion-icon>
                         </button>
-                    </ion-item>
-                    <ion-card-content no-padding>
-        
-                        <ion-list *ngFor="let f of feedbackEntries;let i =index">
-                                <ion-item>
-                                        <ion-label stacked>
-                                            <b>Title (max 100)</b>
-                                            <button ion-button small round clear *ngIf="i>0" type="button" style="float:right" icon-only (click)="onDeleteEntry(i)">
-                                                    <ion-icon name="trash"></ion-icon>
-                                            </button>
-                                        </ion-label>
-                                        <ion-textarea [(ngModel)]="f.title" maxlength="100" placeholder="Enter Title" required name="fTitle{{i}}" >
-                                        </ion-textarea>
-                                    </ion-item>
-                                    <ion-item>
-                                        <ion-label stacked>
-                                            <b>Description (max 500)</b>
-                                        </ion-label>
-                                        <ion-textarea rows="3" [(ngModel)]="f.description" maxlength="500" placeholder="Enter Description" required name="fDescription{{i}}">
-                                        </ion-textarea>
-                                    </ion-item>
-                        </ion-list>
-                    </ion-card-content>
-                </ion-card>
-    
-    
-            <div padding>
-                <button [disabled]="!newAssessmentForm.valid" ion-button full type="submit">Submit</button>
-            </div>
-        </form>
-    
-    
-    
-    </ion-content>
+                        <ion-item>
+                            <ion-label stacked>
+                                <b>Title (max 100)</b>
+                            </ion-label>
+                            <ion-textarea [(ngModel)]="f.title" maxlength="100" placeholder="Enter Title" required name="fTitle{{i}}">
+                            </ion-textarea>
+                        </ion-item>
+                        <ion-item>
+                            <ion-label stacked>
+                                <b>Description (max 500)</b>
+                            </ion-label>
+                            <ion-textarea rows="3" [(ngModel)]="f.description" maxlength="500" placeholder="Enter Description" required name="fDescription{{i}}">
+                            </ion-textarea>
+                        </ion-item>
+                    </ion-card>
+                </ion-list>
+            </ion-card-content>
+        </ion-card>
+
+
+        <div padding>
+            <button [disabled]="!newAssessmentForm.valid" ion-button full type="submit">Submit</button>
+        </div>
+    </form>
+
+
+
+</ion-content>

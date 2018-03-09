@@ -2,7 +2,7 @@
     <nl-modal-navbar [title]="title" (modalClosed)="dismiss()"></nl-modal-navbar>
 </ion-header>
 
-<ion-content >
+<ion-content>
 
     <ion-card>
         <ion-label> Module: {{timeTableInfo.moduleName}}</ion-label>
@@ -15,7 +15,7 @@
         <ion-card>
             <ion-item>
                 <ion-label>Date </ion-label>
-                <ion-datetime  [(ngModel)]="selectedDate" displayFormat="MMM DD YYYY" pickerFormat="DD MMM YYYY" name="date"></ion-datetime>
+                <ion-datetime [(ngModel)]="selectedDate" displayFormat="MMM DD YYYY" pickerFormat="DD MMM YYYY" name="date"></ion-datetime>
             </ion-item>
         </ion-card>
 
@@ -26,27 +26,42 @@
             </ion-item>
         </ion-card>
 
-        <ion-card>
-            <div *ngFor="let student of studentsList;let i=index">
-                <ion-label> {{student.name}} </ion-label>
-                <ion-list radio-group [(ngModel)]="student.attendance" required name="attendance{{i}}">
-                    <ion-item>
-                        <ion-label>P</ion-label>
-                        <ion-radio value="P"></ion-radio>
-                    </ion-item>
-                    <ion-item>
-                        <ion-label>A</ion-label>
-                        <ion-radio value="A"></ion-radio>
-                    </ion-item>
-                    <ion-item>
-                        <ion-label>L</ion-label>
-                        <ion-radio value="L"></ion-radio>
-                    </ion-item>
-
-                </ion-list>
+        <ion-item>
+            <ion-label>
+                Students List
+            </ion-label>
+            <div item-content>
+                <button ion-button icon-only type="button" (click)="openStudentAttendanceSearch()">
+                    <ion-icon name="search" ></ion-icon>
+                </button>
             </div>
-        </ion-card>
+        </ion-item>
 
-        <button ion-button full type="submit" [disabled]="newAttendanceForm.invalid">SUBMIT</button>
+        <div style="height:310px;overflow:auto">
+
+            <ion-card>
+                <div *ngFor="let student of studentsList;let i=index">
+                    <ion-label> {{student.name}} </ion-label>
+                    <ion-list radio-group [(ngModel)]="student.attendance" required name="attendance{{i}}">
+                        <ion-row>
+
+                            <ion-col>
+                                <span>P</span>
+                                <ion-radio value="P">P</ion-radio>
+                            </ion-col>
+                            <ion-col>
+                                <span>A</span>
+                                <ion-radio value="A"></ion-radio>
+                            </ion-col>
+                            <ion-col>
+                                <span>L</span>
+                                <ion-radio value="L"></ion-radio>
+                            </ion-col>
+                        </ion-row>
+                    </ion-list>
+                </div>
+            </ion-card>
+        </div>
+        <button ion-button block type="submit" [disabled]="newAttendanceForm.invalid">SUBMIT</button>
     </form>
 </ion-content>
