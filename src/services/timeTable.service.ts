@@ -25,8 +25,8 @@ export class TimeTableService {
         /**collect observables of all http requests */
         let empObservable = this.fetchEmployees(),
             slotObservable = this.fetchSlots(),
-            roomObservable = this.http.get(CONFIG.serverUrl + '/ma/room'),
-            dayObservable = this.http.get(CONFIG.serverUrl + '/ma/day');
+            roomObservable = this.http.get(CONFIG.serverUrl + '/ad/room'),
+            dayObservable = this.http.get(CONFIG.serverUrl + '/ad/day');
 
         /**simultaneously send all requests*/
         return Observable.forkJoin([empObservable, roomObservable, slotObservable, dayObservable]);
@@ -55,18 +55,18 @@ export class TimeTableService {
 
     fetchProgramList(eId: number) {
 
-        return this.http.get(CONFIG.serverUrl + `/ma/timetable/employee/${eId}`);
+        return this.http.get(CONFIG.serverUrl + `/ad/timetable/employee/${eId}`);
     }
 
     fetchModuleAndYearList(pId: number, fId: number) {
 
-        return this.http.get(CONFIG.serverUrl + `/ma/timetable/program/${pId}/faculty/${fId}`);
+        return this.http.get(CONFIG.serverUrl + `/ad/timetable/program/${pId}/faculty/${fId}`);
     }
 
 
     submitTimetable(data: any) {
 
-        return this.http.post(CONFIG.serverUrl + `/ma/timetable`, data);
+        return this.http.post(CONFIG.serverUrl + `/ad/timetable`, data);
     }
 
 
@@ -84,7 +84,7 @@ export class TimeTableService {
     }
 
     fetchFacultyByProgramAndYear(pId: number, yId: number, isEven: boolean) {
-        return this.http.get(CONFIG.serverUrl + `/ma/timetable/faculty/${pId}/${yId}/${isEven}`);
+        return this.http.get(CONFIG.serverUrl + `/ad/timetable/faculty/${pId}/${yId}/${isEven}`);
     }
 
     editTimetable(data: any, tId: number) {

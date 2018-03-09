@@ -21,7 +21,7 @@ import { TimeTableService } from '../../../../services/timeTable.service';
 
 export class TimeTablePageManagement implements OnDestroy {
 
-    title: string = 'Dashboard';
+    title: string = 'Time Table';
 
     /**data required to display the timetable */
     daysName: Array<string>;

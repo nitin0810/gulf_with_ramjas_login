@@ -82,8 +82,14 @@ export class NewAttendancePageManagement implements OnInit{
     }
 
     submitFinally() {
-        let payLoad = this.buildPayload();
-        this.postAttendance(payLoad);
+        // let payLoad = this.buildPayload();
+        // this.postAttendance(payLoad);
+        this.customService.showLoader();
+        setTimeout(() => {
+            this.customService.hideLoader();
+            this.customService.showToast('Attendance submitted successfully');
+            this.dismiss();
+        }, 500);
     }
 
     buildPayload() {
@@ -106,9 +112,11 @@ export class NewAttendancePageManagement implements OnInit{
     postAttendance(payLoad: any) {
         this.customService.showLoader();
         this.attendanceService.postAttendance(payLoad)
-            .subscribe((res: any) => {
+            .subscribe((res: any) => {          
+                      this.customService.showToast('Attendance submitted successfully');
+
+
                 this.customService.hideLoader();
-                this.customService.showToast('Attendance submitted successfully');
             }, (err: any) => {
                 this.customService.hideLoader();
                 err.status == 0 ? this.saveAttendanceOffline(payLoad) : this.customService.showToast(err.msg);

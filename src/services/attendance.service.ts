@@ -19,16 +19,16 @@ export class AttendanceService {
 
     postAttendance(data: any) {
 
-        return this.http.post(CONFIG.serverUrl + `/ma/attendance`, data);
+        return this.http.post(CONFIG.serverUrl + `/ad/attendance`, data);
     }
 
     fetchAttendance(data:any){
 
-        return this.http.post(CONFIG.serverUrl + `/ma/attendance/day`, data);
+        return this.http.post(CONFIG.serverUrl + `/ad/attendance/day`, data);
     }
 
     editAttendance(data:any,id:number){
 
-        return this.http.put(CONFIG.serverUrl + `/ma/attendance/${id}`, data);
+        return this.http.put(CONFIG.serverUrl + `/ad/attendance/${id}`, data);
     }
 }
