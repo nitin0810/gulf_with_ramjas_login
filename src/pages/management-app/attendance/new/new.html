@@ -1,67 +1,64 @@
 <ion-header>
-    <nl-modal-navbar [title]="title" (modalClosed)="dismiss()"></nl-modal-navbar>
+  <nl-modal-navbar [title]="title" (modalClosed)="dismiss()"></nl-modal-navbar>
 </ion-header>
 
-<ion-content>
+<ion-content class="tt">
+  <div class="ttvHeader csWhiteText" padding text-center>
+    <h2 no-margin>{{timeTableInfo.moduleName}}</h2>
+    <p no-margin>{{timeTableInfo.yearName}} Year</p>
+  </div>
 
-    <ion-card>
-        <ion-label> Module: {{timeTableInfo.moduleName}}</ion-label>
-        <ion-label> Year: {{timeTableInfo.yearName}}</ion-label>
-    </ion-card>
+  <form #newAttendanceForm="ngForm" (ngSubmit)="onSubmit()">
 
 
-    <form #newAttendanceForm="ngForm" (ngSubmit)="onSubmit()">
+    <ion-item>
+      <ion-icon item-start name="clock" color="primary"></ion-icon>
+      <small>Date </small>
+      <ion-datetime placeholder="select Date" [(ngModel)]="selectedDate" displayFormat="MMM DD YYYY" pickerFormat="DD MMM YYYY"
+        name="date"></ion-datetime>
+      <ion-icon item-end name="arrow-down" color="primary"></ion-icon>
+    </ion-item>
 
-        <ion-card>
-            <ion-item>
-                <ion-label>Date </ion-label>
-                <ion-datetime [(ngModel)]="selectedDate" displayFormat="MMM DD YYYY" pickerFormat="DD MMM YYYY" name="date"></ion-datetime>
-            </ion-item>
-        </ion-card>
+    <ion-item *ngIf="studentsList && studentsList.length!=0">
+      <!-- <ion-icon item-start name="checkbox" color="primary"></ion-icon> -->
+      <ion-label>Mark All Unselected as Present </ion-label>
+      <ion-checkbox (ionChange)="setStudentsAttendanceAsPresent($event)"></ion-checkbox>
+    </ion-item>
 
-        <ion-card *ngIf="studentsList && studentsList.length!=0">
-            <ion-item>
-                <ion-label>Mark All Unselected as Present </ion-label>
-                <ion-checkbox (ionChange)="setStudentsAttendanceAsPresent($event)"></ion-checkbox>
-            </ion-item>
-        </ion-card>
+ 
+      <button icon-right block ion-button type="button" (click)="openStudentAttendanceSearch()">
+        Search Student<ion-icon name="search"></ion-icon>
+      </button>
 
-        <ion-item>
-            <ion-label>
-                Students List
-            </ion-label>
-            <div item-content>
-                <button ion-button icon-only type="button" (click)="openStudentAttendanceSearch()">
-                    <ion-icon name="search" ></ion-icon>
-                </button>
-            </div>
-        </ion-item>
 
-        <div style="height:310px;overflow:auto">
 
-            <ion-card>
-                <div *ngFor="let student of studentsList;let i=index">
-                    <ion-label> {{student.name}} </ion-label>
-                    <ion-list radio-group [(ngModel)]="student.attendance" required name="attendance{{i}}">
-                        <ion-row>
 
-                            <ion-col>
-                                <span>P</span>
-                                <ion-radio value="P">P</ion-radio>
-                            </ion-col>
-                            <ion-col>
-                                <span>A</span>
-                                <ion-radio value="A"></ion-radio>
-                            </ion-col>
-                            <ion-col>
-                                <span>L</span>
-                                <ion-radio value="L"></ion-radio>
-                            </ion-col>
-                        </ion-row>
-                    </ion-list>
-                </div>
-            </ion-card>
-        </div>
-        <button ion-button block type="submit" [disabled]="newAttendanceForm.invalid">SUBMIT</button>
-    </form>
+    <div style="height:310px;overflow:auto" padding-left>
+      <div *ngFor="let student of studentsList;let i=index">
+        <ion-list radio-group [(ngModel)]="student.attendance" required name="attendance{{i}}">
+            <ion-row>
+            <ion-col col-6>
+                <b style="text-transform: capitalize;">{{student.name}} </b>
+            </ion-col>
+            <ion-col col-2>
+                 P
+                <ion-radio value="P">P</ion-radio>
+            </ion-col>
+            <ion-col col-2>
+                A
+                <ion-radio value="A"></ion-radio>
+            </ion-col>
+            <ion-col col-2>
+                L
+                <ion-radio value="L"></ion-radio>
+            </ion-col>
+          </ion-row>
+        </ion-list>
+      </div>
+    </div>
+    <div padding>
+            <button ion-button full type="submit" [disabled]="newAttendanceForm.invalid">SUBMIT</button>
+    </div>
+    
+  </form>
 </ion-content>

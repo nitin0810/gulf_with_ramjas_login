@@ -254,7 +254,12 @@ export class TimeTablePageManagement implements OnDestroy {
                 handler: () => {
                     actionSheet.dismiss()
                         .then(() => {
-                            this.openAttendanceActionSheet(period);
+
+                            const modal = this.modalCtrl.create( 'NewAttendancePageManagement',{ 'timeTableInfo': period });
+                            modal.present();
+
+
+                            // this.openAttendanceActionSheet(period);
                         }, (err) => { });
 
                     return false;

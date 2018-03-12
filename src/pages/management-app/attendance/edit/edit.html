@@ -3,37 +3,43 @@
     </nl-modal-navbar>
 </ion-header>
 
-<ion-content >
+<ion-content class="tt">
 
-    <ion-card *ngIf="timeTableInfo">
-        <h4>Module: {{timeTableInfo.moduleName}}</h4>
-        <h4>Year: {{timeTableInfo.yearName}}</h4>
-    </ion-card>
+        <div  *ngIf="timeTableInfo" class="ttvHeader csWhiteText" padding text-center>
+                <h2 no-margin>{{timeTableInfo.moduleName}}</h2>
+                <p no-margin>{{timeTableInfo.yearName}} Year</p>
+              </div>
+
+
 
     <ion-slides>
 
         <ion-slide>
-            <ion-card>
                 <ion-item>
-                    <ion-label> Select Date </ion-label>
-                    <ion-datetime [max]="todayDate()" [(ngModel)]="date" (ionChange)="onDateChange()" displayFormat="MMM DD YYYY" pickerFormat="DD MMM YYYY"></ion-datetime>
-                </ion-item>
-            </ion-card>
-            <div *ngIf="totalStudents">
-                <h6 >Total Students: {{totalStudents}}</h6>
-                <h6 >Present Students: {{presentStudents}}</h6>
-            </div>
+                        <ion-icon item-start name="clock" color="primary"></ion-icon>
+                        <small>Select Date </small>
+                        <ion-datetime [max]="todayDate()" [(ngModel)]="date" (ionChange)="onDateChange()" displayFormat="MMM DD YYYY" pickerFormat="DD MMM YYYY"></ion-datetime>
+                        <ion-icon item-end name="arrow-down" color="primary"></ion-icon>
+                    </ion-item>
 
-            <div *ngIf="attendanceList && attendanceList.length!=0">
-                <ion-label>Select student to edit the attendance</ion-label>
-                <ion-searchbar placeholder="Enter Name" [(ngModel)]="searchInput" (ionInput)="onSearchInput($event)" (ionClear)="onSearchClear($event)"></ion-searchbar>
-            </div>
 
-            <ion-list>
-                <button ion-item *ngFor="let at of attendanceListTemp" (click)="onStudentSelect(at)">
-                    <p>{{at.studentName}} ({{at.studentId}})<span item-right>{{at.attendance}}</span></p>
-                </button>
-            </ion-list>
+<ion-card *ngIf="totalStudents">
+    <ion-item>
+        <ion-icon item-start name="people" color="primary"></ion-icon>
+        <b>Attendance</b>
+        <span item-end>{{presentStudents}}/{{totalStudents}}</span>
+    </ion-item>
+</ion-card>
+
+<div *ngIf="attendanceList && attendanceList.length!=0">
+        <small>Select student to edit the attendance</small>
+        <ion-searchbar placeholder="Enter Name" [(ngModel)]="searchInput" (ionInput)="onSearchInput($event)" (ionClear)="onSearchClear($event)"></ion-searchbar>
+    </div>
+    <ion-list>
+        <button ion-item *ngFor="let at of attendanceListTemp" (click)="onStudentSelect(at)">
+            <p>{{at.studentName}} ({{at.studentId}})<span item-right>{{at.attendance}}</span></p>
+        </button>
+    </ion-list>
 
             <ion-list *ngIf="attendanceList && attendanceList.length==0">
                 <ion-item text-wrap>
@@ -43,31 +49,39 @@
         </ion-slide>
         
         <ion-slide>
-            <div *ngIf="selectedStudent">
-                <button style="margin-right: 20em" ion-button clear (click)="goToList()">
-                    <ion-icon name="arrow-back"></ion-icon>
-                      Back
-                </button>
-                <h1>ID: {{selectedStudent.studentId}}</h1>
-                <h1>NAME: {{selectedStudent.studentName}}</h1>
-                <h4>CURRENT ATTENDANCE: {{selectedStudent.attendance}}</h4>
-                <h4>EDIT ATTENDANCE</h4>
+            <ion-card *ngIf="selectedStudent">
+                <ion-item>
+                        <ion-icon item-start name="finger-print" color="primary"></ion-icon>
+                        <small>ID</small>
+                        <h2 style="text-transform: capitalize;">{{selectedStudent.studentId}}</h2>
+                </ion-item>
+                <ion-item>
+                        <ion-icon item-start name="person" color="primary"></ion-icon>
+                        <small>Name</small>
+                        <h2>{{selectedStudent.studentName}}</h2>
+                </ion-item>
+                <ion-item>
+                        <ion-icon item-start name="flash" color="primary"></ion-icon>
+                        <small>CURRENT ATTENDANCE</small>
+                        <h2>{{selectedStudent.attendance}}</h2>
+                </ion-item>
                 <ion-list radio-group [(ngModel)]="editedAttendance">
-                    <ion-item>
-                        <ion-label>P</ion-label>
-                        <ion-radio value="P"></ion-radio>
-                    </ion-item>
-                    <ion-item>
-                        <ion-label>A</ion-label>
-                        <ion-radio value="A"></ion-radio>
-                    </ion-item>
-                    <ion-item>
-                        <ion-label>L</ion-label>
-                        <ion-radio value="L"></ion-radio>
-                    </ion-item>
-
-                </ion-list>
-            </div>
+                    <small>EDIT ATTENDANCE</small>
+                        <ion-item>
+                            <ion-label>P</ion-label>
+                            <ion-radio value="P"></ion-radio>
+                        </ion-item>
+                        <ion-item>
+                            <ion-label>A</ion-label>
+                            <ion-radio value="A"></ion-radio>
+                        </ion-item>
+                        <ion-item>
+                            <ion-label>L</ion-label>
+                            <ion-radio value="L"></ion-radio>
+                        </ion-item>
+    
+                    </ion-list>
+            </ion-card>
             <button ion-button full (click)="onEditBtn()">EDIT</button>
         </ion-slide>
     </ion-slides>

@@ -3,13 +3,12 @@
     </nl-modal-navbar>
 </ion-header>
 
-<ion-content >
+<ion-content class="tt">
+        <div class="ttvHeader csWhiteText" padding text-center>
+                <h2 no-margin>Program: {{timeTableInfo.programName}}</h2>
+                <p no-margin>Year: {{timeTableInfo.yearName}}</p>
+              </div>
 
-
-    <ion-card>
-        <ion-label> Program: {{timeTableInfo.programName}}</ion-label>
-        <ion-label> Year: {{timeTableInfo.yearName}}</ion-label>
-    </ion-card>
     <form *ngIf="facultyList" #editTimeTableForm="ngForm" (ngSubmit)="onSubmit()">
 
         <ion-card >
@@ -20,14 +19,17 @@
         </ion-card>
 
         <ion-item *ngIf="editedFaculty">    
-            <ion-label>Module: {{editedFaculty.moduleName}}</ion-label>
+            <ion-icon name="albums" color="primary" item-start></ion-icon>
+            <small>Module</small>
+            <h2>{{editedFaculty.moduleName}}</h2>
         </ion-item>
 
-        <ion-card *ngIf="slots">
+        <ion-list *ngIf="slots">
             <ion-item>
-                <ion-label>
+                    <ion-icon name="time" color="primary" item-start></ion-icon>
+                <small>
                     <b>Select Day </b>
-                </ion-label>
+                </small>
                 <ion-select  [disabled]="disableSlotDay"  [(ngModel)]="editedDay" required name="day" >
                     <ion-option *ngFor="let d of days" [value]="d">
                         {{d.day}}
@@ -36,16 +38,17 @@
             </ion-item>
 
             <ion-item>
-                <ion-label>
+                    <ion-icon name="code-download" color="primary" item-start></ion-icon>
+                <small>
                     <b>Select Slot </b>
-                </ion-label>
+                </small>
                 <ion-select [(ngModel)]="editedSlot"  [disabled]="disableSlotDay" required name="slot">
                     <ion-option *ngFor="let s of slots" [value]="s">
                         {{s.startTime}}-{{s.endTime}}
                     </ion-option>
                 </ion-select>
             </ion-item>
-        </ion-card>
+        </ion-list>
 
         <div padding>
             <button ion-button full type="submit" [disabled]="editTimeTableForm.invalid || !editedFacultyName">EDIT</button>

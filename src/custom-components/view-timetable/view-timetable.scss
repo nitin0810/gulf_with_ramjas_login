@@ -1,0 +1,13 @@
+
+.tt{
+    .ttvHeader{
+        background:color($colors,primary);
+    }
+    .csWhiteText{
+        color:white;
+    }
+    small{
+        color:color($colors,primary);
+        font-weight: bold;
+    }
+}

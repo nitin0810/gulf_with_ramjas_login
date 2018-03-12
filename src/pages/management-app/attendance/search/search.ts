@@ -5,7 +5,16 @@ import { AttendanceService } from '../../../../services/attendance.service';
 
 @IonicPage()
 @Component({
-    templateUrl: './search.html'
+    templateUrl: './search.html',
+    styles:[`
+    ion-radio{
+        top: 6px;
+    border: 1px solid black;
+    width: 21px;
+    height: 21px;
+    border-radius: 50%;
+    }
+    `]
 
 })
 

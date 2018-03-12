@@ -1,42 +1,47 @@
 <ion-header>
-    <nl-modal-navbar [title]="title" (modalClosed)="dismiss()">
-        <button *ngIf="isAdmin" ion-button icon-only (click)="presentEditDeleteOption($event)">
-            <ion-icon name="more"></ion-icon>
-        </button>
-    </nl-modal-navbar>
+  <nl-modal-navbar [title]="title" (modalClosed)="dismiss()">
+    <button *ngIf="isAdmin" ion-button icon-only (click)="presentEditDeleteOption($event)">
+      <ion-icon name="more"></ion-icon>
+    </button>
+  </nl-modal-navbar>
 </ion-header>
 
-<ion-content>
-
-    <h3>{{timeTableInfo.dayName}}</h3>
-    <p>{{timeTableInfo.startTime}} - {{timeTableInfo.endTime}}</p>
-    <p>
-        <b>Room No: </b>{{timeTableInfo.roomNumber}}</p>
-
-    <ion-list>
-        <ion-item>
-            <ion-label>
-                <b>Program:</b> {{timeTableInfo.programName}}</ion-label>
-        </ion-item>
-        <ion-item>
-            <ion-label>
-                <b>Module:</b> {{timeTableInfo.moduleName}}</ion-label>
-        </ion-item>
-        <ion-item>
-            <ion-label>
-                <b>Year:</b> {{timeTableInfo.yearName}}</ion-label>
-        </ion-item>
-        <ion-item>
-            <ion-avatar item-start>
-                <img [src]="timeTableInfo.employeePic || defaultAvatar">
-            </ion-avatar>
-            <h2>{{timeTableInfo.employeeName}}</h2>
-        </ion-item>
-        <ion-item *ngIf="timeTableInfo.departmentName">
-            <ion-label>
-                <b>Department:</b> {{timeTableInfo.departmentName}}</ion-label>
-        </ion-item>
-    </ion-list>
+<ion-content class="tt">
+  <div class="ttvHeader csWhiteText" padding text-center>
+    <h2 no-margin>{{timeTableInfo.dayName}}</h2>
+    <p no-margin>{{timeTableInfo.startTime}} - {{timeTableInfo.endTime}}</p>
+    <ion-badge>Room No: {{timeTableInfo.roomNumber}}</ion-badge>
+  </div>
+  <ion-list>
+    <ion-item>
+      <ion-icon item-start color="primary" name="code-download"></ion-icon>
+      <small color="primary">Program</small>
+      <h2>{{timeTableInfo.programName}}</h2>
+    </ion-item>
+    <ion-item *ngIf="timeTableInfo.departmentName">
+            <ion-icon item-start color="primary" name="analytics"></ion-icon>
+            <small color="primary">Department</small>
+            <h2>{{timeTableInfo.departmentName}}</h2>
+    </ion-item>
+    <ion-item>
+      <ion-icon item-start color="primary" name="albums"></ion-icon>
+      <small color="primary">Module</small>
+      <h2>{{timeTableInfo.moduleName}}</h2>
+    </ion-item>
+    <ion-item>
+      <ion-icon item-start color="primary" name="time"></ion-icon>
+      <small color="primary">Year</small>
+      <h2>{{timeTableInfo.yearName}}</h2>
+    </ion-item>
+    <ion-item>
+      <ion-icon *ngIf="!timeTableInfo.employeePic" item-start color="primary" name="person"></ion-icon>
+      <ion-avatar item-start *ngIf="timeTableInfo.employeePic">
+        <img [src]="timeTableInfo.employeePic">
+      </ion-avatar>
+      <small>Teacher</small>
+      <h2>{{timeTableInfo.employeeName}}</h2>
+    </ion-item>
+  </ion-list>
 
 
 

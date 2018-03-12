@@ -16,18 +16,8 @@ time-table {
 .border{
     border: 1px solid lightgray;
 }
-.border-right-progress{
-    border-right-color: color($colors, color5);
-}
-.border-left-progress{
-    border-left-color: color($colors, color5);
-}
-.colorInProgress{
-    color:color($colors, color5);
-}
-.textGray{
-    color:color($colors, color1);
-}
+
+
 .textSmall{
     font-size:10px;
 }
@@ -37,17 +27,7 @@ time-table {
 .textLarge{
     font-size:20px;
 }
-.border-right-notstarted{
-    border-right-color: color($colors, color1);
-}
-.border-left-notstarted{
-    border-left-color: color($colors, color1);
-}
-.colorNotstarted{
-    color:color($colors, color1);
-}
-.timetable-item{
-}
+
 .left-col{
     padding-right: 5px !important;
 }

@@ -5,14 +5,36 @@
 <ion-content>
     <ion-searchbar #searchbar [(ngModel)]="searchInput" placeholder="Search Student" (ionInput)="onSearchInput($event)" (ionClear)="onSearchClear($event)"></ion-searchbar>
 
-<div style="height:490px;overflow:auto">
+<div style="height:490px;overflow:auto" padding>
 
 
 
-    <ion-card>
-        <div *ngFor="let search of searchTempList">
+        <div *ngFor="let search of searchTempList;let i=index" >
 
-            <ion-label> {{search.name}} </ion-label>
+                <ion-list radio-group [(ngModel)]="search.attendance" required name="attendance{{i}}">
+                        <ion-row>
+                        <ion-col col-6>
+                            <b style="text-transform: capitalize;">{{search.name}} </b>
+                        </ion-col>
+                        <ion-col col-2>
+                             P
+                            <ion-radio value="P">P</ion-radio>
+                        </ion-col>
+                        <ion-col col-2>
+                            A
+                            <ion-radio value="A"></ion-radio>
+                        </ion-col>
+                        <ion-col col-2>
+                            L
+                            <ion-radio value="L"></ion-radio>
+                        </ion-col>
+                      </ion-row>
+                    </ion-list>
+
+
+
+
+            <!-- <ion-label> {{search.name}} </ion-label>
             <ion-list radio-group [(ngModel)]="search.attendance">
                 <ion-row>
 
@@ -29,9 +51,8 @@
                         <ion-radio value="L"></ion-radio>
                     </ion-col>
                 </ion-row>
-            </ion-list>
+            </ion-list> -->
         </div>
-    </ion-card>
 
     <p *ngIf="noMatch">No Match Found</p>
     <p *ngIf="searchList.length == 0">No Data Available</p>

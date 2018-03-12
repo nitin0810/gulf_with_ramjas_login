@@ -3,19 +3,22 @@
 </ion-header>
 
 <ion-content>
-
+        <ion-list-header>
+                SUMMATIVE ASSESSMENT
+        </ion-list-header>
     <form *ngIf="years" #newAssessmentForm="ngForm" (ngSubmit)="onSubmit()">
 
-        <h2 text-center>SUMMATIVE ASSESSMENT</h2>
-
+     
         <ion-card>
             <ion-item>
-                <ion-label stacked>
-                    <b>Title</b>
-                </ion-label>
+                    <ion-label stacked>
+                            <b>Title</b>
+                            <ion-badge class="csRight">{{200 - assessmentTitle?.length}}</ion-badge>
+                        </ion-label>
+               
                 <ion-textarea [(ngModel)]="assessmentTitle" placeholder="Enter Title" maxlength=200 required name="assessmentTitle">
                 </ion-textarea>
-                <ion-badge item-end>{{200 - assessmentTitle?.length}}</ion-badge>
+                
             </ion-item>
         </ion-card>
 

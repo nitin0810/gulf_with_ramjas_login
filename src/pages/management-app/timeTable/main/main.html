@@ -47,15 +47,15 @@
                 <button ion-item no-lines detail-none class="timetable-item" (click)="openViewPage(period,i)">
                     <ion-grid no-padding>
                         <ion-row>
-                            <ion-col col-4 class="border border-right-progress left-col" text-right>
+                            <ion-col col-4 class="border left-col" text-right>
                                 <!-- <h2 class="textLarge">{{period.startTime}}</h2> -->
                                 <span class="textGray">{{period.startTime}}-{{period.endTime}}</span>
                                 <div>
-                                    <span class="colorInProgress textSmall">Room No.: {{period.roomNumber}}</span>
+                                    <span class="textSmall">Room No.: {{period.roomNumber}}</span>
                                 </div>
                             </ion-col>
-                            <ion-col col-8 col-8 class="border border-left-progress right-col">
-                                <span class="textGray">
+                            <ion-col col-8 col-8 class="border right-col">
+                                <span>
                                     {{period.programName}}
                                 </span>
                                 <span>
@@ -78,10 +78,10 @@
                     <button ion-button color="danger" (click)="onDelete(period,i)">
                         Delete
                     </button>
-                    <button ion-button color="secondary" (click)="openEditPage(period,i)">
+                    <button ion-button color="fab" (click)="openEditPage(period,i)">
                         Edit
                     </button>
-                    <button ion-button color="primary" (click)="showoptions(period)">
+                    <button ion-button color="cool" (click)="showoptions(period)">
                         More
                     </button>
                 </ion-item-options>
