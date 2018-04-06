@@ -1,5 +1,5 @@
 import { Component, OnDestroy } from '@angular/core';
-import { IonicPage, ModalController, ActionSheetController, AlertController, Alert } from 'ionic-angular';
+import { IonicPage, ModalController, ActionSheetController, AlertController, Alert, NavController, App } from 'ionic-angular';
 import { CustomService } from '../../../../services/custom.service';
 import { TimeTableService } from '../../../../services/timeTable.service';
 
@@ -42,7 +42,9 @@ export class TimeTablePageManagement implements OnDestroy {
         public customService: CustomService,
         public actionSheetCtrl: ActionSheetController,
         public alertCtrl: AlertController,
-        public timeTableService: TimeTableService
+        public timeTableService: TimeTableService,
+        public navcont? : NavController,
+        public appCtrl? : App
     ) { }
 
     ionViewWillEnter() {
@@ -252,47 +254,55 @@ export class TimeTablePageManagement implements OnDestroy {
             buttons: [{
                 text: 'Attendance',
                 handler: () => {
-                    actionSheet.dismiss()
-                        .then(() => {
+                    this.openModal("AttendanceViewPageStudent", period);
+                    // this.navcont.setRoot('AttendanceViewPageStudent');
+                    // actionSheet.dismiss()
+                    //     .then(() => {
 
-                            const modal = this.modalCtrl.create( 'NewAttendancePageManagement',{ 'timeTableInfo': period });
-                            modal.present();
+                    //         const modal = this.modalCtrl.create( 'NewAttendancePageManagement',{ 'timeTableInfo': period });
+                    //         modal.present();
 
 
-                            // this.openAttendanceActionSheet(period);
-                        }, (err) => { });
+                    //         // this.openAttendanceActionSheet(period);
+                    //     }, (err) => { });
 
-                    return false;
+                    // return false;
                 }
             },
             {
                 text: 'Assignment',
                 handler: () => {
-                    this.openModal("NewAssignmentPageManagement", period);
+                    // this.appCtrl.getRootNav().setRoot('AssignmentTabsPageStudent');
+
+                    // this.openModal("NewAssignmentPageManagement", period);
+                    this.navcont.setRoot('AssignmentTabsPageStudent');
                 }
             },
             {
                 text: 'Assessment',
                 handler: () => {
-                    this.openModal("NewSummativePageManagement", period);
+                    // this.openModal("NewSummativePageManagement", period);
+                    this.navcont.setRoot('AssessmentTabsPageStudent');
                 }
             },
             {
-                text: 'Poll',
+                text: 'Messaging',
                 handler: () => {
-                    this.openModal("NewPollPageManagement", period);
+                    this.navcont.setRoot('SuggestionTabsPageStudent');
+                    // this.openModal("NewPollPageManagement", period);
                 }
             },
-            {
-                text: 'Survey',
-                handler: () => {
-                    this.openModal("NewSurveyPageManagement", period);
-                }
-            },
+            // {
+            //     text: 'Survey',
+            //     handler: () => {
+            //         this.openModal("NewSurveyPageManagement", period);
+            //     }
+            // },
             {
                 text: 'Circular',
                 handler: () => {
-                    this.openModal("NewCircularComponent", period);
+                    this.navcont.setRoot('CircularStudentListPage');
+                    // this.openModal("NewCircularComponent", period);
                 }
             },
             {

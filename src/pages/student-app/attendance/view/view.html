@@ -1,0 +1,59 @@
+<ion-header>
+    <nl-modal-navbar [title]="title" (modalClosed)="dismiss()"></nl-modal-navbar>
+</ion-header>
+
+<ion-content>
+
+    <ion-card *ngIf="attendance">
+        <ion-card-content>
+            <ion-item>
+                <ion-icon name="folder" item-start></ion-icon>
+                <p>
+                    <b>Paper Name : </b>
+                    <span>{{attendance.paper}}</span>
+                </p>
+            </ion-item>
+
+            <ion-item>
+                <ion-icon name="clock" item-start></ion-icon>
+                <p>
+                    <b>Date: </b>
+                    <span>{{attendance.date}}</span>
+                </p>
+            </ion-item>
+
+            <ion-item>
+                <ion-icon name="person" item-start></ion-icon>
+                <p>
+                    <b *ngIf="attendance.present" style="color:green">Present</b>
+                    <!-- <span>{{assessment.createdAt | amDateFormat: 'LL'}}</span> -->
+                </p>
+            </ion-item>
+
+            <ion-item>
+                    <ion-icon name="clock" item-start></ion-icon>
+                    <p>
+                        <b>Overall Attendance</b>
+                        <ion-grid>
+                            <ion-row>
+                                <ion-col>
+                                    <b>Total Lectures</b>
+                                    <br>
+                                    {{attendance.overall.total}}
+                                </ion-col>
+                                <ion-col>
+                                        <b>Attended Lectures</b>
+                                        <br>
+                                        {{attendance.overall.attended}}
+                                </ion-col>    
+                            </ion-row>
+                        </ion-grid>
+                        <!-- <span>{{assessment.createdAt | amDateFormat: 'LL'}}</span> -->
+                    </p>
+                </ion-item>
+
+            
+
+        </ion-card-content>
+    </ion-card>
+</ion-content>

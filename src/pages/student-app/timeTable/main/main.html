@@ -44,6 +44,13 @@
                         </ion-row>
                     </ion-grid>
                 </ion-item>
+
+                <ion-item-options side="right">
+                    <button ion-button color="cool" (click)="showoptions(period)">
+                        More
+                    </button>
+                </ion-item-options>
+
             </ion-item-sliding>
         </ion-list>
       <!-- <no-results *ngIf="timetableData && (!selectedDayTimetable || selectedDayTimetable?.length==0)"></no-results> -->

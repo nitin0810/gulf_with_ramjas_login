@@ -1,0 +1,41 @@
+<ion-header>
+    <nl-navbar [title]="title"></nl-navbar>
+</ion-header>
+
+<ion-content>
+
+    <ion-refresher (ionRefresh)="doRefresh($event)">
+        <ion-refresher-content></ion-refresher-content>
+    </ion-refresher>
+
+
+    <ion-list>
+        <ion-card>
+            <ion-item text-wrap>
+                <b>DeadLine : 30th April 2018</b>
+                <ion-grid>
+                    <ion-row *ngFor="let paper of papers">
+                        <hr>
+                        <div class="col-sm-1">
+                            <input name="paper" type="radio">
+                            <b>Paper Name : </b> {{paper.name}}
+                            <br>
+                            <b>Faculty Name : </b> {{paper.faculty}}
+                            <br>
+                            <b>Details : </b> {{paper.details}}
+                        </div>
+                        <button ion-button clear (click)="openDocuments(assign)">View Attached Documents</button>
+                    </ion-row>
+                </ion-grid>
+                
+                <button ion-button class="btn" style="float:right" (click)="submit()" >Submit</button>
+
+            </ion-item>
+        </ion-card>
+    </ion-list>
+
+    <ion-infinite-scroll>
+        <ion-infinite-scroll-content></ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+
+</ion-content>

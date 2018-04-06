@@ -2,17 +2,17 @@
     <nl-modal-navbar [title]="title" (modalClosed)="dismiss()"></nl-modal-navbar>
 </ion-header>
 
-<ion-content >
+<ion-content>
 
     <ion-card *ngIf="assessment">
         <ion-card-content>
-                <ion-item>
-                        <ion-icon name="folder" item-start></ion-icon>
-                        <p>
-                            <b>Module : </b>
-                            <span>{{assessment.moduleName}}</span>
-                        </p>
-                    </ion-item>
+            <ion-item>
+                <ion-icon name="folder" item-start></ion-icon>
+                <p>
+                    <b>Module : </b>
+                    <span>{{assessment.moduleName}}</span>
+                </p>
+            </ion-item>
 
             <ion-item>
                 <ion-icon name="person" item-start></ion-icon>
@@ -23,12 +23,12 @@
             </ion-item>
 
             <ion-item>
-                    <ion-icon name="clock" item-start></ion-icon>
-                    <p>
-                        <b>Created: </b>
-                        <span>{{assessment.createdAt | amDateFormat: 'LL'}}</span>
-                    </p>
-                </ion-item>
+                <ion-icon name="clock" item-start></ion-icon>
+                <p>
+                    <b>Created: </b>
+                    <span>{{assessment.createdAt | amDateFormat: 'LL'}}</span>
+                </p>
+            </ion-item>
 
             <!-- <ion-item>
                 <ion-icon name="folder" item-start></ion-icon>
@@ -54,7 +54,7 @@
                 </p>
             </ion-item> -->
 
-            <ion-item>
+            <ion-item *ngIf="assessment.assesmentTypeName != 'Internal Assessment'">
                 <p>
                     <b>Assessment Title: </b>
                     <span>{{assessment.title}}</span>
@@ -68,21 +68,70 @@
                 </p>
             </ion-item>
 
+            <span *ngIf="assessment.assesmentTypeName == 'Internal Assessment'">
+
+                <ion-item>
+                    <p>
+                        <b>Attendance: </b>
+                        <ion-grid>
+                            <ion-row>
+                                <ion-col>
+                                    <b>Overall (80)</b>
+                                    <br> 56
+                                </ion-col>
+                                <ion-col>
+                                    <b>Percentage</b>
+                                    <br> 70%
+                                </ion-col>
+                                <ion-col>
+                                    <b>Marks (5)</b>
+                                    <br> 1
+                                </ion-col>
+                            </ion-row>
+                        </ion-grid>
+                    </p>
+                </ion-item>
+
+                <ion-item>
+                    <p>
+                        <b>Assignment 1 (10): </b>
+                        <span> 7 </span>
+                    </p>
+                </ion-item>
+
+                <ion-item>
+                    <p>
+                        <b>Assignment 2 (10): </b>
+                        <span> 8 </span>
+                    </p>
+                </ion-item>
+
+            </span>
+
             <ion-item>
                 <p>
-                    <b>Weighting: </b>
+                    <b><span *ngIf="assessment.assesmentTypeName == 'Internal Assessment'"> Total</span> Marks
+                        <span *ngIf="assessment.assesmentTypeName == 'Internal Assessment'"> (25) : </span>
+                    </b>
                     <span>{{assessment.weighting}}</span>
                 </p>
             </ion-item>
 
-            <ion-item text-wrap>
+            <ion-item *ngIf="assessment.assesmentTypeName == 'Internal Assessment'">
+                    <p>
+                        <b> Round Off : </b>
+                        <span>{{assessment.weighting}}</span>
+                    </p>
+                </ion-item>
+
+            <ion-item text-wrap *ngIf="assessment.assesmentTypeName != 'Internal Assessment'">
                 <p>
                     <b>Feedback: </b>
                 </p>
                 <ion-list>
                     <ion-item *ngFor="let f of assessment.feedbacks">
-                        <p>Title: {{f.title}}</p>
-                        <p>Description: {{f.description}}</p>
+                        <!-- <p>Title: {{f.title}}</p> -->
+                        <p>{{f.description}}</p>
                     </ion-item>
                 </ion-list>
             </ion-item>

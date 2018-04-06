@@ -44,7 +44,7 @@ export class CurrentAssignmentPageManagement {
         this.fetchAssignmentMethod.call(this.assignmentService, this.areAssignmentClosed, 1)
             .subscribe((res: any) => {
 
-                this.assignmentList = res;
+                this.assignmentList = res.filter((assignment) =>{ return assignment.moduleName == 'English Literature';})
                 console.log(this.assignmentList);
                 
                 if (refresher) {

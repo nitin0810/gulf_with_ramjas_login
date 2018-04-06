@@ -45,7 +45,7 @@ export class SuggestionByMeStudent {
     hideHelpers:boolean;
     headercontent:any;
 
-    title: string = "Suggestions";
+    title: string = "Messaging";
     complaintList: Array<any>;
     searchInput: string = '';
     debounceDuration: number = 400;

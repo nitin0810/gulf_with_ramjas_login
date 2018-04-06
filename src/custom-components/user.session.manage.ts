@@ -90,16 +90,19 @@ export class UserSessionManage {
             this.sideMenuOptions = [
 
                 // { title: 'Home', component: "DashboardPage", icon: 'assets/icon/home.png' },
-                { title: 'Complaints', component: "ComplaintPageStudent", icon: 'assets/icon/complaint.jpg' },
-                { title: 'Suggestions', component: "SuggestionTabsPageStudent", icon: 'assets/icon/suggestion.jpg' },
-                { title: 'Appreciations', component: "AppreciationTabsPageStudent", icon: 'assets/icon/appreciation.jpg' },
-                { title: 'Polls', component: "PollStudent", icon: 'assets/icon/poll.jpg' },
-                { title: 'Surveys', component: "SurveyPageStudent", icon: 'assets/icon/survey.jpg' },
+                // { title: 'Principal Direct', component: "ComplaintPageStudent", icon: 'assets/icon/complaint.jpg' },
+                // { title: 'Appreciations', component: "AppreciationTabsPageStudent", icon: 'assets/icon/appreciation.jpg' },
+                // { title: 'Polls', component: "PollStudent", icon: 'assets/icon/poll.jpg' },
+                // { title: 'Surveys', component: "SurveyPageStudent", icon: 'assets/icon/survey.jpg' },
+                { title: 'Time Table', component: "TimeTablePageStudent", icon: 'assets/icon/timetable.png' },
                 { title: 'Circular', component: "CircularStudentListPage", icon: 'assets/icon/circular.jpg' },
                 { title: 'Events', component: "MainPlannerPageManagement", icon: 'assets/icon/event.jpg' },
+                { title: 'Attendance', component: "AppreciationTabsPageStudent", icon: 'assets/icon/appreciation.jpg' },
                 { title: 'Assignment', component: "AssignmentTabsPageStudent", icon: 'assets/icon/assignment.png' },
                 { title: 'Assessment', component: "AssessmentTabsPageStudent", icon: 'assets/icon/assessment.png' },
-                { title: 'Time Table', component: "TimeTablePageStudent", icon: 'assets/icon/timetable.png' },
+                { title: 'Elective', component: "ElectiveTabsPageStudent", icon: 'assets/icon/assessment.png' },
+                { title: 'Principal Direct', component: "ComplaintPageStudent", icon: 'assets/icon/complaint.jpg' },
+                { title: 'Messaging', component: "SuggestionTabsPageStudent", icon: 'assets/icon/suggestion.jpg' },
                 { title: 'Account', component: "AccountPage", icon: 'assets/icon/profile.jpg' },
                 
             ];

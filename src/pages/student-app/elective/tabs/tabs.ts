@@ -14,10 +14,10 @@ import { IonicPage } from 'ionic-angular';
     styles: [` `]
 })
 
-export class AssignmentTabsPageStudent {
+export class ElectiveTabsPageStudent {
 
-    current: string = "ClosedAssignmentPageStudent";
-    past: string = "CurrentAssignmentPageStudent";
+    current: string = "CurrentElectivePageStudent";
+    past: string = "ClosedElectivePageStudent";
 
     constructor() { }
 

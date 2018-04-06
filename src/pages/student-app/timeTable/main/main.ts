@@ -1,5 +1,5 @@
 import { Component, OnDestroy } from '@angular/core';
-import { IonicPage, ModalController, ActionSheetController, AlertController } from 'ionic-angular';
+import { IonicPage, ModalController, ActionSheetController, AlertController, NavController } from 'ionic-angular';
 import { CustomService } from '../../../../services/custom.service';
 import { TimeTableService } from '../../../../services/timeTable.service';
 import { TimeTablePageManagement } from '../../../management-app/timeTable/main/main';
@@ -21,9 +21,10 @@ export class TimeTablePageStudent extends TimeTablePageManagement implements OnD
         public customService: CustomService,
         public actionSheetCtrl: ActionSheetController,
         public alertCtrl: AlertController,
-        public timeTableService: TimeTableService
+        public timeTableService: TimeTableService,
+        public navcont : NavController
     ) {
-        super(modalCtrl, customService, actionSheetCtrl, alertCtrl, timeTableService);
+        super(modalCtrl, customService, actionSheetCtrl, alertCtrl, timeTableService,navcont);
     }
 
     ionViewWillEnter() {

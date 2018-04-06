@@ -42,7 +42,7 @@ export class AccountPage {
 
         this.moreDetails = [
 
-            { name: 'ID', value: localStorage.getItem('id'), icon: 'finger-print' },
+            { name: 'Roll No', value: localStorage.getItem('id').substring(0,3), icon: 'finger-print' },
             { name: 'Username', value: localStorage.getItem('userName'), icon: 'person' },
             { name: 'Password', value: "******", icon: 'lock' },
             { name: 'Contact', value: localStorage.getItem('contactNo'), icon: 'call' },

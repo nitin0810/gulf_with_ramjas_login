@@ -24,7 +24,7 @@ export class ComplaintPageStudent {
     hideHelpers:boolean;
     headercontent:any;
 
-    title: string = "Complaints";
+    title: string = "Principal Direct";
     complaintList: Array<any>;
     searchInput: string = '';
     debounceDuration: number = 400;
