@@ -1,0 +1,26 @@
+<ion-list>
+    <button *ngFor="let circular of circularList;let i =index" ion-item (click)="openViewCircular(circular.id)" [style.border-left-color]="circular.mainAudienceColor">
+        <h2>
+            <b>{{circular.title}}</b>
+        </h2>
+        <p>Due Date: {{circular.date}}</p>
+        <ion-grid no-padding>
+            <ion-row no-padding>
+                <ion-col col-6 no-padding>
+                    <!-- <ion-icon name="at"></ion-icon> -->
+                    <span>{{circular.mainAudienceName}}</span>
+                </ion-col>
+                <ion-col col-6 no-padding>
+                    <p>No of Students : {{30-i}}</p>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+    </button>
+</ion-list>
+
+
+
+<ion-list class="no-comment" *ngIf="circularList?.length==0">
+    <ion-icon name="list-box"></ion-icon>
+    <br>NO RECORD FOUND
+</ion-list>

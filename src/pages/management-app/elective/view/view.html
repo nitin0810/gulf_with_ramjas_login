@@ -1,0 +1,101 @@
+<ion-header>
+    <nl-modal-navbar [title]="title" (modalClosed)="dismiss()">
+    </nl-modal-navbar>
+</ion-header>
+
+<ion-content >
+
+    <ion-card>
+        <ion-card-content>
+
+            <ion-card-title>
+                    Title: Lorem ipsum dolor sit
+            </ion-card-title>
+
+            <ion-item text-wrap>
+                <p>Description: Lorem ipsum dolor sit, amet consectetur adipisicing elit. Architecto numquam dolorem ratione, odio cum quod repellendus nostrum nihil quidem repudiandae nisi optio, nobis, quam nulla placeat est ducimus perferendis sed.</p>
+            </ion-item>
+
+            <ion-item>
+                <ion-icon name="clock" item-start></ion-icon>
+                <p>
+                    <b>Due Date : </b>
+                    <span> 24 April 2018   </span>
+                </p>
+            </ion-item>
+
+            <!-- <ion-item *ngIf="circular.expiredAt">
+                <ion-icon name="clock" item-start></ion-icon>
+                <p>
+                    <b>Effective Date: </b>
+                    <span>{{circular.date | amDateFormat: 'LL'}}</span>
+                </p>
+            </ion-item> -->
+
+            <!-- <ion-item>
+                <ion-icon name="person" item-start></ion-icon>
+                <p>
+                    <b>Created By: </b>
+                    <span>{{circular.employeName}}</span>
+                </p>
+            </ion-item> -->
+
+            <ion-item>
+                <ion-icon name="people" item-start></ion-icon>
+                <p>
+                    <b>Courses: </b>
+                    <span>B.A., BSC, M.A.</span>
+                </p>
+            </ion-item>
+
+            <ion-item>
+                <ion-icon name="people" item-start></ion-icon>
+                <p>
+                    <b>No of Students : </b>
+                </p>
+                <p>30</p>
+            </ion-item>
+
+            <!-- <ion-item *ngIf="circular.departments">
+                <ion-icon name="folder" item-start></ion-icon>
+                <p>
+                    <b>Departments: </b>
+                </p>
+                <p *ngFor="let dep of circular.departments">{{dep}}</p>
+            </ion-item>
+
+            <ion-item *ngIf="circular.programs">
+                <ion-icon name="folder" item-start></ion-icon>
+                <p>
+                    <b>Programs: </b>
+                </p>
+                <p *ngFor="let pgm of circular.programs">{{pgm}}</p>
+            </ion-item>
+
+
+            <ion-item *ngIf="circular.modules">
+                <ion-icon name="folder" item-start></ion-icon>
+                <p>
+                    <b>Modules: </b>
+                </p>
+                <p *ngFor="let md of circular.modules">{{md}}</p>
+            </ion-item>
+
+            <ion-item *ngIf="circular.years">
+                <ion-icon name="folder" item-start></ion-icon>
+                <p>
+                    <b>Years: </b>
+                </p>
+                <p *ngFor="let y of circular.years">{{y}}</p>
+            </ion-item> -->
+
+            <ion-item>
+                <button ion-button   >Enrolled Students</button>
+                <button ion-button >Queries</button>
+            </ion-item>
+
+        </ion-card-content>
+    </ion-card>
+</ion-content> 
+
+      

@@ -17,7 +17,17 @@ export class NewPollPageManagement {
     title: string = "new poll";
 
     /** data  required to create the poll*/
-    audienceList: Array<any>;
+    audienceList: Array<any> = [
+        {
+            name : 'B.A.'
+        },
+        {
+            name : 'M.A.'
+        },
+        {
+            name : 'BSC'
+        }
+    ];;
     departmentList: Array<any>;
     programList: Array<any>;
     yearList: Array<any>;
@@ -68,7 +78,7 @@ export class NewPollPageManagement {
 
     ionViewWillEnter() {
         this.setTimeTableInfo(this.navParams.get('timeTableInfo'));
-        this.getMainAudeinceData();
+        // this.getMainAudeinceData();
     }
 
     /**Poll,Survey,Events and Circular all have same audience,

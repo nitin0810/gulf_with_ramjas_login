@@ -100,7 +100,6 @@ export class UserSessionManage {
                 { title: 'Attendance', component: "AppreciationTabsPageStudent", icon: 'assets/icon/appreciation.jpg' },
                 { title: 'Assignment', component: "AssignmentTabsPageStudent", icon: 'assets/icon/assignment.png' },
                 { title: 'Assessment', component: "AssessmentTabsPageStudent", icon: 'assets/icon/assessment.png' },
-                { title: 'Elective', component: "ElectiveTabsPageStudent", icon: 'assets/icon/assessment.png' },
                 { title: 'Principal Direct', component: "ComplaintPageStudent", icon: 'assets/icon/complaint.jpg' },
                 { title: 'Messaging', component: "SuggestionTabsPageStudent", icon: 'assets/icon/suggestion.jpg' },
                 { title: 'Account', component: "AccountPage", icon: 'assets/icon/profile.jpg' },
@@ -111,17 +110,19 @@ export class UserSessionManage {
 
             this.sideMenuOptions = [
 
-                // { title: 'Home', component: "DashboardPage", icon: 'assets/icon/home.png' },
-                { title: 'Complaints', component: "ComplaintPageManagement", icon: 'assets/icon/complaint.jpg' },
-                { title: 'Suggestions', component: "SuggestionTabsPageManagement", icon: 'assets/icon/suggestion.jpg' },
-                { title: 'Appreciations', component: "AppreciationTabsPageManagement", icon: 'assets/icon/appreciation.jpg' },
-                { title: 'Polls', icon: 'assets/icon/poll.jpg' },
-                { title: 'Surveys', icon: 'assets/icon/survey.jpg' },
+                { title: 'Time Table', component: "TimeTablePageManagement", icon: 'assets/icon/timetable.png' },
                 { title: 'Circular', component: "CircularTabsPageManagement", icon: 'assets/icon/circular.jpg' },
                 { title: 'Events', component: "MainPlannerPageManagement", icon: 'assets/icon/event.jpg' },
+                { title: 'Attendance', component: "AppreciationTabsPageStudent", icon: 'assets/icon/appreciation.jpg' },
                 { title: 'Assignment', component: "AssignmentTabsPageManagement", icon: 'assets/icon/assignment.png' },
                 { title: 'Assessment', component: "AssessmentTabsPageManagement", icon: 'assets/icon/assessment.png' },
-                { title: 'Time Table', component: "TimeTablePageManagement", icon: 'assets/icon/timetable.png' },
+                // { title: 'Home', component: "DashboardPage", icon: 'assets/icon/home.png' },
+                { title: 'Elective', component: "ElectiveTabsPageManagement", icon: 'assets/icon/assessment.png' },
+                { title: 'Principal Direct', component: "ComplaintPageManagement", icon: 'assets/icon/complaint.jpg' },
+                { title: 'Messaging', component: "SuggestionTabsPageManagement", icon: 'assets/icon/suggestion.jpg' },
+                // { title: 'Appreciations', component: "AppreciationTabsPageManagement", icon: 'assets/icon/appreciation.jpg' },
+                // { title: 'Polls', icon: 'assets/icon/poll.jpg' },
+                // { title: 'Surveys', icon: 'assets/icon/survey.jpg' },
                 { title: 'Account', component: "AccountPage", icon: 'assets/icon/profile.jpg' },
 
             ];
