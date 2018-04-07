@@ -7,8 +7,7 @@ import { IonicPage } from 'ionic-angular';
     selector: 'assignment',
     template: `
         <ion-tabs    color="primary" tabsLayout='icon-start'>
-        <ion-tab tabTitle="CURRENT" tabIcon="mic" [root]="current"></ion-tab>
-        <ion-tab tabTitle="PAST" tabIcon="mic-off"  [root]="past"></ion-tab>
+        <ion-tab tabTitle="" tabIcon="" [root]="current"></ion-tab>
         </ion-tabs>
                 `,
     styles: [` `]

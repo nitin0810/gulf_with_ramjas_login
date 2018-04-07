@@ -17,7 +17,7 @@ export class CurrentElectivePageStudent extends CurrentAssignmentPageManagement 
     title: string = "Elective";
     papers = [ 
         {
-            name : 'Music',
+            name : 'Music', 
             faculty : 'Dr. Suresh Kumar',
             details : 'Lorem ipsum dolor sit amet consectetur adipisicing elit.' 
         },
